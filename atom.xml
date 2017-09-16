@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-09-16T07:08:36.000Z</updated>
+  <updated>2017-09-16T08:37:07.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,57 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>python 尝鲜踩坑记</title>
+    <link href="http://yoursite.com/2017/09/16/python-%E5%B0%9D%E9%B2%9C%E8%B8%A9%E5%9D%91%E8%AE%B0/"/>
+    <id>http://yoursite.com/2017/09/16/python-尝鲜踩坑记/</id>
+    <published>2017-09-16T08:22:47.000Z</published>
+    <updated>2017-09-16T08:37:07.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>##讲述一下第一次在Sublime Text2下尝试编写python<br>根据Python编程从入门到实践书中推荐，安装了Sublime Text2，由于要使用python3，所以要设置默认编译器，在Sublime Text2下，Tools-&gt;Build System -&gt; New Build System中<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ &#123; “cmd”: [“usr/<span class="built_in">local</span>/bin/python”,”-u”,”<span class="variable">$file</span>”],&#125;</div></pre></td></tr></table></figure></p><p>配置完，command+B运行代码<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ <span class="built_in">print</span>(“Hello World!”)</div></pre></td></tr></table></figure></p><p>报出Error trying to parse setting，查找资料，应该是刚才配置默认编译器的时候多了一个逗号,正确的应该是<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ &#123; “cmd”: [“usr/<span class="built_in">local</span>/bin/python”,”-u”,”<span class="variable">$file</span>”]&#125;</div></pre></td></tr></table></figure></p><p>但是居然在finder和终端中始终找不到该文件的位置，我就知道文件夹的名称应该是User，弄了半天,风险Sublime Text2的file下有一个open，总算是打开了，已经泪奔。不过我希望改变他默认的文件保存位置，还是没找到方法，找到后，会更新</p><p>##【待续】</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;##讲述一下第一次在Sublime Text2下尝试编写python&lt;br&gt;根据Python编程从入门到实践书中推荐，安装了Sublime Text2，由于要使用python3，所以要设置默认编译器，在Sublime Text2下，Tools-&amp;gt;Build Syste
+      
+    
+    </summary>
+    
+      <category term="python" scheme="http://yoursite.com/categories/python/"/>
+    
+    
+      <category term="python" scheme="http://yoursite.com/tags/python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>使用Hexo+github搭建个人博客</title>
+    <link href="http://yoursite.com/2017/09/16/%E4%BD%BF%E7%94%A8Hexo-github%E6%90%AD%E5%BB%BA/"/>
+    <id>http://yoursite.com/2017/09/16/使用Hexo-github搭建/</id>
+    <published>2017-09-16T07:18:45.000Z</published>
+    <updated>2017-09-16T07:28:49.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>##准备工作<br>确保你电脑中已经安装好了nodeJS,NPM.git如果还没有来得及安装，网上有许多教程，就不一一介绍了（第一次写博客，大家谅解^_^）;<br>要使用github，你得现有一个github的帐号（如果没有，先去注册一个吧）</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;##准备工作&lt;br&gt;确保你电脑中已经安装好了nodeJS,NPM.git如果还没有来得及安装，网上有许多教程，就不一一介绍了（第一次写博客，大家谅解^_^）;&lt;br&gt;要使用github，你得现有一个github的帐号（如果没有，先去注册一个吧）&lt;/p&gt;
+
+      
+    
+    </summary>
+    
+      <category term="Hexo" scheme="http://yoursite.com/categories/Hexo/"/>
+    
+    
+      <category term="Hexo" scheme="http://yoursite.com/tags/Hexo/"/>
+    
+  </entry>
   
   <entry>
     <title>感谢有你</title>
@@ -38,27 +89,6 @@
     
     
       <category term="随笔杂谈" scheme="http://yoursite.com/tags/%E9%9A%8F%E7%AC%94%E6%9D%82%E8%B0%88/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Hello World</title>
-    <link href="http://yoursite.com/2017/09/11/hello-world/"/>
-    <id>http://yoursite.com/2017/09/11/hello-world/</id>
-    <published>2017-09-11T13:57:30.000Z</published>
-    <updated>2017-09-11T13:57:30.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.
-      
-    
-    </summary>
-    
     
   </entry>
   
