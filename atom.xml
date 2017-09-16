@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>EWSUN</title>
+  
+  
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://yoursite.com/"/>
+  <updated>2017-09-16T07:08:36.000Z</updated>
+  <id>http://yoursite.com/</id>
+  
+  <author>
+    <name>EtanWatson</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>感谢有你</title>
+    <link href="http://yoursite.com/2017/09/12/%E6%84%9F%E8%B0%A2%E6%9C%89%E4%BD%A0/"/>
+    <id>http://yoursite.com/2017/09/12/感谢有你/</id>
+    <published>2017-09-12T06:55:34.000Z</published>
+    <updated>2017-09-16T07:08:36.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="呜呜"><a href="#呜呜" class="headerlink" title="呜呜"></a>呜呜</h2><p>今天，技术博客总算是”搭成了”？为什么要加引号，因为这个充其量也算是半成品，没有归档，没有社交链接……，但是，它至少可以让我把每天的心得写下来，慢慢完善自己，以后慢慢完善该博客。我知道现在对于我来说，时间是多么的宝贵。我也明白社会竞争的激烈以及自己身在其中的渺小。两天下来，感觉时刻需要提醒自己的就是『冷静』『执着』。诚然，我们不可能做到尽善尽美，但是我们要努力做到让自己不会后悔，加油 Etan ！</p><h2 id="感觉没有什么代码可以码，所以用这篇文章试试Hexo的基本用法"><a href="#感觉没有什么代码可以码，所以用这篇文章试试Hexo的基本用法" class="headerlink" title="感觉没有什么代码可以码，所以用这篇文章试试Hexo的基本用法 ^~^"></a>感觉没有什么代码可以码，所以用这篇文章试试Hexo的基本用法 ^~^</h2><h3 id="JAVA"><a href="#JAVA" class="headerlink" title="JAVA"></a>JAVA</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ System.out.print(“Etan, Come on !”);</div></pre></td></tr></table></figure><h3 id="C"><a href="#C" class="headerlink" title="C"></a>C</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ <span class="built_in">print</span>(“Etan , Come on !”);</div></pre></td></tr></table></figure><h3 id="C-1"><a href="#C-1" class="headerlink" title="C++"></a>C++</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ cout &lt;&lt; “Etan , Come on !”;</div></pre></td></tr></table></figure><h3 id="javascript"><a href="#javascript" class="headerlink" title="javascript"></a>javascript</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ console.log(“Etan , Come on !”);</div></pre></td></tr></table></figure><h2 id="最后，感谢有你，让我无畏风雨！"><a href="#最后，感谢有你，让我无畏风雨！" class="headerlink" title="最后，感谢有你，让我无畏风雨！"></a>最后，感谢有你，让我无畏风雨！</h2>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;呜呜&quot;&gt;&lt;a href=&quot;#呜呜&quot; class=&quot;headerlink&quot; title=&quot;呜呜&quot;&gt;&lt;/a&gt;呜呜&lt;/h2&gt;&lt;p&gt;今天，技术博客总算是”搭成了”？为什么要加引号，因为这个充其量也算是半成品，没有归档，没有社交链接……，但是，它至少可以让我把每天的心得写下
+      
+    
+    </summary>
+    
+      <category term="随笔杂谈" scheme="http://yoursite.com/categories/%E9%9A%8F%E7%AC%94%E6%9D%82%E8%B0%88/"/>
+    
+    
+      <category term="随笔杂谈" scheme="http://yoursite.com/tags/%E9%9A%8F%E7%AC%94%E6%9D%82%E8%B0%88/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hello World</title>
+    <link href="http://yoursite.com/2017/09/11/hello-world/"/>
+    <id>http://yoursite.com/2017/09/11/hello-world/</id>
+    <published>2017-09-11T13:57:30.000Z</published>
+    <updated>2017-09-11T13:57:30.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.
+      
+    
+    </summary>
+    
+    
+  </entry>
+  
+</feed>
