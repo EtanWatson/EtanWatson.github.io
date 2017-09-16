@@ -97,18 +97,18 @@
 
 
 
-<meta name="description" content="##讲述一下第一次在Sublime Text2下尝试编写python根据Python编程从入门到实践书中推荐，安装了Sublime Text2，由于要使用python3，所以要设置默认编译器，在Sublime Text2下，Tools-&amp;gt;Build System -&amp;gt; New Build System中1$ &amp;#123; “cmd”: [“usr/local/bin/python”,”">
+<meta name="description" content="讲述一下第一次在Sublime Text2下尝试编写python根据Python编程从入门到实践书中推荐，安装了Sublime Text2，由于要使用python3，所以要设置默认编译器，在Sublime Text2下，Tools-&amp;gt;Build System -&amp;gt; New Build System中1$ &amp;#123; “cmd”: [“usr/local/bin/python”,”-u">
 <meta name="keywords" content="python">
 <meta property="og:type" content="article">
 <meta property="og:title" content="python 尝鲜踩坑记">
 <meta property="og:url" content="http://yoursite.com/2017/09/16/python-尝鲜踩坑记/index.html">
 <meta property="og:site_name" content="EWSUN">
-<meta property="og:description" content="##讲述一下第一次在Sublime Text2下尝试编写python根据Python编程从入门到实践书中推荐，安装了Sublime Text2，由于要使用python3，所以要设置默认编译器，在Sublime Text2下，Tools-&amp;gt;Build System -&amp;gt; New Build System中1$ &amp;#123; “cmd”: [“usr/local/bin/python”,”">
+<meta property="og:description" content="讲述一下第一次在Sublime Text2下尝试编写python根据Python编程从入门到实践书中推荐，安装了Sublime Text2，由于要使用python3，所以要设置默认编译器，在Sublime Text2下，Tools-&amp;gt;Build System -&amp;gt; New Build System中1$ &amp;#123; “cmd”: [“usr/local/bin/python”,”-u">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-09-16T08:37:07.000Z">
+<meta property="og:updated_time" content="2017-09-16T08:40:08.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="python 尝鲜踩坑记">
-<meta name="twitter:description" content="##讲述一下第一次在Sublime Text2下尝试编写python根据Python编程从入门到实践书中推荐，安装了Sublime Text2，由于要使用python3，所以要设置默认编译器，在Sublime Text2下，Tools-&amp;gt;Build System -&amp;gt; New Build System中1$ &amp;#123; “cmd”: [“usr/local/bin/python”,”">
+<meta name="twitter:description" content="讲述一下第一次在Sublime Text2下尝试编写python根据Python编程从入门到实践书中推荐，安装了Sublime Text2，由于要使用python3，所以要设置默认编译器，在Sublime Text2下，Tools-&amp;gt;Build System -&amp;gt; New Build System中1$ &amp;#123; “cmd”: [“usr/local/bin/python”,”-u">
 
 
 
@@ -400,7 +400,7 @@
       
 
       
-        <p>##讲述一下第一次在Sublime Text2下尝试编写python<br>根据Python编程从入门到实践书中推荐，安装了Sublime Text2，由于要使用python3，所以要设置默认编译器，在Sublime Text2下，Tools-&gt;Build System -&gt; New Build System中<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ &#123; “cmd”: [“usr/<span class="built_in">local</span>/bin/python”,”-u”,”<span class="variable">$file</span>”],&#125;</div></pre></td></tr></table></figure></p>
+        <h2 id="讲述一下第一次在Sublime-Text2下尝试编写python"><a href="#讲述一下第一次在Sublime-Text2下尝试编写python" class="headerlink" title="讲述一下第一次在Sublime Text2下尝试编写python"></a>讲述一下第一次在Sublime Text2下尝试编写python</h2><p>根据Python编程从入门到实践书中推荐，安装了Sublime Text2，由于要使用python3，所以要设置默认编译器，在Sublime Text2下，Tools-&gt;Build System -&gt; New Build System中<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ &#123; “cmd”: [“usr/<span class="built_in">local</span>/bin/python”,”-u”,”<span class="variable">$file</span>”],&#125;</div></pre></td></tr></table></figure></p>
 <p>配置完，command+B运行代码<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ <span class="built_in">print</span>(“Hello World!”)</div></pre></td></tr></table></figure></p>
 <p>报出Error trying to parse setting，查找资料，应该是刚才配置默认编译器的时候多了一个逗号,正确的应该是<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ &#123; “cmd”: [“usr/<span class="built_in">local</span>/bin/python”,”-u”,”<span class="variable">$file</span>”]&#125;</div></pre></td></tr></table></figure></p>
 <p>但是居然在finder和终端中始终找不到该文件的位置，我就知道文件夹的名称应该是User，弄了半天,风险Sublime Text2的file下有一个open，总算是打开了，已经泪奔。不过我希望改变他默认的文件保存位置，还是没找到方法，找到后，会更新</p>
@@ -495,8 +495,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           
             <img class="site-author-image" itemprop="image"
@@ -568,6 +577,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#讲述一下第一次在Sublime-Text2下尝试编写python"><span class="nav-number">1.</span> <span class="nav-text">讲述一下第一次在Sublime Text2下尝试编写python</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
