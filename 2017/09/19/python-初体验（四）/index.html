@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="python," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="EWSUN" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="while 循环while 基本语法123456while True:    	city = input(prompt)if(city) == ‘quit’:	breakelse:	print(“I`d love to go ” + city.title()) 函数基本语法123456789101112131415161718192021222324 def print_models(unprin">
+<meta name="keywords" content="python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python 初体验（四）">
+<meta property="og:url" content="http://yoursite.com/2017/09/19/python-初体验（四）/index.html">
+<meta property="og:site_name" content="EWSUN">
+<meta property="og:description" content="while 循环while 基本语法123456while True:    	city = input(prompt)if(city) == ‘quit’:	breakelse:	print(“I`d love to go ” + city.title()) 函数基本语法123456789101112131415161718192021222324 def print_models(unprin">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-09-19T08:31:54.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python 初体验（四）">
+<meta name="twitter:description" content="while 循环while 基本语法123456while True:    	city = input(prompt)if(city) == ‘quit’:	breakelse:	print(“I`d love to go ” + city.title()) 函数基本语法123456789101112131415161718192021222324 def print_models(unprin">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/09/19/python-初体验（四）/"/>
+
+
+
+
+
+  <title>python 初体验（四） | EWSUN</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">EWSUN</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-schedule">
+          <a href="/schedule/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br />
+            
+            日程表
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/19/python-初体验（四）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EtanWatson">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EWSUN">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">python 初体验（四）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-19T15:24:45+08:00">
+                2017-09-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="while-循环"><a href="#while-循环" class="headerlink" title="while 循环"></a>while 循环</h1><h2 id="while-基本语法"><a href="#while-基本语法" class="headerlink" title="while 基本语法"></a>while 基本语法</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">while</span> True:</div><div class="line">    	city = input(prompt)</div><div class="line"><span class="keyword">if</span>(city) == ‘quit’:</div><div class="line">	<span class="built_in">break</span></div><div class="line"><span class="keyword">else</span>:</div><div class="line">	<span class="built_in">print</span>(“I`d love to go ” + city.title())</div></pre></td></tr></table></figure>
+<h2 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h2><h3 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a>基本语法</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"> def print_models(unprinted_designs,completed_models):</div><div class="line">		<span class="keyword">while</span> unprinted_designs:</div><div class="line">			current_design = unprinted_designs.pop()</div><div class="line">			<span class="built_in">print</span>(<span class="string">"Printing model: "</span> + current_design)</div><div class="line">			completed_models.append(current_design)	</div><div class="line"> def show_completed_model(completed_models):</div><div class="line">		<span class="built_in">print</span>(<span class="string">"\nThe following models have been printed:"</span>)</div><div class="line">		<span class="keyword">for</span> completed_models <span class="keyword">in</span> completed_models:</div><div class="line">			<span class="built_in">print</span>(completed_models)						</div><div class="line"> unprinted_designs = [<span class="string">'iphone case'</span>,<span class="string">'robot pendant'</span>,<span class="string">'dodecahedron'</span>]</div><div class="line"> completed_models = []</div><div class="line"></div><div class="line"> print_models(unprinted_designs[:],completed_models)</div><div class="line"> show_completed_model(completed_models)	 </div><div class="line">``` </div><div class="line">该方式使用列表的切片的方式传递实参，因此不改变原列表的值，除非有必要，否则会给系统带来不必要的时间开销和内存开销</div><div class="line"><span class="comment">### 传递任意数量的实参</span></div><div class="line">``` bash </div><div class="line"> def make_pizza(*toppings):</div><div class="line">	<span class="built_in">print</span>(<span class="string">"\n make a pizza whith the following toppings:"</span>)</div><div class="line">	<span class="keyword">for</span> topping <span class="keyword">in</span> toppings:</div><div class="line">		<span class="built_in">print</span>(<span class="string">"- "</span> + topping)</div><div class="line"> make_pizza(<span class="string">'pepperoni'</span>)</div><div class="line"> make_pizza(<span class="string">'mushrooms'</span>,<span class="string">'green peppers'</span>,<span class="string">'extra cheese'</span>)</div></pre></td></tr></table></figure>
+<p>如果要让函数接收不同类型的实参，必须在函数定义中将接纳任意数量的实参的形参放在最后<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">def make_pizza(size,*toppings):</div><div class="line"><span class="built_in">print</span>(<span class="string">"\n make a pizza whith the following toppings:"</span>)</div><div class="line"><span class="keyword">for</span> topping <span class="keyword">in</span> toppings:</div><div class="line">	<span class="built_in">print</span>(<span class="string">"- "</span> + topping)</div><div class="line">make_pizza(12,’pepperoni<span class="string">')</span></div><div class="line"><span class="string">make_pizza(16,’mushrooms'</span>,<span class="string">'green peppers'</span>,<span class="string">'extra cheese'</span>)</div></pre></td></tr></table></figure></p>
+<h3 id="使用任意数量的关键字实参"><a href="#使用任意数量的关键字实参" class="headerlink" title="使用任意数量的关键字实参"></a>使用任意数量的关键字实参</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">def bulid_profile(frist,last,**user_info):</div><div class="line">profile = &#123;&#125;</div><div class="line">profile[<span class="string">'frist_name'</span>] = frist</div><div class="line">profile[<span class="string">'last_name'</span>] = last</div><div class="line"><span class="keyword">for</span> key,value <span class="keyword">in</span> user_info.items():</div><div class="line">	profile[key] = value</div><div class="line"><span class="built_in">return</span> profile</div><div class="line">user_profile = bulid_profile(<span class="string">'albert'</span>,<span class="string">'einstein'</span>,location = <span class="string">'princeton'</span>,field = <span class="string">'physics'</span>)</div><div class="line"><span class="built_in">print</span>(user_profile )</div></pre></td></tr></table></figure>
+<h3 id="将函数存储在模块中"><a href="#将函数存储在模块中" class="headerlink" title="将函数存储在模块中"></a>将函数存储在模块中</h3><h4 id="导入整个模块"><a href="#导入整个模块" class="headerlink" title="导入整个模块"></a>导入整个模块</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#pizza_import.py </span></div><div class="line"> def make_pizza(size,*toppings):</div><div class="line">	<span class="built_in">print</span>(<span class="string">"\nMaking a "</span> + str(size) + <span class="string">"-inch pizza with the following toppings:"</span>)</div><div class="line">	<span class="keyword">for</span> topping <span class="keyword">in</span> toppings:</div><div class="line">		<span class="built_in">print</span>(<span class="string">"-"</span> + topping)</div></pre></td></tr></table></figure>
+<p>下面是主程序<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">import pizza_import</div><div class="line">pizza_import.make_pizza(16,<span class="string">'pepperoni'</span>)</div><div class="line">pizza_import.make_pizza(12,<span class="string">'mushrooms'</span>,<span class="string">'green peppers'</span>,<span class="string">'extra cheese'</span>)</div></pre></td></tr></table></figure></p>
+<h4 id="导入特定函数"><a href="#导入特定函数" class="headerlink" title="导入特定函数"></a>导入特定函数</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">from pizza import make_pizza</div></pre></td></tr></table></figure>
+<h4 id="使用as给模块和函数指定别名"><a href="#使用as给模块和函数指定别名" class="headerlink" title="使用as给模块和函数指定别名"></a>使用as给模块和函数指定别名</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">from pizza import as p  <span class="comment"># 模块</span></div><div class="line">from pizza import make_pizza as map <span class="comment"># 函数</span></div></pre></td></tr></table></figure>
+<h4 id="导入模块中的所有函数"><a href="#导入模块中的所有函数" class="headerlink" title="导入模块中的所有函数"></a>导入模块中的所有函数</h4><pre><code class="bash">from pizza import * <span class="comment"># 这样导入，函数在该模块中可以直接使用</span>
+</code></pre>
+<h4 id="函数编写指南"><a href="#函数编写指南" class="headerlink" title="函数编写指南"></a>函数编写指南</h4><pre><code>1.描述性函数名，只使用小写和下划线
+2.简明的阐述其函数概念的注释，给形参指定默认值的时候等于号两边不要有空格
+</code></pre>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/18/数据挖掘初体验（一）/" rel="next" title="数据挖掘初体验（一）">
+                <i class="fa fa-chevron-left"></i> 数据挖掘初体验（一）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          
+            <img class="site-author-image" itemprop="image"
+              src="/images/header.png"
+              alt="EtanWatson" />
+          
+            <p class="site-author-name" itemprop="name">EtanWatson</p>
+            <p class="site-description motion-element" itemprop="description">有所舍，有所爱，做一个感性的码农</p>
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives/">
+            
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#while-循环"><span class="nav-number">1.</span> <span class="nav-text">while 循环</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#while-基本语法"><span class="nav-number">1.1.</span> <span class="nav-text">while 基本语法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数"><span class="nav-number">1.2.</span> <span class="nav-text">函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本语法"><span class="nav-number">1.2.1.</span> <span class="nav-text">基本语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用任意数量的关键字实参"><span class="nav-number">1.2.2.</span> <span class="nav-text">使用任意数量的关键字实参</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#将函数存储在模块中"><span class="nav-number">1.2.3.</span> <span class="nav-text">将函数存储在模块中</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#导入整个模块"><span class="nav-number">1.2.3.1.</span> <span class="nav-text">导入整个模块</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#导入特定函数"><span class="nav-number">1.2.3.2.</span> <span class="nav-text">导入特定函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用as给模块和函数指定别名"><span class="nav-number">1.2.3.3.</span> <span class="nav-text">使用as给模块和函数指定别名</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#导入模块中的所有函数"><span class="nav-number">1.2.3.4.</span> <span class="nav-text">导入模块中的所有函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#函数编写指南"><span class="nav-number">1.2.3.5.</span> <span class="nav-text">函数编写指南</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">EtanWatson</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.2</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
