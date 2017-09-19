@@ -310,6 +310,152 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/19/python-初体验（七）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EtanWatson">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EWSUN">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/19/python-初体验（七）/" itemprop="url">python-初体验（七）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-19T19:48:51+08:00">
+                2017-09-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="文件"><a href="#文件" class="headerlink" title="文件"></a>文件</h1><h2 id="一个简单的文件读取示例"><a href="#一个简单的文件读取示例" class="headerlink" title="一个简单的文件读取示例"></a>一个简单的文件读取示例</h2><p>在工作目录中建立pi_digits.txt文件<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">with open(<span class="string">'pi_digits.txt'</span>) as file_object:</div><div class="line">contents = file_object.read()</div><div class="line"><span class="built_in">print</span>(contents)</div></pre></td></tr></table></figure></p>
+<p>open()函数接收一个文件路径，返回一个文件的对象<br>with 在不需要文件访问文件的时候将其关闭<br>read()函数读取这个文件中的所有内容（在达到文件末尾的时候会返回一个空字符串），要删除末尾的空字符串，就需要在print语句中使用rstrip,即：print(contents.rstrip())</p>
+<h3 id="使用for循环逐行读取"><a href="#使用for循环逐行读取" class="headerlink" title="使用for循环逐行读取"></a>使用for循环逐行读取</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">filename = <span class="string">'pi_digits.txt'</span></div><div class="line">with open(filename) as file_object:</div><div class="line"><span class="keyword">for</span> line <span class="keyword">in</span> file_object:</div><div class="line">   <span class="built_in">print</span>(line.rstrip())</div><div class="line"></div><div class="line"><span class="comment">#逐行读取函数 file_object.readlines(),它会将读取的一行存入到一个列表中</span></div><div class="line"><span class="comment">#读取文本是，Python将所有文本都解读为字符串，如果你读取的是数字，并要将其作为数值使用，就必须使用函数init()将  其转换为整数或者使用float()将其转换为浮点数</span></div></pre></td></tr></table></figure>
+<h2 id="写入文件"><a href="#写入文件" class="headerlink" title="写入文件"></a>写入文件</h2><h3 id="写入空文件"><a href="#写入空文件" class="headerlink" title="写入空文件"></a>写入空文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">filename = <span class="string">'programing.txt'</span></div><div class="line">with open(filename , <span class="string">'w'</span>) as file_object:</div><div class="line">file_object.write(<span class="string">'I love programing!'</span>)</div><div class="line"><span class="comment">#python只能写入字符串文本，如果要将数值写入，必须使用str()函数进行类型转换</span></div><div class="line"><span class="comment">#多行写入file_object.write('I love programing!\n’) 在其结尾添加换行符就行（这是是什么鬼?）</span></div></pre></td></tr></table></figure>
+<h3 id="附加到文件"><a href="#附加到文件" class="headerlink" title="附加到文件"></a>附加到文件</h3><p>如果你想给文件添加内容，而不是覆盖原有内容，可以附加模式打开文件，python会将你写入的内容追加到文件末尾，如果指定文件不存在，会新建一个空文件<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">filename = <span class="string">'programing.txt'</span></div><div class="line">with open(filename , <span class="string">'a'</span>) as file_object:</div><div class="line">file_object.write(<span class="string">'I also love finding meaning in laarge datasets. \n'</span>)</div><div class="line">file_object.write(<span class="string">'I love creating apps that can run in a browser! \n'</span>)</div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/19/python-初体验（六）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1649,155 +1795,13 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/12/感谢有你/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="EtanWatson">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/header.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="EWSUN">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/12/感谢有你/" itemprop="url">感谢有你</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-12T14:55:34+08:00">
-                2017-09-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/随笔杂谈/" itemprop="url" rel="index">
-                    <span itemprop="name">随笔杂谈</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="呜呜"><a href="#呜呜" class="headerlink" title="呜呜"></a>呜呜</h2><p>今天，技术博客总算是”搭成了”？为什么要加引号，因为这个充其量也算是半成品，没有归档，没有社交链接……，但是，它至少可以让我把每天的心得写下来，慢慢完善自己，以后慢慢完善该博客。我知道现在对于我来说，时间是多么的宝贵。我也明白社会竞争的激烈以及自己身在其中的渺小。两天下来，感觉时刻需要提醒自己的就是『冷静』『执着』。诚然，我们不可能做到尽善尽美，但是我们要努力做到让自己不会后悔，加油 Etan ！</p>
-<h2 id="感觉没有什么代码可以码，所以用这篇文章试试Hexo的基本用法"><a href="#感觉没有什么代码可以码，所以用这篇文章试试Hexo的基本用法" class="headerlink" title="感觉没有什么代码可以码，所以用这篇文章试试Hexo的基本用法 ^~^"></a>感觉没有什么代码可以码，所以用这篇文章试试Hexo的基本用法 ^~^</h2><h3 id="JAVA"><a href="#JAVA" class="headerlink" title="JAVA"></a>JAVA</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ System.out.print(“Etan, Come on !”);</div></pre></td></tr></table></figure>
-<h3 id="C"><a href="#C" class="headerlink" title="C"></a>C</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ <span class="built_in">print</span>(“Etan , Come on !”);</div></pre></td></tr></table></figure>
-<h3 id="C-1"><a href="#C-1" class="headerlink" title="C++"></a>C++</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ cout &lt;&lt; “Etan , Come on !”;</div></pre></td></tr></table></figure>
-<h3 id="javascript"><a href="#javascript" class="headerlink" title="javascript"></a>javascript</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ console.log(“Etan , Come on !”);</div></pre></td></tr></table></figure>
-<h2 id="最后，感谢有你，让我无畏风雨！"><a href="#最后，感谢有你，让我无畏风雨！" class="headerlink" title="最后，感谢有你，让我无畏风雨！"></a>最后，感谢有你，让我无畏风雨！</h2>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
 
 
           </div>
@@ -1844,7 +1848,7 @@
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-count">11</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
