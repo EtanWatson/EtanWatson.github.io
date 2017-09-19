@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-09-19T08:31:54.000Z</updated>
+  <updated>2017-09-19T10:51:02.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>python 初体验（五）</title>
+    <link href="http://yoursite.com/2017/09/19/python-%E5%88%9D%E4%BD%93%E9%AA%8C%EF%BC%88%E4%BA%94%EF%BC%89/"/>
+    <id>http://yoursite.com/2017/09/19/python-初体验（五）/</id>
+    <published>2017-09-19T08:44:41.000Z</published>
+    <updated>2017-09-19T10:51:02.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>今天来学习python中的类，之前有在C++和JAVA中接触到类，不知道python中会有什么不同的地方呢</p><h1 id="类"><a href="#类" class="headerlink" title="类"></a>类</h1><h2 id="创建类"><a href="#创建类" class="headerlink" title="创建类"></a>创建类</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"> class Dog():</div><div class="line">def __init__(self,name,age) <span class="comment">#特别要注意，这里前后各有两个下划线</span></div><div class="line">self.name = name</div><div class="line">self.age = age</div><div class="line">def sit(self):</div><div class="line"><span class="built_in">print</span>(self.name.title() + <span class="string">"is now sitting"</span>)</div><div class="line">def roll_over(self):</div><div class="line"><span class="built_in">print</span>(self.name.title() + <span class="string">" roll over !"</span>)</div><div class="line"> <span class="comment">#创建一个实例</span></div><div class="line"> my_dog = Dog(‘willie’,6)</div><div class="line"> <span class="comment">#调用属性</span></div><div class="line"> my_dog.name.title()</div><div class="line"> <span class="comment">#调用属性</span></div><div class="line"> my_dog.sit() </div><div class="line"> </div><div class="line">``` </div><div class="line"><span class="comment">## 属性操作</span></div><div class="line"><span class="comment">### 给属性设定默认值</span></div><div class="line">``` bash </div><div class="line"> def __init__(self,make,model,year):</div><div class="line">self.make = make</div><div class="line">self.model = model</div><div class="line">self.year = year</div><div class="line">self.odometer_reading = 0 <span class="comment">#默认值</span></div></pre></td></tr></table></figure><h3 id="修改属性的值"><a href="#修改属性的值" class="headerlink" title="修改属性的值"></a>修改属性的值</h3><h4 id="直接修改属性值"><a href="#直接修改属性值" class="headerlink" title="直接修改属性值"></a>直接修改属性值</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"> my_new_car.odometer_reading = 23</div><div class="line">``` </div><div class="line"><span class="comment">#### 通过方法修改属性值</span></div><div class="line">``` bash </div><div class="line"> def update_odometer(self,mileage):</div><div class="line"><span class="keyword">if</span> mileage &gt;= self.odometer_reading:</div><div class="line">self.odometer_reading = mileage</div><div class="line">        <span class="keyword">else</span></div><div class="line"><span class="built_in">print</span>(“can`t roll back”)</div><div class="line">  def update_odometer(self,miles):</div><div class="line">self.odometer_reading += miles</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;今天来学习python中的类，之前有在C++和JAVA中接触到类，不知道python中会有什么不同的地方呢&lt;/p&gt;
+&lt;h1 id=&quot;类&quot;&gt;&lt;a href=&quot;#类&quot; class=&quot;headerlink&quot; title=&quot;类&quot;&gt;&lt;/a&gt;类&lt;/h1&gt;&lt;h2 id=&quot;创建类&quot;&gt;&lt;a 
+      
+    
+    </summary>
+    
+      <category term="python" scheme="http://yoursite.com/categories/python/"/>
+    
+    
+      <category term="python" scheme="http://yoursite.com/tags/python/"/>
+    
+  </entry>
   
   <entry>
     <title>python 初体验（四）</title>
