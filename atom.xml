@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-09-19T13:04:05.000Z</updated>
+  <updated>2017-09-20T08:05:47.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,58 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>python初体验（九）</title>
+    <link href="http://yoursite.com/2017/09/20/python%E5%88%9D%E4%BD%93%E9%AA%8C%EF%BC%88%E4%B9%9D%EF%BC%89/"/>
+    <id>http://yoursite.com/2017/09/20/python初体验（九）/</id>
+    <published>2017-09-20T06:57:05.000Z</published>
+    <updated>2017-09-20T08:05:47.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>OK 现在我们来学存储数据</p><h1 id="存储数据"><a href="#存储数据" class="headerlink" title="存储数据"></a>存储数据</h1><h2 id="使用模块json来存储数据"><a href="#使用模块json来存储数据" class="headerlink" title="使用模块json来存储数据"></a>使用模块json来存储数据</h2><h3 id="使用json-dump-和json-load"><a href="#使用json-dump-和json-load" class="headerlink" title="使用json.dump()和json.load()"></a>使用json.dump()和json.load()</h3><h4 id="json-dump"><a href="#json-dump" class="headerlink" title="json.dump()"></a>json.dump()</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">import json</div><div class="line">numbers = [2,3,4,5,6,7]</div><div class="line"></div><div class="line">filename = <span class="string">'numbers.json'</span></div><div class="line">with open(filename,<span class="string">'w'</span>) as f_obj:</div><div class="line">json.dump(numbers,f_obj)</div></pre></td></tr></table></figure><h4 id="json-load"><a href="#json-load" class="headerlink" title="json.load()"></a>json.load()</h4><p>OK 那我们接下来看看json.load()是怎么用的把<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"> import json</div><div class="line"> filename = <span class="string">'numbers.json'</span></div><div class="line"> with open(filename) as f_obj:</div><div class="line">numbers = json.load(f_obj)</div><div class="line"> <span class="built_in">print</span>(numbers)</div><div class="line"><span class="comment">#与dump正好相反，load()是将文件加载到内存中</span></div></pre></td></tr></table></figure></p><h3 id="未能解决的问题"><a href="#未能解决的问题" class="headerlink" title="未能解决的问题"></a>未能解决的问题</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"> import json</div><div class="line"> filename = <span class="string">"username.json"</span></div><div class="line"> try:</div><div class="line">with open(filename) as file_obj:</div><div class="line">username = json.load(file_obj)</div><div class="line"> except FileNotFoundError:</div><div class="line">username = input(<span class="string">"What is your name: "</span>)</div><div class="line">with open(filename,<span class="string">'w'</span>) as file_obj:</div><div class="line">json.dump(username,file_obj)</div><div class="line"> <span class="keyword">else</span>:</div><div class="line"><span class="built_in">print</span>(<span class="string">"Welcome back, "</span> + username + <span class="string">"!"</span>)</div><div class="line"><span class="comment">#这段代码在Python 3.5.4下是有问题的，在加入username = input("What is your name: “)后，except就不再捕获异常（什么鬼？还是我在哪里少了什么，检查了好几遍了，但是没有发现问题，如果有发现问题的，请QQ联系我^_^,谢谢啦）</span></div></pre></td></tr></table></figure><h1 id="重构"><a href="#重构" class="headerlink" title="重构"></a>重构</h1><p>核心要点：每一个函数都执行单一而清晰的任务</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;OK 现在我们来学存储数据&lt;/p&gt;
+&lt;h1 id=&quot;存储数据&quot;&gt;&lt;a href=&quot;#存储数据&quot; class=&quot;headerlink&quot; title=&quot;存储数据&quot;&gt;&lt;/a&gt;存储数据&lt;/h1&gt;&lt;h2 id=&quot;使用模块json来存储数据&quot;&gt;&lt;a href=&quot;#使用模块json来存储
+      
+    
+    </summary>
+    
+      <category term="python" scheme="http://yoursite.com/categories/python/"/>
+    
+    
+      <category term="python" scheme="http://yoursite.com/tags/python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>python初体验（八）</title>
+    <link href="http://yoursite.com/2017/09/20/python%E5%88%9D%E4%BD%93%E9%AA%8C%EF%BC%88%E5%85%AB%EF%BC%89/"/>
+    <id>http://yoursite.com/2017/09/20/python初体验（八）/</id>
+    <published>2017-09-20T06:02:53.000Z</published>
+    <updated>2017-09-20T06:53:53.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>今天学习python中的异常！ ^…^</p><h1 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h1><h2 id="ZeroDivisionError"><a href="#ZeroDivisionError" class="headerlink" title="ZeroDivisionError"></a>ZeroDivisionError</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"> try:</div><div class="line"><span class="built_in">print</span>(5/0)</div><div class="line"> except ZeroDivisionError:</div><div class="line"><span class="built_in">print</span>(<span class="string">"You can`t divide by zero!"</span>)</div><div class="line"> <span class="keyword">else</span>:</div><div class="line"><span class="built_in">print</span>(<span class="string">"Hello,you are succssful!"</span>)</div><div class="line"> finally:</div><div class="line"><span class="built_in">print</span>(<span class="string">"this is finally"</span>)</div><div class="line"><span class="comment">#稍微解释一下：try模块中的代码执行成功的话，会执行else中和finally，try中代码执行失败的话，会执行except中的代#码和finally，也就是说，finally的代码都会执行，这和JAVA中的异常比较相似</span></div></pre></td></tr></table></figure><h2 id="FileNotFoundError异常"><a href="#FileNotFoundError异常" class="headerlink" title="FileNotFoundError异常"></a>FileNotFoundError异常</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"> filename = <span class="string">"alice.txt"</span></div><div class="line"> try:</div><div class="line">with open(filename) as f_obj:</div><div class="line">contents = f_obj.read()</div><div class="line"> except FileNotFoundError:</div><div class="line"><span class="built_in">print</span>(<span class="string">"No Such file!"</span>)</div><div class="line"> <span class="keyword">else</span>:</div><div class="line"><span class="built_in">print</span>(<span class="string">"file has been read"</span>)</div><div class="line"> finally:</div><div class="line"><span class="built_in">print</span>(<span class="string">"finish"</span>)</div><div class="line"><span class="comment">#需要注意的是，一定要注意缩进级别，否则，你找错误的时候会非常痛苦</span></div><div class="line"><span class="comment">#遇到一个比较烦心的事儿，就是python3 在 Sumline Text 2中默认的输出编码是</span></div><div class="line"> import sys</div><div class="line"> <span class="built_in">print</span>(sys.stdout.encoding)</div><div class="line"> &gt;&gt;US-ASCII</div><div class="line"> 我会在后续附上该问题的解决方案的</div><div class="line"><span class="comment">#再说明一下文档字符串的注释方式”””注释””” 两边各有三个双引号</span></div></pre></td></tr></table></figure><h2 id="失败时一声不吭"><a href="#失败时一声不吭" class="headerlink" title="失败时一声不吭"></a>失败时一声不吭</h2><p> 在except中使用pass，它会使python失败时一声不吭（~.~）</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;今天学习python中的异常！ ^…^&lt;/p&gt;
+&lt;h1 id=&quot;异常&quot;&gt;&lt;a href=&quot;#异常&quot; class=&quot;headerlink&quot; title=&quot;异常&quot;&gt;&lt;/a&gt;异常&lt;/h1&gt;&lt;h2 id=&quot;ZeroDivisionError&quot;&gt;&lt;a href=&quot;#ZeroDivis
+      
+    
+    </summary>
+    
+      <category term="python" scheme="http://yoursite.com/categories/python/"/>
+    
+    
+      <category term="python" scheme="http://yoursite.com/tags/python/"/>
+    
+  </entry>
   
   <entry>
     <title>python-初体验（七）</title>
