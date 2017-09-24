@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-09-24T09:16:59.000Z</updated>
+  <updated>2017-09-24T14:00:18.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>机器学习实战（一）</title>
+    <link href="http://yoursite.com/2017/09/24/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98%EF%BC%88%E4%B8%80%EF%BC%89/"/>
+    <id>http://yoursite.com/2017/09/24/机器学习实战（一）/</id>
+    <published>2017-09-24T11:27:53.000Z</published>
+    <updated>2017-09-24T14:00:18.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>今天开始了《机器学习实战》的学习，下面就是读书笔记咯</p><h1 id="numpy函数库基础"><a href="#numpy函数库基础" class="headerlink" title="numpy函数库基础"></a>numpy函数库基础</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">random.rand(4,4)</div><div class="line"><span class="comment">#调用mat()函数可以将数组转化为矩阵</span></div><div class="line">randMat = mat(random.rand(4,4)</div><div class="line"><span class="comment">#逆矩阵</span></div><div class="line">invRandMat = randMat.I</div><div class="line"><span class="comment">#逆矩阵*矩阵</span></div><div class="line">invRandMat * randMat <span class="comment">#这里应该是单位矩阵的，但是计算机运算有误差</span></div><div class="line"><span class="comment">#计算误差值</span></div><div class="line">myEye = randMat * invRandMat</div><div class="line">myEye - eye(4) <span class="comment">#用我们计算得到的矩阵减单位矩阵</span></div></pre></td></tr></table></figure><h1 id="K-临近算法"><a href="#K-临近算法" class="headerlink" title="K-临近算法"></a>K-临近算法</h1><p>简单来说，K-临近算法采用测量不同特征值之间的距离方法进行分类</p><h2 id="优缺点："><a href="#优缺点：" class="headerlink" title="优缺点："></a>优缺点：</h2><pre><code>优点：精度高，对异常值不敏感，无数据输入假定缺点：计算复杂度高，空间复杂度高适用数据范围：数值型和标称型</code></pre><h2 id="伪代码"><a href="#伪代码" class="headerlink" title="伪代码"></a>伪代码</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">计算已知类别数据集中的每个点以此执行以下操作</div><div class="line">按照距离递增次序排序</div><div class="line">选取与当前点距离最小的k个点</div><div class="line">确定前k个点所在类别的出现频率</div><div class="line">返回前k个点出现频率最高的类别的类当做当前点的预测分类</div></pre></td></tr></table></figure><h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">def classify0(inX,dataSet,labels,k):</div><div class="line">    dataSetSize = dataSet.shape[0]</div><div class="line">    diffMat = tile(inX,(dataSetSize,1)) - dataSet</div><div class="line">    sqDiffMat = diffMat**2</div><div class="line">    sqDistances = sqDiffMat.sum(axis=1)</div><div class="line">    distances = sqDistances**0.5</div><div class="line">    sortedDistIndicies = distances.argsort()</div><div class="line">    classCount = &#123;&#125;</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(k):</div><div class="line">        voteIlabel = labels[sortedDistIndicies[i]]</div><div class="line">        classCount[voteIlabel] = classCount.get(voteIlabel,0) + 1</div><div class="line">    sortedClassCount = sorted(classCount.items(),</div><div class="line">                              key = operator.itemgetter(1),reverse=True)</div><div class="line">    <span class="built_in">return</span> sortedClassCount[0][0]</div></pre></td></tr></table></figure><p>需要注意的是，当你在终端导入一个模块的时候，如果你给这个模块增加了一个新的函数的时候，你必须先退出python3环境，重新导入才能生效<br>array.shape[0] #放回数组的长度<br>tile() # Construct an array by repeating A the number of times given by reps.<br>tile(a,x):   x是控制a重复几次的，结果是一个一维数组<br>tile(a,(x,y))：   结果是一个二维矩阵，其中行数为x，列数是一维数组a的长度和y的乘积<br>tile(a,(x,y,z)):   结果是一个三维矩阵，其中矩阵的行数为x，矩阵的列数为y，而z表示矩阵每个单元格里a重复的次数。(三维矩阵可以看成一个二维矩阵，每个矩阵的单元格里存者一个一维矩阵a)<br>sqDiffMat.sum(axis=1)：将二维数组按行相加，结果是一个一维数组<br>classCount.get(voteIlabel,0)：字典的get方法，查找第一个参数key，如果不存在，返回参数2<br>sorted(classCount.items(),key = operator.itemgetter(1),reverse=True):根据字典中的第二域进行排序<br>sortedClassCount[0][0]：将匹配到的key值取出来</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;今天开始了《机器学习实战》的学习，下面就是读书笔记咯&lt;/p&gt;
+&lt;h1 id=&quot;numpy函数库基础&quot;&gt;&lt;a href=&quot;#numpy函数库基础&quot; class=&quot;headerlink&quot; title=&quot;numpy函数库基础&quot;&gt;&lt;/a&gt;numpy函数库基础&lt;/h1&gt;&lt;figure
+      
+    
+    </summary>
+    
+      <category term="机器学习" scheme="http://yoursite.com/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+      <category term="机器学习" scheme="http://yoursite.com/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
   
   <entry>
     <title>python网络爬虫 初体验（一）</title>
