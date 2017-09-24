@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-09-20T11:41:05.000Z</updated>
+  <updated>2017-09-24T09:16:59.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,58 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>python网络爬虫 初体验（一）</title>
+    <link href="http://yoursite.com/2017/09/24/python%E7%BD%91%E7%BB%9C%E7%88%AC%E8%99%AB-%E5%88%9D%E4%BD%93%E9%AA%8C%EF%BC%88%E4%B8%80%EF%BC%89/"/>
+    <id>http://yoursite.com/2017/09/24/python网络爬虫-初体验（一）/</id>
+    <published>2017-09-24T09:12:19.000Z</published>
+    <updated>2017-09-24T09:16:59.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>今天看了一个关于爬虫的视频，心血来潮，就想弄弄爬虫，BUT只弄了一个简单页面，不过也算是体验一把，以后会慢慢深入研究（以后是什么鬼？？）</p><h1 id="代码示例（大神勿喷吐槽）"><a href="#代码示例（大神勿喷吐槽）" class="headerlink" title="代码示例（大神勿喷吐槽）"></a>代码示例（大神勿喷吐槽）</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line">import requests</div><div class="line">from bs4 import BeautifulSoup</div><div class="line">from datetime import datetime</div><div class="line"></div><div class="line">res = requests.get(<span class="string">'https://news.sina.cn/gn/2017-09-24/'</span></div><div class="line">                   <span class="string">'detail-ifymenmt6515409.d.html?vt=4&amp;pos=8&amp;wm=8017_0001&amp;cid=56261'</span>)</div><div class="line">res.encoding = <span class="string">'utf-8'</span></div><div class="line">soup = BeautifulSoup(res.text,<span class="string">'html.parser'</span>)</div><div class="line">header = soup.select(<span class="string">'h1'</span>)</div><div class="line"></div><div class="line"><span class="comment">#找出含有a标签的元素</span></div><div class="line"><span class="comment"># a_link = soup.select('a')</span></div><div class="line"><span class="comment"># print(a_link[0])</span></div><div class="line"></div><div class="line"><span class="comment">#找出class为art_p的元素</span></div><div class="line"><span class="comment"># for art_p in soup.select('.art_p'):</span></div><div class="line"><span class="comment">#     print(art_p)</span></div><div class="line"></div><div class="line"><span class="comment">#找出所有a标签内的链接</span></div><div class="line"><span class="comment"># alinks = soup.select('a')</span></div><div class="line"><span class="comment"># for link in alinks:</span></div><div class="line"><span class="comment">#     print(link['href'])</span></div><div class="line"></div><div class="line"><span class="comment">#找出文章标题，文章内容，以及文章时间和出处</span></div><div class="line">art_detail = &#123;&#125;</div><div class="line">art_time = soup.select(<span class="string">'.weibo_time'</span>)[0].contents[1].text + \</div><div class="line">           soup.select(<span class="string">'.weibo_time'</span>)[0].contents[2].strip()</div><div class="line">art_title = soup.select(<span class="string">'h1'</span>)[0].text</div><div class="line"><span class="comment">#字符串转时间</span></div><div class="line">art_time = <span class="string">'2017年'</span>+art_time</div><div class="line">dt = datetime.strptime(art_time,<span class="string">'%Y年%m月%d日%H:%M'</span>)</div><div class="line">dt = datetime.strftime(dt,<span class="string">'%Y年%m月%d日%H:%M'</span>)</div><div class="line"><span class="comment">#时间转字符串</span></div><div class="line"><span class="comment">#datetime.strftime("%Y-M-%d")</span></div><div class="line"><span class="comment">#处理内容</span></div><div class="line">art_content = soup.select(<span class="string">'.art_p'</span>)</div><div class="line">new_source = art_content[-1].text.lstrip(<span class="string">'来源：'</span>)</div><div class="line">art_content =<span class="string">'\n'</span>.join([p.text.strip() <span class="keyword">for</span> p <span class="keyword">in</span> art_content[:-1]])</div><div class="line"><span class="comment">#将拿到的信息放入到art_detail字典中</span></div><div class="line">art_detail[<span class="string">'art_content'</span>] = art_content</div><div class="line">art_detail[<span class="string">'art_time'</span>] = dt</div><div class="line">art_detail[<span class="string">'art_title'</span>] = art_title</div><div class="line">art_detail[<span class="string">'new_source'</span>] = new_source</div><div class="line"><span class="built_in">print</span>(art_detail)</div></pre></td></tr></table></figure><h1 id="备注一个问题"><a href="#备注一个问题" class="headerlink" title="备注一个问题"></a>备注一个问题</h1><p>object of type ‘Response’ has no len()<br>解决方案：soup = BeautifulSoup(res.text,’html.parser’)</p><p>OK 今天就这样 ^~^</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;今天看了一个关于爬虫的视频，心血来潮，就想弄弄爬虫，BUT只弄了一个简单页面，不过也算是体验一把，以后会慢慢深入研究（以后是什么鬼？？）&lt;/p&gt;
+&lt;h1 id=&quot;代码示例（大神勿喷吐槽）&quot;&gt;&lt;a href=&quot;#代码示例（大神勿喷吐槽）&quot; class=&quot;headerlink&quot;
+      
+    
+    </summary>
+    
+      <category term="python" scheme="http://yoursite.com/categories/python/"/>
+    
+    
+      <category term="python" scheme="http://yoursite.com/tags/python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>英语学习笔记之（翻译）</title>
+    <link href="http://yoursite.com/2017/09/20/%E8%8B%B1%E8%AF%AD%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B9%8B%EF%BC%88%E7%BF%BB%E8%AF%91%EF%BC%89/"/>
+    <id>http://yoursite.com/2017/09/20/英语学习笔记之（翻译）/</id>
+    <published>2017-09-20T13:05:01.000Z</published>
+    <updated>2017-09-20T13:20:52.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>今天整理一下老师讲的英语翻译（汉译英）技巧</p><h1 id="英语翻译技巧"><a href="#英语翻译技巧" class="headerlink" title="英语翻译技巧"></a>英语翻译技巧</h1><h2 id="单词"><a href="#单词" class="headerlink" title="单词"></a>单词</h2><h2 id="结构"><a href="#结构" class="headerlink" title="结构"></a>结构</h2><h2 id="完整性"><a href="#完整性" class="headerlink" title="完整性"></a>完整性</h2><h2 id="“的”的处理"><a href="#“的”的处理" class="headerlink" title="“的”的处理"></a>“的”的处理</h2><h2 id="一般词与具体词"><a href="#一般词与具体词" class="headerlink" title="一般词与具体词"></a>一般词与具体词</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">ex:indicate</div><div class="line">show(一般词）：   reveal</div><div class="line">imply</div><div class="line">suggest</div></pre></td></tr></table></figure><h2 id="冠词"><a href="#冠词" class="headerlink" title="冠词"></a>冠词</h2><h2 id="名词的单复数"><a href="#名词的单复数" class="headerlink" title="名词的单复数"></a>名词的单复数</h2><p>``` bash<br> 单数 - &gt; 特指<br> 复数 - &gt; 泛指</p><h2 id="谓语"><a href="#谓语" class="headerlink" title="谓语"></a>谓语</h2><p>``` bash<br>    时态<br>    语态<br>    语气</p><h2 id="动词的选择"><a href="#动词的选择" class="headerlink" title="动词的选择"></a>动词的选择</h2><h2 id="平衡"><a href="#平衡" class="headerlink" title="平衡"></a>平衡</h2><h2 id="用词的多样性"><a href="#用词的多样性" class="headerlink" title="用词的多样性"></a>用词的多样性</h2><h2 id="平行结构：前后一致"><a href="#平行结构：前后一致" class="headerlink" title="平行结构：前后一致"></a>平行结构：前后一致</h2><pre><code>动名词 - &gt; 抽象不定式 - &gt; 具体</code></pre><h2 id="语意"><a href="#语意" class="headerlink" title="语意"></a>语意</h2><h3 id="越来越的译法"><a href="#越来越的译法" class="headerlink" title="越来越的译法"></a>越来越的译法</h3><pre><code>increasing adj.  ex: An increasing number of people increasingly adv.growing adj.  ex：a growing number</code></pre><h3 id="面临的译法-face-（倒过来用ing）"><a href="#面临的译法-face-（倒过来用ing）" class="headerlink" title="面临的译法 face （倒过来用ing）"></a>面临的译法 face （倒过来用ing）</h3><h3 id="现在-currently"><a href="#现在-currently" class="headerlink" title="现在 currently"></a>现在 currently</h3><h3 id="短缺-be-shirt-of"><a href="#短缺-be-shirt-of" class="headerlink" title="短缺 be shirt of"></a>短缺 be shirt of</h3><h3 id="缩小-the-shrink-in"><a href="#缩小-the-shrink-in" class="headerlink" title="缩小 the shrink in"></a>缩小 the shrink in</h3>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;今天整理一下老师讲的英语翻译（汉译英）技巧&lt;/p&gt;
+&lt;h1 id=&quot;英语翻译技巧&quot;&gt;&lt;a href=&quot;#英语翻译技巧&quot; class=&quot;headerlink&quot; title=&quot;英语翻译技巧&quot;&gt;&lt;/a&gt;英语翻译技巧&lt;/h1&gt;&lt;h2 id=&quot;单词&quot;&gt;&lt;a href=&quot;#单词&quot; cl
+      
+    
+    </summary>
+    
+      <category term="English" scheme="http://yoursite.com/categories/English/"/>
+    
+    
+      <category term="English" scheme="http://yoursite.com/tags/English/"/>
+    
+  </entry>
   
   <entry>
     <title>python初体验（十）</title>
