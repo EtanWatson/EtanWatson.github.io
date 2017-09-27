@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-09-24T14:00:18.000Z</updated>
+  <updated>2017-09-27T14:03:19.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>机器学习实战（四）</title>
+    <link href="http://yoursite.com/2017/09/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98%EF%BC%88%E5%9B%9B%EF%BC%89/"/>
+    <id>http://yoursite.com/2017/09/27/机器学习实战（四）/</id>
+    <published>2017-09-27T13:38:18.000Z</published>
+    <updated>2017-09-27T14:03:19.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>为什么先写四，而没有二，三呢？二三的代码都码了一遍，理解的还不是很充分，今天看到四，所以先把四的概念写写：朴素贝叶斯</p><h1 id="基于概率论的分类方法：朴素贝叶斯"><a href="#基于概率论的分类方法：朴素贝叶斯" class="headerlink" title="基于概率论的分类方法：朴素贝叶斯"></a>基于概率论的分类方法：朴素贝叶斯</h1><p>贝叶斯决策论的核心思想：选着具有最高概率的决策</p><h2 id="条件概率-p-x-y-c1"><a href="#条件概率-p-x-y-c1" class="headerlink" title="条件概率 p(x,y|c1)"></a>条件概率 p(x,y|c1)</h2><p><img src="https://gss0.bdstatic.com/94o3dSag_xI4khGkpoWK1HF6hhy/baike/s%3D113/sign=62231e180df431adb8d247387837ac0f/35a85edf8db1cb1399c0c799dc54564e93584b8b.jpg" alt="“条件概率公式”"><br><img src="https://gss1.bdstatic.com/9vo3dSag_xI4khGkpoWK1HF6hhy/baike/s%3D280/sign=51f198b6c4fdfc03e178e4b0e43f87a9/aec379310a55b31972c9ec3d44a98226cffc1741.jpg" alt="“贝叶斯公式”"></p><h2 id="使用条件概率来分类"><a href="#使用条件概率来分类" class="headerlink" title="使用条件概率来分类"></a>使用条件概率来分类</h2>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;为什么先写四，而没有二，三呢？二三的代码都码了一遍，理解的还不是很充分，今天看到四，所以先把四的概念写写：朴素贝叶斯&lt;/p&gt;
+&lt;h1 id=&quot;基于概率论的分类方法：朴素贝叶斯&quot;&gt;&lt;a href=&quot;#基于概率论的分类方法：朴素贝叶斯&quot; class=&quot;headerlink&quot; t
+      
+    
+    </summary>
+    
+      <category term="机器学习" scheme="http://yoursite.com/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+      <category term="机器学习" scheme="http://yoursite.com/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
   
   <entry>
     <title>机器学习实战（一）</title>
