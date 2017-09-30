@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-09-27T14:03:19.000Z</updated>
+  <updated>2017-09-30T12:03:43.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -17,13 +17,89 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>python数据收集（二）</title>
+    <link href="http://yoursite.com/2017/09/30/python%E6%95%B0%E6%8D%AE%E6%94%B6%E9%9B%86%EF%BC%88%E4%BA%8C%EF%BC%89/"/>
+    <id>http://yoursite.com/2017/09/30/python数据收集（二）/</id>
+    <published>2017-09-30T07:54:29.000Z</published>
+    <updated>2017-09-30T12:03:43.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="复杂的HTML解析"><a href="#复杂的HTML解析" class="headerlink" title="复杂的HTML解析"></a>复杂的HTML解析</h1><h2 id="不是一直都要用锤子"><a href="#不是一直都要用锤子" class="headerlink" title="不是一直都要用锤子"></a>不是一直都要用锤子</h2><p>例如：<br>$ bsObj.findAll(“table”)[4].findAll(“tr”)[2].find(“td”).findAll(“div”)[1].find(“a”)<br>虽然可以达到目标，但是除了代码欠缺美感之外，还有就是管理员对网页稍作修改，代码就会失效，甚至会毁了整个<br>网络爬虫<br>如何解决该问题呢？<br>1.寻找样式更友好的移动版或者看看有没有打印此页的链接<br>2.寻找隐藏在javascript文件里的信息<br>3.你要的信息或许也可以从网页的URL链接里获取<br>4.找找你要的信息是不是该网站从别的网站上抓取出来的</p><h2 id="再端一碗BeautifulSoup"><a href="#再端一碗BeautifulSoup" class="headerlink" title="再端一碗BeautifulSoup"></a>再端一碗BeautifulSoup</h2><h3 id="利用好css中的class和ID属性"><a href="#利用好css中的class和ID属性" class="headerlink" title="利用好css中的class和ID属性"></a>利用好css中的class和ID属性</h3><p>ex:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">from urllib.request import urlopen</div><div class="line">from bs4 import BeautifulSoup</div><div class="line"></div><div class="line">html = urlopen(<span class="string">"http://www.pythonscraping.com/pages/warandpeace.html"</span>)</div><div class="line">bsObj = BeautifulSoup(html,<span class="string">"html.parser"</span>)</div><div class="line">nameList = bsObj.findAll(<span class="string">"span"</span>,&#123;<span class="string">"class"</span>:<span class="string">"green"</span>&#125;)</div><div class="line"><span class="keyword">for</span> name <span class="keyword">in</span> nameList:</div><div class="line">    <span class="built_in">print</span>(name.get_text())</div><div class="line"><span class="comment">#使用name.get_text()会将标签中的内容提取出来，如果你正在处理一个包含许多超链接，段落和标签的</span></div><div class="line"><span class="comment">#大段源码，.get_text()会将这些处理成只剩下一串不带标签的文字，一般情况下，尽可能的保留HTML文档的标签结构</span></div></pre></td></tr></table></figure></p><h3 id="BeautifulSoup的find-和findAll"><a href="#BeautifulSoup的find-和findAll" class="headerlink" title="BeautifulSoup的find()和findAll()"></a>BeautifulSoup的find()和findAll()</h3><p>函数定义：<br>findAll(tag, attributes, recursive, text, limit, keywords)<br>find(tag, attributes, recursive, text, keywords)<br>下面来介绍一下各个参数<br>recursive:bool型 True：查找标签参数的所有子标签（默认）<br>        False：只查找文档的一级标签<br>text:更具标签的文本内容去匹配<br>$ nameList = bsObj.findAll(text=”the prince”)<br>$ print(len(nameList))<br>limit:find等价于finall的limit等于1，获取前几项是按照网页上的顺序排序的<br>keyword<br>以下每组效果相同<br>$ bsObj.findAll(id=”text”)<br>$ bsObj.findAll(“”, {“id”:”text”})</p><p>$ bsObj.findAll(class<em>=”green”) #由于class是python的保留字，所以必须在其后面添加</em><br>$ bsObj.findAll(“”, {“class”:”green”})</p><h3 id="其他BeautifulSoup对象"><a href="#其他BeautifulSoup对象" class="headerlink" title="其他BeautifulSoup对象"></a>其他BeautifulSoup对象</h3><p>常用对象： 1.BeautifulSoup 2.Tag对象（前面已经提到过，例如：bsObj.div.h1）<br>不常用对象：NavigableString对象：用来表示标签里的文字<br>     Comment 对象：用来查找HTML文档的注释标签 &lt;!—- 像这样 —&gt;</p><h3 id="导航树"><a href="#导航树" class="headerlink" title="导航树"></a>导航树</h3><p>如果你需要通过标签在文档中的位置来查找标签，就使用导航树(Navigating Trees)<br>$ bsObj.tag.subTag.anotherSubTag</p><h4 id="处理子标签和其他后代标签"><a href="#处理子标签和其他后代标签" class="headerlink" title="处理子标签和其他后代标签"></a>处理子标签和其他后代标签</h4><p>$ bsObj.div.findAll(“img”)<br>如果你只想找出子标签，可以用.children标签<br>$ from urllib.request import urlopen<br>$ from bs4 import BeautifulSoup<br>$ html = urlopen(“<a href="http://www.pythonscraping.com/pages/page3.html" target="_blank" rel="external">http://www.pythonscraping.com/pages/page3.html</a>“)<br>$ bsObj = BeautifulSoup(html)<br>$ for child in bsObj.find(“table”,{“id”:”giftList”}).children:<br>    print(child)<br>如果你用descendants()函数，就会将其所有后代标签打印出来</p><h4 id="处理兄弟标签"><a href="#处理兄弟标签" class="headerlink" title="处理兄弟标签"></a>处理兄弟标签</h4><p>$ from urllib.request import urlopen<br>$ from bs4 import BeautifulSoup<br>$ html = urlopen(“<a href="http://www.pythonscraping.com/pages/page3.html" target="_blank" rel="external">http://www.pythonscraping.com/pages/page3.html</a>“)<br>$ bsObj = BeautifulSoup(html)<br>$ for sibling in bsObj.find(“table”,{“id”:”giftList”}).tr.next_siblings:<br>    print(sibling)</p><p>#这里需要注意的是，next_siblings只会找到他后面的兄弟标签</p><p>#让标签的选择更具体(如果可能的话）<br>$ bsObj.find(“table”,{“id”:”giftList”}).tr</p><p>#罗列一下查找子标签的四个函数<br>next_sibling 和 previous_sibling<br>next_siblings 和 previous_siblings<br>从命名规范中我们也可以发现其各自的用途以及区别，这里不在赘述</p><h4 id="父标签处理"><a href="#父标签处理" class="headerlink" title="父标签处理"></a>父标签处理</h4><p>$ from urllib.request import urlopen<br>$ from bs4 import BeautifulSoup<br>$ html = urlopen(“<a href="http://www.pythonscraping.com/pages/page3.html" target="_blank" rel="external">http://www.pythonscraping.com/pages/page3.html</a>“)<br>$ bsObj = BeautifulSoup(html)<br>$ print(bsObj.find(“img”,{“src”:”../img/gifts/img1.jpg”}).parent.previous_sibling.get_text())</p><h2 id="正则表达式：如果你有一个问题打算用正则表达式来解决，那么就是两个问题了"><a href="#正则表达式：如果你有一个问题打算用正则表达式来解决，那么就是两个问题了" class="headerlink" title="正则表达式：如果你有一个问题打算用正则表达式来解决，那么就是两个问题了"></a>正则表达式：如果你有一个问题打算用正则表达式来解决，那么就是两个问题了</h2><p>ex：邮箱正则表达式：[A-Za-z0-9._+]+@[A-Za-z]+.(com|org\edu\net)<br>OK,接下来我们学习一下12中python中最常用的正则表达式符号</p><ul><li>: 匹配前面的字符，子表达式或括号里的字符0次或多次    a<em>b</em>      aaaaaaaaa,aaabbb,bbbb</li></ul><ul><li>: 匹配前面的字符，子表达式或括号里的字符至少一次    a+b+       aaaabbb ab<br>[]: 匹配任意一个字符（相当于”任选一个”）        [A-Z]<em>   APPLe,GAPITALS<br>(): 表达式编组（在正则表达式的规划里编组会优先运行）    (a</em>b)<em>      aaabaab<br>{m,n}: 匹配前面的字符，子表达式或括号里的字符m到n次（包含m或n）     a{2,3}b{2,3}<br>[^]: 匹配任意一个不在括号里的字符            [^A-Z]</em>     sdasdasd<br>| : 匹配任意一个由竖线分割哥的字符，子表达式        b(a|i|e) bad,bid,bed<br>. : 匹配任意单个字符（包括符号，数字和空格等）        b.d     bad,bzd,b$d,b d<br>^ : 字符串开始位置的字符或子表达式            ^a     apple,asdf,a<br>\ : 转义字符（把有特殊含义的字符转换成字面形式）         . | \<br>$ : 经常用在正则表达式的末尾，表示”从字符串的末端匹配”。如果不用它，<br>  每个正则表达式实际都带着’.<em>’模式，只会从字符串的开头进行匹配。这个符号<br>  可以看做是^符号的反义词<br>?!  “不包含”。这个奇怪的组合通常会放在字符或正则表达式前面，表示字符不能<br>  出现在诺表字符串里。字符通常会在字符窜的不同部位出现。如果要在整个字符串<br>  中全部排除某个字符，就加上^和$符号               ^((?![A-Z]).)</em>$    <h2 id="正则表达式和BeautifulSoup"><a href="#正则表达式和BeautifulSoup" class="headerlink" title="正则表达式和BeautifulSoup"></a>正则表达式和BeautifulSoup</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">from urllib.request import urlopen</div><div class="line">from bs4 import BeautifulSoup</div><div class="line">import re</div><div class="line">html = urlopen(<span class="string">"http://www.pythonscraping.com/pages/page3.html"</span>)</div><div class="line">bsObj = BeautifulSoup(html)</div><div class="line">images = bsObj.findAll(<span class="string">"img"</span>,&#123;<span class="string">"src"</span>:re.compile(<span class="string">"\.\.\/img\/gifts/img.*\.jpg"</span>)&#125;)</div><div class="line"><span class="keyword">for</span> image <span class="keyword">in</span> images:</div><div class="line">    <span class="built_in">print</span>(image[<span class="string">"src"</span>])</div></pre></td></tr></table></figure></li></ul><h2 id="获取属性"><a href="#获取属性" class="headerlink" title="获取属性"></a>获取属性</h2><p>对于一个标签对象，可以用下面的代码获取它的全部属性：<br>$ myTag.attrs #返回的是Python字典对象<br>$ myImgTag.attrs[“src”]</p><h2 id="Lambda表达式：本质上就是一个函数"><a href="#Lambda表达式：本质上就是一个函数" class="headerlink" title="Lambda表达式：本质上就是一个函数"></a>Lambda表达式：本质上就是一个函数</h2><p>BeautifulSoup允许我们把特定函数类型当做findAll函数的参数-&gt;限定：标签作为参数，返回结果是boolean型<br>BeautifulSoup用这个函数来评估他遇到的每个标签对象，最后把评估结果为真的标签保留，把其他标签剔除<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">soup.findAll(lambda tag: len(tag.attrs) == 2) <span class="comment">#这个在我的环境下不起作用，先标注一下</span></div><div class="line"><span class="comment">#返回结果</span>&lt;div class=<span class="string">"body"</span> id=<span class="string">"content"</span>&gt;&lt;/div&gt;&lt;span style=<span class="string">"color:red"</span> class=<span class="string">"title"</span>&gt;&lt;/span&gt;</div></pre></td></tr></table></figure></p><h2 id="超越BeautifulSoup"><a href="#超越BeautifulSoup" class="headerlink" title="超越BeautifulSoup"></a>超越BeautifulSoup</h2><p>lxml -&gt; <a href="http://lxml.de/" target="_blank" rel="external">http://lxml.de/</a> 用c语言写的，处理绝大多数HTML文档时的速度都非常快（学习成本高）<br>HTML parser -&gt; python自带解析库，不需要重新安装</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;复杂的HTML解析&quot;&gt;&lt;a href=&quot;#复杂的HTML解析&quot; class=&quot;headerlink&quot; title=&quot;复杂的HTML解析&quot;&gt;&lt;/a&gt;复杂的HTML解析&lt;/h1&gt;&lt;h2 id=&quot;不是一直都要用锤子&quot;&gt;&lt;a href=&quot;#不是一直都要用锤子&quot; class
+      
+    
+    </summary>
+    
+      <category term="python数据收集" scheme="http://yoursite.com/categories/python%E6%95%B0%E6%8D%AE%E6%94%B6%E9%9B%86/"/>
+    
+    
+      <category term="python数据收集" scheme="http://yoursite.com/tags/python%E6%95%B0%E6%8D%AE%E6%94%B6%E9%9B%86/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>python数据收集（一）</title>
+    <link href="http://yoursite.com/2017/09/30/python%E6%95%B0%E6%8D%AE%E6%94%B6%E9%9B%86%EF%BC%88%E4%B8%80%EF%BC%89/"/>
+    <id>http://yoursite.com/2017/09/30/python数据收集（一）/</id>
+    <published>2017-09-30T02:46:43.000Z</published>
+    <updated>2017-09-30T07:52:11.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>之前的python爬虫初体验，是看视频教学的，感觉不太踏实，正好现在需要系统的学一下爬虫，所有就找了一本python数据采集的书来看看，为了区分学习计划，所以将这个作为数据采集第一篇笔记，加油，坚持下去！</p><h1 id="初见爬虫"><a href="#初见爬虫" class="headerlink" title="初见爬虫"></a>初见爬虫</h1><h2 id="关于urllib"><a href="#关于urllib" class="headerlink" title="关于urllib"></a>关于urllib</h2><p>urllib被分为：urllib.request、urllib.parse和urllib.error 三个子模块</p><h2 id="安装BeautifulSoup"><a href="#安装BeautifulSoup" class="headerlink" title="安装BeautifulSoup"></a>安装BeautifulSoup</h2><h2 id="用虚拟环境保存库文件"><a href="#用虚拟环境保存库文件" class="headerlink" title="用虚拟环境保存库文件"></a>用虚拟环境保存库文件</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">$ virtualenv scrapingEnv</div><div class="line"><span class="comment">#这样就创建了一个叫作scrapingEnv的新环境，你需要先激活它再使用：</span></div><div class="line">$ <span class="built_in">cd</span> scrapingEnv/</div><div class="line">$ <span class="built_in">source</span> bin/activate</div><div class="line"><span class="comment">#你可以在新建的scrapingEnv环境里，安装并使用BeautifulSoup</span></div><div class="line"><span class="comment">#当你不在使用虚拟机环境的库时，可以通过释放命令来退出环境：</span></div><div class="line">$ deactivate</div></pre></td></tr></table></figure><h2 id="运行BeautifulSoup"><a href="#运行BeautifulSoup" class="headerlink" title="运行BeautifulSoup"></a>运行BeautifulSoup</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">from urllib.request import urlopenfrom bs4 import BeautifulSouphtml = urlopen(<span class="string">"http://www.pythonscraping.com/pages/page1.html"</span>) bsObj = BeautifulSoup(html.read())<span class="built_in">print</span>(bsObj.h1)</div></pre></td></tr></table></figure><h2 id="可靠的网络连接"><a href="#可靠的网络连接" class="headerlink" title="可靠的网络连接"></a>可靠的网络连接</h2><h3 id="html-urlopen-“http-news-baidu-com-“-是如何处理异常的？"><a href="#html-urlopen-“http-news-baidu-com-“-是如何处理异常的？" class="headerlink" title="html = urlopen(“http://news.baidu.com/“)是如何处理异常的？"></a>html = urlopen(“<a href="http://news.baidu.com/“)是如何处理异常的？" target="_blank" rel="external">http://news.baidu.com/“)是如何处理异常的？</a></h3><p>这行代码主要可能会发生两种异常</p><ol><li><p>页面在服务器上不存在<br> 404 Page Not Found<br> 500 Internal Server Error<br>所有这些类似的情形，urlopen函数都会抛出”HTTPError” 异常<br>处理这种异常的方式：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">try:html = urlopen(<span class="string">"http://news.baidu.com/"</span>)except HTTPError as e: </div><div class="line"><span class="built_in">print</span>(e)<span class="comment"># 返回空值，中断程序，或者执行另一个方案 </span></div><div class="line"><span class="keyword">else</span>:<span class="comment"># 程序继续。注意:如果你已经在上面异常捕捉那一段代码里返回或中断(break)， </span></div><div class="line"><span class="comment"># 那么就不需要使用else语句了，这段代码也不会执行</span></div></pre></td></tr></table></figure></li><li><p>服务器不存在</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> html is None:<span class="built_in">print</span>(<span class="string">"URL is not found"</span>)<span class="keyword">else</span>:<span class="comment"># 程序继续</span></div></pre></td></tr></table></figure></li><li><p>标签不存在</p><pre><code class="bash"> <span class="comment">#如果BeautifulSoup对象里面没有nonExistentTag标签</span> <span class="built_in">print</span>(bsObj.nonExistentTag) <span class="comment">#返回None对象</span> <span class="comment">#如果这个时候在继续调用nonExistentTag的子标签</span> <span class="built_in">print</span>(bsObj.nonExistentTag.someTag) <span class="comment">#会抛出 AttributeError: 'NoneType' object has no attribute 'someTag'</span>解决方法： try:     badContent = bsObj.nonExistingTag.anotherTag except AttributeError as e:      <span class="built_in">print</span>(<span class="string">"Tag was not found"</span>) <span class="keyword">else</span>:     <span class="keyword">if</span> badContent == None:         <span class="built_in">print</span> (<span class="string">"Tag was not found"</span>)      <span class="keyword">else</span>:         <span class="built_in">print</span>(badContent)</code></pre><p>我们会发现，这样写会有些累赘，换一种写法<br>from urllib.request import urlopen<br>from urllib.error import HTTPError<br>from bs4 import BeautifulSoup<br>def getTitle(url):<br> try:</p><pre><code>html = urlopen(url) </code></pre><p> except HTTPError as e:</p><pre><code>return None </code></pre><p> try:</p><pre><code>        bsObj = BeautifulSoup(html.read())title = bsObj.body.h1 </code></pre><p> except AttributeError as e:</p><pre><code>return None </code></pre><p> return title<br>title = getTitle(“<a href="http://news.baidu.com/" target="_blank" rel="external">http://news.baidu.com/</a>“)<br>if title == None:<br> print(“Title could not be found”)<br>else:<br> print(title)</p></li></ol>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;之前的python爬虫初体验，是看视频教学的，感觉不太踏实，正好现在需要系统的学一下爬虫，所有就找了一本python数据采集的书来看看，为了区分学习计划，所以将这个作为数据采集第一篇笔记，加油，坚持下去！&lt;/p&gt;
+&lt;h1 id=&quot;初见爬虫&quot;&gt;&lt;a href=&quot;#初见爬虫&quot; 
+      
+    
+    </summary>
+    
+      <category term="python数据收集" scheme="http://yoursite.com/categories/python%E6%95%B0%E6%8D%AE%E6%94%B6%E9%9B%86/"/>
+    
+    
+      <category term="python数据收集" scheme="http://yoursite.com/tags/python%E6%95%B0%E6%8D%AE%E6%94%B6%E9%9B%86/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>概率论与数理统计（一）</title>
+    <link href="http://yoursite.com/2017/09/28/%E6%A6%82%E7%8E%87%E8%AE%BA%E4%B8%8E%E6%95%B0%E7%90%86%E7%BB%9F%E8%AE%A1%EF%BC%88%E4%B8%80%EF%BC%89/"/>
+    <id>http://yoursite.com/2017/09/28/概率论与数理统计（一）/</id>
+    <published>2017-09-28T10:25:13.000Z</published>
+    <updated>2017-09-28T12:02:08.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="离散型随机变量及其分布规律"><a href="#离散型随机变量及其分布规律" class="headerlink" title="离散型随机变量及其分布规律"></a>离散型随机变量及其分布规律</h1><h2 id="0-1分布"><a href="#0-1分布" class="headerlink" title="0-1分布"></a>0-1分布</h2><h2 id="二项分布"><a href="#二项分布" class="headerlink" title="二项分布"></a>二项分布</h2><h2 id="泊松分布"><a href="#泊松分布" class="headerlink" title="泊松分布"></a>泊松分布</h2><h1 id="随机变量的分布函数"><a href="#随机变量的分布函数" class="headerlink" title="随机变量的分布函数"></a>随机变量的分布函数</h1><p>#连续性随机变量及其概率密度</p><h2 id="均匀分布"><a href="#均匀分布" class="headerlink" title="均匀分布"></a>均匀分布</h2><h2 id="指数分布"><a href="#指数分布" class="headerlink" title="指数分布"></a>指数分布</h2><h2 id="正态分布"><a href="#正态分布" class="headerlink" title="正态分布"></a>正态分布</h2><h1 id="多维随机变量及其分布"><a href="#多维随机变量及其分布" class="headerlink" title="多维随机变量及其分布"></a>多维随机变量及其分布</h1><h2 id="二维随机变量"><a href="#二维随机变量" class="headerlink" title="二维随机变量"></a>二维随机变量</h2><h2 id="边缘分布"><a href="#边缘分布" class="headerlink" title="边缘分布"></a>边缘分布</h2><h2 id="条件分布"><a href="#条件分布" class="headerlink" title="条件分布"></a>条件分布</h2><h2 id="互相独立的随机变量"><a href="#互相独立的随机变量" class="headerlink" title="互相独立的随机变量"></a>互相独立的随机变量</h2><h2 id="两个随机变量的函数的分布"><a href="#两个随机变量的函数的分布" class="headerlink" title="两个随机变量的函数的分布"></a>两个随机变量的函数的分布</h2><h3 id="卷积公式"><a href="#卷积公式" class="headerlink" title="卷积公式"></a>卷积公式</h3><h1 id="随机变量的数字特征"><a href="#随机变量的数字特征" class="headerlink" title="随机变量的数字特征"></a>随机变量的数字特征</h1><h2 id="数学期望"><a href="#数学期望" class="headerlink" title="数学期望"></a>数学期望</h2><h2 id="方差"><a href="#方差" class="headerlink" title="方差"></a>方差</h2><h2 id="协方差与相关系数"><a href="#协方差与相关系数" class="headerlink" title="协方差与相关系数"></a>协方差与相关系数</h2><h2 id="矩、协方差矩阵"><a href="#矩、协方差矩阵" class="headerlink" title="矩、协方差矩阵"></a>矩、协方差矩阵</h2>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;离散型随机变量及其分布规律&quot;&gt;&lt;a href=&quot;#离散型随机变量及其分布规律&quot; class=&quot;headerlink&quot; title=&quot;离散型随机变量及其分布规律&quot;&gt;&lt;/a&gt;离散型随机变量及其分布规律&lt;/h1&gt;&lt;h2 id=&quot;0-1分布&quot;&gt;&lt;a href=&quot;#0-1分
+      
+    
+    </summary>
+    
+      <category term="概率论" scheme="http://yoursite.com/categories/%E6%A6%82%E7%8E%87%E8%AE%BA/"/>
+    
+    
+      <category term="概率论" scheme="http://yoursite.com/tags/%E6%A6%82%E7%8E%87%E8%AE%BA/"/>
+    
+  </entry>
+  
+  <entry>
     <title>机器学习实战（四）</title>
     <link href="http://yoursite.com/2017/09/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98%EF%BC%88%E5%9B%9B%EF%BC%89/"/>
     <id>http://yoursite.com/2017/09/27/机器学习实战（四）/</id>
     <published>2017-09-27T13:38:18.000Z</published>
-    <updated>2017-09-27T14:03:19.000Z</updated>
+    <updated>2017-09-29T12:51:56.000Z</updated>
     
-    <content type="html"><![CDATA[<p>为什么先写四，而没有二，三呢？二三的代码都码了一遍，理解的还不是很充分，今天看到四，所以先把四的概念写写：朴素贝叶斯</p><h1 id="基于概率论的分类方法：朴素贝叶斯"><a href="#基于概率论的分类方法：朴素贝叶斯" class="headerlink" title="基于概率论的分类方法：朴素贝叶斯"></a>基于概率论的分类方法：朴素贝叶斯</h1><p>贝叶斯决策论的核心思想：选着具有最高概率的决策</p><h2 id="条件概率-p-x-y-c1"><a href="#条件概率-p-x-y-c1" class="headerlink" title="条件概率 p(x,y|c1)"></a>条件概率 p(x,y|c1)</h2><p><img src="https://gss0.bdstatic.com/94o3dSag_xI4khGkpoWK1HF6hhy/baike/s%3D113/sign=62231e180df431adb8d247387837ac0f/35a85edf8db1cb1399c0c799dc54564e93584b8b.jpg" alt="“条件概率公式”"><br><img src="https://gss1.bdstatic.com/9vo3dSag_xI4khGkpoWK1HF6hhy/baike/s%3D280/sign=51f198b6c4fdfc03e178e4b0e43f87a9/aec379310a55b31972c9ec3d44a98226cffc1741.jpg" alt="“贝叶斯公式”"></p><h2 id="使用条件概率来分类"><a href="#使用条件概率来分类" class="headerlink" title="使用条件概率来分类"></a>使用条件概率来分类</h2>]]></content>
+    <content type="html"><![CDATA[<p>为什么先写四，而没有二，三呢？二三的代码都码了一遍，理解的还不是很充分，今天看到四，所以先把四的概念写写：朴素贝叶斯</p><h1 id="基于概率论的分类方法：朴素贝叶斯"><a href="#基于概率论的分类方法：朴素贝叶斯" class="headerlink" title="基于概率论的分类方法：朴素贝叶斯"></a>基于概率论的分类方法：朴素贝叶斯</h1><p>贝叶斯决策论的核心思想：选着具有最高概率的决策</p><h2 id="条件概率-p-x-y-c1"><a href="#条件概率-p-x-y-c1" class="headerlink" title="条件概率 p(x,y|c1)"></a>条件概率 p(x,y|c1)</h2><p><img src="https://gss0.bdstatic.com/94o3dSag_xI4khGkpoWK1HF6hhy/baike/s%3D113/sign=62231e180df431adb8d247387837ac0f/35a85edf8db1cb1399c0c799dc54564e93584b8b.jpg" alt="“条件概率公式”"><br><img src="https://gss1.bdstatic.com/9vo3dSag_xI4khGkpoWK1HF6hhy/baike/s%3D280/sign=51f198b6c4fdfc03e178e4b0e43f87a9/aec379310a55b31972c9ec3d44a98226cffc1741.jpg" alt="“贝叶斯公式”"></p><h2 id="使用条件概率来分类"><a href="#使用条件概率来分类" class="headerlink" title="使用条件概率来分类"></a>使用条件概率来分类</h2><h2 id="词集模型-词袋模型"><a href="#词集模型-词袋模型" class="headerlink" title="词集模型 词袋模型"></a>词集模型 词袋模型</h2>]]></content>
     
     <summary type="html">
     
@@ -448,31 +524,6 @@
     
     
       <category term="Hexo" scheme="http://yoursite.com/tags/Hexo/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>感谢有你</title>
-    <link href="http://yoursite.com/2017/09/12/%E6%84%9F%E8%B0%A2%E6%9C%89%E4%BD%A0/"/>
-    <id>http://yoursite.com/2017/09/12/感谢有你/</id>
-    <published>2017-09-12T06:55:34.000Z</published>
-    <updated>2017-09-16T07:08:36.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="呜呜"><a href="#呜呜" class="headerlink" title="呜呜"></a>呜呜</h2><p>今天，技术博客总算是”搭成了”？为什么要加引号，因为这个充其量也算是半成品，没有归档，没有社交链接……，但是，它至少可以让我把每天的心得写下来，慢慢完善自己，以后慢慢完善该博客。我知道现在对于我来说，时间是多么的宝贵。我也明白社会竞争的激烈以及自己身在其中的渺小。两天下来，感觉时刻需要提醒自己的就是『冷静』『执着』。诚然，我们不可能做到尽善尽美，但是我们要努力做到让自己不会后悔，加油 Etan ！</p><h2 id="感觉没有什么代码可以码，所以用这篇文章试试Hexo的基本用法"><a href="#感觉没有什么代码可以码，所以用这篇文章试试Hexo的基本用法" class="headerlink" title="感觉没有什么代码可以码，所以用这篇文章试试Hexo的基本用法 ^~^"></a>感觉没有什么代码可以码，所以用这篇文章试试Hexo的基本用法 ^~^</h2><h3 id="JAVA"><a href="#JAVA" class="headerlink" title="JAVA"></a>JAVA</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ System.out.print(“Etan, Come on !”);</div></pre></td></tr></table></figure><h3 id="C"><a href="#C" class="headerlink" title="C"></a>C</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ <span class="built_in">print</span>(“Etan , Come on !”);</div></pre></td></tr></table></figure><h3 id="C-1"><a href="#C-1" class="headerlink" title="C++"></a>C++</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ cout &lt;&lt; “Etan , Come on !”;</div></pre></td></tr></table></figure><h3 id="javascript"><a href="#javascript" class="headerlink" title="javascript"></a>javascript</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ console.log(“Etan , Come on !”);</div></pre></td></tr></table></figure><h2 id="最后，感谢有你，让我无畏风雨！"><a href="#最后，感谢有你，让我无畏风雨！" class="headerlink" title="最后，感谢有你，让我无畏风雨！"></a>最后，感谢有你，让我无畏风雨！</h2>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;呜呜&quot;&gt;&lt;a href=&quot;#呜呜&quot; class=&quot;headerlink&quot; title=&quot;呜呜&quot;&gt;&lt;/a&gt;呜呜&lt;/h2&gt;&lt;p&gt;今天，技术博客总算是”搭成了”？为什么要加引号，因为这个充其量也算是半成品，没有归档，没有社交链接……，但是，它至少可以让我把每天的心得写下
-      
-    
-    </summary>
-    
-      <category term="随笔杂谈" scheme="http://yoursite.com/categories/%E9%9A%8F%E7%AC%94%E6%9D%82%E8%B0%88/"/>
-    
-    
-      <category term="随笔杂谈" scheme="http://yoursite.com/tags/%E9%9A%8F%E7%AC%94%E6%9D%82%E8%B0%88/"/>
     
   </entry>
   
