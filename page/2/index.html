@@ -310,6 +310,151 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/20/python初体验（八）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EtanWatson">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EWSUN">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/20/python初体验（八）/" itemprop="url">python初体验（八）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-20T14:02:53+08:00">
+                2017-09-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>今天学习python中的异常！ ^…^</p>
+<h1 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h1><h2 id="ZeroDivisionError"><a href="#ZeroDivisionError" class="headerlink" title="ZeroDivisionError"></a>ZeroDivisionError</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"> try:</div><div class="line">	<span class="built_in">print</span>(5/0)</div><div class="line"> except ZeroDivisionError:</div><div class="line">	<span class="built_in">print</span>(<span class="string">"You can`t divide by zero!"</span>)</div><div class="line"> <span class="keyword">else</span>:</div><div class="line">	<span class="built_in">print</span>(<span class="string">"Hello,you are succssful!"</span>)</div><div class="line"> finally:</div><div class="line">	<span class="built_in">print</span>(<span class="string">"this is finally"</span>)</div><div class="line"><span class="comment">#稍微解释一下：try模块中的代码执行成功的话，会执行else中和finally，try中代码执行失败的话，会执行except中的代#码和finally，也就是说，finally的代码都会执行，这和JAVA中的异常比较相似</span></div></pre></td></tr></table></figure>
+<h2 id="FileNotFoundError异常"><a href="#FileNotFoundError异常" class="headerlink" title="FileNotFoundError异常"></a>FileNotFoundError异常</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"> filename = <span class="string">"alice.txt"</span></div><div class="line"> try:</div><div class="line">	with open(filename) as f_obj:</div><div class="line">		contents = f_obj.read()</div><div class="line"> except FileNotFoundError:</div><div class="line">	<span class="built_in">print</span>(<span class="string">"No Such file!"</span>)</div><div class="line"> <span class="keyword">else</span>:</div><div class="line">	<span class="built_in">print</span>(<span class="string">"file has been read"</span>)</div><div class="line"> finally:</div><div class="line">	<span class="built_in">print</span>(<span class="string">"finish"</span>)	</div><div class="line"><span class="comment">#需要注意的是，一定要注意缩进级别，否则，你找错误的时候会非常痛苦</span></div><div class="line"><span class="comment">#遇到一个比较烦心的事儿，就是python3 在 Sumline Text 2中默认的输出编码是</span></div><div class="line"> import sys</div><div class="line"> <span class="built_in">print</span>(sys.stdout.encoding)</div><div class="line"> &gt;&gt;US-ASCII</div><div class="line"> 我会在后续附上该问题的解决方案的</div><div class="line"><span class="comment">#再说明一下文档字符串的注释方式”””注释””” 两边各有三个双引号</span></div></pre></td></tr></table></figure>
+<h2 id="失败时一声不吭"><a href="#失败时一声不吭" class="headerlink" title="失败时一声不吭"></a>失败时一声不吭</h2><p> 在except中使用pass，它会使python失败时一声不吭（~.~）</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/19/python-初体验（七）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1653,148 +1798,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/16/使用Hexo-github搭建/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="EtanWatson">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/header.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="EWSUN">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/16/使用Hexo-github搭建/" itemprop="url">使用Hexo+github搭建个人博客</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-16T15:18:45+08:00">
-                2017-09-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Hexo/" itemprop="url" rel="index">
-                    <span itemprop="name">Hexo</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>确保你电脑中已经安装好了nodeJS,NPM.git如果还没有来得及安装，网上有许多教程，就不一一介绍了（第一次写博客，大家谅解^_^）;<br>要使用github，你得现有一个github的帐号（如果没有，先去注册一个吧）</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1848,7 +1851,7 @@
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">21</span>
+                <span class="site-state-item-count">22</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
