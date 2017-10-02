@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-10-02T03:01:06.000Z</updated>
+  <updated>2017-10-02T07:55:08.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>python数据收集（四）</title>
+    <link href="http://yoursite.com/2017/10/02/python%E6%95%B0%E6%8D%AE%E6%94%B6%E9%9B%86%EF%BC%88%E5%9B%9B%EF%BC%89/"/>
+    <id>http://yoursite.com/2017/10/02/python数据收集（四）/</id>
+    <published>2017-10-02T03:03:10.000Z</published>
+    <updated>2017-10-02T07:55:08.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="使用API"><a href="#使用API" class="headerlink" title="使用API"></a>使用API</h1><h2 id="API与普通网站的区别"><a href="#API与普通网站的区别" class="headerlink" title="API与普通网站的区别"></a>API与普通网站的区别</h2><p>1.API请求使用非常严谨的语法 2.其次API用JSON或XML格式表示数据，而不是HTML</p><h2 id="API的通用规则"><a href="#API的通用规则" class="headerlink" title="API的通用规则"></a>API的通用规则</h2><p>第一次使用API的时候，建议阅读文档</p><h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><p>利用HTTP从网络服务获取信息的四种方式：<br>1.GET<br>2.POST<br>3.PUT<br>4.DELETE</p><h3 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h3><h3 id="服务器响应"><a href="#服务器响应" class="headerlink" title="服务器响应"></a>服务器响应</h3><p>XML/JSON -&gt; json更小，在js框架中更好处理<br>API调用</p><h3 id="Echo-Nest"><a href="#Echo-Nest" class="headerlink" title="Echo Nest"></a>Echo Nest</h3><h3 id="解析JSON数据"><a href="#解析JSON数据" class="headerlink" title="解析JSON数据"></a>解析JSON数据</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">import json</div><div class="line">from urllib.request import urlopen</div><div class="line"></div><div class="line">def getCountry(ipAddress):</div><div class="line">    response = urlopen(<span class="string">"http://freegeoip.net/json/"</span>+ipAddress).<span class="built_in">read</span>().decode(<span class="string">'utf-8'</span>)</div><div class="line">    responseJson = json.loads(response)</div><div class="line">    <span class="built_in">return</span> responseJson.get(<span class="string">'country_code'</span>)</div><div class="line"><span class="built_in">print</span>(getCountry(<span class="string">"50.78.253.58"</span>))</div><div class="line">下面的例子将json字符串处理成python可以处理的json对象</div><div class="line">import json</div><div class="line">jsonString = <span class="string">'&#123;"arrayOfNums":[&#123;"number":0&#125;,&#123;"number":1&#125;,&#123;"number":2&#125;],'</span> \</div><div class="line">             <span class="string">'"arrayOfFruits":[&#123;"fruit":"apple"&#125;,&#123;"fruit":"banana"&#125;,&#123;"fruit":"pear"&#125;]&#125;'</span></div><div class="line">jsonObj = json.loads(jsonString)</div><div class="line"><span class="built_in">print</span>(jsonObj.get(<span class="string">"arrayOfNums"</span>))</div><div class="line"><span class="built_in">print</span>(jsonObj.get(<span class="string">"arrayOfNums"</span>)[1])</div><div class="line"><span class="built_in">print</span>(jsonObj.get(<span class="string">"arrayOfNums"</span>)[1].get(<span class="string">"number"</span>)+</div><div class="line">jsonObj.get(<span class="string">"arrayOfNums"</span>)[2].get(<span class="string">"number"</span>))</div><div class="line"><span class="built_in">print</span>(jsonObj.get(<span class="string">"arrayOfFruits"</span>)[2].get(<span class="string">"fruit"</span>))</div><div class="line">可以着重注意一下load()函数</div></pre></td></tr></table></figure><h3 id="Python的集合类型简介"><a href="#Python的集合类型简介" class="headerlink" title="Python的集合类型简介"></a>Python的集合类型简介</h3><p>集合是无序的，set集合的好处是它存储的值不会重复<br>在未来可能需要扩展的代码，在决定使用集合还是列表时，有两件事情需要考虑：虽然列表迭代速度比集合稍微快一点，<br>但集合查找速度更快</p><h3 id="示例代码"><a href="#示例代码" class="headerlink" title="示例代码"></a>示例代码</h3><pre><code class="bash">from urllib.request import urlopen,HTTPErrorfrom bs4 import BeautifulSoupimport datetimeimport randomimport reimport jsonrandom.seed(datetime.datetime.now())def getLinks(articleUrl):    html = urlopen(<span class="string">"http://en.wikipedia.org"</span>+articleUrl)    bsObj = BeautifulSoup(html,<span class="string">'html.parser'</span>)    <span class="built_in">return</span> bsObj.find(<span class="string">"div"</span>,{<span class="string">"id"</span>:<span class="string">"bodyContent"</span>}).findAll(<span class="string">"a"</span>,                                                          href=re.compile(<span class="string">"^(/wiki/)((?!:).)*$"</span>))def getHistoryIPs(pageUrl):    <span class="comment"># 编辑历史页面URL链接格式是：</span>    <span class="comment"># http://en.wikipedia.org/w/index.php?title=Title_in_URL&amp;action=history</span>    pageUrl = pageUrl.replace(<span class="string">"/wiki/"</span>,<span class="string">""</span>)    historyUrl = <span class="string">"http://en.wikipedia.org/w/index.php?title="</span> +pageUrl+<span class="string">"&amp;action=history"</span>    <span class="built_in">print</span>(<span class="string">"history url is: "</span> + historyUrl)    html = urlopen(historyUrl)    bsObj = BeautifulSoup(html,<span class="string">'html.parser'</span>)    <span class="comment"># 找出class属性是"mw-anonuserlink"的链接</span>    <span class="comment"># 它们用IP地址代替用户</span>    ipAddressse = bsObj.findAll(<span class="string">"a"</span>,{<span class="string">"class"</span>:<span class="string">"mw-anonuserlink"</span>})    addressList = <span class="built_in">set</span>()    <span class="keyword">for</span> ipAddress <span class="keyword">in</span> ipAddressse:        addressList.add(ipAddress.get_text())        <span class="built_in">return</span> addressListdef getCountry(ipAddress):    try:        response = urlopen(<span class="string">"http://freegeoip.net/json/"</span>+ipAddress)\            .<span class="built_in">read</span>().decode(<span class="string">'utf-8'</span>)    except HTTPError:        <span class="built_in">return</span> None    responseJson = json.loads(response)    <span class="built_in">return</span> responseJson.get(<span class="string">"country_code"</span>)links = getLinks(<span class="string">"/wiki/Python_(programming_language)"</span>)<span class="keyword">while</span>(len(links) &gt; 0):    <span class="keyword">for</span> link <span class="keyword">in</span> links:        <span class="built_in">print</span>(<span class="string">"------------------------"</span>)        historyIPs = getHistoryIPs(link.attrs[<span class="string">"href"</span>])        <span class="keyword">for</span> historyIP <span class="keyword">in</span> historyIPs:            country = getCountry(historyIP)            <span class="keyword">if</span> country is not None:                <span class="built_in">print</span>(historyIP+ <span class="string">" is from "</span> + country)    newLink = links[random.randint(0, len(links)-1)].attrs[<span class="string">'herf'</span>]    links = getLinks(newLink)</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;使用API&quot;&gt;&lt;a href=&quot;#使用API&quot; class=&quot;headerlink&quot; title=&quot;使用API&quot;&gt;&lt;/a&gt;使用API&lt;/h1&gt;&lt;h2 id=&quot;API与普通网站的区别&quot;&gt;&lt;a href=&quot;#API与普通网站的区别&quot; class=&quot;headerlink
+      
+    
+    </summary>
+    
+      <category term="python数据收集" scheme="http://yoursite.com/categories/python%E6%95%B0%E6%8D%AE%E6%94%B6%E9%9B%86/"/>
+    
+    
+      <category term="python数据收集" scheme="http://yoursite.com/tags/python%E6%95%B0%E6%8D%AE%E6%94%B6%E9%9B%86/"/>
+    
+  </entry>
   
   <entry>
     <title>python数据收集（三）</title>
@@ -491,31 +516,6 @@
       
       
         &lt;h2 id=&quot;开端（python遨游记：仅仅只是记下python入门的基本语法，俺是一只小小小菜鸟！）&quot;&gt;&lt;a href=&quot;#开端（python遨游记：仅仅只是记下python入门的基本语法，俺是一只小小小菜鸟！）&quot; class=&quot;headerlink&quot; title=&quot;开端（p
-      
-    
-    </summary>
-    
-      <category term="python" scheme="http://yoursite.com/categories/python/"/>
-    
-    
-      <category term="python" scheme="http://yoursite.com/tags/python/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>python 尝鲜踩坑记</title>
-    <link href="http://yoursite.com/2017/09/16/python-%E5%B0%9D%E9%B2%9C%E8%B8%A9%E5%9D%91%E8%AE%B0/"/>
-    <id>http://yoursite.com/2017/09/16/python-尝鲜踩坑记/</id>
-    <published>2017-09-16T08:22:47.000Z</published>
-    <updated>2017-09-17T00:07:05.000Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="讲述一下第一次在Sublime-Text2下尝试编写python"><a href="#讲述一下第一次在Sublime-Text2下尝试编写python" class="headerlink" title="讲述一下第一次在Sublime Text2下尝试编写python"></a>讲述一下第一次在Sublime Text2下尝试编写python</h2><p>根据Python编程从入门到实践书中推荐，安装了Sublime Text2，由于要使用python3，所以要设置默认编译器，在Sublime Text2下，Tools-&gt;Build System -&gt; New Build System中<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ &#123; “cmd”: [“usr/<span class="built_in">local</span>/bin/python”,”-u”,”<span class="variable">$file</span>”],&#125;</div></pre></td></tr></table></figure></p><p>配置完，command+B运行代码<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ <span class="built_in">print</span>(“Hello World!”)</div></pre></td></tr></table></figure></p><p>报出Error trying to parse setting，查找资料，应该是刚才配置默认编译器的时候多了一个逗号,正确的应该是<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ &#123; “cmd”: [“usr/<span class="built_in">local</span>/bin/python”,”-u”,”<span class="variable">$file</span>”]&#125;</div></pre></td></tr></table></figure></p><p>但是居然在finder和终端中始终找不到该文件的位置，我就知道文件夹的名称应该是User，弄了半天,风险Sublime Text2的file下有一个open，总算是打开了，已经泪奔。不过我希望改变他默认的文件保存位置，还是没找到方法，找到后，会更新<br>默认的位置在~/Library/Application Support/Sublime Text 2/下</p><p>##【待续】</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;讲述一下第一次在Sublime-Text2下尝试编写python&quot;&gt;&lt;a href=&quot;#讲述一下第一次在Sublime-Text2下尝试编写python&quot; class=&quot;headerlink&quot; title=&quot;讲述一下第一次在Sublime Text2下尝试编写py
       
     
     </summary>

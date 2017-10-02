@@ -310,6 +310,204 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/02/python数据收集（四）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EtanWatson">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EWSUN">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/02/python数据收集（四）/" itemprop="url">python数据收集（四）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-02T11:03:10+08:00">
+                2017-10-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python数据收集/" itemprop="url" rel="index">
+                    <span itemprop="name">python数据收集</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="使用API"><a href="#使用API" class="headerlink" title="使用API"></a>使用API</h1><h2 id="API与普通网站的区别"><a href="#API与普通网站的区别" class="headerlink" title="API与普通网站的区别"></a>API与普通网站的区别</h2><p>1.API请求使用非常严谨的语法 2.其次API用JSON或XML格式表示数据，而不是HTML</p>
+<h2 id="API的通用规则"><a href="#API的通用规则" class="headerlink" title="API的通用规则"></a>API的通用规则</h2><p>第一次使用API的时候，建议阅读文档</p>
+<h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><p>利用HTTP从网络服务获取信息的四种方式：<br>1.GET<br>2.POST<br>3.PUT<br>4.DELETE</p>
+<h3 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h3><h3 id="服务器响应"><a href="#服务器响应" class="headerlink" title="服务器响应"></a>服务器响应</h3><p>XML/JSON -&gt; json更小，在js框架中更好处理<br>API调用</p>
+<h3 id="Echo-Nest"><a href="#Echo-Nest" class="headerlink" title="Echo Nest"></a>Echo Nest</h3><h3 id="解析JSON数据"><a href="#解析JSON数据" class="headerlink" title="解析JSON数据"></a>解析JSON数据</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">import json</div><div class="line">from urllib.request import urlopen</div><div class="line"></div><div class="line">def getCountry(ipAddress):</div><div class="line">    response = urlopen(<span class="string">"http://freegeoip.net/json/"</span>+ipAddress).<span class="built_in">read</span>().decode(<span class="string">'utf-8'</span>)</div><div class="line">    responseJson = json.loads(response)</div><div class="line">    <span class="built_in">return</span> responseJson.get(<span class="string">'country_code'</span>)</div><div class="line"><span class="built_in">print</span>(getCountry(<span class="string">"50.78.253.58"</span>))</div><div class="line">下面的例子将json字符串处理成python可以处理的json对象</div><div class="line">import json</div><div class="line">jsonString = <span class="string">'&#123;"arrayOfNums":[&#123;"number":0&#125;,&#123;"number":1&#125;,&#123;"number":2&#125;],'</span> \</div><div class="line">             <span class="string">'"arrayOfFruits":[&#123;"fruit":"apple"&#125;,&#123;"fruit":"banana"&#125;,&#123;"fruit":"pear"&#125;]&#125;'</span></div><div class="line">jsonObj = json.loads(jsonString)</div><div class="line"><span class="built_in">print</span>(jsonObj.get(<span class="string">"arrayOfNums"</span>))</div><div class="line"><span class="built_in">print</span>(jsonObj.get(<span class="string">"arrayOfNums"</span>)[1])</div><div class="line"><span class="built_in">print</span>(jsonObj.get(<span class="string">"arrayOfNums"</span>)[1].get(<span class="string">"number"</span>)+</div><div class="line">jsonObj.get(<span class="string">"arrayOfNums"</span>)[2].get(<span class="string">"number"</span>))</div><div class="line"><span class="built_in">print</span>(jsonObj.get(<span class="string">"arrayOfFruits"</span>)[2].get(<span class="string">"fruit"</span>))</div><div class="line">可以着重注意一下load()函数</div></pre></td></tr></table></figure>
+<h3 id="Python的集合类型简介"><a href="#Python的集合类型简介" class="headerlink" title="Python的集合类型简介"></a>Python的集合类型简介</h3><p>集合是无序的，set集合的好处是它存储的值不会重复<br>在未来可能需要扩展的代码，在决定使用集合还是列表时，有两件事情需要考虑：虽然列表迭代速度比集合稍微快一点，<br>但集合查找速度更快</p>
+<h3 id="示例代码"><a href="#示例代码" class="headerlink" title="示例代码"></a>示例代码</h3><pre><code class="bash">from urllib.request import urlopen,HTTPError
+from bs4 import BeautifulSoup
+import datetime
+import random
+import re
+import json
+
+random.seed(datetime.datetime.now())
+def getLinks(articleUrl):
+    html = urlopen(<span class="string">"http://en.wikipedia.org"</span>+articleUrl)
+    bsObj = BeautifulSoup(html,<span class="string">'html.parser'</span>)
+    <span class="built_in">return</span> bsObj.find(<span class="string">"div"</span>,{<span class="string">"id"</span>:<span class="string">"bodyContent"</span>}).findAll(<span class="string">"a"</span>,
+                                                          href=re.compile(<span class="string">"^(/wiki/)((?!:).)*$"</span>))
+def getHistoryIPs(pageUrl):
+    <span class="comment"># 编辑历史页面URL链接格式是：</span>
+    <span class="comment"># http://en.wikipedia.org/w/index.php?title=Title_in_URL&amp;action=history</span>
+    pageUrl = pageUrl.replace(<span class="string">"/wiki/"</span>,<span class="string">""</span>)
+    historyUrl = <span class="string">"http://en.wikipedia.org/w/index.php?title="</span> +pageUrl+<span class="string">"&amp;action=history"</span>
+    <span class="built_in">print</span>(<span class="string">"history url is: "</span> + historyUrl)
+    html = urlopen(historyUrl)
+    bsObj = BeautifulSoup(html,<span class="string">'html.parser'</span>)
+    <span class="comment"># 找出class属性是"mw-anonuserlink"的链接</span>
+    <span class="comment"># 它们用IP地址代替用户</span>
+    ipAddressse = bsObj.findAll(<span class="string">"a"</span>,{<span class="string">"class"</span>:<span class="string">"mw-anonuserlink"</span>})
+    addressList = <span class="built_in">set</span>()
+    <span class="keyword">for</span> ipAddress <span class="keyword">in</span> ipAddressse:
+        addressList.add(ipAddress.get_text())
+        <span class="built_in">return</span> addressList
+
+def getCountry(ipAddress):
+    try:
+        response = urlopen(<span class="string">"http://freegeoip.net/json/"</span>+ipAddress)\
+            .<span class="built_in">read</span>().decode(<span class="string">'utf-8'</span>)
+    except HTTPError:
+        <span class="built_in">return</span> None
+    responseJson = json.loads(response)
+    <span class="built_in">return</span> responseJson.get(<span class="string">"country_code"</span>)
+
+links = getLinks(<span class="string">"/wiki/Python_(programming_language)"</span>)
+
+<span class="keyword">while</span>(len(links) &gt; 0):
+    <span class="keyword">for</span> link <span class="keyword">in</span> links:
+        <span class="built_in">print</span>(<span class="string">"------------------------"</span>)
+        historyIPs = getHistoryIPs(link.attrs[<span class="string">"href"</span>])
+        <span class="keyword">for</span> historyIP <span class="keyword">in</span> historyIPs:
+            country = getCountry(historyIP)
+            <span class="keyword">if</span> country is not None:
+                <span class="built_in">print</span>(historyIP+ <span class="string">" is from "</span> + country)
+    newLink = links[random.randint(0, len(links)-1)].attrs[<span class="string">'herf'</span>]
+    links = getLinks(newLink)
+</code></pre>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/30/python数据收集（三）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1677,152 +1875,6 @@ growing adj.  ex：a growing number
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/20/python初体验（九）/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="EtanWatson">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/header.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="EWSUN">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/20/python初体验（九）/" itemprop="url">python初体验（九）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-20T14:57:05+08:00">
-                2017-09-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/python/" itemprop="url" rel="index">
-                    <span itemprop="name">python</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>OK 现在我们来学存储数据</p>
-<h1 id="存储数据"><a href="#存储数据" class="headerlink" title="存储数据"></a>存储数据</h1><h2 id="使用模块json来存储数据"><a href="#使用模块json来存储数据" class="headerlink" title="使用模块json来存储数据"></a>使用模块json来存储数据</h2><h3 id="使用json-dump-和json-load"><a href="#使用json-dump-和json-load" class="headerlink" title="使用json.dump()和json.load()"></a>使用json.dump()和json.load()</h3><h4 id="json-dump"><a href="#json-dump" class="headerlink" title="json.dump()"></a>json.dump()</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">import json</div><div class="line">numbers = [2,3,4,5,6,7]</div><div class="line"></div><div class="line">filename = <span class="string">'numbers.json'</span></div><div class="line">with open(filename,<span class="string">'w'</span>) as f_obj:</div><div class="line">json.dump(numbers,f_obj)</div></pre></td></tr></table></figure>
-<h4 id="json-load"><a href="#json-load" class="headerlink" title="json.load()"></a>json.load()</h4><p>OK 那我们接下来看看json.load()是怎么用的把<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"> import json</div><div class="line"> filename = <span class="string">'numbers.json'</span></div><div class="line"> with open(filename) as f_obj:</div><div class="line">	numbers = json.load(f_obj)</div><div class="line"> <span class="built_in">print</span>(numbers)</div><div class="line"><span class="comment">#与dump正好相反，load()是将文件加载到内存中</span></div></pre></td></tr></table></figure></p>
-<h3 id="未能解决的问题"><a href="#未能解决的问题" class="headerlink" title="未能解决的问题"></a>未能解决的问题</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"> import json</div><div class="line"> filename = <span class="string">"username.json"</span></div><div class="line"> try:</div><div class="line">	with open(filename) as file_obj:</div><div class="line">		username = json.load(file_obj)</div><div class="line"> except FileNotFoundError:</div><div class="line">	username = input(<span class="string">"What is your name: "</span>)</div><div class="line">	with open(filename,<span class="string">'w'</span>) as file_obj:</div><div class="line">		json.dump(username,file_obj)</div><div class="line"> <span class="keyword">else</span>:</div><div class="line">	<span class="built_in">print</span>(<span class="string">"Welcome back, "</span> + username + <span class="string">"!"</span>)</div><div class="line"><span class="comment">#Subline Text2中无法运行input(),如果要运行，需要在终端中运行</span></div></pre></td></tr></table></figure>
-<h1 id="重构"><a href="#重构" class="headerlink" title="重构"></a>重构</h1><p>核心要点：每一个函数都执行单一而清晰的任务</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1876,7 +1928,7 @@ growing adj.  ex：a growing number
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-count">23</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
