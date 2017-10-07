@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="python数据收集," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="EWSUN" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="自然语言的处理概括数据前面已经介绍过了n-gram模型，即n个单词长度的词组123456789101112131415161718192021222324252627282930313233343536from urllib.request import urlopenfrom bs4 import BeautifulSoupimport reimport stringimport operato">
+<meta name="keywords" content="python数据收集">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python数据收集（自然语言处理）">
+<meta property="og:url" content="http://yoursite.com/2017/10/04/python数据收集（自然语言处理）/index.html">
+<meta property="og:site_name" content="EWSUN">
+<meta property="og:description" content="自然语言的处理概括数据前面已经介绍过了n-gram模型，即n个单词长度的词组123456789101112131415161718192021222324252627282930313233343536from urllib.request import urlopenfrom bs4 import BeautifulSoupimport reimport stringimport operato">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-10-05T03:30:52.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python数据收集（自然语言处理）">
+<meta name="twitter:description" content="自然语言的处理概括数据前面已经介绍过了n-gram模型，即n个单词长度的词组123456789101112131415161718192021222324252627282930313233343536from urllib.request import urlopenfrom bs4 import BeautifulSoupimport reimport stringimport operato">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/10/04/python数据收集（自然语言处理）/"/>
+
+
+
+
+
+  <title>python数据收集（自然语言处理） | EWSUN</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">EWSUN</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-schedule">
+          <a href="/schedule/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br />
+            
+            日程表
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/04/python数据收集（自然语言处理）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EtanWatson">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EWSUN">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">python数据收集（自然语言处理）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-04T11:08:41+08:00">
+                2017-10-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python数据收集/" itemprop="url" rel="index">
+                    <span itemprop="name">python数据收集</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="自然语言的处理"><a href="#自然语言的处理" class="headerlink" title="自然语言的处理"></a>自然语言的处理</h1><h2 id="概括数据"><a href="#概括数据" class="headerlink" title="概括数据"></a>概括数据</h2><p>前面已经介绍过了n-gram模型，即n个单词长度的词组<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">from urllib.request import urlopen</div><div class="line">from bs4 import BeautifulSoup</div><div class="line">import re</div><div class="line">import string</div><div class="line">import operator</div><div class="line"></div><div class="line">def cleanInput(input):</div><div class="line">    input = re.sub(<span class="string">'\n+'</span>,<span class="string">" "</span>,input).lower()</div><div class="line">    input = re.sub(<span class="string">'\[[0-9]*\]'</span>,<span class="string">""</span>,input)</div><div class="line">    input = re.sub(<span class="string">' +'</span>, <span class="string">" "</span>, input)</div><div class="line">    input = bytes(input, <span class="string">"UTF-8"</span>)</div><div class="line">    input = input.decode(<span class="string">"ascii"</span>, <span class="string">"ignore"</span>)</div><div class="line">    cleanInput = []</div><div class="line">    input = input.split(<span class="string">' '</span>)</div><div class="line">    <span class="keyword">for</span> item <span class="keyword">in</span> input:</div><div class="line">        item = item.strip(string.punctuation)</div><div class="line">        <span class="keyword">if</span> len(item) &gt; 1 or (item.lower() == <span class="string">'a'</span> or item.lower() == <span class="string">'i'</span>):</div><div class="line">            cleanInput.append(item)</div><div class="line">    <span class="built_in">return</span> cleanInput</div><div class="line"></div><div class="line">def ngrams(input, n):</div><div class="line">    input = cleanInput(input)</div><div class="line">    output = &#123;&#125;</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(input)-n+1):</div><div class="line">        ngramTemp =<span class="string">" "</span>.join(input[i:i+n])</div><div class="line">        <span class="keyword">if</span> ngramTemp not <span class="keyword">in</span> output:</div><div class="line">            output[ngramTemp] = 0</div><div class="line">        output[ngramTemp] += 1</div><div class="line">    <span class="built_in">return</span> output</div><div class="line"></div><div class="line">content = str(urlopen(<span class="string">"http://pythonscraping.com/files/inaugurationSpeech.txt"</span>).<span class="built_in">read</span>(),<span class="string">'utf-8'</span>)</div><div class="line">ngrams = ngrams(content, 2)</div><div class="line">sortedNGrams = sorted(ngrams.items(), key=operator.itemgetter(1), reverse=True)</div><div class="line"><span class="built_in">print</span>(sortedNGrams)</div><div class="line"><span class="comment">#结果</span></div><div class="line">&gt;&gt;&gt; (<span class="string">'of the'</span>, 213), (<span class="string">'in the'</span>, 65), (<span class="string">'to the'</span>, 61), (<span class="string">'by the'</span>, 41), (<span class="string">'the constitution'</span>, 34),</div></pre></td></tr></table></figure></p>
+<p>我们会发现，其实像of the，in the ，对我们来讲一点儿都不重要，而 the constitution相对来说就比较重要</p>
+<h3 id="去掉看上去无用的字符"><a href="#去掉看上去无用的字符" class="headerlink" title="去掉看上去无用的字符"></a>去掉看上去无用的字符</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div></pre></td><td class="code"><pre><div class="line">from urllib.request import urlopen</div><div class="line">from bs4 import BeautifulSoup</div><div class="line">import re</div><div class="line">import string</div><div class="line">import operator</div><div class="line"></div><div class="line"><span class="comment">#最常用的5000个单词列表可以免费获取，我们现在提取出前100个</span></div><div class="line"><span class="comment">#返回boolean类型，如果包含，就返回true</span></div><div class="line">def isCommon(ngram):</div><div class="line">    commonWords = [<span class="string">"the"</span>, <span class="string">"be"</span>, <span class="string">"and"</span>, <span class="string">"of"</span>, <span class="string">"a"</span>, <span class="string">"in"</span>, <span class="string">"to"</span>, <span class="string">"have"</span>, <span class="string">"it"</span>,</div><div class="line">             <span class="string">"i"</span>, <span class="string">"that"</span>, <span class="string">"for"</span>, <span class="string">"you"</span>, <span class="string">"he"</span>, <span class="string">"with"</span>, <span class="string">"on"</span>, <span class="string">"do"</span>, <span class="string">"say"</span>, <span class="string">"this"</span>,</div><div class="line">             <span class="string">"they"</span>, <span class="string">"is"</span>, <span class="string">"an"</span>, <span class="string">"at"</span>, <span class="string">"but"</span>,<span class="string">"we"</span>, <span class="string">"his"</span>, <span class="string">"from"</span>, <span class="string">"that"</span>, <span class="string">"not"</span>,</div><div class="line">             <span class="string">"by"</span>, <span class="string">"she"</span>, <span class="string">"or"</span>, <span class="string">"as"</span>, <span class="string">"what"</span>, <span class="string">"go"</span>, <span class="string">"their"</span>,<span class="string">"can"</span>, <span class="string">"who"</span>, <span class="string">"get"</span>,</div><div class="line">             <span class="string">"if"</span>, <span class="string">"would"</span>, <span class="string">"her"</span>, <span class="string">"all"</span>, <span class="string">"my"</span>, <span class="string">"make"</span>, <span class="string">"about"</span>, <span class="string">"know"</span>, <span class="string">"will"</span>,</div><div class="line">             <span class="string">"as"</span>, <span class="string">"up"</span>, <span class="string">"one"</span>, <span class="string">"time"</span>, <span class="string">"has"</span>, <span class="string">"been"</span>, <span class="string">"there"</span>, <span class="string">"year"</span>, <span class="string">"so"</span>,</div><div class="line">             <span class="string">"think"</span>, <span class="string">"when"</span>, <span class="string">"which"</span>, <span class="string">"them"</span>, <span class="string">"some"</span>, <span class="string">"me"</span>, <span class="string">"people"</span>, <span class="string">"take"</span>,</div><div class="line">             <span class="string">"out"</span>, <span class="string">"into"</span>, <span class="string">"just"</span>, <span class="string">"see"</span>, <span class="string">"him"</span>, <span class="string">"your"</span>, <span class="string">"come"</span>, <span class="string">"could"</span>, <span class="string">"now"</span>,</div><div class="line">             <span class="string">"than"</span>, <span class="string">"like"</span>, <span class="string">"other"</span>, <span class="string">"how"</span>, <span class="string">"then"</span>, <span class="string">"its"</span>, <span class="string">"our"</span>, <span class="string">"two"</span>, <span class="string">"more"</span>,</div><div class="line">             <span class="string">"these"</span>, <span class="string">"want"</span>, <span class="string">"way"</span>, <span class="string">"look"</span>, <span class="string">"first"</span>, <span class="string">"also"</span>, <span class="string">"new"</span>, <span class="string">"because"</span>,</div><div class="line">             <span class="string">"day"</span>, <span class="string">"more"</span>, <span class="string">"use"</span>, <span class="string">"no"</span>, <span class="string">"man"</span>, <span class="string">"find"</span>, <span class="string">"here"</span>, <span class="string">"thing"</span>, <span class="string">"give"</span>,</div><div class="line">             <span class="string">"many"</span>, <span class="string">"well"</span>]</div><div class="line"></div><div class="line">    <span class="keyword">if</span> ngram <span class="keyword">in</span> commonWords:</div><div class="line">        <span class="built_in">return</span> True</div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        <span class="built_in">return</span> False</div><div class="line"></div><div class="line">def cleanInput(input):</div><div class="line">    input = re.sub(<span class="string">'\n+'</span>,<span class="string">" "</span>,input).lower() <span class="comment"># 匹配换行,用空格替换换行符</span></div><div class="line">    input = re.sub(<span class="string">'\[[0-9]*\]'</span>,<span class="string">""</span>,input) <span class="comment"># 剔除类似[1]这样的引用标记</span></div><div class="line">    input = re.sub(<span class="string">' +'</span>, <span class="string">" "</span>, input) <span class="comment">#把连续多个空格替换成一个空格</span></div><div class="line">    input = bytes(input, <span class="string">"UTF-8"</span>)</div><div class="line">    input = input.decode(<span class="string">"ascii"</span>, <span class="string">"ignore"</span>)</div><div class="line">    cleanInput = []</div><div class="line">    input = input.split(<span class="string">' '</span>)</div><div class="line">    <span class="keyword">for</span> item <span class="keyword">in</span> input:</div><div class="line">        item = item.strip(string.punctuation)</div><div class="line">        <span class="keyword">if</span> len(item) &gt; 1 or (item.lower() == <span class="string">'a'</span> or item.lower() == <span class="string">'i'</span>):</div><div class="line">            cleanInput.append(item)</div><div class="line">    <span class="built_in">return</span> cleanInput</div><div class="line"></div><div class="line">def ngrams(input, n):</div><div class="line">    input = cleanInput(input)</div><div class="line">    output = &#123;&#125;</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(input)-n+1):</div><div class="line">        ngramTemp =<span class="string">" "</span>.join(input[i:i+n]) <span class="comment">#这句话将n-grams拆分成n个元素组成的列表</span></div><div class="line">        <span class="keyword">if</span> isCommon(ngramTemp.split()[0]) or isCommon(ngramTemp.split()[1]):</div><div class="line">            pass</div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            <span class="keyword">if</span> ngramTemp not <span class="keyword">in</span> output:</div><div class="line">                output[ngramTemp] = 0</div><div class="line">            output[ngramTemp] += 1</div><div class="line">    <span class="built_in">return</span> output</div><div class="line"></div><div class="line">content = str(urlopen(<span class="string">"http://pythonscraping.com/files/inaugurationSpeech.txt"</span>).<span class="built_in">read</span>(),<span class="string">'utf-8'</span>)</div><div class="line">ngrams = ngrams(content, 2)</div><div class="line">sortedNGrams = sorted(ngrams.items(), key=operator.itemgetter(1), reverse=True)</div><div class="line"><span class="built_in">print</span>(sortedNGrams)</div></pre></td></tr></table></figure>
+<p>#结果</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>[(‘united states’, 10), (‘general government’, 4), (‘executive department’, 4), (‘mr jefferson’, 3), (‘same causes’, 3),……]<br>我的疑惑：在进行”看似无用”的单词过滤的时候，是不是会将有用的单词过滤掉类似the constitution</p>
+<h3 id="通过中心主题词，归纳文章核心"><a href="#通过中心主题词，归纳文章核心" class="headerlink" title="通过中心主题词，归纳文章核心"></a>通过中心主题词，归纳文章核心</h3><p>一种方法是搜索包含每个核心 n-gram 序列的第一句话，这个方法的理论是英语中段落的首句 往往是对后面内容的概述<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div></pre></td><td class="code"><pre><div class="line">from urllib.request import urlopen</div><div class="line">from bs4 import BeautifulSoup</div><div class="line">import re</div><div class="line">import string</div><div class="line">import operator</div><div class="line"></div><div class="line"><span class="comment">#最常用的5000个单词列表可以免费获取，我们现在提取出前100个</span></div><div class="line"><span class="comment">#返回boolean类型，如果包含，就返回true</span></div><div class="line">def isCommon(ngram):</div><div class="line">    commonWords = [<span class="string">"the"</span>, <span class="string">"be"</span>, <span class="string">"and"</span>, <span class="string">"of"</span>, <span class="string">"a"</span>, <span class="string">"in"</span>, <span class="string">"to"</span>, <span class="string">"have"</span>, <span class="string">"it"</span>,</div><div class="line">             <span class="string">"i"</span>, <span class="string">"that"</span>, <span class="string">"for"</span>, <span class="string">"you"</span>, <span class="string">"he"</span>, <span class="string">"with"</span>, <span class="string">"on"</span>, <span class="string">"do"</span>, <span class="string">"say"</span>, <span class="string">"this"</span>,</div><div class="line">             <span class="string">"they"</span>, <span class="string">"is"</span>, <span class="string">"an"</span>, <span class="string">"at"</span>, <span class="string">"but"</span>,<span class="string">"we"</span>, <span class="string">"his"</span>, <span class="string">"from"</span>, <span class="string">"that"</span>, <span class="string">"not"</span>,</div><div class="line">             <span class="string">"by"</span>, <span class="string">"she"</span>, <span class="string">"or"</span>, <span class="string">"as"</span>, <span class="string">"what"</span>, <span class="string">"go"</span>, <span class="string">"their"</span>,<span class="string">"can"</span>, <span class="string">"who"</span>, <span class="string">"get"</span>,</div><div class="line">             <span class="string">"if"</span>, <span class="string">"would"</span>, <span class="string">"her"</span>, <span class="string">"all"</span>, <span class="string">"my"</span>, <span class="string">"make"</span>, <span class="string">"about"</span>, <span class="string">"know"</span>, <span class="string">"will"</span>,</div><div class="line">             <span class="string">"as"</span>, <span class="string">"up"</span>, <span class="string">"one"</span>, <span class="string">"time"</span>, <span class="string">"has"</span>, <span class="string">"been"</span>, <span class="string">"there"</span>, <span class="string">"year"</span>, <span class="string">"so"</span>,</div><div class="line">             <span class="string">"think"</span>, <span class="string">"when"</span>, <span class="string">"which"</span>, <span class="string">"them"</span>, <span class="string">"some"</span>, <span class="string">"me"</span>, <span class="string">"people"</span>, <span class="string">"take"</span>,</div><div class="line">             <span class="string">"out"</span>, <span class="string">"into"</span>, <span class="string">"just"</span>, <span class="string">"see"</span>, <span class="string">"him"</span>, <span class="string">"your"</span>, <span class="string">"come"</span>, <span class="string">"could"</span>, <span class="string">"now"</span>,</div><div class="line">             <span class="string">"than"</span>, <span class="string">"like"</span>, <span class="string">"other"</span>, <span class="string">"how"</span>, <span class="string">"then"</span>, <span class="string">"its"</span>, <span class="string">"our"</span>, <span class="string">"two"</span>, <span class="string">"more"</span>,</div><div class="line">             <span class="string">"these"</span>, <span class="string">"want"</span>, <span class="string">"way"</span>, <span class="string">"look"</span>, <span class="string">"first"</span>, <span class="string">"also"</span>, <span class="string">"new"</span>, <span class="string">"because"</span>,</div><div class="line">             <span class="string">"day"</span>, <span class="string">"more"</span>, <span class="string">"use"</span>, <span class="string">"no"</span>, <span class="string">"man"</span>, <span class="string">"find"</span>, <span class="string">"here"</span>, <span class="string">"thing"</span>, <span class="string">"give"</span>,</div><div class="line">             <span class="string">"many"</span>, <span class="string">"well"</span>]</div><div class="line"></div><div class="line">    <span class="keyword">if</span> ngram <span class="keyword">in</span> commonWords:</div><div class="line">        <span class="built_in">return</span> True</div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        <span class="built_in">return</span> False</div><div class="line"></div><div class="line">def cleanInput(input):</div><div class="line">    input = re.sub(<span class="string">'\n+'</span>,<span class="string">" "</span>,input).lower() <span class="comment"># 匹配换行,用空格替换换行符</span></div><div class="line">    input = re.sub(<span class="string">'\[[0-9]*\]'</span>,<span class="string">""</span>,input) <span class="comment"># 剔除类似[1]这样的引用标记</span></div><div class="line">    input = re.sub(<span class="string">' +'</span>, <span class="string">" "</span>, input) <span class="comment">#把连续多个空格替换成一个空格</span></div><div class="line">    input = bytes(input, <span class="string">"UTF-8"</span>)</div><div class="line">    input = input.decode(<span class="string">"ascii"</span>, <span class="string">"ignore"</span>)</div><div class="line">    cleanInput = []</div><div class="line">    input = input.split(<span class="string">' '</span>)</div><div class="line">    <span class="keyword">for</span> item <span class="keyword">in</span> input:</div><div class="line">        item = item.strip(string.punctuation)</div><div class="line">        <span class="keyword">if</span> len(item) &gt; 1 or (item.lower() == <span class="string">'a'</span> or item.lower() == <span class="string">'i'</span>):</div><div class="line">            cleanInput.append(item)</div><div class="line">    <span class="built_in">return</span> cleanInput</div><div class="line"></div><div class="line">def ngrams(input, n):</div><div class="line">    input = cleanInput(input)</div><div class="line">    output = &#123;&#125;</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(input)-n+1):</div><div class="line">        ngramTemp =<span class="string">" "</span>.join(input[i:i+n]) <span class="comment">#这句话将n-grams拆分成n个元素组成的列表</span></div><div class="line">        <span class="keyword">if</span> isCommon(ngramTemp.split()[0]) or isCommon(ngramTemp.split()[1]):</div><div class="line">            pass</div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            <span class="keyword">if</span> ngramTemp not <span class="keyword">in</span> output:</div><div class="line">                output[ngramTemp] = 0</div><div class="line">            output[ngramTemp] += 1</div><div class="line">    <span class="built_in">return</span> output</div><div class="line"></div><div class="line"><span class="comment">#获取核心词在的句子</span></div><div class="line">def getFirstSentenceCOntaining(ngram, content):</div><div class="line">    sentences = content.split(<span class="string">'.'</span>)</div><div class="line">    <span class="keyword">for</span> sentence <span class="keyword">in</span> sentences:</div><div class="line">        <span class="keyword">if</span> ngram <span class="keyword">in</span> sentence:</div><div class="line">            <span class="built_in">return</span> sentence</div><div class="line">    <span class="built_in">return</span> <span class="string">""</span></div><div class="line">content = str(urlopen(<span class="string">"http://pythonscraping.com/files/inaugurationSpeech.txt"</span>).<span class="built_in">read</span>(),<span class="string">'utf-8'</span>)</div><div class="line">ngrams = ngrams(content, 2)</div><div class="line"><span class="comment">#核心词</span></div><div class="line">sortedNGrams = sorted(ngrams.items(), key=operator.itemgetter(1), reverse=True)</div><div class="line"><span class="built_in">print</span>(sortedNGrams)</div><div class="line"><span class="comment">#核心句</span></div><div class="line"><span class="keyword">for</span> top3 <span class="keyword">in</span> range(3):</div><div class="line">    <span class="built_in">print</span>(<span class="string">"&gt;"</span>+getFirstSentenceCOntaining(sortedNGrams[top3][0],content.lower()))</div><div class="line">``` </div><div class="line">结果：</div><div class="line">&gt; the constitution of the united states is the instrument containing this grant of power to the several departments composing the government</div><div class="line"></div><div class="line">&gt; the general government has seized upon none of the reserved rights of the states</div><div class="line"></div><div class="line">&gt; such a one was afforded by the executive department constituted by the constitution</div><div class="line"></div><div class="line">我的困惑：这里返回的仅仅是匹配到的第一句话（也就是该核心词匹配的到第一句话，后面的都放弃了，是否会有不妥）</div><div class="line"></div><div class="line"><span class="comment">## 马尔可夫模型</span></div><div class="line">随机事件的特点 是一个离散事件发生之后，另一个离散事件将在前一个事件的条件下以一定的概率发生。</div><div class="line">图：马尔科夫模型描述理论天气系统</div><div class="line">• 任何一个节点引出的所有可能的总和必须等于100%。无论是多么复杂的系统，必然会 在下一步发生若干事件中的一个事件。• 虽然这个天气系统在任一时间都只有三种可能，但是你可以用这个模型生成一个天气状 态的无限次转移列表。• 只有当前节点的状态会影响后一天的状态。如果你在“晴天”节点上，即使前100天都 是晴天或雨天都没关系，明天晴天的概率还是 70%。• 有些节点可能比其他节点较难到达。这个现象的原因用数学来解释非常复杂，但是可以 直观地看出，在这个系统中任意时间节点上，第二天是“雨天”的可能性(指向它的箭 头概率之和小于“100%”)比“晴天”或“多云”要小很多</div><div class="line">``` bash </div><div class="line"><span class="comment">#生成链为100的马尔可夫链</span></div><div class="line">from urllib.request import urlopen</div><div class="line">from random import randint</div><div class="line"></div><div class="line">def wordlistSum(wordList):</div><div class="line">    sum = 0</div><div class="line">    <span class="keyword">for</span> word, value <span class="keyword">in</span> wordList.items():</div><div class="line">        sum += value</div><div class="line">    <span class="built_in">return</span> sum</div><div class="line"></div><div class="line">def retrieveRandomWord(wordlist):</div><div class="line">    randIndex = randint(1, wordlistSum(wordlist))</div><div class="line">    <span class="keyword">for</span> word, value <span class="keyword">in</span> wordlist.items():</div><div class="line">        randIndex -= value</div><div class="line">        <span class="keyword">if</span> randIndex &lt;= 0:</div><div class="line">            <span class="built_in">return</span> word</div><div class="line"></div><div class="line">def buildWordDict(text):</div><div class="line">    <span class="comment"># 剔除换行符和引号</span></div><div class="line">    text = text.replace(<span class="string">"\n"</span>, <span class="string">" "</span>)</div><div class="line">    text = text.replace(<span class="string">"\""</span>, <span class="string">""</span>)</div><div class="line">    <span class="comment"># 保证每个标点符号都和前面的单词在一起</span></div><div class="line">    <span class="comment"># 这样不会被剔除，保留在马尔可夫链中</span></div><div class="line">    punctuation = [<span class="string">','</span>, <span class="string">'.'</span>, <span class="string">';'</span>,<span class="string">':'</span>]</div><div class="line">    <span class="keyword">for</span> symbol <span class="keyword">in</span> punctuation:</div><div class="line">        text = text.replace(symbol, <span class="string">" "</span>+symbol+<span class="string">" "</span>)</div><div class="line">    words = text.split(<span class="string">" "</span>)</div><div class="line">    <span class="comment"># 过滤空单词</span></div><div class="line">    words = [word <span class="keyword">for</span> word <span class="keyword">in</span> words <span class="keyword">if</span> word != <span class="string">""</span>]</div><div class="line"></div><div class="line">    wordDict = &#123;&#125;</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(1, len(words)):</div><div class="line">        <span class="keyword">if</span> words[i-1] not <span class="keyword">in</span> wordDict: <span class="comment"># 为单词新建一个词典</span></div><div class="line">            wordDict[words[i-1]] = &#123;&#125;</div><div class="line">        <span class="keyword">if</span> words[i] not <span class="keyword">in</span> wordDict[words[i-1]]:</div><div class="line">            wordDict[words[i-1]][words[i]] = 0</div><div class="line">        wordDict[words[i-1]][words[i]] = wordDict[words[i-1]][words[i]] + 1</div><div class="line">    <span class="built_in">return</span> wordDict</div><div class="line"></div><div class="line">text = str(urlopen(<span class="string">"http://pythonscraping.com/files/inaugurationSpeech.txt"</span>)</div><div class="line">           .<span class="built_in">read</span>(), <span class="string">'utf-8'</span>)</div><div class="line">wordDict = buildWordDict(text)</div><div class="line">length = 100</div><div class="line">chain = <span class="string">""</span></div><div class="line">currentWord = <span class="string">"I"</span></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(0, length):</div><div class="line">    chain += currentWord+<span class="string">" "</span></div><div class="line">    currentWord = retrieveRandomWord(wordDict[currentWord])</div><div class="line"><span class="built_in">print</span>(chain)</div><div class="line">``` </div><div class="line">上述代码会随机生成一段100个单词的马尔可夫链，至于句子的含义，就是胡言乱语</div><div class="line"><span class="comment">## 维基百科六度分割：终结篇</span></div><div class="line">在寻找有向图的最短路径问题中，即找出维基百科中凯文 ·贝肯词条和其他词条之间最短链接路径的方法中，效果 最好且最常用的一种方法是广度优先搜索(breadth-first search)。</div><div class="line">``` bash </div><div class="line">from urllib.request import urlopen</div><div class="line">from bs4 import BeautifulSoup</div><div class="line">import pymysql</div><div class="line"></div><div class="line">conn = pymysql.connect(host=<span class="string">'127.0.0.1'</span>, unix_socket=<span class="string">'/tmp/mysql.sock'</span>,</div><div class="line">                       user=<span class="string">'root'</span>, passwd=<span class="string">'wyt629szk'</span>, db=<span class="string">'mysql'</span>, charset=<span class="string">'utf8'</span>)</div><div class="line">cur = conn.cursor()</div><div class="line">cur.execute(<span class="string">"USE wikipedia"</span>)</div><div class="line"></div><div class="line">class SolutionFound(RuntimeError):</div><div class="line">    def __init__(self, message):</div><div class="line">        self.message = message</div><div class="line"></div><div class="line">def getLinks(fromPageId):</div><div class="line">    cur.execute(<span class="string">"SELECT toPageId FROM links WHERE fromPageId = %s"</span>, (fromPageId))</div><div class="line">    <span class="keyword">if</span> cur.rowcount == 0:</div><div class="line">        <span class="built_in">return</span> None</div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        <span class="built_in">return</span> [x[0] <span class="keyword">for</span> x <span class="keyword">in</span> cur.fetchall()]</div><div class="line"></div><div class="line">def constructDict(currentPageId):</div><div class="line">    links = getLinks(currentPageId)</div><div class="line">    <span class="keyword">if</span> links:</div><div class="line">        <span class="built_in">return</span> dict(zip(links,[&#123;&#125;]*len(links)))</div><div class="line">    <span class="built_in">return</span> &#123;&#125;</div><div class="line"></div><div class="line"><span class="comment"># 链接树要么为空，要么包含多个链接</span></div><div class="line">def searchDepth(targetPageId, currentPageId, linkTree, depth):</div><div class="line">    <span class="keyword">if</span> depth == 0:</div><div class="line">        <span class="comment">#停止递归，返回结果</span></div><div class="line">        <span class="built_in">return</span> linkTree</div><div class="line">    <span class="keyword">if</span> not linkTree:</div><div class="line">        <span class="comment">#如果函数获取的链接字典是空的，就对当前页面的链接进行搜索。如果当前页面也没链</span></div><div class="line">        <span class="comment"># 接，就返回空链接字典。</span></div><div class="line">        linkTree = constructDict(currentPageId)</div><div class="line">        <span class="keyword">if</span> not linkTree:</div><div class="line">            <span class="comment">#若此节点无连接，则跳过此节点</span></div><div class="line">            <span class="built_in">return</span> &#123;&#125;</div><div class="line">    <span class="keyword">if</span> targetPageId <span class="keyword">in</span> linkTree.keys():</div><div class="line">        <span class="built_in">print</span>(<span class="string">"TARGET"</span> + str(targetPageId) + <span class="string">" FOUND!"</span>)</div><div class="line">        raise SolutionFound(<span class="string">"PAGE: "</span>+ str(currentPageId))</div><div class="line"></div><div class="line">    <span class="keyword">for</span> branchKey, branchValue <span class="keyword">in</span> linkTree.items():</div><div class="line">        try:</div><div class="line">            <span class="comment">#递归建立链接树</span></div><div class="line">            linkTree[branchKey] = searchDepth(targetPageId, branchKey, branchValue,</div><div class="line">                                              depth-1)</div><div class="line">        except SolutionFound as e:</div><div class="line">            <span class="built_in">print</span>(e.message)</div><div class="line">            raise  SolutionFound(<span class="string">"PAGE: "</span>+str(currentPageId))</div><div class="line">    <span class="built_in">return</span> linkTree</div><div class="line">try:</div><div class="line">    searchDepth(134951, 1, &#123;&#125;, 4)</div><div class="line">    <span class="built_in">print</span>(<span class="string">"No solution found"</span>)</div><div class="line">except SolutionFound as e:</div><div class="line">    <span class="built_in">print</span>(e.message)</div></pre></td></tr></table></figure></p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p>由于数据库中的数据被我删除了，所以没有测试（^~^）</p>
+<h2 id="自然语言工具包（NLTK）"><a href="#自然语言工具包（NLTK）" class="headerlink" title="自然语言工具包（NLTK）"></a>自然语言工具包（NLTK）</h2><p>一个python库，用于识别和标记英语文本中各个词的词性（<a href="http://www.nltk.org/install.html）" target="_blank" rel="external">http://www.nltk.org/install.html）</a></p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>import nltk<br>nltk.download()<br>两行命令会打开NLTK的下载器</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<h3 id="用NLTK做统计分析"><a href="#用NLTK做统计分析" class="headerlink" title="用NLTK做统计分析"></a>用NLTK做统计分析</h3><p>文字的单词数量，单词频率和单词词性<br>一般从Text对象开始<br>from nltk import word_tokenize<br>from nltk import Text</p>
+<p>tokens = word_tokenize(“Here is some not very interesting text”)<br>text = Text(tokens)</p>
+<p>NLTK库里面已经内置了几本书，可以用import函数导入：<br>from nltk.book import *</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>len(text6)/len(words)</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p>你还可以将文本对象放到一个频率分布对象FreqDist中，查看哪些单词是最常用的，以及单词的频率是多少</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>from nltk import FreqDist<br>fdist = FreqDist(text6)<br>fdist.most_common(10)<br>[(‘:’, 1197), (‘.’, 816), (‘!’, 801), (‘,’, 731), (“‘“, 421), (‘[‘, 3 19), (‘]’, 312), (‘the’, 299), (‘I’, 255), (‘ARTHUR’, 225)]<br>fdist[“Grail”]<br>34</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p>你可以用NLTK非常轻松的创建并搜索一个2-gram模型（还有一个trigrams 即：3-grams）：</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>from nltk import bigrams<br>bigrams = bigrams(text6)<br>bigramsDist = FreqDist(bigrams) &gt;&gt;&gt; bigramsDist[(“Sir”, “Robin”)]<br>18</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p>对于更一般的情形，你还可以导入ngrams模块：</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>from nltk import ngrams<br>fourgrams = ngrams(text6, 4)<br>fourgramsDist = FreqDist(fourgrams)<br>fourgramsDist[(“father”, “smelt”, “of”, “elderberries”)]<br>1</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p>频率分布，文本对象和n-gram还可以整合在一个循环中进行迭代（下面程序就是打印文本中所以以”coconut”）<br>from nltk.book import *<br>from nltk import ngrams<br>fourgrams = ngrams(text6, 4) for fourgram in fourgrams:<br>    if fourgram[0] == “coconut”:<br>        print(fourgram)</p>
+<h3 id="用NLTK做词性分析"><a href="#用NLTK做词性分析" class="headerlink" title="用NLTK做词性分析"></a>用NLTK做词性分析</h3><p>考虑同一个词在不同的语境中可能会导致意思混乱<br>ex:”He was objective in achieving his objective of writing an objective philosophy, primarily using verbs in the objective case”<br>爬虫会认为（objective）被用了四次，进而简单地忽略这四个单词各自不同的含义</p>
+<p>还有要分析普通英文单词组成的公司名称，或者分析某个人对一个公司的评价，像<br>ACME Products is good”和“ACME Products is not bad”意思是一样的</p>
+<p>Penn Treebank语意标记</p>
+<p>除了度量语言，NLTK还可以用它的超级大字典分析文本内容，帮助人们寻找单词的含义。<br>NLTK的一个基本功能就是识别句子中各个词性</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>from nltk.book import *<br>from nltk import word_tokenize<br>text = word_tokenize(“Strange women lying in ponds distributing swords is no basis for a system of government. Supreme executive power derives from a mandate from the masses, not from some farcical aquatic ceremony.”)<br>from nltk import pos_tag<br>pos_tag(text)<br>[(‘Strange’, ‘NNP’), (‘women’, ‘NNS’), (‘lying’, ‘VBG’), (‘in’, ‘IN’)<br>, (‘ponds’, ‘NNS’), (‘distributing’, ‘VBG’), (‘swords’, ‘NNS’), (‘is’<br>, ‘VBZ’), (‘no’, ‘DT’), (‘basis’, ‘NN’), (‘for’, ‘IN’), (‘a’, ‘DT’),<br>(‘system’, ‘NN’), (‘of’, ‘IN’), (‘government’, ‘NN’), (‘.’, ‘.’),<br>(‘Supreme’, ‘NNP’), (‘executive’, ‘NN’), (‘power’, ‘NN’), (‘derives’, ‘NNS’),<br>(‘from’, ‘IN’), (‘a’, ‘DT’), (‘mandate’, ‘NN’), (‘from’, ‘IN’),<br>(‘the’, ‘DT’), (‘masses’, ‘NNS’), (‘,’, ‘,’), (‘not’, ‘RB’), (‘from’, ‘IN’),<br> (‘some’, ‘DT’), (‘farcical’, ‘JJ’), (‘aquatic’, ‘JJ’), (‘ceremony’, ‘NN’), (‘.’, ‘.’)]</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p>但是要正确的完成任务其实很复杂，用下面的例子看更直观</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>text = word_tokenize(“The dust was thick so he had to dust”)<br>pos_tag(text)<br>[(‘The’, ‘DT’), (‘dust’, ‘NN’), (‘was’, ‘VBD’), (‘thick’, ‘JJ’), (‘so’, ‘RB’),<br>(‘he’, ‘PRP’), (‘had’, ‘VBD’), (‘to’, ‘TO’), (‘dust’, ‘VB’)]</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p>需要注意的是dust出现了两次，一个是名称，另外一个是动词（NLTK用英语的上下文无关法识别词性）</p>
+<p>注：机器学习和机器训练<br>你也可以对NLTK进行训练，创建一个全新的上下文无关文法规则，比如，一种外语 的上下文无关文法规则。如果你用 Penn Treebank 词性标记手工完成了那种语言的大部 分文本的语义标记，那么你就可以把结果传给NLTK，然后训练它对其他未标记的文 本进行语义标记</p>
+<h4 id="示例（找出google作为名称而不是动词的句子）"><a href="#示例（找出google作为名称而不是动词的句子）" class="headerlink" title="示例（找出google作为名称而不是动词的句子）"></a>示例（找出google作为名称而不是动词的句子）</h4><p>``` bash<br>from nltk import word_tokenize, sent_tokenize, pos_tag<br>sentences = sent_tokenize(“Google is one of the best companies in the world. I constantly google myself to see what I’m up to.”)<br>nouns = [‘NN’, ‘NNS’, ‘NNP’, ‘NNPS’]<br>for sentence in sentences:<br>    if “google” in sentence.lower():<br>        taggedWords = pos_tag(word_tokenize(sentence))<br>            for word in taggleWords:<br>                if word[0].lower() == “google” and word[1] in nouns:                         print(sentence)</p>
+<h3 id="其他资源"><a href="#其他资源" class="headerlink" title="其他资源"></a>其他资源</h3><p>Natural Language Processing with Python(http:// shop.oreilly.com/product/9780596516499.do)<br>Natural Language Annotation for Machine Learning(<a href="http://shop.oreilly.com/product/0636920020578.do" target="_blank" rel="external">http://shop.oreilly.com/product/0636920020578.do</a>)</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python数据收集/" rel="tag"># python数据收集</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/04/自然语言处理/" rel="next" title="自然语言处理">
+                <i class="fa fa-chevron-left"></i> 自然语言处理
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          
+            <img class="site-author-image" itemprop="image"
+              src="/images/header.png"
+              alt="EtanWatson" />
+          
+            <p class="site-author-name" itemprop="name">EtanWatson</p>
+            <p class="site-description motion-element" itemprop="description">有所舍，有所爱，做一个感性的码农</p>
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives/">
+            
+                <span class="site-state-item-count">29</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#自然语言的处理"><span class="nav-number">1.</span> <span class="nav-text">自然语言的处理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#概括数据"><span class="nav-number">1.1.</span> <span class="nav-text">概括数据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#去掉看上去无用的字符"><span class="nav-number">1.1.1.</span> <span class="nav-text">去掉看上去无用的字符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通过中心主题词，归纳文章核心"><span class="nav-number">1.1.2.</span> <span class="nav-text">通过中心主题词，归纳文章核心</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自然语言工具包（NLTK）"><span class="nav-number">1.2.</span> <span class="nav-text">自然语言工具包（NLTK）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#用NLTK做统计分析"><span class="nav-number">1.2.1.</span> <span class="nav-text">用NLTK做统计分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#用NLTK做词性分析"><span class="nav-number">1.2.2.</span> <span class="nav-text">用NLTK做词性分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#示例（找出google作为名称而不是动词的句子）"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">示例（找出google作为名称而不是动词的句子）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他资源"><span class="nav-number">1.2.3.</span> <span class="nav-text">其他资源</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">EtanWatson</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.2</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
