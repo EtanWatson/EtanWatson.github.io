@@ -310,6 +310,170 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/07/python数据采集（采集JavaScript）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EtanWatson">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EWSUN">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/07/python数据采集（采集JavaScript）/" itemprop="url">python数据采集（采集JavaScript）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-07T14:33:28+08:00">
+                2017-10-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python数据收集/" itemprop="url" rel="index">
+                    <span itemprop="name">python数据收集</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="采集JavaScript"><a href="#采集JavaScript" class="headerlink" title="采集JavaScript"></a>采集JavaScript</h1><h2 id="常用的JavaScript库"><a href="#常用的JavaScript库" class="headerlink" title="常用的JavaScript库"></a>常用的JavaScript库</h2><h3 id="jQuery"><a href="#jQuery" class="headerlink" title="jQuery"></a>jQuery</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;script src=<span class="string">"http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"</span>&gt;&lt;/ script&gt;</div></pre></td></tr></table></figure>
+<h3 id="Google-Analytics"><a href="#Google-Analytics" class="headerlink" title="Google Analytics"></a>Google Analytics</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">&lt;!-- Google Analytics --&gt;&lt;script <span class="built_in">type</span>=<span class="string">"text/javascript"</span>&gt;</div><div class="line">var _gaq = _gaq || []; </div><div class="line">_gaq.push([<span class="string">'_setAccount'</span>, <span class="string">'UA-4591498-1'</span>]); </div><div class="line">_gaq.push([<span class="string">'_setDomainName'</span>, <span class="string">'oreilly.com'</span>]); </div><div class="line">_gaq.push([<span class="string">'_addIgnoredRef'</span>, <span class="string">'oreilly.com'</span>]); </div><div class="line">_gaq.push([<span class="string">'_setSiteSpeedSampleRate'</span>, 50]); </div><div class="line">_gaq.push([<span class="string">'_trackPageview'</span>]);(<span class="function"><span class="title">function</span></span>() &#123; var ga = document.createElement(<span class="string">'script'</span>); </div><div class="line">ga.type = <span class="string">'text/javascript'</span>; </div><div class="line">ga.async = <span class="literal">true</span>; </div><div class="line">ga.src = (<span class="string">'https:'</span> == document.location.protocol ? <span class="string">'https://ssl'</span> : <span class="string">'http://www'</span>) + <span class="string">'.google-analytics.com/ga.js'</span>; </div><div class="line">var s = document.getElementsByTagName(<span class="string">'script'</span>)[0]; s.parentNode.insertBefore(ga, s); &#125;();&lt;/script&gt;</div><div class="line">``` </div><div class="line"><span class="comment">### Google地图</span></div><div class="line">``` bash </div><div class="line">var marker = new google.maps.Marker(&#123;	position: new google.maps.LatLng(-25.363882,131.044922), </div><div class="line">	map: map,	title: <span class="string">'Some marker text'</span>&#125;);</div><div class="line"><span class="comment">### Ajax（异步JavaScript和XML）和动态HTML（有没有用JavaScript控制HTML和CSS元素）</span></div><div class="line">解决方案：</div><div class="line">1.直接从JavaScript代码里采集内容。</div><div class="line">2.用Python的第三方运行JavaScript，直接采集你在浏览器里看到的页面</div><div class="line"><span class="comment">### 在Python中用Selenium执行JavaScript</span></div><div class="line">Selenium是一个强大的网络数据采集工具，它还被广泛用于获取精确的网站快照，因为它们可以直接运行在浏览器上</div><div class="line">phantomJS是一个无头（headless）浏览器</div><div class="line">Selenium库是一个在WebDriver上调用的API。WebDriver有点儿想可以加载网站的浏览器，但是它也可以像BeautifulSoup对象一样用来查找页面元素，与页面上的元素进行交互（发送文本，点击等），以及执行其他动作来运行</div><div class="line">网络爬虫</div><div class="line">下面代码可以获取前面测试页面上Ajax”墙”后面的内容</div><div class="line">``` bash </div><div class="line">from selenium import webdriver</div><div class="line">import time</div><div class="line">diver = webdriver.PhantomJS(executable_path=‘’) <span class="comment">#你的PhantomJS可执行文件的路径</span></div><div class="line">driver.get(<span class="string">"http://pythonscraping.com/pages/javascript/ajaxDemo.html"</span>)</div><div class="line">time.sleep(3)</div><div class="line"><span class="built_in">print</span>(driver.find_element_by_id(‘content’).text)</div><div class="line">driver.close()</div></pre></td></tr></table></figure>
+<p>#这种方法虽然奏效，但是效率还不高，由于页面加载时间的不确定性，所有有很大的弊端</p>
+<h4 id="Selenium的选择器"><a href="#Selenium的选择器" class="headerlink" title="Selenium的选择器"></a>Selenium的选择器</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">driver.find_element_by_id(<span class="string">'content'</span>).text</div><div class="line">driver.find_element_by_css_selector(<span class="string">"#content"</span>)driver.find_element_by_tag_name(<span class="string">"div"</span>)</div><div class="line">driver.find_elements_by_css_selector(<span class="string">"#content"</span>)driver.find_elements_by_css_selector(<span class="string">"div"</span>)</div><div class="line"><span class="comment">#另外，如果你还想用BeautifulSoup来解析网页内容，可以用WebDriver的page_source</span></div><div class="line">pageSource = driver.page_sourcebsObj = BeautifulSoup(pageSource) </div><div class="line"><span class="built_in">print</span>(bsObj.find(id=<span class="string">"content"</span>).get_text())</div><div class="line">``` </div><div class="line"><span class="comment">#### 使用Selenium不断检查，是否完全加载</span></div><div class="line">``` bash </div><div class="line">from selenium.webdriver.common.by import By</div><div class="line">from selenium.webdriver.support.ui import WebDriverWait</div><div class="line">from selenium.webdriver.support import expected_conditions as EC</div><div class="line">from selenium import webdriver</div><div class="line">import time</div><div class="line"></div><div class="line">driver = webdriver.PhantomJS(executable_path=<span class="string">''</span>)</div><div class="line">driver.get(<span class="string">"http://pythonscraping.com/pages/javascript/ajaxDemo.html"</span>)</div><div class="line">try:</div><div class="line">    element = WebDriverWait(driver, 10).until(</div><div class="line">        EC.presence_of_all_elements_located((By.ID, <span class="string">"loadedButton"</span>)))</div><div class="line">finally:</div><div class="line">    <span class="built_in">print</span>(driver.find_element_by_id(<span class="string">"content"</span>).text)</div><div class="line">    driver.close()</div></pre></td></tr></table></figure>
+<p>需要注意的就是WebDriverWait和expected_conditions,这两个模块组合起来，构成了Selenium的隐式等待</p>
+<h5 id="Selenium隐式等待"><a href="#Selenium隐式等待" class="headerlink" title="Selenium隐式等待"></a>Selenium隐式等待</h5><p>1.没有明确的等待时间，但是有最大等待时间</p>
+<p>#DOM触发的状态是用expected_conditions定义的<br>• 弹出一个提示框<br>• 一个元素被选中(比如文本框)<br>• 页面的标题改变了，或者某个文字显示在页面上或者某个元素里 • 一个元素在DOM中变成可见的，或者一个元素从DOM中消失了</p>
+<h5 id="定位器"><a href="#定位器" class="headerlink" title="定位器"></a>定位器</h5><p>大多数的期望条件在使用前都需要你先指定等待的目标元素，定位器是一种抽象的查询语言，用 By 对象表示，可以用于不同的场合，包括创建选择器。<br>一个定位器被用来查找id是loadedButton -&gt; EX：<br>EC.presence_of_element_located((By.ID, “loadedButton”))<br>定位器还可以用来创建选择器，配合WebDriver的find_element函数使用：<br>print(driver.find_element(By.ID, “content”).text)<br>下面这行代码的功能和示例代码中一样：<br>print(driver.find_element_by_id(“content”).text)</p>
+<p>下面是定位器通过By对象进行选择的策略<br>• ID<br>• CLASS_NAME(HTML的class属性)<br>• CSS_SELECTOR:通过 CSS 的 class、id、tag 属性名来查找元素，<br>           用 #idName、.className、tagName 表示。<br>• LINK_TEXT：通过链接文字查找 HTML 的 <a> 标签。例如，如果一个链接的文字是“Next”，就可以 用(By.LINK_TEXT, “Next”)来选择。<br>• PARTIAL_LINK_TEXT：与 LINK_TEXT 类似，只是通过部分链接文字来查找。<br>• NAME：通过 HTML 标签的 name 属性查找。这在处理 HTML 表单时非常方便。<br>• TAG_NAME：通过 HTML 标签的名称查找。<br>• XPATH：用 XPath 表达式(语法在下面介绍)选择匹配的元素。</a></p>
+<h6 id="XPath语法"><a href="#XPath语法" class="headerlink" title="XPath语法"></a>XPath语法</h6><p>在XPath语法中有四个重要概念。<br>一、根节点和非根节点</p>
+<ol>
+<li>/div选择div节点，只有当它是文档的根节点时</li>
+<li>//div选择文档中所有的div节点（包括非根节点）<br>二、通过属性选择节点</li>
+<li>//@href选择带href属性的所有节点</li>
+<li>//a[@href=‘<a href="http://google.com’]选择页面中所有指向Google网站的链接" target="_blank" rel="external">http://google.com’]选择页面中所有指向Google网站的链接</a><br>三、通过位置选择节点</li>
+<li>//a[3]选着文档中的第三个链接</li>
+<li>//table[last()]选择文档中的最后一个表</li>
+<li>//a[positon() &lt; 3]选择文档中的前三个链接<br>四、星号（*）匹配任意字符串或节点，可以在不同条件下使用</li>
+<li>//table/tr/*选择所有表格行tr标签的所有子节点（这很适合选择th和td标签）</li>
+<li>//div[@0]选择带有任意属性的所有div标签<br>更多，请参考微软的XPath语法页面：<a href="https://msdn.microsoft.com/en-us/enus/library/ms256471" target="_blank" rel="external">https://msdn.microsoft.com/en-us/enus/library/ms256471</a></li>
+</ol>
+<h2 id="处理重定向"><a href="#处理重定向" class="headerlink" title="处理重定向"></a>处理重定向</h2><h3 id="客户端重定向"><a href="#客户端重定向" class="headerlink" title="客户端重定向"></a>客户端重定向</h3><p>是在服务器将页面内容发送到浏览器之前，由浏览器执行 JavaScript 完成的 页面跳转，而不是服务器完成的跳转。<br>在网络采集是的差异：（客户端重定向和服务端重定向）<br>根据具体情况，<br>服务器端重定向一般都可以轻松地通过 Python 的 urllib 库解决，不需要使用 Selenium (更多的介绍请参考第 3 章)。客户端重定向却不能这样处理，除非你有工具可以执行<br>JavaScript。<br>Selenium的问题在于怎么识别一个页面已经完成重定向了</p>
+<h4 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h4><p>首先从页面开始加载时就”监视”DOM中的一个元素，然后重复调用这个元素直到Selenium抛出一个StaleElementRefereceException异常，也就是说，元素不在页面的DOM里了，说明这时网站已经跳转：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">from selenium import webdriver</div><div class="line">import time</div><div class="line">from selenium.webdriver.remote.webelement import WebElement</div><div class="line">from selenium.common.exceptions import StaleElementReferenceException</div><div class="line"></div><div class="line">def waitForLoad(driver):</div><div class="line">    elem = driver.find_element_by_tag_name(<span class="string">"html"</span>)</div><div class="line">    count = 0</div><div class="line">    <span class="keyword">while</span> True:</div><div class="line">        count += 1</div><div class="line">        <span class="keyword">if</span> count &gt; 20:</div><div class="line">            <span class="built_in">print</span>(<span class="string">"Timing out after 10 secods and returning"</span>)</div><div class="line">            <span class="built_in">return</span></div><div class="line">        time.sleep(.5)</div><div class="line">        try:</div><div class="line">            elem == driver.find_element_by_tag_name(<span class="string">"html"</span>)</div><div class="line">        except StaleElementReferenceException:</div><div class="line">            <span class="built_in">return</span></div><div class="line">driver = webdriver.PhantomJS(executable_path=“/****/**/MachineLearning/phantomjs-2.1.1-macosx/bin/phantomjs<span class="string">")</span></div><div class="line"><span class="string">driver.get("</span>http://pythonscraping.com/pages/javascript/redirectDemo1.html<span class="string">")</span></div><div class="line"><span class="string">waitForLoad(driver)</span></div><div class="line"><span class="string">print(driver.page_source)</span></div></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/07/python数据收集（穿越网页表单与登录窗口进行采集）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1746,175 +1910,11 @@ links = getLinks(<span class="string">"/wiki/Python_(programming_language)"</spa
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/30/python数据收集（二）/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="EtanWatson">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/header.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="EWSUN">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/30/python数据收集（二）/" itemprop="url">python数据收集（二）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-30T15:54:29+08:00">
-                2017-09-30
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/python数据收集/" itemprop="url" rel="index">
-                    <span itemprop="name">python数据收集</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="复杂的HTML解析"><a href="#复杂的HTML解析" class="headerlink" title="复杂的HTML解析"></a>复杂的HTML解析</h1><h2 id="不是一直都要用锤子"><a href="#不是一直都要用锤子" class="headerlink" title="不是一直都要用锤子"></a>不是一直都要用锤子</h2><p>例如：<br>$ bsObj.findAll(“table”)[4].findAll(“tr”)[2].find(“td”).findAll(“div”)[1].find(“a”)<br>虽然可以达到目标，但是除了代码欠缺美感之外，还有就是管理员对网页稍作修改，代码就会失效，甚至会毁了整个<br>网络爬虫<br>如何解决该问题呢？<br>1.寻找样式更友好的移动版或者看看有没有打印此页的链接<br>2.寻找隐藏在javascript文件里的信息<br>3.你要的信息或许也可以从网页的URL链接里获取<br>4.找找你要的信息是不是该网站从别的网站上抓取出来的</p>
-<h2 id="再端一碗BeautifulSoup"><a href="#再端一碗BeautifulSoup" class="headerlink" title="再端一碗BeautifulSoup"></a>再端一碗BeautifulSoup</h2><h3 id="利用好css中的class和ID属性"><a href="#利用好css中的class和ID属性" class="headerlink" title="利用好css中的class和ID属性"></a>利用好css中的class和ID属性</h3><p>ex:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">from urllib.request import urlopen</div><div class="line">from bs4 import BeautifulSoup</div><div class="line"></div><div class="line">html = urlopen(<span class="string">"http://www.pythonscraping.com/pages/warandpeace.html"</span>)</div><div class="line">bsObj = BeautifulSoup(html,<span class="string">"html.parser"</span>)</div><div class="line">nameList = bsObj.findAll(<span class="string">"span"</span>,&#123;<span class="string">"class"</span>:<span class="string">"green"</span>&#125;)</div><div class="line"><span class="keyword">for</span> name <span class="keyword">in</span> nameList:</div><div class="line">    <span class="built_in">print</span>(name.get_text())</div><div class="line"><span class="comment">#使用name.get_text()会将标签中的内容提取出来，如果你正在处理一个包含许多超链接，段落和标签的</span></div><div class="line"><span class="comment">#大段源码，.get_text()会将这些处理成只剩下一串不带标签的文字，一般情况下，尽可能的保留HTML文档的标签结构</span></div></pre></td></tr></table></figure></p>
-<h3 id="BeautifulSoup的find-和findAll"><a href="#BeautifulSoup的find-和findAll" class="headerlink" title="BeautifulSoup的find()和findAll()"></a>BeautifulSoup的find()和findAll()</h3><p>函数定义：<br>findAll(tag, attributes, recursive, text, limit, keywords)<br>find(tag, attributes, recursive, text, keywords)<br>下面来介绍一下各个参数<br>recursive:bool型 True：查找标签参数的所有子标签（默认）<br>        False：只查找文档的一级标签<br>text:更具标签的文本内容去匹配<br>$ nameList = bsObj.findAll(text=”the prince”)<br>$ print(len(nameList))<br>limit:find等价于finall的limit等于1，获取前几项是按照网页上的顺序排序的<br>keyword<br>以下每组效果相同<br>$ bsObj.findAll(id=”text”)<br>$ bsObj.findAll(“”, {“id”:”text”})</p>
-<p>$ bsObj.findAll(class<em>=”green”) #由于class是python的保留字，所以必须在其后面添加</em><br>$ bsObj.findAll(“”, {“class”:”green”})</p>
-<h3 id="其他BeautifulSoup对象"><a href="#其他BeautifulSoup对象" class="headerlink" title="其他BeautifulSoup对象"></a>其他BeautifulSoup对象</h3><p>常用对象： 1.BeautifulSoup 2.Tag对象（前面已经提到过，例如：bsObj.div.h1）<br>不常用对象：NavigableString对象：用来表示标签里的文字<br>     Comment 对象：用来查找HTML文档的注释标签 &lt;!—- 像这样 —&gt;</p>
-<h3 id="导航树"><a href="#导航树" class="headerlink" title="导航树"></a>导航树</h3><p>如果你需要通过标签在文档中的位置来查找标签，就使用导航树(Navigating Trees)<br>$ bsObj.tag.subTag.anotherSubTag</p>
-<h4 id="处理子标签和其他后代标签"><a href="#处理子标签和其他后代标签" class="headerlink" title="处理子标签和其他后代标签"></a>处理子标签和其他后代标签</h4><p>$ bsObj.div.findAll(“img”)<br>如果你只想找出子标签，可以用.children标签<br>$ from urllib.request import urlopen<br>$ from bs4 import BeautifulSoup<br>$ html = urlopen(“<a href="http://www.pythonscraping.com/pages/page3.html" target="_blank" rel="external">http://www.pythonscraping.com/pages/page3.html</a>“)<br>$ bsObj = BeautifulSoup(html)<br>$ for child in bsObj.find(“table”,{“id”:”giftList”}).children:<br>    print(child)<br>如果你用descendants()函数，就会将其所有后代标签打印出来</p>
-<h4 id="处理兄弟标签"><a href="#处理兄弟标签" class="headerlink" title="处理兄弟标签"></a>处理兄弟标签</h4><p>$ from urllib.request import urlopen<br>$ from bs4 import BeautifulSoup<br>$ html = urlopen(“<a href="http://www.pythonscraping.com/pages/page3.html" target="_blank" rel="external">http://www.pythonscraping.com/pages/page3.html</a>“)<br>$ bsObj = BeautifulSoup(html)<br>$ for sibling in bsObj.find(“table”,{“id”:”giftList”}).tr.next_siblings:<br>    print(sibling)</p>
-<p>#这里需要注意的是，next_siblings只会找到他后面的兄弟标签</p>
-<p>#让标签的选择更具体(如果可能的话）<br>$ bsObj.find(“table”,{“id”:”giftList”}).tr</p>
-<p>#罗列一下查找子标签的四个函数<br>next_sibling 和 previous_sibling<br>next_siblings 和 previous_siblings<br>从命名规范中我们也可以发现其各自的用途以及区别，这里不在赘述</p>
-<h4 id="父标签处理"><a href="#父标签处理" class="headerlink" title="父标签处理"></a>父标签处理</h4><p>$ from urllib.request import urlopen<br>$ from bs4 import BeautifulSoup<br>$ html = urlopen(“<a href="http://www.pythonscraping.com/pages/page3.html" target="_blank" rel="external">http://www.pythonscraping.com/pages/page3.html</a>“)<br>$ bsObj = BeautifulSoup(html)<br>$ print(bsObj.find(“img”,{“src”:”../img/gifts/img1.jpg”}).parent.previous_sibling.get_text())</p>
-<h2 id="正则表达式：如果你有一个问题打算用正则表达式来解决，那么就是两个问题了"><a href="#正则表达式：如果你有一个问题打算用正则表达式来解决，那么就是两个问题了" class="headerlink" title="正则表达式：如果你有一个问题打算用正则表达式来解决，那么就是两个问题了"></a>正则表达式：如果你有一个问题打算用正则表达式来解决，那么就是两个问题了</h2><p>ex：邮箱正则表达式：[A-Za-z0-9._+]+@[A-Za-z]+.(com|org\edu\net)<br>OK,接下来我们学习一下12中python中最常用的正则表达式符号</p>
-<ul>
-<li>: 匹配前面的字符，子表达式或括号里的字符0次或多次    a<em>b</em>      aaaaaaaaa,aaabbb,bbbb</li>
-</ul>
-<ul>
-<li>: 匹配前面的字符，子表达式或括号里的字符至少一次    a+b+       aaaabbb ab<br>[]: 匹配任意一个字符（相当于”任选一个”）        [A-Z]<em>   APPLe,GAPITALS<br>(): 表达式编组（在正则表达式的规划里编组会优先运行）    (a</em>b)<em>      aaabaab<br>{m,n}: 匹配前面的字符，子表达式或括号里的字符m到n次（包含m或n）     a{2,3}b{2,3}<br>[^]: 匹配任意一个不在括号里的字符            [^A-Z]</em>     sdasdasd<br>| : 匹配任意一个由竖线分割哥的字符，子表达式        b(a|i|e) bad,bid,bed<br>. : 匹配任意单个字符（包括符号，数字和空格等）        b.d     bad,bzd,b$d,b d<br>^ : 字符串开始位置的字符或子表达式            ^a     apple,asdf,a<br>\ : 转义字符（把有特殊含义的字符转换成字面形式）         . | \<br>$ : 经常用在正则表达式的末尾，表示”从字符串的末端匹配”。如果不用它，<br>  每个正则表达式实际都带着’.<em>’模式，只会从字符串的开头进行匹配。这个符号<br>  可以看做是^符号的反义词<br>?!  “不包含”。这个奇怪的组合通常会放在字符或正则表达式前面，表示字符不能<br>  出现在诺表字符串里。字符通常会在字符窜的不同部位出现。如果要在整个字符串<br>  中全部排除某个字符，就加上^和$符号               ^((?![A-Z]).)</em>$    <h2 id="正则表达式和BeautifulSoup"><a href="#正则表达式和BeautifulSoup" class="headerlink" title="正则表达式和BeautifulSoup"></a>正则表达式和BeautifulSoup</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">from urllib.request import urlopen</div><div class="line">from bs4 import BeautifulSoup</div><div class="line">import re</div><div class="line">html = urlopen(<span class="string">"http://www.pythonscraping.com/pages/page3.html"</span>)</div><div class="line">bsObj = BeautifulSoup(html)</div><div class="line">images = bsObj.findAll(<span class="string">"img"</span>,&#123;<span class="string">"src"</span>:re.compile(<span class="string">"\.\.\/img\/gifts/img.*\.jpg"</span>)&#125;)</div><div class="line"><span class="keyword">for</span> image <span class="keyword">in</span> images:</div><div class="line">    <span class="built_in">print</span>(image[<span class="string">"src"</span>])</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<h2 id="获取属性"><a href="#获取属性" class="headerlink" title="获取属性"></a>获取属性</h2><p>对于一个标签对象，可以用下面的代码获取它的全部属性：<br>$ myTag.attrs #返回的是Python字典对象<br>$ myImgTag.attrs[“src”]</p>
-<h2 id="Lambda表达式：本质上就是一个函数"><a href="#Lambda表达式：本质上就是一个函数" class="headerlink" title="Lambda表达式：本质上就是一个函数"></a>Lambda表达式：本质上就是一个函数</h2><p>BeautifulSoup允许我们把特定函数类型当做findAll函数的参数-&gt;限定：标签作为参数，返回结果是boolean型<br>BeautifulSoup用这个函数来评估他遇到的每个标签对象，最后把评估结果为真的标签保留，把其他标签剔除<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">soup.findAll(lambda tag: len(tag.attrs) == 2) <span class="comment">#这个在我的环境下不起作用，先标注一下</span></div><div class="line"><span class="comment">#返回结果</span>&lt;div class=<span class="string">"body"</span> id=<span class="string">"content"</span>&gt;&lt;/div&gt;&lt;span style=<span class="string">"color:red"</span> class=<span class="string">"title"</span>&gt;&lt;/span&gt;</div></pre></td></tr></table></figure></p>
-<h2 id="超越BeautifulSoup"><a href="#超越BeautifulSoup" class="headerlink" title="超越BeautifulSoup"></a>超越BeautifulSoup</h2><p>lxml -&gt; <a href="http://lxml.de/" target="_blank" rel="external">http://lxml.de/</a> 用c语言写的，处理绝大多数HTML文档时的速度都非常快（学习成本高）<br>HTML parser -&gt; python自带解析库，不需要重新安装</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1963,7 +1963,7 @@ links = getLinks(<span class="string">"/wiki/Python_(programming_language)"</spa
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">30</span>
+                <span class="site-state-item-count">31</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
