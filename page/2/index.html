@@ -310,6 +310,361 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/02/python数据收集（四）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EtanWatson">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EWSUN">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/02/python数据收集（四）/" itemprop="url">python数据收集（四）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-02T11:03:10+08:00">
+                2017-10-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python数据收集/" itemprop="url" rel="index">
+                    <span itemprop="name">python数据收集</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="使用API"><a href="#使用API" class="headerlink" title="使用API"></a>使用API</h1><h2 id="API与普通网站的区别"><a href="#API与普通网站的区别" class="headerlink" title="API与普通网站的区别"></a>API与普通网站的区别</h2><p>1.API请求使用非常严谨的语法 2.其次API用JSON或XML格式表示数据，而不是HTML</p>
+<h2 id="API的通用规则"><a href="#API的通用规则" class="headerlink" title="API的通用规则"></a>API的通用规则</h2><p>第一次使用API的时候，建议阅读文档</p>
+<h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><p>利用HTTP从网络服务获取信息的四种方式：<br>1.GET<br>2.POST<br>3.PUT<br>4.DELETE</p>
+<h3 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h3><h3 id="服务器响应"><a href="#服务器响应" class="headerlink" title="服务器响应"></a>服务器响应</h3><p>XML/JSON -&gt; json更小，在js框架中更好处理<br>API调用</p>
+<h3 id="Echo-Nest"><a href="#Echo-Nest" class="headerlink" title="Echo Nest"></a>Echo Nest</h3><h3 id="解析JSON数据"><a href="#解析JSON数据" class="headerlink" title="解析JSON数据"></a>解析JSON数据</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">import json</div><div class="line">from urllib.request import urlopen</div><div class="line"></div><div class="line">def getCountry(ipAddress):</div><div class="line">    response = urlopen(<span class="string">"http://freegeoip.net/json/"</span>+ipAddress).<span class="built_in">read</span>().decode(<span class="string">'utf-8'</span>)</div><div class="line">    responseJson = json.loads(response)</div><div class="line">    <span class="built_in">return</span> responseJson.get(<span class="string">'country_code'</span>)</div><div class="line"><span class="built_in">print</span>(getCountry(<span class="string">"50.78.253.58"</span>))</div><div class="line">下面的例子将json字符串处理成python可以处理的json对象</div><div class="line">import json</div><div class="line">jsonString = <span class="string">'&#123;"arrayOfNums":[&#123;"number":0&#125;,&#123;"number":1&#125;,&#123;"number":2&#125;],'</span> \</div><div class="line">             <span class="string">'"arrayOfFruits":[&#123;"fruit":"apple"&#125;,&#123;"fruit":"banana"&#125;,&#123;"fruit":"pear"&#125;]&#125;'</span></div><div class="line">jsonObj = json.loads(jsonString)</div><div class="line"><span class="built_in">print</span>(jsonObj.get(<span class="string">"arrayOfNums"</span>))</div><div class="line"><span class="built_in">print</span>(jsonObj.get(<span class="string">"arrayOfNums"</span>)[1])</div><div class="line"><span class="built_in">print</span>(jsonObj.get(<span class="string">"arrayOfNums"</span>)[1].get(<span class="string">"number"</span>)+</div><div class="line">jsonObj.get(<span class="string">"arrayOfNums"</span>)[2].get(<span class="string">"number"</span>))</div><div class="line"><span class="built_in">print</span>(jsonObj.get(<span class="string">"arrayOfFruits"</span>)[2].get(<span class="string">"fruit"</span>))</div><div class="line">可以着重注意一下load()函数</div></pre></td></tr></table></figure>
+<h3 id="Python的集合类型简介"><a href="#Python的集合类型简介" class="headerlink" title="Python的集合类型简介"></a>Python的集合类型简介</h3><p>集合是无序的，set集合的好处是它存储的值不会重复<br>在未来可能需要扩展的代码，在决定使用集合还是列表时，有两件事情需要考虑：虽然列表迭代速度比集合稍微快一点，<br>但集合查找速度更快</p>
+<h3 id="示例代码"><a href="#示例代码" class="headerlink" title="示例代码"></a>示例代码</h3><pre><code class="bash">from urllib.request import urlopen,HTTPError
+from bs4 import BeautifulSoup
+import datetime
+import random
+import re
+import json
+
+random.seed(datetime.datetime.now())
+def getLinks(articleUrl):
+    html = urlopen(<span class="string">"http://en.wikipedia.org"</span>+articleUrl)
+    bsObj = BeautifulSoup(html,<span class="string">'html.parser'</span>)
+    <span class="built_in">return</span> bsObj.find(<span class="string">"div"</span>,{<span class="string">"id"</span>:<span class="string">"bodyContent"</span>}).findAll(<span class="string">"a"</span>,
+                                                          href=re.compile(<span class="string">"^(/wiki/)((?!:).)*$"</span>))
+def getHistoryIPs(pageUrl):
+    <span class="comment"># 编辑历史页面URL链接格式是：</span>
+    <span class="comment"># http://en.wikipedia.org/w/index.php?title=Title_in_URL&amp;action=history</span>
+    pageUrl = pageUrl.replace(<span class="string">"/wiki/"</span>,<span class="string">""</span>)
+    historyUrl = <span class="string">"http://en.wikipedia.org/w/index.php?title="</span> +pageUrl+<span class="string">"&amp;action=history"</span>
+    <span class="built_in">print</span>(<span class="string">"history url is: "</span> + historyUrl)
+    html = urlopen(historyUrl)
+    bsObj = BeautifulSoup(html,<span class="string">'html.parser'</span>)
+    <span class="comment"># 找出class属性是"mw-anonuserlink"的链接</span>
+    <span class="comment"># 它们用IP地址代替用户</span>
+    ipAddressse = bsObj.findAll(<span class="string">"a"</span>,{<span class="string">"class"</span>:<span class="string">"mw-anonuserlink"</span>})
+    addressList = <span class="built_in">set</span>()
+    <span class="keyword">for</span> ipAddress <span class="keyword">in</span> ipAddressse:
+        addressList.add(ipAddress.get_text())
+        <span class="built_in">return</span> addressList
+
+def getCountry(ipAddress):
+    try:
+        response = urlopen(<span class="string">"http://freegeoip.net/json/"</span>+ipAddress)\
+            .<span class="built_in">read</span>().decode(<span class="string">'utf-8'</span>)
+    except HTTPError:
+        <span class="built_in">return</span> None
+    responseJson = json.loads(response)
+    <span class="built_in">return</span> responseJson.get(<span class="string">"country_code"</span>)
+
+links = getLinks(<span class="string">"/wiki/Python_(programming_language)"</span>)
+
+<span class="keyword">while</span>(len(links) &gt; 0):
+    <span class="keyword">for</span> link <span class="keyword">in</span> links:
+        <span class="built_in">print</span>(<span class="string">"------------------------"</span>)
+        historyIPs = getHistoryIPs(link.attrs[<span class="string">"href"</span>])
+        <span class="keyword">for</span> historyIP <span class="keyword">in</span> historyIPs:
+            country = getCountry(historyIP)
+            <span class="keyword">if</span> country is not None:
+                <span class="built_in">print</span>(historyIP+ <span class="string">" is from "</span> + country)
+    newLink = links[random.randint(0, len(links)-1)].attrs[<span class="string">'herf'</span>]
+    links = getLinks(newLink)
+</code></pre>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/30/python数据收集（三）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EtanWatson">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EWSUN">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/30/python数据收集（三）/" itemprop="url">python数据收集（三）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-30T20:10:29+08:00">
+                2017-09-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python数据收集/" itemprop="url" rel="index">
+                    <span itemprop="name">python数据收集</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="开始采集"><a href="#开始采集" class="headerlink" title="开始采集"></a>开始采集</h1><h2 id="遍历单个域名"><a href="#遍历单个域名" class="headerlink" title="遍历单个域名"></a>遍历单个域名</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">from urllib.request import urlopen</div><div class="line">from bs4 import BeautifulSoup</div><div class="line">import datetime</div><div class="line">import random</div><div class="line">import re</div><div class="line"></div><div class="line">random.seed(datetime.datetime.now())</div><div class="line">def getLinks(articleUrl):</div><div class="line">    html = urlopen(<span class="string">"http://en.wikipedia.org"</span>+articleUrl)</div><div class="line">    bsObj = BeautifulSoup(html)</div><div class="line">    <span class="built_in">return</span> bsObj.find(<span class="string">"div"</span>, &#123;<span class="string">"id"</span>:<span class="string">"bodyContent"</span>&#125;).findAll(<span class="string">"a"</span>,</div><div class="line">                          href=re.compile(<span class="string">"^(/wiki/)((?!:).)*$"</span>))</div><div class="line">links = getLinks(<span class="string">"/wiki/Kevin_Bacon"</span>)</div><div class="line"><span class="keyword">while</span> len(links) &gt; 0:</div><div class="line">    newArticle = links[random.randint(0, len(links)-1)].attrs[<span class="string">"href"</span>]</div><div class="line">    <span class="built_in">print</span>(newArticle)</div><div class="line">    links = getLinks(newArticle)</div><div class="line"><span class="comment">#伪随机数和随机数种子</span></div><div class="line">random.seed(datetime.datetime.now()) <span class="comment">#种子重复，会导致随机数重复，所以这里采用系统时间作为种子</span></div><div class="line">random.randint(0,len(links)-1) <span class="comment">#返回0-len(links)-1的随机整数</span></div><div class="line"><span class="comment">#python的伪随机数生成器用的是梅森旋转算法，它产生的随机数很难预测且均匀分布</span></div></pre></td></tr></table></figure>
+<p>#要注意异常处理</p>
+<h2 id="采集整个网站"><a href="#采集整个网站" class="headerlink" title="采集整个网站"></a>采集整个网站</h2><p>1.深网（deep Web）和暗网(dark Web)<br>2.遍历整个网站的网络数据采集有许多好处<br>  <1 生成网站地图="" <2="" 收集数据="" 链接去重="" 集合set类型="" <figure="" class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line">from urllib.request import urlopen</div><div class="line">from bs4 import BeautifulSoup</div><div class="line">import re</div><div class="line"></div><div class="line">pages = <span class="built_in">set</span>()</div><div class="line">def getLinks(pageUrl):</div><div class="line">    global pages</div><div class="line">    html = urlopen(<span class="string">"http://en.wikipedia.org"</span>+pageUrl)</div><div class="line">    bsObj = BeautifulSoup(html)</div><div class="line">    <span class="keyword">for</span> link <span class="keyword">in</span> bsObj.findAll(<span class="string">"a"</span>, href=re.compile(<span class="string">"^(/wiki/)"</span>)):</div><div class="line">        <span class="keyword">if</span> <span class="string">'href'</span> <span class="keyword">in</span> link.attrs:</div><div class="line">            <span class="keyword">if</span> link.attrs[<span class="string">'href'</span>] not <span class="keyword">in</span> pages:</div><div class="line">                <span class="comment"># 我们遇到了新页面</span></div><div class="line">                newPage = link.attrs[<span class="string">'href'</span>]</div><div class="line">                <span class="built_in">print</span>(newPage)</div><div class="line">                pages.add(newPage)</div><div class="line">                getLinks(newPage)</div><div class="line">getLinks(<span class="string">""</span>)</div><div class="line"><span class="comment">#关于递归的警告</span></div><div class="line">如果递归运行的次数非常多，前面的递归程序就很可能崩溃</div><div class="line">python默认的递归限制（自我调用次数）是1000次</div><div class="line"><span class="comment">### 收集整个网站数据</span></div><div class="line">``` bash</div><div class="line">from urllib.request import urlopen</div><div class="line">from bs4 import BeautifulSoup</div><div class="line">import re</div><div class="line">pages = <span class="built_in">set</span>()</div><div class="line">def getLinks(pageUrl):</div><div class="line">    global pages</div><div class="line">    html = urlopen(<span class="string">"http://en.wikipedia.org"</span>+pageUrl)</div><div class="line">    bsObj = BeautifulSoup(html)</div><div class="line">    try:</div><div class="line">        <span class="built_in">print</span>(bsObj.h1.get_text())</div><div class="line">        <span class="built_in">print</span>(bsObj.find(id=<span class="string">"mw-content-text"</span>).findAll(<span class="string">"p"</span>)[0])</div><div class="line">        <span class="built_in">print</span>(bsObj.find(id=<span class="string">"ca-edit"</span>).find(<span class="string">"span"</span>).find(<span class="string">"a"</span>).attrs[<span class="string">'href'</span>])</div><div class="line">    except AttributeError: <span class="built_in">print</span>(<span class="string">"页面缺少一些属性!不过不用担心!"</span>)</div><div class="line">    <span class="keyword">for</span> link <span class="keyword">in</span> bsObj.findAll(<span class="string">"a"</span>, href=re.compile(<span class="string">"^(/wiki/)"</span>)):</div><div class="line">        <span class="keyword">if</span> <span class="string">'href'</span> <span class="keyword">in</span> link.attrs:</div><div class="line">            <span class="keyword">if</span> link.attrs[<span class="string">'href'</span>] not <span class="keyword">in</span> pages:</div><div class="line">                <span class="comment"># 我们遇到了新页面</span></div><div class="line">                newPage = link.attrs[<span class="string">'href'</span>]</div><div class="line">                <span class="built_in">print</span>(<span class="string">"----------------\n"</span>+newPage)</div><div class="line">                pages.add(newPage)</div><div class="line">                getLinks(newPage)</div><div class="line">getLinks(<span class="string">""</span>)</div></pre></td></tr></table></1></p>
+<p>#在一个异常处理语句中包裹多岗语句显然是有点儿危险的，你没有办法识别除究竟哪行代码出现了异常，其次，如果有个页面没</p>
+<p>#有前面的标题内容，却有”编辑”按，那么由于前面已经发生异常，后面的编辑连接就不会出现</p>
+<p>#偶尔都是一些数据，只要保存详细的日志就不是什么问题了</p>
+<h2 id="通过互联网采集（多个域名采集）"><a href="#通过互联网采集（多个域名采集）" class="headerlink" title="通过互联网采集（多个域名采集）"></a>通过互联网采集（多个域名采集）</h2><p>相比之前的单个域名采集，互联网采集要难得多——不同网站的布局迥然不同。这就意味着我们必须在要寻找的信息<br>以及查找方式上都极具灵活性<br>在你写爬虫随意跟外链跳转之前，请问自己几个问题<br>1.我要搜集那些数据？这些数据可以通过采集几个已经确定的网站完成吗？（永远是最简单的做法）？<br>  或者我的爬虫需要发现那些我可能不知道的网站吗？<br>2.当我的爬虫到某个网站，它是立即顺着下一个出站链接跳到一个新网站，还是在网站上待一会儿，深入采集网站的内容<br>3.有没有我不想采集的一类网站？我对非英文网站的内容感兴趣吗？<br>4.如果我的网络爬虫引起了某个网管的怀疑，我该如何避免法律责任</p>
+<p>几个灵活的python函数组合起来就可以实现不同类型的网络爬虫<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line">from urllib.request import urlopen</div><div class="line">from bs4 import BeautifulSoup</div><div class="line">import re</div><div class="line">import datetime</div><div class="line">import random</div><div class="line">pages = <span class="built_in">set</span>()</div><div class="line">random.seed(datetime.datetime.now())</div><div class="line"><span class="comment"># 获取页面所有内链的列表</span></div><div class="line">def getInternalLinks(bsObj, includeUrl):</div><div class="line">    internalLinks = []</div><div class="line">    <span class="comment"># 找出所有以"/"开头的链接</span></div><div class="line">    <span class="keyword">for</span> link <span class="keyword">in</span> bsObj.findAll(<span class="string">"a"</span>, href=re.compile(<span class="string">"^(/|.*"</span>+includeUrl+<span class="string">")"</span>)):</div><div class="line">        <span class="keyword">if</span> link.attrs[<span class="string">'href'</span>] is not None:</div><div class="line">            <span class="keyword">if</span> link.attrs[<span class="string">'href'</span>] not <span class="keyword">in</span> internalLinks:</div><div class="line">                internalLinks.append(link.attrs[<span class="string">'href'</span>])</div><div class="line">    <span class="built_in">return</span> internalLinks</div><div class="line"><span class="comment"># 获取页面所有外链的列表</span></div><div class="line">def getExternalLinks(bsObj, excludeUrl):</div><div class="line">    externalLinks = []</div><div class="line">    <span class="comment"># 找出所有以"http"或"www"开头且不包含当前URL的链接</span></div><div class="line">    <span class="keyword">for</span> link <span class="keyword">in</span> bsObj.findAll(<span class="string">"a"</span>,href=re.compile(<span class="string">"^(http|www)((?!"</span> + excludeUrl + <span class="string">").)*$"</span>)):</div><div class="line">        <span class="keyword">if</span> link.attrs[<span class="string">'href'</span>] is not None:</div><div class="line">            <span class="keyword">if</span> link.attrs[<span class="string">'href'</span>] not <span class="keyword">in</span> externalLinks: externalLinks.append(link.attrs[<span class="string">'href'</span>])</div><div class="line">    <span class="built_in">return</span> externalLinks</div><div class="line">def splitAddress(address):</div><div class="line">    addressParts = address.replace(<span class="string">"http://"</span>, <span class="string">""</span>).split(<span class="string">"/"</span>)</div><div class="line">    <span class="built_in">return</span> addressParts</div><div class="line">def getRandomExternalLink(startingPage):</div><div class="line">    html = urlopen(startingPage)</div><div class="line">    bsObj = BeautifulSoup(html)</div><div class="line">    externalLinks = getExternalLinks(bsObj, splitAddress(startingPage)[0])</div><div class="line">    <span class="keyword">if</span> len(externalLinks) == 0:</div><div class="line">        internalLinks = getInternalLinks(startingPage)</div><div class="line">        <span class="built_in">return</span> getExternalLinks(internalLinks[random.randint(0,len(internalLinks) - 1)])</div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        <span class="built_in">return</span> externalLinks[random.randint(0, len(externalLinks) - 1)]</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">def followExternalOnly(startingSite):</div><div class="line">    externalLink = getRandomExternalLink(<span class="string">"http://oreilly.com"</span>)</div><div class="line">    <span class="built_in">print</span>(<span class="string">"随机外链是:"</span>+externalLink)</div><div class="line">    followExternalOnly(externalLink)</div><div class="line">followExternalOnly(<span class="string">"http://oreilly.com"</span>)</div></pre></td></tr></table></figure></p>
+<p>#网站首页上并不能保证一直能发现外链。这时为了能够发现外链，就需要用一种类似前面案例中使用的采集方法，即递归</p>
+<p>#深入一个网站直到找到一个外链才停止<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">allExtLinks = <span class="built_in">set</span>()</div><div class="line">allIntLinks = <span class="built_in">set</span>()</div><div class="line">def getAllExternalLinks(siteUrl):</div><div class="line">    html = urlopen(siteUrl)</div><div class="line">    bsObj = BeautifulSoup(html)</div><div class="line">    internalLinks = getInternalLinks(bsObj, splitAddress(siteUrl)[0])</div><div class="line">    externalLinks = getExternalLinks(bsObj, splitAddress(siteUrl)[0])</div><div class="line">    <span class="keyword">for</span> link <span class="keyword">in</span> externalLinks:</div><div class="line">        <span class="keyword">if</span> link not <span class="keyword">in</span> allExtLinks:</div><div class="line">            allExtLinks.add(link)</div><div class="line">        <span class="built_in">print</span>(link)</div><div class="line">    <span class="keyword">for</span> link <span class="keyword">in</span> internalLinks:</div><div class="line">        <span class="keyword">if</span> link not <span class="keyword">in</span> allIntLinks:</div><div class="line">            <span class="built_in">print</span>(<span class="string">"即将获取链接的URL是:"</span> + link)</div><div class="line">        allIntLinks.add(link)</div><div class="line">        getAllExternalLinks(link)</div><div class="line">getAllExternalLinks(<span class="string">"http://oreilly.com"</span>)</div></pre></td></tr></table></figure></p>
+<p>#写代码之前拟个大纲或画个流程图是很好的编程习惯，这么做不仅可以为你后期处理节省好多时间，更重要的是可以防止<br>自己在爬虫变得越来越复杂是乱了方寸<br>*处理网页重定向<br> 重定向分为两种：服务器端重定向，客户端重定向；在服务器端的重定向urllib库一般会给你自动处理，但是你要注意，<br> 你要采集的页面URL可能并不是你当前所在的页面的URL</p>
+<h2 id="用Scrapy采集"><a href="#用Scrapy采集" class="headerlink" title="用Scrapy采集"></a>用Scrapy采集</h2><h3 id="创建新的Scrapy项目"><a href="#创建新的Scrapy项目" class="headerlink" title="创建新的Scrapy项目"></a>创建新的Scrapy项目</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$scrapy</span> startproject wikiSpider</div><div class="line"><span class="comment">#然后在spiders文件夹（一定要注意路径）里创建一个articleSpider.py文件，另外需要在items.py文件中，我们需要定义一个Article类</span></div><div class="line">from scrapy import Item,Field</div><div class="line">class Ariticle(Item): <span class="comment"># 每个Item对象表示网站上的一个页面 我们现在只收集title字段</span></div><div class="line">    <span class="comment"># define the fields for your item here like:</span></div><div class="line">    <span class="comment"># name = scrapy.Field()</span></div><div class="line">    title = Field()</div></pre></td></tr></table></figure>
+<h3 id="填坑？"><a href="#填坑？" class="headerlink" title="填坑？"></a>填坑？</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#from scrapy.contrib.spiders import CrawlSpider, Rule</span><span class="comment">#from wikiSpider.items import Article</span><span class="comment">#from scrapy.contrib.linkextractors.sgml import SgmlLinkExtractor</span></div><div class="line">from scrapy.spiders import CrawlSpider, Rule</div><div class="line">from wikiSpider.items import Article</div><div class="line">from scrapy.linkextractors import LinkExtractor</div><div class="line"></div><div class="line">class ArticleSpider(CrawlSpider):</div><div class="line">    name=<span class="string">"article"</span></div><div class="line">    allowed_domains = [<span class="string">"en.wikipedia.org"</span>]</div><div class="line">    start_urls = [<span class="string">"http://en.wikipedia.org/wiki/Main_Page"</span>,</div><div class="line">                    <span class="string">"http://en.wikipedia.org/wiki/Python_%28programming_language%29"</span>]</div><div class="line">    rules = [Rule(LinkExtractor(allow=(<span class="string">'(/wiki/)((?!:).)*$'</span>),),</div><div class="line">                                            callback=<span class="string">"parse_item"</span>, follow=True)]</div><div class="line">    def parse(self, response):</div><div class="line">        item = Article()</div><div class="line">        title = response.xpath(<span class="string">'//h1/text()'</span>)[0].extract()</div><div class="line">        <span class="built_in">print</span>(<span class="string">"Title is: "</span>+title)</div><div class="line">        item[<span class="string">'title'</span>] = title</div><div class="line">        <span class="built_in">return</span> item</div></pre></td></tr></table></figure>
+<p>由于我用的是scrapy1.4+python3,上面是书上原来的代码scrapy版本不详，python2.7，使用上面的代码运行，你会发现好多的函数和包都丢弃或者换位置了，虽然本机有2.7python 但是scrapy的版本不知道该如何弄，所以找了1.4的版本的文旦<br>查阅了一下，改了一下包引用以及函数，但是结果不知道是否达到预期，慢慢学习吧</p>
+<h3 id="Scrapy处理日志"><a href="#Scrapy处理日志" class="headerlink" title="Scrapy处理日志"></a>Scrapy处理日志</h3><p>五种级别日志 CRITICAL ERROR WARNING DEBUG INFO<br>如果级别设置为ERROR，那么只有CRITICAL 和ERROR日志会显示出来<br>将日志输出到一个独立的文件中<br>$ scrapy crawl article -s LOG_FILE=wiki.log<br>如果目录中没有wiki.log,那么运行程序会创建一个新文件，然后把所有的日志都保存在里面，如果已经存在，会在原文后面加入新的日志文件</p>
+<h3 id="输出不同格式"><a href="#输出不同格式" class="headerlink" title="输出不同格式"></a>输出不同格式</h3><p>$ scrapy crawl article -o articles.csv -t csv<br>$ scrapy crawl article -o articles.json -t json<br>$ scrapy crawl article -o articles.xml -t xml<br>当然，你也可以自定义Item对象</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/30/python数据收集（二）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1520,297 +1875,6 @@ growing adj.  ex：a growing number
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/20/python初体验（九）/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="EtanWatson">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/header.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="EWSUN">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/20/python初体验（九）/" itemprop="url">python初体验（九）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-20T14:57:05+08:00">
-                2017-09-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/python/" itemprop="url" rel="index">
-                    <span itemprop="name">python</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>OK 现在我们来学存储数据</p>
-<h1 id="存储数据"><a href="#存储数据" class="headerlink" title="存储数据"></a>存储数据</h1><h2 id="使用模块json来存储数据"><a href="#使用模块json来存储数据" class="headerlink" title="使用模块json来存储数据"></a>使用模块json来存储数据</h2><h3 id="使用json-dump-和json-load"><a href="#使用json-dump-和json-load" class="headerlink" title="使用json.dump()和json.load()"></a>使用json.dump()和json.load()</h3><h4 id="json-dump"><a href="#json-dump" class="headerlink" title="json.dump()"></a>json.dump()</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">import json</div><div class="line">numbers = [2,3,4,5,6,7]</div><div class="line"></div><div class="line">filename = <span class="string">'numbers.json'</span></div><div class="line">with open(filename,<span class="string">'w'</span>) as f_obj:</div><div class="line">json.dump(numbers,f_obj)</div></pre></td></tr></table></figure>
-<h4 id="json-load"><a href="#json-load" class="headerlink" title="json.load()"></a>json.load()</h4><p>OK 那我们接下来看看json.load()是怎么用的把<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"> import json</div><div class="line"> filename = <span class="string">'numbers.json'</span></div><div class="line"> with open(filename) as f_obj:</div><div class="line">	numbers = json.load(f_obj)</div><div class="line"> <span class="built_in">print</span>(numbers)</div><div class="line"><span class="comment">#与dump正好相反，load()是将文件加载到内存中</span></div></pre></td></tr></table></figure></p>
-<h3 id="未能解决的问题"><a href="#未能解决的问题" class="headerlink" title="未能解决的问题"></a>未能解决的问题</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"> import json</div><div class="line"> filename = <span class="string">"username.json"</span></div><div class="line"> try:</div><div class="line">	with open(filename) as file_obj:</div><div class="line">		username = json.load(file_obj)</div><div class="line"> except FileNotFoundError:</div><div class="line">	username = input(<span class="string">"What is your name: "</span>)</div><div class="line">	with open(filename,<span class="string">'w'</span>) as file_obj:</div><div class="line">		json.dump(username,file_obj)</div><div class="line"> <span class="keyword">else</span>:</div><div class="line">	<span class="built_in">print</span>(<span class="string">"Welcome back, "</span> + username + <span class="string">"!"</span>)</div><div class="line"><span class="comment">#Subline Text2中无法运行input(),如果要运行，需要在终端中运行</span></div></pre></td></tr></table></figure>
-<h1 id="重构"><a href="#重构" class="headerlink" title="重构"></a>重构</h1><p>核心要点：每一个函数都执行单一而清晰的任务</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/20/python初体验（八）/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="EtanWatson">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/header.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="EWSUN">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/20/python初体验（八）/" itemprop="url">python初体验（八）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-20T14:02:53+08:00">
-                2017-09-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/python/" itemprop="url" rel="index">
-                    <span itemprop="name">python</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>今天学习python中的异常！ ^…^</p>
-<h1 id="异常"><a href="#异常" class="headerlink" title="异常"></a>异常</h1><h2 id="ZeroDivisionError"><a href="#ZeroDivisionError" class="headerlink" title="ZeroDivisionError"></a>ZeroDivisionError</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"> try:</div><div class="line">	<span class="built_in">print</span>(5/0)</div><div class="line"> except ZeroDivisionError:</div><div class="line">	<span class="built_in">print</span>(<span class="string">"You can`t divide by zero!"</span>)</div><div class="line"> <span class="keyword">else</span>:</div><div class="line">	<span class="built_in">print</span>(<span class="string">"Hello,you are succssful!"</span>)</div><div class="line"> finally:</div><div class="line">	<span class="built_in">print</span>(<span class="string">"this is finally"</span>)</div><div class="line"><span class="comment">#稍微解释一下：try模块中的代码执行成功的话，会执行else中和finally，try中代码执行失败的话，会执行except中的代#码和finally，也就是说，finally的代码都会执行，这和JAVA中的异常比较相似</span></div></pre></td></tr></table></figure>
-<h2 id="FileNotFoundError异常"><a href="#FileNotFoundError异常" class="headerlink" title="FileNotFoundError异常"></a>FileNotFoundError异常</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"> filename = <span class="string">"alice.txt"</span></div><div class="line"> try:</div><div class="line">	with open(filename) as f_obj:</div><div class="line">		contents = f_obj.read()</div><div class="line"> except FileNotFoundError:</div><div class="line">	<span class="built_in">print</span>(<span class="string">"No Such file!"</span>)</div><div class="line"> <span class="keyword">else</span>:</div><div class="line">	<span class="built_in">print</span>(<span class="string">"file has been read"</span>)</div><div class="line"> finally:</div><div class="line">	<span class="built_in">print</span>(<span class="string">"finish"</span>)	</div><div class="line"><span class="comment">#需要注意的是，一定要注意缩进级别，否则，你找错误的时候会非常痛苦</span></div><div class="line"><span class="comment">#遇到一个比较烦心的事儿，就是python3 在 Sumline Text 2中默认的输出编码是</span></div><div class="line"> import sys</div><div class="line"> <span class="built_in">print</span>(sys.stdout.encoding)</div><div class="line"> &gt;&gt;US-ASCII</div><div class="line"> 我会在后续附上该问题的解决方案的</div><div class="line"><span class="comment">#再说明一下文档字符串的注释方式”””注释””” 两边各有三个双引号</span></div></pre></td></tr></table></figure>
-<h2 id="失败时一声不吭"><a href="#失败时一声不吭" class="headerlink" title="失败时一声不吭"></a>失败时一声不吭</h2><p> 在except中使用pass，它会使python失败时一声不吭（~.~）</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1864,7 +1928,7 @@ growing adj.  ex：a growing number
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">31</span>
+                <span class="site-state-item-count">33</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1875,7 +1939,7 @@ growing adj.  ex：a growing number
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1886,7 +1950,7 @@ growing adj.  ex：a growing number
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
