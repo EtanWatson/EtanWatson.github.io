@@ -105,7 +105,7 @@
 <meta property="og:site_name" content="EWSUN">
 <meta property="og:description" content="图像识别与文字处理将图像翻译成文字一般被称为光学文字识别（Optical Character Recognition，OCR） OCR库概述重点介绍两个库：Pillow(http://pillow.readthedocs.org/installation.html )        Tesseract(https://pypi.python.org/pypi/pytesseract)或者使用pip">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-10-08T14:12:08.000Z">
+<meta property="og:updated_time" content="2017-10-11T10:34:21.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="python收集（图像识别与文字处理）">
 <meta name="twitter:description" content="图像识别与文字处理将图像翻译成文字一般被称为光学文字识别（Optical Character Recognition，OCR） OCR库概述重点介绍两个库：Pillow(http://pillow.readthedocs.org/installation.html )        Tesseract(https://pypi.python.org/pypi/pytesseract)或者使用pip">
@@ -413,6 +413,126 @@
 <p>pip install numpy</p>
 </blockquote>
 <h2 id="处理格式规范的文字"><a href="#处理格式规范的文字" class="headerlink" title="处理格式规范的文字"></a>处理格式规范的文字</h2><p>通常规范文字的特点<br>• 使用一个标准字体(不包含手写体、草书，或者十分“花哨的”字体) • 虽然被复印或拍照，字体还是很清晰，没有多余的痕迹或污点<br>• 排列整齐，没有歪歪斜斜的字<br>• 没有超出图片范围，也没有残缺不全，或紧紧贴在图片的边缘</p>
+<blockquote>
+<p>$ tesseract text.png textoutput | cat textoutput.txt<br>Warning in pixReadMemPng: work-around: writing to a temp file</p>
+</blockquote>
+<h3 id="对于背景渐变以及文字模糊的，可以使用Pillow库预处理，让图片更加清晰"><a href="#对于背景渐变以及文字模糊的，可以使用Pillow库预处理，让图片更加清晰" class="headerlink" title="对于背景渐变以及文字模糊的，可以使用Pillow库预处理，让图片更加清晰"></a>对于背景渐变以及文字模糊的，可以使用Pillow库预处理，让图片更加清晰</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">from PIL import Image</div><div class="line">import subprocess</div><div class="line"></div><div class="line">def cleanFile(filePath, newFilePath):</div><div class="line">    image = Image.open(filePath)</div><div class="line"></div><div class="line">    <span class="comment"># 对图片进行阀值过滤，然后保存</span></div><div class="line">    image = image.point(lambda x: 0 <span class="keyword">if</span> x&lt;143 <span class="keyword">else</span> 255)</div><div class="line">    image.save(newFilePath)</div><div class="line"></div><div class="line">    <span class="comment"># 调用系统的tesseract</span></div><div class="line">    subprocess.call([<span class="string">"tesseract"</span>, newFilePath, <span class="string">"output"</span>])</div><div class="line"></div><div class="line">    <span class="comment"># 打开文件读取结果</span></div><div class="line">    outputFile = open(<span class="string">"output.txt"</span>, <span class="string">'r'</span>)</div><div class="line">    <span class="built_in">print</span>((outputFile.read()))</div><div class="line">    outputFile.close()</div><div class="line">cleanFile(<span class="string">"text_2.jpg"</span>,<span class="string">"text_2_clean.png"</span>)</div></pre></td></tr></table></figure>
+<h3 id="从网站图片中抓取文字"><a href="#从网站图片中抓取文字" class="headerlink" title="从网站图片中抓取文字"></a>从网站图片中抓取文字</h3><pre><code class="bash">import time 
+from urllib.request import urlretrieve
+import subprocess
+from selenium import webdriver
+
+<span class="comment">## 读取验证码与训练Tesseract</span>
+PHP内容管理系统Drupal有一个著名的验证码模块，https://www.drupal.org/project/captcha,可以生成不同难度
+的验证码。
+<span class="variable">$tesseract</span> captchaExample.png captcha | cat captcha.txt
+&gt;&gt; 4MMCJ
+
+<span class="comment">### 训练Tesseract</span>
+矩形定位文件（box file），一个验证码图片生成一个矩形定位文件，一个图片的矩形定位文件如下所示：
+    ··4 15 26 33 55 0
+      M 38 13 67 45 0
+      m 79 15 101 26 0
+      C 111 33 136 60 0
+      3 147 17 176 45 0
+第一列符号是图片中的每个字符，后面的 4 个数字分别是包围这个字符的最小矩形的坐标 (图片左下角是原点 (0,0)，4 个数字分别对应每个字符的左下角 x 坐标、左下角 y 坐标、右上角 x 坐标和右上角 y 坐标)，最后一个数字“0”表示图片样本的编号。
+在线工具Tesseract OCR Chopper(http://pp19dd.com/tesseract-ocr-chopper/)
+矩形定位文件必须保存在一个.box后缀的文本文件中。和图片文件一样，文本文件也是用验证码的世纪结果命名（例如，4MmC3.box）
+https://github.com/REMitchell/tesseract-trainer(OReilly.Web.Scraping.with.Python.2015.6的书的作者写的一个同时包图片和.box文件) 
+
+def main(self):
+    languageName = “eng”
+    fontName = “captchaFont”
+    directory = “”
+
+def runAll(self):
+    self.createFontFile()
+    self.cleanImages()
+    self.renameFiles()
+    self.extractUnicode()
+    self.runShapeClustering() 
+    self.runMfTraining() 
+    self.runCnTraining() 
+    self.createTessData()
+
+* language 
+Tesseract 用三个字母的语言缩写代码表示识别的语言种类。可能大多数情况下，你都会 用“eng”表示英语(English)。
+* fontName 
+表示你选择的字体名称，可以是任意名称，但必须是一个不包含空格的单词。
+* directory
+表示包含所有图片和 .box 文件的目录。建议你使用文件夹的绝对路径，但是如果你使 用相对路径，可能需要以 Python 代码运行的目录位置为原点。如果你使用绝对路径， 就可以在电脑的任意位置运行代码了。
+
+* runAll里每个函数的用法
+1.createFontFile 创建了一个 font_properties 文件，让 Tesseract 知道我们要创建的新字体:
+captchaFont 0 0 0 0 0（这个文件包括字体的名称，后面跟着若干 1 和 0，分别表示应该使用斜体、加粗或其他版 本的字体）
+2.cleanImages 首先创建所有样本图片的高对比度版本，然后转换成灰度图，并进行一些清 理，让 Tesseract 更容易读取图片文件。如果你要处理的验证码图片上面有一些很容易过滤 掉的噪点，那么你可以在这里增加一些步骤来处理它们。
+3.renameFiles 把所有的图片文件和 .box 文件的文件名改变成 Tesseract 需要的形式 (fileNumber 是文件序号，用来区别每个文件):
+• &lt;languageName&gt;.&lt;fontName&gt;.exp&lt;fileNumber&gt;.box • &lt;languageName&gt;.&lt;fontName&gt;.exp&lt;fileNumber&gt;.tiff
+4.extractUnicode 函数会检查所有已创建的 .box 文件，确定要训练的字符集范围。抽取出的 Unicode 会告诉你一共找到了多少个不重复的字符，这也是一个查询字符的好方法，如果 你漏了字符可以用这个结果快速排查。
+5.之后的三个函数，runShapeClustering、runMfTraining 和 runCtTraining 分别用来创建 文件 shapetable、pfftable 和 normproto。它们会生成每个字符的几何和形状信息，也为 Tesseract 提供计算字符若干可能结果的概率统计信息。
+6.最后，Tesseract 会用之前设置的语言名称对数据文件夹编译出的每个文件进行重命名(例 如，shapetable 被重命名为 eng.shapetable)，然后把所有的文件编译到最终的训练文件 eng. traineddata 中。
+你需要做的，就是用下面的Linux和Mac命令行把刚刚创建的eng.traineddata文件复制到tessdata文件夹里
+<span class="variable">$cp</span> /path/to/data/eng.traineddata <span class="variable">$TESSDATA_PREFIX</span>/tessdata(输入自己的路径)
+
+上面只是对Tesseract库强大的字体训练和识别能力的一个简略的概述。详细阅读Tesseract 的文档
+(https://github.com/tesseract-ocr/tesseract/wiki)。
+<span class="comment">## 获取验证码提交答案</span>
+大多数网站生成的验证码图片都具有以下属性
+• 它们是服务器端的程序动态生成的图片。验证码图片的src属性可能和普通图片不太一 样，比如&lt;img src=<span class="string">"WebForm.aspx?id=8AP85CQKE9TJ"</span>&gt;，但是可以和其他图片一样进行 下载和处理。
+• 图片的答案存储在服务器端的数据库里。
+• 很多验证码都有时间限制，如果你太长时间没解决就会失效。虽然这对网络机器人来说
+ 不是什么问题，但是如果你想保留验证码的答案一会儿再使用，或者想通过一些方法延
+ 长验证码的有效时限，可能很难成功。
+常用的办法就是，首先把验证码图片下载到硬盘里，清理干净，然后用Tesseract处理图片，最后返回符合网站要求的识别结果
+<span class="comment">### 演示如何用网络机器人破解验证码</span>
+``` bash 
+from urllib.request import urlretrieve
+from urllib.request import urlopen
+from bs4 import BeautifulSoup
+import subprocess
+import requests
+from PIL import Image
+from PIL import ImageOps
+
+def cleanImage(imagePath):
+    image = Image.open(imagePath)
+    image = Image.point(lambda x: 0 <span class="keyword">if</span> x &lt; 143 <span class="keyword">else</span> 255)
+    borderImage = ImageOps.expand(image, border=20, fill=<span class="string">'white'</span>)
+    borderImage.save(imagePath)
+
+html = urlopen(<span class="string">"http://www.pythonscraping.com/humans-only"</span>)
+bsObj = BeautifulSoup(html)
+<span class="comment"># 收集需要处理的表单数据（包括验证码和输入字段）</span>
+imageLocation = bsObj.find(<span class="string">"img"</span>,{<span class="string">"title"</span>: <span class="string">"Image CAPTCHA"</span>})[<span class="string">"src"</span>]
+fromBuildId = bsObj.find(<span class="string">"input"</span>,{<span class="string">"name"</span>: <span class="string">"from_build_id"</span>})[<span class="string">"value"</span>]
+captchaSid = bsObj.find(<span class="string">"input"</span>, {<span class="string">"name"</span>: <span class="string">"captcha_sid"</span>})[<span class="string">"value"</span>]
+captchaToken = bsObj.find(<span class="string">"input"</span>, {<span class="string">"name"</span>: <span class="string">"captcha_token"</span>})[<span class="string">"value"</span>]
+
+captchaUrl = <span class="string">"http://pythonscraping.com"</span>+imageLocation
+urlretrieve(captchaUrl,<span class="string">'captcha.jpg'</span>)
+cleanImage(<span class="string">"captcha,jpg"</span>)
+p = subprocess.Popen([<span class="string">"tesseract"</span>, <span class="string">"captcha.jpg"</span>, <span class="string">"captcha"</span>],stdout=
+                     subprocess.PIPE,stderr=subprocess.PIPE)
+p.wait()
+f = open(<span class="string">"captcha.txt"</span>, <span class="string">'r'</span>)
+
+<span class="comment"># 清理识别结果中的空格和换行符</span>
+captchResponse = f.read().replace(<span class="string">" "</span>,<span class="string">""</span>).replace(<span class="string">"\n"</span>,<span class="string">""</span>)
+<span class="built_in">print</span>(<span class="string">"Capcha solution attempt: "</span> + captchResponse)
+
+<span class="keyword">if</span> len(captchResponse) == 5:
+    params = {<span class="string">"captcha_token"</span>:captchaToken, <span class="string">"captcha_sid"</span>:fromBuildId,
+                <span class="string">"captcha_response"</span>:captchResponse, <span class="string">"name"</span>:<span class="string">"Ryan Mitchell"</span>,
+                <span class="string">"subject"</span>: <span class="string">"I come to seek the Grail"</span>,
+                <span class="string">"comment_body[und][0][value]"</span>:<span class="string">"...and I am definitely not a bot"</span>
+              }
+    r = requests.post(<span class="string">"http://www.pythonscraping.com/comment/reply/10"</span> ,data=params)
+    responseObj = BeautifulSoup(<span class="string">'r.text'</span>)
+    <span class="keyword">if</span> responseObj.find(<span class="string">"div"</span>,{<span class="string">"class"</span>:<span class="string">"messages"</span>}) is not None:
+        <span class="built_in">print</span>(responseObj.find(<span class="string">"div"</span>, {<span class="string">"class"</span>:<span class="string">"messages"</span>}).get_text())
+    <span class="keyword">else</span>:
+        <span class="built_in">print</span>(<span class="string">"There was a problem reading the CAPTCHA correctly"</span>)
+</code></pre>
 
       
     </div>
@@ -599,7 +719,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#图像识别与文字处理"><span class="nav-number">1.</span> <span class="nav-text">图像识别与文字处理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#OCR库概述"><span class="nav-number">1.1.</span> <span class="nav-text">OCR库概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Pillow"><span class="nav-number">1.1.1.</span> <span class="nav-text">Pillow</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Tesseract"><span class="nav-number">1.1.2.</span> <span class="nav-text">Tesseract</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NumPy-训练字符和字体时候，会用到它"><span class="nav-number">1.1.3.</span> <span class="nav-text">NumPy(训练字符和字体时候，会用到它)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#处理格式规范的文字"><span class="nav-number">1.2.</span> <span class="nav-text">处理格式规范的文字</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#图像识别与文字处理"><span class="nav-number">1.</span> <span class="nav-text">图像识别与文字处理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#OCR库概述"><span class="nav-number">1.1.</span> <span class="nav-text">OCR库概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Pillow"><span class="nav-number">1.1.1.</span> <span class="nav-text">Pillow</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Tesseract"><span class="nav-number">1.1.2.</span> <span class="nav-text">Tesseract</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NumPy-训练字符和字体时候，会用到它"><span class="nav-number">1.1.3.</span> <span class="nav-text">NumPy(训练字符和字体时候，会用到它)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#处理格式规范的文字"><span class="nav-number">1.2.</span> <span class="nav-text">处理格式规范的文字</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#对于背景渐变以及文字模糊的，可以使用Pillow库预处理，让图片更加清晰"><span class="nav-number">1.2.1.</span> <span class="nav-text">对于背景渐变以及文字模糊的，可以使用Pillow库预处理，让图片更加清晰</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#从网站图片中抓取文字"><span class="nav-number">1.2.2.</span> <span class="nav-text">从网站图片中抓取文字</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
