@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-10-13T02:38:32.000Z</updated>
+  <updated>2017-10-13T06:53:59.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -17,11 +17,62 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>python数据收集（远程采集）</title>
+    <link href="http://yoursite.com/2017/10/13/python%E6%95%B0%E6%8D%AE%E6%94%B6%E9%9B%86%EF%BC%88%E8%BF%9C%E7%A8%8B%E9%87%87%E9%9B%86%EF%BC%89/"/>
+    <id>http://yoursite.com/2017/10/13/python数据收集（远程采集）/</id>
+    <published>2017-10-13T03:14:35.000Z</published>
+    <updated>2017-10-13T06:53:59.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="远程采集"><a href="#远程采集" class="headerlink" title="远程采集"></a>远程采集</h1><p>“If you love something, set it free.”</p><h2 id="为什么要用远程服务器"><a href="#为什么要用远程服务器" class="headerlink" title="为什么要用远程服务器"></a>为什么要用远程服务器</h2><p>启用远程平台的人通常 有两个目的:对更大计算能力和灵活性的需求，以及对可变 IP 地址的需求。</p><h3 id="避免IP地址被封杀"><a href="#避免IP地址被封杀" class="headerlink" title="避免IP地址被封杀"></a>避免IP地址被封杀</h3><h2 id="Tor代理服务器（一种IP地址匿名手段）"><a href="#Tor代理服务器（一种IP地址匿名手段）" class="headerlink" title="Tor代理服务器（一种IP地址匿名手段）"></a>Tor代理服务器（一种IP地址匿名手段）</h2><p>洋葱路由(The Onion Router)网络</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;远程采集&quot;&gt;&lt;a href=&quot;#远程采集&quot; class=&quot;headerlink&quot; title=&quot;远程采集&quot;&gt;&lt;/a&gt;远程采集&lt;/h1&gt;&lt;p&gt;“If you love something, set it free.”&lt;/p&gt;
+&lt;h2 id=&quot;为什么要用远程服务器&quot;&gt;
+      
+    
+    </summary>
+    
+      <category term="python数据收集" scheme="http://yoursite.com/categories/python%E6%95%B0%E6%8D%AE%E6%94%B6%E9%9B%86/"/>
+    
+    
+      <category term="python数据收集" scheme="http://yoursite.com/tags/python%E6%95%B0%E6%8D%AE%E6%94%B6%E9%9B%86/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>python数据收集（用爬虫测试网站）</title>
+    <link href="http://yoursite.com/2017/10/13/python%E6%95%B0%E6%8D%AE%E6%94%B6%E9%9B%86%EF%BC%88%E7%94%A8%E7%88%AC%E8%99%AB%E6%B5%8B%E8%AF%95%E7%BD%91%E7%AB%99%EF%BC%89/"/>
+    <id>http://yoursite.com/2017/10/13/python数据收集（用爬虫测试网站）/</id>
+    <published>2017-10-13T02:52:24.000Z</published>
+    <updated>2017-10-13T03:13:16.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="用爬虫测试网站"><a href="#用爬虫测试网站" class="headerlink" title="用爬虫测试网站"></a>用爬虫测试网站</h1><h2 id="Python单元测试"><a href="#Python单元测试" class="headerlink" title="Python单元测试"></a>Python单元测试</h2><p>Python的测试单元模块unittest，只要先导入模块然后继承unittest.TestCase类，就可以实现以下的功能：<br>• 为每个单元测试的开始和结束提供setUp和tearDown函数<br>• 提供不同类型的“断言”语句让测试成功或失败<br>• 把所有以test<em>开头的函数当作单元测试运行，忽略不带test</em>的函数</p><h3 id="一个简单的例子"><a href="#一个简单的例子" class="headerlink" title="一个简单的例子"></a>一个简单的例子</h3><pre><code class="bash"><span class="string">""</span><span class="string">"一个简单的unit test"</span><span class="string">""</span>import unittestclass TestAddition(unittest.TestCase):    def setUp(self):        <span class="built_in">print</span>(<span class="string">"Setting up the test"</span>)    def tearDown(self):        <span class="built_in">print</span>(<span class="string">"Tearing down the test"</span>)    def test_twoPlusTwo(self):        total = 2+2        self.assertEqual(4, total)<span class="keyword">if</span> __name__ == <span class="string">'__name__'</span>:    unittest.main()</code></pre><p>虽然 setUp 和 tearDown 函数在这里并没有实现可用的功能，但是仍然达到了演示的目的。 需要注意的是，这两个函数在每个测试的开始和结束都会运行一次，而不是把类中所有测 试作为一个整体在开始或结束时各运行一次。</p><h3 id="测试维基百科"><a href="#测试维基百科" class="headerlink" title="测试维基百科"></a>测试维基百科</h3>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;用爬虫测试网站&quot;&gt;&lt;a href=&quot;#用爬虫测试网站&quot; class=&quot;headerlink&quot; title=&quot;用爬虫测试网站&quot;&gt;&lt;/a&gt;用爬虫测试网站&lt;/h1&gt;&lt;h2 id=&quot;Python单元测试&quot;&gt;&lt;a href=&quot;#Python单元测试&quot; class=&quot;head
+      
+    
+    </summary>
+    
+      <category term="python数据收集" scheme="http://yoursite.com/categories/python%E6%95%B0%E6%8D%AE%E6%94%B6%E9%9B%86/"/>
+    
+    
+      <category term="python数据收集" scheme="http://yoursite.com/tags/python%E6%95%B0%E6%8D%AE%E6%94%B6%E9%9B%86/"/>
+    
+  </entry>
+  
+  <entry>
     <title>python数据收集(避开采集陷阱)</title>
     <link href="http://yoursite.com/2017/10/11/python%E6%95%B0%E6%8D%AE%E6%94%B6%E9%9B%86-%E9%81%BF%E5%BC%80%E9%87%87%E9%9B%86%E9%99%B7%E9%98%B1/"/>
     <id>http://yoursite.com/2017/10/11/python数据收集-避开采集陷阱/</id>
     <published>2017-10-11T10:46:00.000Z</published>
-    <updated>2017-10-13T02:38:32.000Z</updated>
+    <updated>2017-10-13T02:51:21.000Z</updated>
     
     <content type="html"><![CDATA[<h1 id="避开采集陷阱"><a href="#避开采集陷阱" class="headerlink" title="避开采集陷阱"></a>避开采集陷阱</h1><h2 id="道德规范"><a href="#道德规范" class="headerlink" title="道德规范"></a>道德规范</h2><h2 id="让网络-机器人看起来更像人类用户"><a href="#让网络-机器人看起来更像人类用户" class="headerlink" title="让网络 机器人看起来更像人类用户"></a>让网络 机器人看起来更像人类用户</h2><h3 id="修改请求头"><a href="#修改请求头" class="headerlink" title="修改请求头"></a>修改请求头</h3><p>只有下面的七个字段被大多数浏览器用来初始化所有网络请求<br>Host          <a href="https://www.google.com/" target="_blank" rel="external">https://www.google.com/</a><br>Connection    keep-alive<br>Accept    text/html，application/xhtml+xml，application/xml;q=0.9，image/webp，<em>/</em>;q=0.8<br>User-Agent Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_5) AppleWebKit/537.36 (KHTML, like        Gecko) Chrome/39.0.2171.95 Safari/537.36<br>Referrer   <a href="https://www.google.com/" target="_blank" rel="external">https://www.google.com/</a><br>Accept-Encoding  gzip，deflate，sdch<br>Accept-Language  en-US,en;q=0.8</p><p>经典的Python爬虫在使用urllib标准库时，都会发送如下请求<br>Accept-Encoding identity<br>User-Agent     Python-urllib/3.4</p><h4 id="示例代码"><a href="#示例代码" class="headerlink" title="示例代码"></a>示例代码</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">import requests</div><div class="line">from bs4 import BeautifulSoup</div><div class="line">session = requests.Session()</div><div class="line">headers = &#123;<span class="string">"User-Agent"</span>:<span class="string">"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) "</span></div><div class="line">                        <span class="string">"AppleWebKit/537.36 (KHTML, like Gecko) "</span></div><div class="line">                        <span class="string">"Chrome/61.0.3163.100 Safari/537.36"</span>,</div><div class="line">           <span class="string">"Accept"</span>:<span class="string">"text/html,application/xhtml+xml,application/xml;"</span></div><div class="line">                    <span class="string">"q = 0.9, image / webp, * / *;q = 0.8"</span></div><div class="line"></div><div class="line">           &#125;</div><div class="line">url = <span class="string">"https://www.whatismybrowser.com/developers/what-http-headers-is-my-browser-sending"</span></div><div class="line">req = session.get(url, headers = headers)</div><div class="line">bsObj = BeautifulSoup(req.text, <span class="string">"html.parser"</span>)</div><div class="line"><span class="built_in">print</span>(bsObj.find(<span class="string">"table"</span>,&#123;<span class="string">"class"</span>:<span class="string">"table-striped"</span>&#125;).get_text)</div></pre></td></tr></table></figure><h3 id="处理cookie"><a href="#处理cookie" class="headerlink" title="处理cookie"></a>处理cookie</h3><p>网站会用cookie跟踪你的访问过程，发现爬虫异常行为就会中断你的访问，比如：特别快速的填写表单，或者浏览大量页面。虽然这些行为可以通过关闭或重新连接或者改变IP地址来伪装，但是如果cookie暴露了你的身份，再多努力也是白费<br>在采集一个或者几个目标网站，检查这些网站生成的 cookie，然后想想 哪一个 cookie 是爬虫需要处理的。<br>显示访问网站和离开网站时 cookie 是如何设置的插件。EditThisCookie(<a href="http://www.editthiscookie.com/)Chrome" target="_blank" rel="external">http://www.editthiscookie.com/)Chrome</a> 浏览器插件之一。<br>Google Analytics：只有当客户端脚本执行后才设置cookie（或者基于网页事件生成cookie，比如点击按钮）。为了处理这些动作，你需要用Selenium 和 PhantomJS包</p><h4 id="调用webdriver的get-cookie"><a href="#调用webdriver的get-cookie" class="headerlink" title="调用webdriver的get_cookie()"></a>调用webdriver的get_cookie()</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">from selenium import webdriver</div><div class="line">driver = webdriver.PhantomJS(executable_path=<span class="string">"/Users/YT/MachineLearning/phantomjs-2.1.1-macosx/bin/phantomjs"</span>)</div><div class="line">driver.get(<span class="string">"http://pythonscraping.com"</span>)</div><div class="line">driver.implicitly_wait(1)</div><div class="line"><span class="built_in">print</span>(driver.get_cookies())</div></pre></td></tr></table></figure><h4 id="一个更加综合的例子"><a href="#一个更加综合的例子" class="headerlink" title="一个更加综合的例子"></a>一个更加综合的例子</h4><p>调用delete_cookie(),add_cookie()和delete_all_cookies()方法来处理cookie。另外，还可以保存cookie以备其他网络爬虫使用。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div></pre></td><td class="code"><pre><div class="line">from selenium import webdriver</div><div class="line"></div><div class="line">driver = webdriver.PhantomJS(executable_path=<span class="string">"/Users/YT/MachineLearning/phantomjs-2.1.1-macosx/bin/phantomjs"</span>)</div><div class="line">driver.get(<span class="string">"http://pythonscraping.com"</span>)</div><div class="line">driver.implicitly_wait(1)</div><div class="line"><span class="built_in">print</span>(driver.get_cookies())</div><div class="line"></div><div class="line">saveCookies = driver.get_cookies()</div><div class="line"></div><div class="line">driver2 = webdriver.PhantomJS(executable_path=<span class="string">"/Users/YT/MachineLearning/phantomjs-2.1.1-macosx/bin/phantomjs"</span>)</div><div class="line">driver2.get(<span class="string">"http://pythonscraping.com"</span>)</div><div class="line">driver2.delete_all_cookies()</div><div class="line"><span class="keyword">for</span> cookie <span class="keyword">in</span> saveCookies:</div><div class="line">    driver2.add_cookie(cookie)</div><div class="line"></div><div class="line">driver2.get(<span class="string">"http://pythonscraping.com"</span>)</div><div class="line">driver.implicitly_wait(1)</div><div class="line"><span class="built_in">print</span>(driver2.get_cookies())</div><div class="line">``` </div><div class="line">该示例中，先将cookie值保存在saveCookies中，在第二次访问的时候，将同一个网站下的cookie都删除掉（必须先加载网络，不然selenium不知道有cookie的域），然后将第一次的cookie填入到该网站下，这样从Google Analytics角度来看</div><div class="line">第二个webdriver现在和第一个webdriver完全一样（cookie的时间戳，源代码和其他信息都一样）</div><div class="line"></div><div class="line"><span class="comment">### 时间就是一切</span></div><div class="line">尽量保证一次加载页面加载且数据请求最小化</div><div class="line">如果条件允许，尽量为每个页面访问 增加一点儿时间间隔，即使你要增加一行代码:time.sleep(3)<span class="comment">## 常见的表单安全措施</span></div><div class="line"><span class="comment">### 隐含输入字段值（主要用于阻止爬虫自动提交表单）</span></div><div class="line">第一种是表单页面上的一个字段可以用服务器生成的随机变量表示。如果提交时这个值不在表单处理页面上，服务器就有理由认为这个提交不是从原始表单页面上提交的。绕开这个问题的最佳方法就是，首先采集表单实在页面上生成的随机变量，然后再提交到表单处理页面</div><div class="line">第二种是蜜罐圈套。如果表单里包含一个具有普通名称的隐含字段，比如用户名或者”邮箱地址”，服务器火把所有隐含字段的真实值（或者与表单提交页面的默认值不同的值）都忽略，而且填写隐含字段的访问用户也可能被网站封杀</div><div class="line">还有其他一些检查，用来保 证这些当前生成的表单变量只被使用一次或是最近生成的</div><div class="line"></div><div class="line"><span class="comment">### 避免蜜罐</span></div><div class="line">因为 Selenium 可以获取访问页面的内容，所以它可以区分页面上的可见元素与隐含元素。通过 is_displayed() 可以判断元素在页面上是否可见。</div><div class="line">``` bash </div><div class="line"><span class="string">""</span><span class="string">"下面实例代码，用来查找隐含字段"</span><span class="string">""</span></div><div class="line">from selenium import  webdriver</div><div class="line">from selenium.webdriver.remote.webelement import WebElement</div><div class="line"></div><div class="line">driver = webdriver.PhantomJS(executable_path=<span class="string">"/Users/YT"</span></div><div class="line">                                             <span class="string">"/MachineLearning/phantomjs-2.1.1-macosx/bin/phantomjs"</span>)</div><div class="line">driver.get(<span class="string">"http://pythonscraping.com/pages/itsatrap.html"</span>)</div><div class="line">links = driver.find_elements_by_tag_name(<span class="string">"a"</span>)</div><div class="line"></div><div class="line"><span class="keyword">for</span> link <span class="keyword">in</span> links:</div><div class="line">    <span class="keyword">if</span> not link.is_displayed():</div><div class="line">        <span class="built_in">print</span>(<span class="string">"The link "</span> + link.get_attribute(<span class="string">'href'</span>))</div><div class="line"></div><div class="line">fields = driver.find_elements_by_tag_name(<span class="string">"input"</span>)</div><div class="line"><span class="keyword">for</span> field <span class="keyword">in</span> fields:</div><div class="line">    <span class="keyword">if</span> not field.is_displayed():</div><div class="line">        <span class="built_in">print</span>(<span class="string">"Do not change value of "</span>+field.get_attribute(<span class="string">"name"</span>))</div></pre></td></tr></table></figure></p><p>虽然你不太可能会去访问你找到的那些隐含链接，但是在提交前，记得确认一下那些已经 在表单中、准备提交的隐含字段的值(或者让 Selenium 为你自动提交)。</p><h2 id="问题检查表"><a href="#问题检查表" class="headerlink" title="问题检查表"></a>问题检查表</h2><p>• 首先，如果你从网络服务器收到的页面是空白的，缺少信息，或其遇到他不符合你预期 的情况(或者不是你在浏览器上看到的   内容)，有可能是因为网站创建页面的 JavaScript 执行有问题。可以看看第 10 章内容。<br>• 如果你准备向网站提交表单或发出POST请求，记得检查一下页面的内容，看看你想提 交的每个字段是不是都已经填好，而且格式也正确。用 Chrome 浏览器的网络面板(快 捷键 F12 打开开发者控制台，然后点击“Network”即可看到)查看发送到网站的 POST 命令，确认你的每个参数都是正确的。<br>• 如果你已经登录网站却不能保持登录状态，或者网站上出现了其他的“登录状态”异常， 请检查你的 cookie。确认在加载每个页面时 cookie 都被正确调用，而且你的 cookie 在 每次发起请求时都发送到了网站上。<br>• 如果你在客户端遇到了HTTP错误，尤其是403禁止访问错误，这可能说明网站已经把 你的 IP 当作机器人了，不再接受你的任何请求。你要么等待你的 IP 地址从网站黑名单 里移除，要么就换个 IP 地址(可以去星巴克上网，或者看看第 14 章的内容)。如果你 确定自己并没有被封杀，那么再检查下面的内容。<br>♦ 确认你的爬虫在网站上的速度不是特别快。快速采集是一种恶习，会对网管的服务 器造成沉重的负担，还会让你陷入违法境地，也是 IP 被网站列入黑名单的首要原因。给你的爬虫增加延迟，让它们在夜深人静的时候运行。切记:匆匆忙忙写程序或收<br> 集数据都是拙劣项目管理的表现;应该提前做好计划，避免临阵慌乱。<br>♦ 还有一件必须做的事情:修改你的请求头!有些网站会封杀任何声称自己是爬虫的访问者。如果你不确定请求头的值怎样才算合适，就用你自己浏览器的请求头吧。<br>♦ 确认你没有点击或访问任何人类用户通常不能点击或接入的信息(更多信息请查阅12.3.2 节)。<br>♦ 如果你用了一大堆复杂的手段才接入网站，考虑联系一下网管吧，告诉他们你的目的。试试发邮件到 webmaster@&lt; 域名 &gt; 或 admin@&lt; 域名 &gt;，请求网管允许你使用爬虫采 集数据。管理员也是人嘛!</p>]]></content>
     
@@ -443,58 +494,6 @@
     
     
       <category term="概率论" scheme="http://yoursite.com/tags/%E6%A6%82%E7%8E%87%E8%AE%BA/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>机器学习实战（四）</title>
-    <link href="http://yoursite.com/2017/09/27/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98%EF%BC%88%E5%9B%9B%EF%BC%89/"/>
-    <id>http://yoursite.com/2017/09/27/机器学习实战（四）/</id>
-    <published>2017-09-27T13:38:18.000Z</published>
-    <updated>2017-09-29T12:51:56.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>为什么先写四，而没有二，三呢？二三的代码都码了一遍，理解的还不是很充分，今天看到四，所以先把四的概念写写：朴素贝叶斯</p><h1 id="基于概率论的分类方法：朴素贝叶斯"><a href="#基于概率论的分类方法：朴素贝叶斯" class="headerlink" title="基于概率论的分类方法：朴素贝叶斯"></a>基于概率论的分类方法：朴素贝叶斯</h1><p>贝叶斯决策论的核心思想：选着具有最高概率的决策</p><h2 id="条件概率-p-x-y-c1"><a href="#条件概率-p-x-y-c1" class="headerlink" title="条件概率 p(x,y|c1)"></a>条件概率 p(x,y|c1)</h2><p><img src="https://gss0.bdstatic.com/94o3dSag_xI4khGkpoWK1HF6hhy/baike/s%3D113/sign=62231e180df431adb8d247387837ac0f/35a85edf8db1cb1399c0c799dc54564e93584b8b.jpg" alt="“条件概率公式”"><br><img src="https://gss1.bdstatic.com/9vo3dSag_xI4khGkpoWK1HF6hhy/baike/s%3D280/sign=51f198b6c4fdfc03e178e4b0e43f87a9/aec379310a55b31972c9ec3d44a98226cffc1741.jpg" alt="“贝叶斯公式”"></p><h2 id="使用条件概率来分类"><a href="#使用条件概率来分类" class="headerlink" title="使用条件概率来分类"></a>使用条件概率来分类</h2><h2 id="词集模型-词袋模型"><a href="#词集模型-词袋模型" class="headerlink" title="词集模型 词袋模型"></a>词集模型 词袋模型</h2>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;为什么先写四，而没有二，三呢？二三的代码都码了一遍，理解的还不是很充分，今天看到四，所以先把四的概念写写：朴素贝叶斯&lt;/p&gt;
-&lt;h1 id=&quot;基于概率论的分类方法：朴素贝叶斯&quot;&gt;&lt;a href=&quot;#基于概率论的分类方法：朴素贝叶斯&quot; class=&quot;headerlink&quot; t
-      
-    
-    </summary>
-    
-      <category term="机器学习" scheme="http://yoursite.com/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
-    
-    
-      <category term="机器学习" scheme="http://yoursite.com/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>机器学习实战（一）</title>
-    <link href="http://yoursite.com/2017/09/24/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98%EF%BC%88%E4%B8%80%EF%BC%89/"/>
-    <id>http://yoursite.com/2017/09/24/机器学习实战（一）/</id>
-    <published>2017-09-24T11:27:53.000Z</published>
-    <updated>2017-09-24T14:00:18.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>今天开始了《机器学习实战》的学习，下面就是读书笔记咯</p><h1 id="numpy函数库基础"><a href="#numpy函数库基础" class="headerlink" title="numpy函数库基础"></a>numpy函数库基础</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">random.rand(4,4)</div><div class="line"><span class="comment">#调用mat()函数可以将数组转化为矩阵</span></div><div class="line">randMat = mat(random.rand(4,4)</div><div class="line"><span class="comment">#逆矩阵</span></div><div class="line">invRandMat = randMat.I</div><div class="line"><span class="comment">#逆矩阵*矩阵</span></div><div class="line">invRandMat * randMat <span class="comment">#这里应该是单位矩阵的，但是计算机运算有误差</span></div><div class="line"><span class="comment">#计算误差值</span></div><div class="line">myEye = randMat * invRandMat</div><div class="line">myEye - eye(4) <span class="comment">#用我们计算得到的矩阵减单位矩阵</span></div></pre></td></tr></table></figure><h1 id="K-临近算法"><a href="#K-临近算法" class="headerlink" title="K-临近算法"></a>K-临近算法</h1><p>简单来说，K-临近算法采用测量不同特征值之间的距离方法进行分类</p><h2 id="优缺点："><a href="#优缺点：" class="headerlink" title="优缺点："></a>优缺点：</h2><pre><code>优点：精度高，对异常值不敏感，无数据输入假定缺点：计算复杂度高，空间复杂度高适用数据范围：数值型和标称型</code></pre><h2 id="伪代码"><a href="#伪代码" class="headerlink" title="伪代码"></a>伪代码</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">计算已知类别数据集中的每个点以此执行以下操作</div><div class="line">按照距离递增次序排序</div><div class="line">选取与当前点距离最小的k个点</div><div class="line">确定前k个点所在类别的出现频率</div><div class="line">返回前k个点出现频率最高的类别的类当做当前点的预测分类</div></pre></td></tr></table></figure><h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">def classify0(inX,dataSet,labels,k):</div><div class="line">    dataSetSize = dataSet.shape[0]</div><div class="line">    diffMat = tile(inX,(dataSetSize,1)) - dataSet</div><div class="line">    sqDiffMat = diffMat**2</div><div class="line">    sqDistances = sqDiffMat.sum(axis=1)</div><div class="line">    distances = sqDistances**0.5</div><div class="line">    sortedDistIndicies = distances.argsort()</div><div class="line">    classCount = &#123;&#125;</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(k):</div><div class="line">        voteIlabel = labels[sortedDistIndicies[i]]</div><div class="line">        classCount[voteIlabel] = classCount.get(voteIlabel,0) + 1</div><div class="line">    sortedClassCount = sorted(classCount.items(),</div><div class="line">                              key = operator.itemgetter(1),reverse=True)</div><div class="line">    <span class="built_in">return</span> sortedClassCount[0][0]</div></pre></td></tr></table></figure><p>需要注意的是，当你在终端导入一个模块的时候，如果你给这个模块增加了一个新的函数的时候，你必须先退出python3环境，重新导入才能生效<br>array.shape[0] #放回数组的长度<br>tile() # Construct an array by repeating A the number of times given by reps.<br>tile(a,x):   x是控制a重复几次的，结果是一个一维数组<br>tile(a,(x,y))：   结果是一个二维矩阵，其中行数为x，列数是一维数组a的长度和y的乘积<br>tile(a,(x,y,z)):   结果是一个三维矩阵，其中矩阵的行数为x，矩阵的列数为y，而z表示矩阵每个单元格里a重复的次数。(三维矩阵可以看成一个二维矩阵，每个矩阵的单元格里存者一个一维矩阵a)<br>sqDiffMat.sum(axis=1)：将二维数组按行相加，结果是一个一维数组<br>classCount.get(voteIlabel,0)：字典的get方法，查找第一个参数key，如果不存在，返回参数2<br>sorted(classCount.items(),key = operator.itemgetter(1),reverse=True):根据字典中的第二域进行排序<br>sortedClassCount[0][0]：将匹配到的key值取出来</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;今天开始了《机器学习实战》的学习，下面就是读书笔记咯&lt;/p&gt;
-&lt;h1 id=&quot;numpy函数库基础&quot;&gt;&lt;a href=&quot;#numpy函数库基础&quot; class=&quot;headerlink&quot; title=&quot;numpy函数库基础&quot;&gt;&lt;/a&gt;numpy函数库基础&lt;/h1&gt;&lt;figure
-      
-    
-    </summary>
-    
-      <category term="机器学习" scheme="http://yoursite.com/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
-    
-    
-      <category term="机器学习" scheme="http://yoursite.com/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/"/>
     
   </entry>
   

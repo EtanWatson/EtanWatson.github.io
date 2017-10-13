@@ -310,6 +310,281 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/04/自然语言处理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EtanWatson">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EWSUN">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/04/自然语言处理/" itemprop="url">自然语言处理</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-04T11:07:53+08:00">
+                2017-10-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/03/python数据收集（数据清洗）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EtanWatson">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EWSUN">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/03/python数据收集（数据清洗）/" itemprop="url">python数据收集（数据清洗）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-03T20:51:22+08:00">
+                2017-10-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python数据收集/" itemprop="url" rel="index">
+                    <span itemprop="name">python数据收集</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="数据清洗"><a href="#数据清洗" class="headerlink" title="数据清洗"></a>数据清洗</h1><h2 id="编写代码清洗数据"><a href="#编写代码清洗数据" class="headerlink" title="编写代码清洗数据"></a>编写代码清洗数据</h2><p>n-gram<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">from urllib.request import urlopen</div><div class="line">from bs4 import BeautifulSoup</div><div class="line">import re</div><div class="line"></div><div class="line"><span class="comment">#清洗规则函数</span></div><div class="line"></div><div class="line"><span class="comment">#剔除单字符的“单词”，除非这个字符是“i”或“a”;</span></div><div class="line"><span class="comment">#剔除维基百科的引用标记(方括号包裹的数字，如[1]);</span></div><div class="line"><span class="comment">#剔除标点符号(注意:这个规则有点儿矫枉过正，在第9章我们将详细介绍，本例暂时这样处理)。</span></div><div class="line">import string</div><div class="line"></div><div class="line">def cleanInput(input):</div><div class="line">    input = re.sub(<span class="string">'\n+'</span>,<span class="string">' '</span>, input)</div><div class="line">    input = re.sub(<span class="string">'\[[0-9]*\]'</span>,<span class="string">""</span>, input)</div><div class="line">    input = re.sub(<span class="string">' +'</span>,<span class="string">" "</span>, input)</div><div class="line">    input = bytes(input,<span class="string">"UTF-8"</span>)</div><div class="line">    input = input.decode(<span class="string">"ascii"</span>, <span class="string">"ignore"</span>)</div><div class="line">    cleanInput = []</div><div class="line">    input = input.split(<span class="string">' '</span>)</div><div class="line">    <span class="keyword">for</span> item <span class="keyword">in</span> input:</div><div class="line">        item = item.strip(string.punctuation)</div><div class="line">        <span class="keyword">if</span> len(item) &gt; 1 or (item.lower() == <span class="string">'i'</span>):</div><div class="line">            cleanInput.append(item)</div><div class="line">    <span class="built_in">return</span> cleanInput</div><div class="line"></div><div class="line">def ngrams(input, n):</div><div class="line">    input = input.upper()</div><div class="line">    input = cleanInput(input)</div><div class="line">    output = []</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(input)-n+1):</div><div class="line">        output.append(input[i:i+n])</div><div class="line">    <span class="built_in">return</span> output</div><div class="line">html = urlopen(<span class="string">"http://en.wikipedia.org/wiki/Python_(programming_language)"</span>)</div><div class="line">bsObj = BeautifulSoup(html,<span class="string">'html.parser'</span>)</div><div class="line">content = bsObj.find(<span class="string">'div'</span>,&#123;<span class="string">'id'</span>:<span class="string">'mw-content-text'</span>&#125;).get_text()</div><div class="line">ngrams = ngrams(content, 2)</div><div class="line"><span class="built_in">print</span>(ngrams)</div><div class="line"><span class="built_in">print</span>(<span class="string">"2-grams count is: "</span>+str(len(ngrams)))</div></pre></td></tr></table></figure></p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>import string<br>print(string.punctuation)<br>!”#$%&amp;’()*+,-./:;&lt;=&gt;?@[]^_`{|}~</p>
+<h3 id="数据标准化"><a href="#数据标准化" class="headerlink" title="数据标准化"></a>数据标准化</h3><p>python的字典是无序的，不能想数组一样直接对n-gran序列频率进行排序，字典内部的元素位置排序以后再次使用时还是<br>会变化，在python的collections库里面有一个OrderedDict可以解决这个问题</p>
+<pre><code class="bash">from collection import OrderedDict
+……
+ngrams = OrderedDict(sorted(ngrams.items(), key=lambda t: t[1), reverse=True)
+</code></pre>
+<p>没有跑起来，网速不好（下次测试）</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<h2 id="数据存储后在清洗"><a href="#数据存储后在清洗" class="headerlink" title="数据存储后在清洗"></a>数据存储后在清洗</h2><p>OpenRefine</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/03/python数据收集（六）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1586,300 +1861,6 @@ title = bsObj.body.h1
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/27/机器学习实战（四）/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="EtanWatson">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/header.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="EWSUN">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/27/机器学习实战（四）/" itemprop="url">机器学习实战（四）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-27T21:38:18+08:00">
-                2017-09-27
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/机器学习/" itemprop="url" rel="index">
-                    <span itemprop="name">机器学习</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>为什么先写四，而没有二，三呢？二三的代码都码了一遍，理解的还不是很充分，今天看到四，所以先把四的概念写写：朴素贝叶斯</p>
-<h1 id="基于概率论的分类方法：朴素贝叶斯"><a href="#基于概率论的分类方法：朴素贝叶斯" class="headerlink" title="基于概率论的分类方法：朴素贝叶斯"></a>基于概率论的分类方法：朴素贝叶斯</h1><p>贝叶斯决策论的核心思想：选着具有最高概率的决策</p>
-<h2 id="条件概率-p-x-y-c1"><a href="#条件概率-p-x-y-c1" class="headerlink" title="条件概率 p(x,y|c1)"></a>条件概率 p(x,y|c1)</h2><p><img src="https://gss0.bdstatic.com/94o3dSag_xI4khGkpoWK1HF6hhy/baike/s%3D113/sign=62231e180df431adb8d247387837ac0f/35a85edf8db1cb1399c0c799dc54564e93584b8b.jpg" alt="“条件概率公式”"><br><img src="https://gss1.bdstatic.com/9vo3dSag_xI4khGkpoWK1HF6hhy/baike/s%3D280/sign=51f198b6c4fdfc03e178e4b0e43f87a9/aec379310a55b31972c9ec3d44a98226cffc1741.jpg" alt="“贝叶斯公式”"></p>
-<h2 id="使用条件概率来分类"><a href="#使用条件概率来分类" class="headerlink" title="使用条件概率来分类"></a>使用条件概率来分类</h2><h2 id="词集模型-词袋模型"><a href="#词集模型-词袋模型" class="headerlink" title="词集模型 词袋模型"></a>词集模型 词袋模型</h2>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/24/机器学习实战（一）/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="EtanWatson">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/header.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="EWSUN">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/24/机器学习实战（一）/" itemprop="url">机器学习实战（一）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-24T19:27:53+08:00">
-                2017-09-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/机器学习/" itemprop="url" rel="index">
-                    <span itemprop="name">机器学习</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>今天开始了《机器学习实战》的学习，下面就是读书笔记咯</p>
-<h1 id="numpy函数库基础"><a href="#numpy函数库基础" class="headerlink" title="numpy函数库基础"></a>numpy函数库基础</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">random.rand(4,4)</div><div class="line"><span class="comment">#调用mat()函数可以将数组转化为矩阵</span></div><div class="line">randMat = mat(random.rand(4,4)</div><div class="line"><span class="comment">#逆矩阵</span></div><div class="line">invRandMat = randMat.I</div><div class="line"><span class="comment">#逆矩阵*矩阵</span></div><div class="line">invRandMat * randMat <span class="comment">#这里应该是单位矩阵的，但是计算机运算有误差</span></div><div class="line"><span class="comment">#计算误差值</span></div><div class="line">myEye = randMat * invRandMat</div><div class="line">myEye - eye(4) <span class="comment">#用我们计算得到的矩阵减单位矩阵</span></div></pre></td></tr></table></figure>
-<h1 id="K-临近算法"><a href="#K-临近算法" class="headerlink" title="K-临近算法"></a>K-临近算法</h1><p>简单来说，K-临近算法采用测量不同特征值之间的距离方法进行分类</p>
-<h2 id="优缺点："><a href="#优缺点：" class="headerlink" title="优缺点："></a>优缺点：</h2><pre><code>优点：精度高，对异常值不敏感，无数据输入假定
-缺点：计算复杂度高，空间复杂度高
-适用数据范围：数值型和标称型
-</code></pre><h2 id="伪代码"><a href="#伪代码" class="headerlink" title="伪代码"></a>伪代码</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">计算已知类别数据集中的每个点以此执行以下操作</div><div class="line">按照距离递增次序排序</div><div class="line">选取与当前点距离最小的k个点</div><div class="line">确定前k个点所在类别的出现频率</div><div class="line">返回前k个点出现频率最高的类别的类当做当前点的预测分类</div></pre></td></tr></table></figure>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">def classify0(inX,dataSet,labels,k):</div><div class="line">    dataSetSize = dataSet.shape[0]</div><div class="line">    diffMat = tile(inX,(dataSetSize,1)) - dataSet</div><div class="line">    sqDiffMat = diffMat**2</div><div class="line">    sqDistances = sqDiffMat.sum(axis=1)</div><div class="line">    distances = sqDistances**0.5</div><div class="line">    sortedDistIndicies = distances.argsort()</div><div class="line">    classCount = &#123;&#125;</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(k):</div><div class="line">        voteIlabel = labels[sortedDistIndicies[i]]</div><div class="line">        classCount[voteIlabel] = classCount.get(voteIlabel,0) + 1</div><div class="line">    sortedClassCount = sorted(classCount.items(),</div><div class="line">                              key = operator.itemgetter(1),reverse=True)</div><div class="line">    <span class="built_in">return</span> sortedClassCount[0][0]</div></pre></td></tr></table></figure>
-<p>需要注意的是，当你在终端导入一个模块的时候，如果你给这个模块增加了一个新的函数的时候，你必须先退出python3环境，重新导入才能生效<br>array.shape[0] #放回数组的长度<br>tile() # Construct an array by repeating A the number of times given by reps.<br>tile(a,x):   x是控制a重复几次的，结果是一个一维数组<br>tile(a,(x,y))：   结果是一个二维矩阵，其中行数为x，列数是一维数组a的长度和y的乘积<br>tile(a,(x,y,z)):   结果是一个三维矩阵，其中矩阵的行数为x，矩阵的列数为y，而z表示矩阵每个单元格里a重复的次数。(三维矩阵可以看成一个二维矩阵，每个矩阵的单元格里存者一个一维矩阵a)<br>sqDiffMat.sum(axis=1)：将二维数组按行相加，结果是一个一维数组<br>classCount.get(voteIlabel,0)：字典的get方法，查找第一个参数key，如果不存在，返回参数2<br>sorted(classCount.items(),key = operator.itemgetter(1),reverse=True):根据字典中的第二域进行排序<br>sortedClassCount[0][0]：将匹配到的key值取出来</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1933,7 +1914,7 @@ title = bsObj.body.h1
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">36</span>
+                <span class="site-state-item-count">38</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
