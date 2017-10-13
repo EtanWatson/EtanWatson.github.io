@@ -310,6 +310,171 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/18/python-初体验（三）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EtanWatson">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EWSUN">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/18/python-初体验（三）/" itemprop="url">python 初体验（三）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-18T09:36:41+08:00">
+                2017-09-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>书上的好多练习没做，等有时间专门把书上的习题整理做一下</p>
+<h1 id="字典"><a href="#字典" class="headerlink" title="字典"></a>字典</h1><h2 id="一个简单的字典的例子"><a href="#一个简单的字典的例子" class="headerlink" title="一个简单的字典的例子"></a>一个简单的字典的例子</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">alien_0 = &#123;‘color’:’green’,’points’:5&#125;</div><div class="line"><span class="built_in">print</span>(alien_0[‘color’])</div><div class="line"><span class="built_in">print</span>(alien_0[‘points’]</div></pre></td></tr></table></figure>
+<h2 id="字典操作"><a href="#字典操作" class="headerlink" title="字典操作"></a>字典操作</h2><h3 id="添加健-值对-键值对的排序顺序与添加顺序不同"><a href="#添加健-值对-键值对的排序顺序与添加顺序不同" class="headerlink" title="添加健-值对(键值对的排序顺序与添加顺序不同)"></a>添加健-值对(键值对的排序顺序与添加顺序不同)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">alien_0[‘x_position’] = 0</div><div class="line">alien_0[‘y_position’] = 25</div></pre></td></tr></table></figure>
+<h3 id="修改字典中的值"><a href="#修改字典中的值" class="headerlink" title="修改字典中的值"></a>修改字典中的值</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">alien_0[‘color’] = ‘yellow’</div></pre></td></tr></table></figure>
+<h3 id="删除键值对-删除以后，表面该键值对永久消失了"><a href="#删除键值对-删除以后，表面该键值对永久消失了" class="headerlink" title="删除键值对(删除以后，表面该键值对永久消失了)"></a>删除键值对(删除以后，表面该键值对永久消失了)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">del alien_0[‘points’]</div></pre></td></tr></table></figure>
+<h3 id="由类似对象组成的字典"><a href="#由类似对象组成的字典" class="headerlink" title="由类似对象组成的字典"></a>由类似对象组成的字典</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"> favorite_languages =&#123;</div><div class="line">‘jen’ : ‘python’,</div><div class="line">‘sarch’ : ‘c’,</div><div class="line">‘edward’: ‘ruby’,</div><div class="line">‘phil’ : ‘C++’</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
+<h2 id="遍历字典"><a href="#遍历字典" class="headerlink" title="遍历字典"></a>遍历字典</h2><h3 id="遍历所有键值对"><a href="#遍历所有键值对" class="headerlink" title="遍历所有键值对"></a>遍历所有键值对</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"> <span class="keyword">for</span> key ,value <span class="keyword">in</span> user_0.items():</div><div class="line"><span class="built_in">print</span>(“\nKey:” + key)</div><div class="line"><span class="built_in">print</span>(“Value:” + value)</div></pre></td></tr></table></figure>
+<h3 id="遍历字典中的所有键"><a href="#遍历字典中的所有键" class="headerlink" title="遍历字典中的所有键"></a>遍历字典中的所有键</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">  <span class="keyword">for</span> name <span class="keyword">in</span> favorite_languages.keys():</div><div class="line">	<span class="built_in">print</span>(name.title())</div><div class="line"><span class="comment">#其中keys()的结果调用了函数sorted(),所以在遍历前对这个列表进行排序</span></div></pre></td></tr></table></figure>
+<h3 id="遍历字典中的所有值"><a href="#遍历字典中的所有值" class="headerlink" title="遍历字典中的所有值"></a>遍历字典中的所有值</h3><pre><code class="bash"><span class="keyword">for</span> value <span class="keyword">in</span> favorite_languages.values():
+  <span class="built_in">print</span>(value.title())
+</code></pre>
+<h2 id="嵌套"><a href="#嵌套" class="headerlink" title="嵌套"></a>嵌套</h2><h3 id="字典列表"><a href="#字典列表" class="headerlink" title="字典列表"></a>字典列表</h3><pre><code class="bash">  alien_0 = {};
+  alien_1 = {};
+  alien_2 = {};
+  aliens = [alien_0,alien_1,alien_2]
+<span class="comment">#或者是自动生成</span>
+ aliens = []
+ <span class="keyword">for</span> aliens_number <span class="keyword">in</span> range(30):
+    new_alien = {<span class="string">'color'</span>:<span class="string">'green'</span>,<span class="string">'ponits'</span>:<span class="string">'5'</span>,<span class="string">'speed'</span>:<span class="string">'slow'</span>}
+    aliens.append(new_alien)
+ <span class="keyword">for</span> alien <span class="keyword">in</span> aliens[:5]:
+    <span class="built_in">print</span>(alien)
+<span class="comment">#或者是类似于下面这个例子的：</span>
+</code></pre>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/17/python初体验（二）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1096,7 +1261,7 @@
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">35</span>
+                <span class="site-state-item-count">36</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
