@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2017/09/16/%E4%BD%BF%E7%94%A8Hexo-github%E6%90%AD%E5%BB%BA/</loc>
+    
+    <lastmod>2017-10-14T06:11:21.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2017/10/13/python%E6%95%B0%E6%8D%AE%E6%94%B6%E9%9B%86%EF%BC%88%E8%BF%9C%E7%A8%8B%E9%87%87%E9%9B%86%EF%BC%89/</loc>
     
     <lastmod>2017-10-13T06:53:59.000Z</lastmod>
@@ -264,13 +271,6 @@
     <loc>http://yoursite.com/2017/09/16/python-%E5%B0%9D%E9%B2%9C%E8%B8%A9%E5%9D%91%E8%AE%B0/</loc>
     
     <lastmod>2017-09-17T00:07:05.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2017/09/16/%E4%BD%BF%E7%94%A8Hexo-github%E6%90%AD%E5%BB%BA/</loc>
-    
-    <lastmod>2017-09-16T08:39:55.000Z</lastmod>
     
   </url>
   
