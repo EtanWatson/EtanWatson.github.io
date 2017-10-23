@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2017-10-13T06:53:59.000Z</updated>
+  <updated>2017-10-23T01:37:40.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,56 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>mysql safe update mode 下出现的错误</title>
+    <link href="http://yoursite.com/2017/10/23/mysql-safe-update-mode-%E4%B8%8B%E5%87%BA%E7%8E%B0%E7%9A%84%E9%94%99%E8%AF%AF/"/>
+    <id>http://yoursite.com/2017/10/23/mysql-safe-update-mode-下出现的错误/</id>
+    <published>2017-10-23T01:22:10.000Z</published>
+    <updated>2017-10-23T01:37:40.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="mysql-safe-update-mode-下出现的错误"><a href="#mysql-safe-update-mode-下出现的错误" class="headerlink" title="mysql safe update mode 下出现的错误"></a>mysql safe update mode 下出现的错误</h1><p>今天在中，发现一个简单sql语句执行不了，看了半天没有找到错误，后来在WorkBench中执行也没有通过，控制台报错误Error Code: 1175. You are using safe update mode and you tried to update a table without a WHERE that uses a KEY column To disable safe mode, toggle the option in Preferences -&gt; SQL Editor and reconnect.查阅资料，这是因为MySql运行在safe-updates模式下，该模式会导致非主键条件下无法执行update或者delete命令。</p><h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">show variables like <span class="string">'SQL_SAFE_UPDATES’;#查看开关状态。你在这里可能看到value为no</span></div><div class="line"><span class="string">SET SQL_SAFE_UPDATES = 0;#修改下数据库模式</span></div></pre></td></tr></table></figure><p>更多详情，请参见官方文档：<a href="https://dev.mysql.com/doc/refman/5.7/en/mysql-tips.html下的4.5.1.6.4" target="_blank" rel="external">https://dev.mysql.com/doc/refman/5.7/en/mysql-tips.html下的4.5.1.6.4</a> Using the –safe-updates Option</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;mysql-safe-update-mode-下出现的错误&quot;&gt;&lt;a href=&quot;#mysql-safe-update-mode-下出现的错误&quot; class=&quot;headerlink&quot; title=&quot;mysql safe update mode 下出现的错误&quot;&gt;&lt;/a
+      
+    
+    </summary>
+    
+      <category term="mysql" scheme="http://yoursite.com/categories/mysql/"/>
+    
+    
+      <category term="mysql" scheme="http://yoursite.com/tags/mysql/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>关于mac环境变量的埋坑记</title>
+    <link href="http://yoursite.com/2017/10/14/%E5%85%B3%E4%BA%8Emac%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E7%9A%84%E5%9F%8B%E5%9D%91%E8%AE%B0/"/>
+    <id>http://yoursite.com/2017/10/14/关于mac环境变量的埋坑记/</id>
+    <published>2017-10-14T11:55:11.000Z</published>
+    <updated>2017-10-14T12:06:21.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>在配置googledriver环境变量的时候，配置好了，然后就source .bash_profile，哈哈，大功告成，怎么配置的呢？<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">export</span> PATH=**/**/**/chromedriver</div></pre></td></tr></table></figure></p><p>我去，我的命令咋都不好使了？，尝试了很多，好像就cd好使，其他的都失灵了。估摸着是环境变量出来问题。</p><h2 id="高潮"><a href="#高潮" class="headerlink" title="高潮"></a>高潮</h2><p>网络怎么便利的今天，怎么会难倒我，google一下，你就知道<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">export</span> PATH=/usr/bin:/usr/sbin:/bin:/sbin:/usr/X11R6/bin</div><div class="line"></div><div class="line"><span class="comment"># 清空.bash_profile,加入一下配置</span></div><div class="line"><span class="built_in">export</span> JAVA_HOME=`/usr/libexec/java_home`</div><div class="line"></div><div class="line"><span class="built_in">export</span> PATH=<span class="variable">$&#123;PATH&#125;</span>:<span class="variable">$&#123;JAVA_HOME&#125;</span>:<span class="variable">$&#123;ANDROID_SDK_ROOT&#125;</span>:<span class="variable">$&#123;ANDROID_SDK_ROOT&#125;</span>/platform-tools:<span class="variable">$&#123;ANDROID_SDK_ROOT&#125;</span>/tools:<span class="variable">$&#123;JAVA_HOME&#125;</span>:<span class="variable">$&#123;JAVA_HOME&#125;</span>/bin</div><div class="line"><span class="built_in">export</span> PATH=<span class="string">"/usr/local/bin:/usr/local/sbin:~/bin:<span class="variable">$PATH</span>"</span></div></pre></td></tr></table></figure></p><p>ok 果断好使了<br>再把自己的加进去，又崩了，反复折腾了好几次，无果</p><h2 id="结果：眼瞎"><a href="#结果：眼瞎" class="headerlink" title="结果：眼瞎"></a>结果：眼瞎</h2><pre><code class="bash"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:**/**/**/chromedriver好像这样也可以PATH=“**/**/**/chromedriver<span class="variable">${PATH}</span>”<span class="built_in">export</span> PATH <span class="comment">#没有尝试，原谅我是小白</span></code></pre><p>(完，然而一个小时过去了)</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;起因&quot;&gt;&lt;a href=&quot;#起因&quot; class=&quot;headerlink&quot; title=&quot;起因&quot;&gt;&lt;/a&gt;起因&lt;/h2&gt;&lt;p&gt;在配置googledriver环境变量的时候，配置好了，然后就source .bash_profile，哈哈，大功告成，怎么配置的呢？&lt;br
+      
+    
+    </summary>
+    
+      <category term="埋坑记" scheme="http://yoursite.com/categories/%E5%9F%8B%E5%9D%91%E8%AE%B0/"/>
+    
+    
+      <category term="埋坑记" scheme="http://yoursite.com/tags/%E5%9F%8B%E5%9D%91%E8%AE%B0/"/>
+    
+  </entry>
   
   <entry>
     <title>python数据收集（远程采集）</title>
@@ -443,57 +493,6 @@
     
     
       <category term="python数据收集" scheme="http://yoursite.com/tags/python%E6%95%B0%E6%8D%AE%E6%94%B6%E9%9B%86/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>python数据收集（一）</title>
-    <link href="http://yoursite.com/2017/09/30/python%E6%95%B0%E6%8D%AE%E6%94%B6%E9%9B%86%EF%BC%88%E4%B8%80%EF%BC%89/"/>
-    <id>http://yoursite.com/2017/09/30/python数据收集（一）/</id>
-    <published>2017-09-30T02:46:43.000Z</published>
-    <updated>2017-09-30T07:52:11.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>之前的python爬虫初体验，是看视频教学的，感觉不太踏实，正好现在需要系统的学一下爬虫，所有就找了一本python数据采集的书来看看，为了区分学习计划，所以将这个作为数据采集第一篇笔记，加油，坚持下去！</p><h1 id="初见爬虫"><a href="#初见爬虫" class="headerlink" title="初见爬虫"></a>初见爬虫</h1><h2 id="关于urllib"><a href="#关于urllib" class="headerlink" title="关于urllib"></a>关于urllib</h2><p>urllib被分为：urllib.request、urllib.parse和urllib.error 三个子模块</p><h2 id="安装BeautifulSoup"><a href="#安装BeautifulSoup" class="headerlink" title="安装BeautifulSoup"></a>安装BeautifulSoup</h2><h2 id="用虚拟环境保存库文件"><a href="#用虚拟环境保存库文件" class="headerlink" title="用虚拟环境保存库文件"></a>用虚拟环境保存库文件</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">$ virtualenv scrapingEnv</div><div class="line"><span class="comment">#这样就创建了一个叫作scrapingEnv的新环境，你需要先激活它再使用：</span></div><div class="line">$ <span class="built_in">cd</span> scrapingEnv/</div><div class="line">$ <span class="built_in">source</span> bin/activate</div><div class="line"><span class="comment">#你可以在新建的scrapingEnv环境里，安装并使用BeautifulSoup</span></div><div class="line"><span class="comment">#当你不在使用虚拟机环境的库时，可以通过释放命令来退出环境：</span></div><div class="line">$ deactivate</div></pre></td></tr></table></figure><h2 id="运行BeautifulSoup"><a href="#运行BeautifulSoup" class="headerlink" title="运行BeautifulSoup"></a>运行BeautifulSoup</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">from urllib.request import urlopenfrom bs4 import BeautifulSouphtml = urlopen(<span class="string">"http://www.pythonscraping.com/pages/page1.html"</span>) bsObj = BeautifulSoup(html.read())<span class="built_in">print</span>(bsObj.h1)</div></pre></td></tr></table></figure><h2 id="可靠的网络连接"><a href="#可靠的网络连接" class="headerlink" title="可靠的网络连接"></a>可靠的网络连接</h2><h3 id="html-urlopen-“http-news-baidu-com-“-是如何处理异常的？"><a href="#html-urlopen-“http-news-baidu-com-“-是如何处理异常的？" class="headerlink" title="html = urlopen(“http://news.baidu.com/“)是如何处理异常的？"></a>html = urlopen(“<a href="http://news.baidu.com/“)是如何处理异常的？" target="_blank" rel="external">http://news.baidu.com/“)是如何处理异常的？</a></h3><p>这行代码主要可能会发生两种异常</p><ol><li><p>页面在服务器上不存在<br> 404 Page Not Found<br> 500 Internal Server Error<br>所有这些类似的情形，urlopen函数都会抛出”HTTPError” 异常<br>处理这种异常的方式：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">try:html = urlopen(<span class="string">"http://news.baidu.com/"</span>)except HTTPError as e: </div><div class="line"><span class="built_in">print</span>(e)<span class="comment"># 返回空值，中断程序，或者执行另一个方案 </span></div><div class="line"><span class="keyword">else</span>:<span class="comment"># 程序继续。注意:如果你已经在上面异常捕捉那一段代码里返回或中断(break)， </span></div><div class="line"><span class="comment"># 那么就不需要使用else语句了，这段代码也不会执行</span></div></pre></td></tr></table></figure></li><li><p>服务器不存在</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> html is None:<span class="built_in">print</span>(<span class="string">"URL is not found"</span>)<span class="keyword">else</span>:<span class="comment"># 程序继续</span></div></pre></td></tr></table></figure></li><li><p>标签不存在</p><pre><code class="bash"> <span class="comment">#如果BeautifulSoup对象里面没有nonExistentTag标签</span> <span class="built_in">print</span>(bsObj.nonExistentTag) <span class="comment">#返回None对象</span> <span class="comment">#如果这个时候在继续调用nonExistentTag的子标签</span> <span class="built_in">print</span>(bsObj.nonExistentTag.someTag) <span class="comment">#会抛出 AttributeError: 'NoneType' object has no attribute 'someTag'</span>解决方法： try:     badContent = bsObj.nonExistingTag.anotherTag except AttributeError as e:      <span class="built_in">print</span>(<span class="string">"Tag was not found"</span>) <span class="keyword">else</span>:     <span class="keyword">if</span> badContent == None:         <span class="built_in">print</span> (<span class="string">"Tag was not found"</span>)      <span class="keyword">else</span>:         <span class="built_in">print</span>(badContent)</code></pre><p>我们会发现，这样写会有些累赘，换一种写法<br>from urllib.request import urlopen<br>from urllib.error import HTTPError<br>from bs4 import BeautifulSoup<br>def getTitle(url):<br> try:</p><pre><code>html = urlopen(url) </code></pre><p> except HTTPError as e:</p><pre><code>return None </code></pre><p> try:</p><pre><code>        bsObj = BeautifulSoup(html.read())title = bsObj.body.h1 </code></pre><p> except AttributeError as e:</p><pre><code>return None </code></pre><p> return title<br>title = getTitle(“<a href="http://news.baidu.com/" target="_blank" rel="external">http://news.baidu.com/</a>“)<br>if title == None:<br> print(“Title could not be found”)<br>else:<br> print(title)</p></li></ol>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;之前的python爬虫初体验，是看视频教学的，感觉不太踏实，正好现在需要系统的学一下爬虫，所有就找了一本python数据采集的书来看看，为了区分学习计划，所以将这个作为数据采集第一篇笔记，加油，坚持下去！&lt;/p&gt;
-&lt;h1 id=&quot;初见爬虫&quot;&gt;&lt;a href=&quot;#初见爬虫&quot; 
-      
-    
-    </summary>
-    
-      <category term="python数据收集" scheme="http://yoursite.com/categories/python%E6%95%B0%E6%8D%AE%E6%94%B6%E9%9B%86/"/>
-    
-    
-      <category term="python数据收集" scheme="http://yoursite.com/tags/python%E6%95%B0%E6%8D%AE%E6%94%B6%E9%9B%86/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>概率论与数理统计（一）</title>
-    <link href="http://yoursite.com/2017/09/28/%E6%A6%82%E7%8E%87%E8%AE%BA%E4%B8%8E%E6%95%B0%E7%90%86%E7%BB%9F%E8%AE%A1%EF%BC%88%E4%B8%80%EF%BC%89/"/>
-    <id>http://yoursite.com/2017/09/28/概率论与数理统计（一）/</id>
-    <published>2017-09-28T10:25:13.000Z</published>
-    <updated>2017-09-28T12:02:08.000Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="离散型随机变量及其分布规律"><a href="#离散型随机变量及其分布规律" class="headerlink" title="离散型随机变量及其分布规律"></a>离散型随机变量及其分布规律</h1><h2 id="0-1分布"><a href="#0-1分布" class="headerlink" title="0-1分布"></a>0-1分布</h2><h2 id="二项分布"><a href="#二项分布" class="headerlink" title="二项分布"></a>二项分布</h2><h2 id="泊松分布"><a href="#泊松分布" class="headerlink" title="泊松分布"></a>泊松分布</h2><h1 id="随机变量的分布函数"><a href="#随机变量的分布函数" class="headerlink" title="随机变量的分布函数"></a>随机变量的分布函数</h1><p>#连续性随机变量及其概率密度</p><h2 id="均匀分布"><a href="#均匀分布" class="headerlink" title="均匀分布"></a>均匀分布</h2><h2 id="指数分布"><a href="#指数分布" class="headerlink" title="指数分布"></a>指数分布</h2><h2 id="正态分布"><a href="#正态分布" class="headerlink" title="正态分布"></a>正态分布</h2><h1 id="多维随机变量及其分布"><a href="#多维随机变量及其分布" class="headerlink" title="多维随机变量及其分布"></a>多维随机变量及其分布</h1><h2 id="二维随机变量"><a href="#二维随机变量" class="headerlink" title="二维随机变量"></a>二维随机变量</h2><h2 id="边缘分布"><a href="#边缘分布" class="headerlink" title="边缘分布"></a>边缘分布</h2><h2 id="条件分布"><a href="#条件分布" class="headerlink" title="条件分布"></a>条件分布</h2><h2 id="互相独立的随机变量"><a href="#互相独立的随机变量" class="headerlink" title="互相独立的随机变量"></a>互相独立的随机变量</h2><h2 id="两个随机变量的函数的分布"><a href="#两个随机变量的函数的分布" class="headerlink" title="两个随机变量的函数的分布"></a>两个随机变量的函数的分布</h2><h3 id="卷积公式"><a href="#卷积公式" class="headerlink" title="卷积公式"></a>卷积公式</h3><h1 id="随机变量的数字特征"><a href="#随机变量的数字特征" class="headerlink" title="随机变量的数字特征"></a>随机变量的数字特征</h1><h2 id="数学期望"><a href="#数学期望" class="headerlink" title="数学期望"></a>数学期望</h2><h2 id="方差"><a href="#方差" class="headerlink" title="方差"></a>方差</h2><h2 id="协方差与相关系数"><a href="#协方差与相关系数" class="headerlink" title="协方差与相关系数"></a>协方差与相关系数</h2><h2 id="矩、协方差矩阵"><a href="#矩、协方差矩阵" class="headerlink" title="矩、协方差矩阵"></a>矩、协方差矩阵</h2>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h1 id=&quot;离散型随机变量及其分布规律&quot;&gt;&lt;a href=&quot;#离散型随机变量及其分布规律&quot; class=&quot;headerlink&quot; title=&quot;离散型随机变量及其分布规律&quot;&gt;&lt;/a&gt;离散型随机变量及其分布规律&lt;/h1&gt;&lt;h2 id=&quot;0-1分布&quot;&gt;&lt;a href=&quot;#0-1分
-      
-    
-    </summary>
-    
-      <category term="概率论" scheme="http://yoursite.com/categories/%E6%A6%82%E7%8E%87%E8%AE%BA/"/>
-    
-    
-      <category term="概率论" scheme="http://yoursite.com/tags/%E6%A6%82%E7%8E%87%E8%AE%BA/"/>
     
   </entry>
   
