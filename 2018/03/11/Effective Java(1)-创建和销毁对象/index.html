@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="EWSUN" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="Effective Java(1)-创建和销毁对象标签（空格分隔）： javaSE  何时以及如何创建对象，何时以及如何避免创建对象，如何确保它们能够适时地销毁，以及如何管理对象销毁之前必须进行的各种清理动作 第一条：考虑用静态工厂方法代替构造器类可以提供一个公有的静态工厂方法，它只是一个返回类的实例的静态方法 public static Boolean valueOf(boolean b){">
+<meta property="og:type" content="article">
+<meta property="og:title" content="EWSUN">
+<meta property="og:url" content="http://yoursite.com/2018/03/11/Effective Java(1)-创建和销毁对象/index.html">
+<meta property="og:site_name" content="EWSUN">
+<meta property="og:description" content="Effective Java(1)-创建和销毁对象标签（空格分隔）： javaSE  何时以及如何创建对象，何时以及如何避免创建对象，如何确保它们能够适时地销毁，以及如何管理对象销毁之前必须进行的各种清理动作 第一条：考虑用静态工厂方法代替构造器类可以提供一个公有的静态工厂方法，它只是一个返回类的实例的静态方法 public static Boolean valueOf(boolean b){">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-03-11T05:58:55.371Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="EWSUN">
+<meta name="twitter:description" content="Effective Java(1)-创建和销毁对象标签（空格分隔）： javaSE  何时以及如何创建对象，何时以及如何避免创建对象，如何确保它们能够适时地销毁，以及如何管理对象销毁之前必须进行的各种清理动作 第一条：考虑用静态工厂方法代替构造器类可以提供一个公有的静态工厂方法，它只是一个返回类的实例的静态方法 public static Boolean valueOf(boolean b){">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/03/11/Effective Java(1)-创建和销毁对象/"/>
+
+
+
+
+
+  <title> | EWSUN</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">EWSUN</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-schedule">
+          <a href="/schedule/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br />
+            
+            日程表
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/11/Effective Java(1)-创建和销毁对象/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EtanWatson">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EWSUN">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline"></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-11T13:58:55+08:00">
+                2018-03-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Effective-Java-1-创建和销毁对象"><a href="#Effective-Java-1-创建和销毁对象" class="headerlink" title="Effective Java(1)-创建和销毁对象"></a>Effective Java(1)-创建和销毁对象</h1><p>标签（空格分隔）： javaSE</p>
+<hr>
+<p>何时以及如何创建对象，何时以及如何避免创建对象，如何确保它们能够适时地销毁，以及如何管理对象销毁之前必须进行的各种清理动作</p>
+<h2 id="第一条：考虑用静态工厂方法代替构造器"><a href="#第一条：考虑用静态工厂方法代替构造器" class="headerlink" title="第一条：考虑用静态工厂方法代替构造器"></a>第一条：考虑用静态工厂方法代替构造器</h2><p>类可以提供一个公有的静态工厂方法，它只是一个返回类的实例的静态方法</p>
+<pre><code>public static Boolean valueOf(boolean b){
+    return b ? Boolean.TRUE : Boolean.FALSE;
+}
+</code></pre><p>这个方法将boolean基本类型值转换成一个Boolean对象的引用<br><em>注：静态工厂方法与设计模式中的工厂方法模式不同，本条目所指的静态工厂方法并不直接对应于设计模式中的工厂方法</em></p>
+<h3 id="这样做具有几大优势"><a href="#这样做具有几大优势" class="headerlink" title="这样做具有几大优势"></a>这样做具有几大优势</h3><ul>
+<li><strong>第一大优势，它们有名称</strong>，当一个类需要多个带有相同签名的构造器时，就用静态方法代替构造器，并且慎重的选择名称以便突出它们之间的区别</li>
+<li><strong>不必在每次调用它们的时候都创建一个新对象</strong>：可以使用预先构建好的实例，或者将构建好的实例缓存起来，从而避免创建不必要的对象；静态工厂方法能够为重复的调用返回相同对象，<em>实例受控类</em>，可以使类确保它是一个Singleton或者是不可实例化的；它还使得不可变的类可以确保不会存在两个相等的实例（使用==代替equals(Object)）</li>
+<li><strong>它们可以返回原返回类型的任何子类型的对象，这样在选择返回对象的类时就有了更大的灵活性</strong>；一种应用是：API可以返回对象，同时又不会使对象的类变成公有的（返回非公有类的对象），以这种方式隐藏实现类会使API变得非常简洁；该类还可以随着每次的调用而发生变化，这取决于静态工厂方法的参数值，只要是已声明的返回类型的子类型，都是允许的；静态工厂方法返回的对象所属的类，在编写包含静态工厂方法的类是可以不必存在，这种灵活的静态工厂方法构成了服务提供者框架的基础（例如JDBC）；<strong>服务提供者框架</strong>：多个服务提供者实现一个服务，系统为服务提供者的客户端提供多个实现，并把他们从多个实现中解耦出来；框架的三个重要组件（1）服务接口：这是提供者实现的；（2）提供者注册API：这是系统用来注册实现的，让客户端访问它们的 （3）服务访问API，是客户端用来获取服务实例的（4）服务提供者接口：这些提供者负责创建其服务实现的实例；例如：对于JDBC来说，Connection就是它的服务接口；DriverManager.registerDriver是提供者注册API， DriverManager.getConnection是服务访问API；Driver就是服务提供者接口；Driver就是服务提供者接口<br><strong>例</strong></li>
+</ul>
+<pre><code>// Service proider framework sketch
+ // Service interface
+ public interface Service{
+     ... // Service-specific methods go here
+ }
+
+ // Service provider interface
+ public interface Provider{
+     Service newService();
+ }
+ // Noninstantiable class for service registration and access 
+ public class Service{
+     private Services(){} // Prevents instantiation (Item 4)
+     private static final Map&lt;String, Provider&gt; providers = new ConurrentHashMap&lt;String, Provider&gt;();
+     public static final String DEFAULT_PROVIDE_NAME = &quot;&lt;def&gt;&quot;;
+     // Provider registration API
+     public static void registerDefaultProvider(Provider p){
+     registerProvider(DEFAULT_PROVIDER_NAME, p);
+     }
+     public static void registerProvider(String name, Provider p){
+     providers.put(name,p);
+     }
+     // Service access API
+     public static Service newInstance(){
+         return newInstance(DEFAULT_PROVIDER_NAME);
+     }
+     public static Service newInstance(String name){
+         Provider p = providers.get(name);
+         if(p == null){
+             throw new IllegalArgumentException(&quot;No provider registered with name:&quot; + name);
+         }
+         return p.newService();
+     }
+ }
+</code></pre><ul>
+<li><strong>第四大优势，在创建参数化实例的时候，它们使代码变得更加简洁</strong>，在调用参数化类的构造器时，即使类型参数很明显，也必须指明，要求你接连两次提供类型参数：<br><code>Map&lt;String, List&lt;String&gt;&gt; m = new HashMap&lt;String,List&lt;String&gt;&gt;();</code><br>使用<strong>类型推导</strong>编译器可以替你找到类型参数，例如：假设HashMap提供了这个静态工厂<br><code>public static &lt;K, V&gt; HashMap&lt;K,V&gt; newInstance(){return new HashMap&lt;K, V}();</code><br>这样，你就可以使用这句简洁的代码代替上面这段繁琐的声明<br><code>Map&lt;String, List&lt;String&gt;&gt; m = HashMap.newInstance();</code><h3 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h3></li>
+<li><strong>类如果不含有公有的或受保护的构造器，就不能被子类化</strong>，但是这样也许会因祸得福，因为它鼓励程序员<strong>使用复合，而不是继承</strong></li>
+<li><strong>它们与其他静态方法实际上没有任何区别</strong>，这样使你想要查明如何实例化一个类是非常困难的，解决方法注释和命名规范，常用的命名规范：<strong>valueOf、of、getInstance、newInstance、getType、newType</strong><h2 id="第二条遇到多个构造器参数时要考虑用构建器"><a href="#第二条遇到多个构造器参数时要考虑用构建器" class="headerlink" title="第二条遇到多个构造器参数时要考虑用构建器"></a>第二条遇到多个构造器参数时要考虑用构建器</h2>静态工厂和构造器有个共同的局限性：<strong>它们都不能很好地扩展到大量的可选参数</strong></li>
+<li>对于多个可选参数，程序员一贯采用<strong>重叠构造器</strong>（telescope constructor）模式，重叠构造器模式可行，但是当有许多参数的时候，客户端代码很难编写，并且难以阅读</li>
+<li><strong>javaBeans模式</strong>：调用一个无参构造器来创建对象，然后调用setter方法来设置每个必要的参数，以及每个相关的可选参数。<br><strong>不足：</strong> <strong><em>1、</em></strong>因为构造过程被分到了几个调用中，在构造过程中JavaBean可能处于不一致的状态。类无法仅仅通过检验构造器参数的有效性来保证一致性 <strong><em>2、</em></strong>javaBeans模式阻止了把类做成不可变的可能，这就需要程序员付出额外的努力来确保它的线程安全</li>
+<li><p><strong>Builder模式</strong> 既能保证像重叠构造模式那样的安全性，也能保证像JavaBeans模式那么好的可读性。<em>1.不直接生成想要的对象</em>，而是客户端利用所有必要的参数调用构造器（或者静态工厂），得到一个builder对象 <em>2. 客户端在builder对象上调用类似setter的方法</em>，来设置每个相关的可选参数 <em>3.客户端调用无参的build方法生成不可变的对象</em>,这个builder是它构建的类的静态成员类</p>
+<p> // Builder Pattern<br> public class NutritionFacts{</p>
+<pre><code>private final int servingSize;
+private final int servings;
+private final int calories;
+private final int fat;
+private final int sodium;
+private final int carbohydrate;
+
+public static class Builder{
+    // Required parameters
+    private final int servingSize;
+    private final int servings
+
+    // Optional parameters - initialized to default values
+    private int calories = 0;
+    private int fat = 0;
+    private int carbohydrate = 0;
+    private int sodium = 0;
+
+    public Builder(int servingSize, int servings){
+        this.servingSize = servingSize;
+        this.servings = servings;
+    }
+    public Builder calories(int val){
+        colories = val; reutrn this;
+    }
+    public Builder fat(int val){
+        fat = val; return this;
+    }
+    public Builder carbohydrate(int val){
+        carbohydrate = val; return this;
+    }
+    public Builder sodium(int val){
+        sodium = val; reuturn this;
+    }
+    public NutritionFacts build(){
+        return new NutritionFacts(this);
+    }
+}
+
+private NutritionFacts(Builder builder){
+    seringSize = builder.servingSzie;
+    servings = builder.servings;
+    calories = builder.calories;
+    fat = builder.fat;
+    sodium = builder.sodium;
+    carbohydrate = builder.carbohydrate;
+}
+</code></pre><p> }<br> // 客户端调用代码<br> NutritionFacts cocacola = new NutritionFacts.Builder(240, 8).calories(100).sodium(35).carbohydrate(27).builder();<br> // A builder for objects of type T<br> public interface Builder<t>{</t></p>
+<pre><code>public T build();
+</code></pre><p> }<br><strong>简而言之，如果类的构造器或者静态工厂中具有多个参数，设计这种类时，<em>Builder模式</em>就是种不错的选择</strong></p>
+</li>
+</ul>
+<h2 id="第三条：用私有构造器或者枚举类型强化Singleton属性（没太看明白）"><a href="#第三条：用私有构造器或者枚举类型强化Singleton属性（没太看明白）" class="headerlink" title="第三条：用私有构造器或者枚举类型强化Singleton属性（没太看明白）"></a>第三条：用私有构造器或者枚举类型强化Singleton属性（没太看明白）</h2><h2 id="第四条：通过私有构造器强化不可实例化的能力"><a href="#第四条：通过私有构造器强化不可实例化的能力" class="headerlink" title="第四条：通过私有构造器强化不可实例化的能力"></a>第四条：通过私有构造器强化不可实例化的能力</h2><p>企图通过将类做成抽象类来强制该类不可被实例化，这是行不通的。因此我们只要让这个类包含私有构造器，它就不能被实例化了：</p>
+<pre><code>// Noninstantiable utility class
+public class UtilityClass{
+    // Suppress default constructor for noninstantiability
+    private UtilityClass(){
+        throw new AssertionErrot();
+    }
+    ... // Remainder omitted
+}
+</code></pre><p><strong>这样做有一个副作用: 它使得一个类不能被子类化</strong></p>
+<h2 id="第五条：避免创建不必要的对象"><a href="#第五条：避免创建不必要的对象" class="headerlink" title="第五条：避免创建不必要的对象"></a>第五条：避免创建不必要的对象</h2><p>重用不可变的对象以及重用已知不会被修改的可变对象<br><strong>要优先使用基本类型而不是装箱基本类型，要当心无意识的自动装箱</strong><br><em>小对象的创建和回收动作是非常廉价的，通过维护自己的对象池（object pool）来避免创建对象并不是一种好的做法，除非池中的对象是非常重量级，真正正确使用对象池的典型对象示例就是数据库连接池</em>一般而言，维护自己的对象池必定会把代码弄得很乱，同时增加内存占用，并且还会损害性能</p>
+<h2 id="第六条：清除过期的对象引用"><a href="#第六条：清除过期的对象引用" class="headerlink" title="第六条：清除过期的对象引用"></a>第六条：清除过期的对象引用</h2><p>考虑下面这个例子</p>
+<pre><code>// Can you spot the &quot;memory leak&quot;?
+public class Stack{
+    private Object[] elements;
+    private int size = 0;
+    private static final int DEFAULT_INITIAL_CAPACITY = 16;
+
+    public Stack(){
+        elements = new Object[DEFAULT_INITIAL_CAPACITY];
+    }
+
+    public void push(Object e){
+        ensureCapacity();
+        elements[size++] = e;
+    }
+    public Object pop(){
+        if(size == 0){
+            throw new EmptyStackException();
+        }
+        return elements[--size];
+    }
+    /**
+     * Ensure space for at least one more element,roughly
+     * doubling the capacity each time the array needs to grow
+     */
+    private void ensureCapacity(){
+        if(elements.length == size){
+            elements = Arrays.copyOf(elements, 2 * size + 1);
+        }
+    } 
+}
+</code></pre><p>从栈中弹出来的对象将不会被当做垃圾回收，即使使用栈的程序不在引用这些对象，他们也不会被回收，这是因为，栈内部维护这对这些对象的过期引用（obsolete reference），所谓过期引用，是指永远也不会在被解除的引用。无意识对象保持（unintentional object retention）<br>故修改上例栈pop方法</p>
+<pre><code>public Object pop(){
+    if(size == 0){
+        throw new EmptyStackException();
+    }
+    Object result = elements[--size];
+    elements[size] = null; //Eliminate obsolete reference
+    return result;
+}
+</code></pre><p>清空引用的另外一个好处的是，如果它们以后又被错误的解除引用，程序就会立即抛出NullPointerException异常<br><em>清空对象引用应该是一种例外，而不是一种规范行为</em></p>
+<ul>
+<li><strong><em>一般而言，只要类是自己管理内存，程序员就应该警惕内存泄露问题</em></strong></li>
+<li><strong><em>内存泄露的另外一个常见的来源是缓存</em></strong></li>
+<li><strong><em>内存泄露的第三个常见来源是监听器和其他回调</em></strong></li>
+</ul>
+<h2 id="避免使用终结方法（finalizer）"><a href="#避免使用终结方法（finalizer）" class="headerlink" title="避免使用终结方法（finalizer）"></a>避免使用终结方法（finalizer）</h2><p>finalizer方法通常是不可预测的，也是很危险的，一般情况下是不必要的，使用终结方法会导致行为不稳定，降低性能，以及可移植问题</p>
+<ul>
+<li><strong>不应该依赖终结方法来更新最终要的持久状态</strong></li>
+<li><strong>如果未被捕获的异常在终结过程中被抛出来，那么这种异常可以被忽略</strong></li>
+<li><strong>使用终结方法有非常严重的性能损失</strong></li>
+<li><strong>如果类的对象中国年封装的资源确实需要终止，只需提供一个显示的终止方法。</strong>该实例必须记录下自己是否已经被终止了，显示终止的典型例子是InputStream 上的close方法</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/11/Effective Java - 对于所有对象都通用的方法（一）/" rel="next" title="">
+                <i class="fa fa-chevron-left"></i> 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/11/java性能优化-JVM概述（一）/" rel="prev" title="">
+                 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          
+            <img class="site-author-image" itemprop="image"
+              src="/images/header.png"
+              alt="EtanWatson" />
+          
+            <p class="site-author-name" itemprop="name">EtanWatson</p>
+            <p class="site-description motion-element" itemprop="description">有所舍，有所爱，做一个感性的码农</p>
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives/">
+            
+                <span class="site-state-item-count">50</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Effective-Java-1-创建和销毁对象"><span class="nav-number">1.</span> <span class="nav-text">Effective Java(1)-创建和销毁对象</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#第一条：考虑用静态工厂方法代替构造器"><span class="nav-number">1.1.</span> <span class="nav-text">第一条：考虑用静态工厂方法代替构造器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#这样做具有几大优势"><span class="nav-number">1.1.1.</span> <span class="nav-text">这样做具有几大优势</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缺点"><span class="nav-number">1.1.2.</span> <span class="nav-text">缺点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第二条遇到多个构造器参数时要考虑用构建器"><span class="nav-number">1.2.</span> <span class="nav-text">第二条遇到多个构造器参数时要考虑用构建器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第三条：用私有构造器或者枚举类型强化Singleton属性（没太看明白）"><span class="nav-number">1.3.</span> <span class="nav-text">第三条：用私有构造器或者枚举类型强化Singleton属性（没太看明白）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第四条：通过私有构造器强化不可实例化的能力"><span class="nav-number">1.4.</span> <span class="nav-text">第四条：通过私有构造器强化不可实例化的能力</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第五条：避免创建不必要的对象"><span class="nav-number">1.5.</span> <span class="nav-text">第五条：避免创建不必要的对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第六条：清除过期的对象引用"><span class="nav-number">1.6.</span> <span class="nav-text">第六条：清除过期的对象引用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#避免使用终结方法（finalizer）"><span class="nav-number">1.7.</span> <span class="nav-text">避免使用终结方法（finalizer）</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">EtanWatson</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.2</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

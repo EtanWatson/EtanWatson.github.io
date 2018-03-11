@@ -105,7 +105,7 @@
 <meta property="og:site_name" content="EWSUN">
 <meta property="og:description" content="讲述一下第一次在Sublime Text2下尝试编写python根据Python编程从入门到实践书中推荐，安装了Sublime Text2，由于要使用python3，所以要设置默认编译器，在Sublime Text2下，Tools-&amp;gt;Build System -&amp;gt; New Build System中1$ &amp;#123; “cmd”: [“usr/local/bin/python”,”-u">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-09-17T00:07:05.000Z">
+<meta property="og:updated_time" content="2017-10-23T08:54:47.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="python 尝鲜踩坑记">
 <meta name="twitter:description" content="讲述一下第一次在Sublime Text2下尝试编写python根据Python编程从入门到实践书中推荐，安装了Sublime Text2，由于要使用python3，所以要设置默认编译器，在Sublime Text2下，Tools-&amp;gt;Build System -&amp;gt; New Build System中1$ &amp;#123; “cmd”: [“usr/local/bin/python”,”-u">
@@ -403,7 +403,7 @@
         <h2 id="讲述一下第一次在Sublime-Text2下尝试编写python"><a href="#讲述一下第一次在Sublime-Text2下尝试编写python" class="headerlink" title="讲述一下第一次在Sublime Text2下尝试编写python"></a>讲述一下第一次在Sublime Text2下尝试编写python</h2><p>根据Python编程从入门到实践书中推荐，安装了Sublime Text2，由于要使用python3，所以要设置默认编译器，在Sublime Text2下，Tools-&gt;Build System -&gt; New Build System中<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ &#123; “cmd”: [“usr/<span class="built_in">local</span>/bin/python”,”-u”,”<span class="variable">$file</span>”],&#125;</div></pre></td></tr></table></figure></p>
 <p>配置完，command+B运行代码<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ <span class="built_in">print</span>(“Hello World!”)</div></pre></td></tr></table></figure></p>
 <p>报出Error trying to parse setting，查找资料，应该是刚才配置默认编译器的时候多了一个逗号,正确的应该是<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ &#123; “cmd”: [“usr/<span class="built_in">local</span>/bin/python”,”-u”,”<span class="variable">$file</span>”]&#125;</div></pre></td></tr></table></figure></p>
-<p>但是居然在finder和终端中始终找不到该文件的位置，我就知道文件夹的名称应该是User，弄了半天,风险Sublime Text2的file下有一个open，总算是打开了，已经泪奔。不过我希望改变他默认的文件保存位置，还是没找到方法，找到后，会更新<br>默认的位置在~/Library/Application Support/Sublime Text 2/下</p>
+<p>默认的位置在~/Library/Application Support/Sublime Text 2/下</p>
 <p>##【待续】</p>
 
       
@@ -527,7 +527,7 @@
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">40</span>
+                <span class="site-state-item-count">50</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -614,7 +614,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
