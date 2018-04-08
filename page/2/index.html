@@ -310,6 +310,185 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/04/Effective Java - 对于所有对象都通用的方法（一）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EtanWatson">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EWSUN">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/01/04/Effective Java - 对于所有对象都通用的方法（一）/" itemprop="url">Effective Java - 对于所有对象都通用的方法（一）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-04T11:07:53+08:00">
+                2018-01-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaSE/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaSE</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>本节将讲述何时以及如何覆盖这些非final的Object方法</p>
+<h2 id="第八条：覆盖equals时请遵守通用约定"><a href="#第八条：覆盖equals时请遵守通用约定" class="headerlink" title="第八条：覆盖equals时请遵守通用约定"></a>第八条：覆盖equals时请遵守通用约定</h2><p>满足下列任何一个条件，这就正是所期望的结果</p>
+<ul>
+<li><strong>类的每个实例本质上都是唯一的</strong></li>
+<li><strong>不关心类是否提供了”逻辑相等”的测试功能</strong></li>
+<li><strong>超类已经覆盖了equals，从超类继承过来的行为对于子类也是合适的</strong></li>
+<li><strong>类是私有的或是包级私有的，可以确定它的equals方法永远不会被调用</strong></li>
+</ul>
+<p>那么，什么时候应该覆盖Object.equeals呢？<strong>如果类具有自己的『逻辑相等』概念（不同于对象等同的概念），而且超类还没有覆盖equals以实现期望的行为，这是我们就需要覆盖equals方法</strong>这通常属于『值类(value class)』的情形，值类仅仅是表示值的类，例如<strong>Interger或者Date</strong>，有两大好处：<em>（1）</em>希望知道它们在逻辑上是否相等，而不是想了解它们是否指向同一个对象<em>（2）</em>而且这样做也使得这个类的实例可以被用做映射表（map）的键（key），或者集合（set）的元素，是映射或者集合表现出预期的行为<br><strong>实例受控</strong>:确保『每个值至多只存在一个对象』的类，例如枚举类型，对于这样的类而言，逻辑相同与对象等同是一回事<br>在覆盖equals方法的时候，你必须遵守它的通用约定</p>
+<ul>
+<li><strong>自反性</strong> 对于任何非null的引用值x，x.equals必须返回true</li>
+<li><strong>对称性</strong> 对于任何非null的引用值x和y，当且仅当y.equals(x)返回true时，x.equals(y)必须返回ture</li>
+<li><strong>传递性</strong> 对于任何非null的引用值x,y和z，如果x.equals(y)返回true，并且y.equals(z)也返回true，那么x.equals(z)也必须返回true</li>
+<li><strong>一致性</strong> 对于任何非null的引用值x和y，只要equals的比较操作在对象中所用的信息没有被修改，多次调用x.equals(y)就会一致的返回true，或者一致的返回false，<strong>无论类是否是不可变的，都不要使equals方法依赖于不可靠的资源</strong></li>
+<li><strong>非空性</strong>对与任何非null的引用值x，x.equals(null)必须返回false</li>
+</ul>
+<p><strong><em>里氏代换原则认为：</em></strong>一个类型的任何重要属性也将适用于它的子类型，因此为该类型编写的任何方法，在它的子类型上也应该同样运行的很好<br><strong>综合所有要求，得出以下实现高质量equals方法的诀窍</strong></p>
+<ul>
+<li><strong>使用==操作符检查『参数是否为这个对象的引用』</strong>。如果是，则返回true。这只不过是一种性能优化，如果比较操作有可能很昂贵，就值得这么做</li>
+<li><strong>使用instanceof操作符检查『参数是否为正确的类型』</strong> 正确类型是指equals方法所在的那个类，有些情况下，是指该类所现实的某个接口</li>
+<li><strong>把参数转换成正确的类型</strong></li>
+<li><strong>对于该类中的每个关键域，检查参数中的域是否与该对象中对应的域相匹配</strong><br><em>有些对象引用域包含null可能是合法的，所以，为了避免可能导致的NullPointerException异常，则使用下面的习惯用法来比较这样的域</em><br>(field == null ? o.field == null : field.equals(o.field)<br><strong><em>最后一些告诫</em></strong></li>
+<li>覆盖equals时总要覆盖hashCode</li>
+<li>不要企图让equals方法过于智能</li>
+<li>不要将equals声明中的Object对象替换为其他的类型<br> public boolean equals(MyClass o){<br> }<br> 该方式是方法的重载，而不是覆写<h2 id="第九条：覆盖equals时总要覆盖hashCode"><a href="#第九条：覆盖equals时总要覆盖hashCode" class="headerlink" title="第九条：覆盖equals时总要覆盖hashCode"></a>第九条：覆盖equals时总要覆盖hashCode</h2>如果不这样做，就会违反Object.hashCode的通用约定，导致该类无法结合所有基于散列的集合一起正常运行<br><strong>覆写hashCode()的解决方案：</strong></li>
+<li>把某个非零的常数值，比如说17，保存在一个名为reuslt的int类型的变量中</li>
+<li>对于对象每个关键于f（指equals方法中涉及的每个域），完成下列步骤</li>
+<li>返回result</li>
+<li><p>编写单元测试<br>1、如果一个类是不可变的，并且计算散列码的开销也比比较大，就应该考虑把散列码缓存在对象内部，而不是每次请求的时候都要重新计算<br>2、选择延迟初始化散列码，一直到hashCode被第一次调用的时候才初始化<br><strong>不要试图从散列码计算中排除掉一个对象的关键部分来提高性能</strong></p>
+<h2 id="第十条：要始终覆盖toString"><a href="#第十条：要始终覆盖toString" class="headerlink" title="第十条：要始终覆盖toString"></a>第十条：要始终覆盖toString</h2><h2 id="第十一条谨慎的覆盖clone"><a href="#第十一条谨慎的覆盖clone" class="headerlink" title="第十一条谨慎的覆盖clone"></a>第十一条谨慎的覆盖clone</h2><p>cloneable接口的目的是作为对象的一个mixin接口，表明这样的对象允许被clone<br>如果一个类实现了Cloneable,Object的clone方法就返回该对象的逐域copy，否则就会抛出CloneNotSupportedException异常<br><strong><em>准则</em></strong>:永远不要让客户去做任何类库能够替客户完成的事情<br><strong><em>实际上，clone方法就是另外一个构造器；你必须确保它不会伤害到原始的对象，并且确保正确的创建被克隆对象中的约束条件</em></strong><br>clone架构与引用可变对象的final域的正常用法是不相兼容的<br><strong>另外一个实现队形拷贝的好办法是提供一个拷贝构造器（copy constructor）或拷贝工厂（copy factory）</strong><br>拷贝构造器：<code>public Yum(Yum yum);</code><br>拷贝工厂：<code>public static Yum newInstance(Yum yum);</code></p>
+<h2 id="第十二条：考虑实现Comparable接口"><a href="#第十二条：考虑实现Comparable接口" class="headerlink" title="第十二条：考虑实现Comparable接口"></a>第十二条：考虑实现Comparable接口</h2><p>类实现了Comparable接口，就表明它的实例具有内在的排序关系。如果你正在编写一个值类，它具有非常明显的内在排序关系，那你就应该坚决考虑实现这个接口；如果两个被比较的对象引用不同类的对象，compareTo可以抛出ClassCastException异常<br>如果你想为一个实现了Comparable接口的类增加值组件，请不要扩展这个类；而是要编写一个不相关的类，其中包含第一个类的一个实例。然后提供一个视图方法返回这个实例；如果你需要使用一个非标准的排序关系，就可以使用一个显式的Comparator来代替。或者编写自己的Comparato，或者使用以有的Comparator</p>
+<p> public final class CaseInsensitiveString implements Comparable<caseinsensitivesttring>{</caseinsensitivesttring></p>
+<pre><code>public int compareTo(CaseInsensitiveString cis){
+    return String.CASE_INSENSITIVE_ORDER.compare(s,cis.s);
+}
+</code></pre><p> }</p>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/02/Effective Java(1)-创建和销毁对象/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1369,6 +1548,161 @@ class TestAddition(unittest.TestCase):
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/09/递归/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EtanWatson">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EWSUN">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/09/递归/" itemprop="url">递归</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-09T15:08:10+08:00">
+                2017-10-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/algorithm/" itemprop="url" rel="index">
+                    <span itemprop="name">algorithm</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h1><p>恨它的，爱它的以及恨了几年有爱上它的（比较经典，记下了）</p>
+<h2 id="while与递归的对比"><a href="#while与递归的对比" class="headerlink" title="while与递归的对比"></a>while与递归的对比</h2><p>伪代码实现<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#while 实现</span></div><div class="line">def look_for_key(main_box):</div><div class="line">	pile = main_box.make_a_pile_to_look_through()</div><div class="line">	<span class="keyword">while</span> pile is not empty:</div><div class="line">		box = pile.grab_a_box()</div><div class="line">		<span class="keyword">for</span> item <span class="keyword">in</span> box:</div><div class="line">			<span class="keyword">if</span> item.is_a_box():</div><div class="line">				pile.append(item)</div><div class="line">			<span class="keyword">elif</span> item.is_a_key():</div><div class="line">				<span class="built_in">print</span>(“found the key!”)</div><div class="line"><span class="comment">#递归实现</span></div><div class="line">def look_for_key(box):</div><div class="line">	<span class="keyword">for</span> item <span class="keyword">in</span> box:</div><div class="line">		<span class="keyword">if</span> item.is_a_box():</div><div class="line">			look_for_key(item)</div><div class="line">		<span class="keyword">elif</span> item.is_a_key():</div><div class="line">			<span class="built_in">print</span>(“found the key!”)</div></pre></td></tr></table></figure></p>
+<p>#这两种方法的作用相同，第二种方法更清晰。递归只是让解决方案更清晰 ，并没有性能上的优势，实际上，在有些情况下，使用循环的性能更好。<br>再引入一句大神说的话：Loops may achieve a performance gain for your program. Recursion may achieve a performance gain for your programmer. Choose which is more important in your situation!</p>
+<h2 id="基线条件和递归条件"><a href="#基线条件和递归条件" class="headerlink" title="基线条件和递归条件"></a>基线条件和递归条件</h2><p>每个递归函数都有两个部分：基线条件和递归条件<br>递归条件指的是函数调用自己，而基线条件则指的是函数不在调用自己，从而避免形成无线循环<br>ex：<br>def countdown(i):<br>    print i<br>    countdown(i-1)<br>上述代码，会导致死循环<br>我们来给countdown添加基线条件<br>def countdown(i):<br>    print i</p>
+<pre><code>#基线条件
+if i &lt;= 0:
+return
+else:  #递归条件
+countdown(i-1)
+</code></pre><h2 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h2><h3 id="调用栈"><a href="#调用栈" class="headerlink" title="调用栈"></a>调用栈</h3><p>def greet(name):<br>    print (“hello, “ + name + “i”)<br>    greet2(name)<br>    print (getting ready to say bye…)<br>    bye()</p>
+<p>#这个函数问候用户，在调用另外两个函数。这两个函数的代码如下。<br>def greet2(name):<br>    print (”how are you, ” + name + ‘?’)<br>    def bye():<br>        print(“ok bye!”)</p>
+<h3 id="递归调用栈"><a href="#递归调用栈" class="headerlink" title="递归调用栈"></a>递归调用栈</h3><h4 id="计算阶乘的"><a href="#计算阶乘的" class="headerlink" title="计算阶乘的"></a>计算阶乘的</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">def fact(x):</div><div class="line">	<span class="keyword">if</span> x == 1:</div><div class="line">		<span class="built_in">return</span> 1</div><div class="line">	<span class="keyword">else</span>:</div><div class="line">	   <span class="built_in">return</span> x*fact(x-1)</div></pre></td></tr></table></figure>
+<p>使用栈虽然很方便，但是也要付出代价:存储详尽的信息可能占用大量的内存。每个函数调 用都要占用一定的内存，如果栈很高，就意味着计算机存储了大量函数调用的信息。在这种情况 下，你有两种选择。<br> 重新编写代码，转而使用循环。<br> 使用尾递归。这是一个高级递归主题，不在本书的讨论范围内。另外，并非所有的语言<br>都支持尾递归。</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p> 递归指的是调用自己的函数。<br> 每个递归函数都有两个条件:基线条件和递归条件。  栈有两种操作:压入和弹出。<br> 所有函数调用都进入调用栈。<br> 调用栈可能很长，这将占用大量的内存。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/09/深入分析Java I:O的工作原理/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1656,307 +1990,6 @@ class TestAddition(unittest.TestCase):
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/09/递归/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="EtanWatson">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/header.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="EWSUN">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/10/09/递归/" itemprop="url">递归</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-09T15:08:10+08:00">
-                2017-10-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/algorithm/" itemprop="url" rel="index">
-                    <span itemprop="name">algorithm</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h1><p>恨它的，爱它的以及恨了几年有爱上它的（比较经典，记下了）</p>
-<h2 id="while与递归的对比"><a href="#while与递归的对比" class="headerlink" title="while与递归的对比"></a>while与递归的对比</h2><p>伪代码实现<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#while 实现</span></div><div class="line">def look_for_key(main_box):</div><div class="line">	pile = main_box.make_a_pile_to_look_through()</div><div class="line">	<span class="keyword">while</span> pile is not empty:</div><div class="line">		box = pile.grab_a_box()</div><div class="line">		<span class="keyword">for</span> item <span class="keyword">in</span> box:</div><div class="line">			<span class="keyword">if</span> item.is_a_box():</div><div class="line">				pile.append(item)</div><div class="line">			<span class="keyword">elif</span> item.is_a_key():</div><div class="line">				<span class="built_in">print</span>(“found the key!”)</div><div class="line"><span class="comment">#递归实现</span></div><div class="line">def look_for_key(box):</div><div class="line">	<span class="keyword">for</span> item <span class="keyword">in</span> box:</div><div class="line">		<span class="keyword">if</span> item.is_a_box():</div><div class="line">			look_for_key(item)</div><div class="line">		<span class="keyword">elif</span> item.is_a_key():</div><div class="line">			<span class="built_in">print</span>(“found the key!”)</div></pre></td></tr></table></figure></p>
-<p>#这两种方法的作用相同，第二种方法更清晰。递归只是让解决方案更清晰 ，并没有性能上的优势，实际上，在有些情况下，使用循环的性能更好。<br>再引入一句大神说的话：Loops may achieve a performance gain for your program. Recursion may achieve a performance gain for your programmer. Choose which is more important in your situation!</p>
-<h2 id="基线条件和递归条件"><a href="#基线条件和递归条件" class="headerlink" title="基线条件和递归条件"></a>基线条件和递归条件</h2><p>每个递归函数都有两个部分：基线条件和递归条件<br>递归条件指的是函数调用自己，而基线条件则指的是函数不在调用自己，从而避免形成无线循环<br>ex：<br>def countdown(i):<br>    print i<br>    countdown(i-1)<br>上述代码，会导致死循环<br>我们来给countdown添加基线条件<br>def countdown(i):<br>    print i</p>
-<pre><code>#基线条件
-if i &lt;= 0:
-return
-else:  #递归条件
-countdown(i-1)
-</code></pre><h2 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h2><h3 id="调用栈"><a href="#调用栈" class="headerlink" title="调用栈"></a>调用栈</h3><p>def greet(name):<br>    print (“hello, “ + name + “i”)<br>    greet2(name)<br>    print (getting ready to say bye…)<br>    bye()</p>
-<p>#这个函数问候用户，在调用另外两个函数。这两个函数的代码如下。<br>def greet2(name):<br>    print (”how are you, ” + name + ‘?’)<br>    def bye():<br>        print(“ok bye!”)</p>
-<h3 id="递归调用栈"><a href="#递归调用栈" class="headerlink" title="递归调用栈"></a>递归调用栈</h3><h4 id="计算阶乘的"><a href="#计算阶乘的" class="headerlink" title="计算阶乘的"></a>计算阶乘的</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">def fact(x):</div><div class="line">	<span class="keyword">if</span> x == 1:</div><div class="line">		<span class="built_in">return</span> 1</div><div class="line">	<span class="keyword">else</span>:</div><div class="line">	   <span class="built_in">return</span> x*fact(x-1)</div></pre></td></tr></table></figure>
-<p>使用栈虽然很方便，但是也要付出代价:存储详尽的信息可能占用大量的内存。每个函数调 用都要占用一定的内存，如果栈很高，就意味着计算机存储了大量函数调用的信息。在这种情况 下，你有两种选择。<br> 重新编写代码，转而使用循环。<br> 使用尾递归。这是一个高级递归主题，不在本书的讨论范围内。另外，并非所有的语言<br>都支持尾递归。</p>
-<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p> 递归指的是调用自己的函数。<br> 每个递归函数都有两个条件:基线条件和递归条件。  栈有两种操作:压入和弹出。<br> 所有函数调用都进入调用栈。<br> 调用栈可能很长，这将占用大量的内存。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/09/选择排序/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="EtanWatson">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/header.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="EWSUN">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/10/09/选择排序/" itemprop="url">选择排序</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-09T09:39:40+08:00">
-                2017-10-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/algorithm/" itemprop="url" rel="index">
-                    <span itemprop="name">algorithm</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h1><h2 id="链表和数组"><a href="#链表和数组" class="headerlink" title="链表和数组"></a>链表和数组</h2><h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><p>优点：读取的时间复杂度为O(1) 常量时间<br>缺点：插入的时间复杂度为O(n) 线性时间</p>
-<h3 id="链表"><a href="#链表" class="headerlink" title="链表"></a>链表</h3><p>中间插入，删除</p>
-<h2 id="选择排序-1"><a href="#选择排序-1" class="headerlink" title="选择排序"></a>选择排序</h2><h3 id="需要检查的元素越来越少"><a href="#需要检查的元素越来越少" class="headerlink" title="需要检查的元素越来越少"></a>需要检查的元素越来越少</h3><p>第一次需要检查n个元素，但随后检查的元素 数依次为n  1, n – 2, …, 2和1。平均每次检查的元素数为1/2 × n，因此运行时间为O(n × 1/2 × n)。</p>
-<h3 id="示例代码"><a href="#示例代码" class="headerlink" title="示例代码"></a>示例代码</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">def findSmallest(arr):</div><div class="line">	<span class="comment"># 存储最小的值</span></div><div class="line">	smallest = arr[0]</div><div class="line">	<span class="comment"># 存储最小元素的索引</span></div><div class="line">	smallest_index = 0</div><div class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> reange(1, len(arr)):</div><div class="line">		<span class="keyword">if</span> arr[i] &lt; smallest:</div><div class="line">			smallest = arr[i]</div><div class="line">			smallest_index = i</div><div class="line">	<span class="built_in">return</span> smallest_index</div><div class="line"></div><div class="line"><span class="comment">#现在可以使用这个函数来编写选择排序算法了</span></div><div class="line">def selectionSort(arr):</div><div class="line">	newArr = []</div><div class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> range(len(arr)):</div><div class="line">		smallest = findSmallest(arr)    <span class="comment">#找出数组中最小的元素，</span></div><div class="line">						<span class="comment">#并将其加入到新数组中</span></div><div class="line">		newArr.append(arr.pop(smallest))</div><div class="line">	<span class="built_in">return</span> newArr</div></pre></td></tr></table></figure>
-<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p> 计算机内存犹如一大堆抽屉。<br> 需要存储多个元素时，可使用数组或链表。<br> 数组的元素都在一起。<br> 链表的元素是分开的，其中每个元素都存储了下一个元素的地址。<br> 数组的读取速度很快。<br> 链表的插入和删除速度很快。<br> 在同一个数组中，所有元素的类型都必须相同(都为int、double等)。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2010,7 +2043,7 @@ countdown(i-1)
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">53</span>
+                <span class="site-state-item-count">54</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -2021,7 +2054,7 @@ countdown(i-1)
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-count">15</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -2032,7 +2065,7 @@ countdown(i-1)
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-count">15</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

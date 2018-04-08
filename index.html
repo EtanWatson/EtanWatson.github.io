@@ -329,7 +329,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/04/08/2018-04-08/" itemprop="url">设计模式-代理模式</a></h1>
+                <a class="post-title-link" href="/2018/04/08/2018-04-08/" itemprop="url">我的Spring之路（六）-Spring Boot （2）</a></h1>
         
 
         <div class="post-meta">
@@ -364,8 +364,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/设计模式/" itemprop="url" rel="index">
-                    <span itemprop="name">设计模式</span>
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
                   </a>
                 </span>
 
@@ -1008,6 +1008,150 @@ request.setAttribute(&quot;handlingTime&quot;, endTime - startTime);
 <p> @Configuration<br> @EnableWebMvc<br> @EnableScheduling<br> @ComponentScan(“”)<br> public class MyMvcConfig extends WebMvcConfigurerAdapter{}<br> // 添加 viewController:<br> reqistry.addViewController(“/async”).setViewName(“/async”)</p>
 <h2 id="Spring-MVC的测试（本节主要涉及控制器的测试）"><a href="#Spring-MVC的测试（本节主要涉及控制器的测试）" class="headerlink" title="Spring MVC的测试（本节主要涉及控制器的测试）"></a>Spring MVC的测试（本节主要涉及控制器的测试）</h2><p>Servlet相关的模拟器对象：MockMVC，MockHttpServletRequest，MockHttpServletRequest，MockHttpSession</p>
 </li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/11/java性能优化-操作系统性能监控（一）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EtanWatson">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EWSUN">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/11/java性能优化-操作系统性能监控（一）/" itemprop="url">未命名</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-11T13:58:55+08:00">
+                2018-03-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <hr>
+<p>title: java性能优化-操作系统性能监控（一）<br>date: 2018-02-07 20:10:23<br>tags: JVM性能相关</p>
+<h2 id="categories-JVM性能相关"><a href="#categories-JVM性能相关" class="headerlink" title="categories: JVM性能相关"></a>categories: JVM性能相关</h2><h2 id="改善性能的3种活动"><a href="#改善性能的3种活动" class="headerlink" title="改善性能的3种活动"></a>改善性能的3种活动</h2><ul>
+<li>性能监控（非侵入式）</li>
+<li>性能分析（侵入式）</li>
+<li>性能调优：为改善应用响应性或吞吐量而更改参数（Tune-able）、源代码或者属性配置的活动。<h2 id="CPU使用率"><a href="#CPU使用率" class="headerlink" title="CPU使用率"></a>CPU使用率</h2></li>
+<li>尽可能降低系统态CPU使用率</li>
+<li>减少停滞或者改善CPu告诉缓存使用率，从而减少CPU在等待内存数据时浪费的时钟周期<h2 id="监控CPU使用率：Linux"><a href="#监控CPU使用率：Linux" class="headerlink" title="监控CPU使用率：Linux"></a>监控CPU使用率：Linux</h2><h3 id="GNOME-System-Monitor"><a href="#GNOME-System-Monitor" class="headerlink" title="GNOME System Monitor"></a>GNOME System Monitor</h3><h3 id="xosview"><a href="#xosview" class="headerlink" title="xosview"></a>xosview</h3><h2 id="命令行监控CPU使用率：Linux和Solaris"><a href="#命令行监控CPU使用率：Linux和Solaris" class="headerlink" title="命令行监控CPU使用率：Linux和Solaris"></a>命令行监控CPU使用率：Linux和Solaris</h2></li>
+</ul>
+<ul>
+<li>vmstat</li>
+<li>mpstat</li>
+<li>top<h2 id="CPU调度程序运行队列"><a href="#CPU调度程序运行队列" class="headerlink" title="CPU调度程序运行队列"></a>CPU调度程序运行队列</h2><em>一般性指导原则：如果在很长一段时间里，运行队列的长度一直都超过虚拟处理器的个数的1倍，就需要关注了，如果很长一段时间里，运行队列的长度达到虚拟处理器个数的3~4倍或更高，则需要立刻引起注意或采取行动</em><h3 id="监控CPU调度程序运行队列：Linux"><a href="#监控CPU调度程序运行队列：Linux" class="headerlink" title="监控CPU调度程序运行队列：Linux"></a>监控CPU调度程序运行队列：Linux</h3></li>
+<li>vmstat 第一列（运行队列长度）<h2 id="内存使用率"><a href="#内存使用率" class="headerlink" title="内存使用率"></a>内存使用率</h2></li>
+<li><strong>系统在进行页面交换或使用虚拟内存时，java应用或JVM会表现出明显的性能问题</strong></li>
+<li><strong>JVM垃圾收集器在系统页面交换时的性能也很差</strong><h3 id="监控内存使用率：Linux（vmstat）"><a href="#监控内存使用率：Linux（vmstat）" class="headerlink" title="监控内存使用率：Linux（vmstat）"></a>监控内存使用率：Linux（vmstat）</h3></li>
+<li>free列监控页面交换</li>
+<li>si、so内存页面换入和换出量<h2 id="监控锁竞争Linux（sysstat包中的pidstat命令监控竞争锁）"><a href="#监控锁竞争Linux（sysstat包中的pidstat命令监控竞争锁）" class="headerlink" title="监控锁竞争Linux（sysstat包中的pidstat命令监控竞争锁）"></a>监控锁竞争Linux（sysstat包中的pidstat命令监控竞争锁）</h2></li>
+<li>pidstat -w 中的cswch/s(不包含所有的上下文切换)，浪费掉的时钟周期，可以有pidstat -w的让步式切换数除以虚拟处理器的数目而得</li>
+<li><code>pidstat -w -I -p 9391 5</code> 每五秒监控进程id为9391的JAVA应用程序</li>
+<li>(cswch/s) / 2(cpu内核数) * 8000 / 3.0G(cpu主频)<h3 id="隔离竞争锁-Oracle-Solaris-Studio-Performance-Analyzer工具"><a href="#隔离竞争锁-Oracle-Solaris-Studio-Performance-Analyzer工具" class="headerlink" title="隔离竞争锁 Oracle Solaris Studio Performance Analyzer工具"></a>隔离竞争锁 Oracle Solaris Studio Performance Analyzer工具</h3><h3 id="监控抢占式上下文-pidstat-w（icsw）"><a href="#监控抢占式上下文-pidstat-w（icsw）" class="headerlink" title="监控抢占式上下文 pidstat -w（icsw）"></a>监控抢占式上下文 pidstat -w（icsw）</h3><h3 id="监控线程迁移"><a href="#监控线程迁移" class="headerlink" title="监控线程迁移"></a>监控线程迁移</h3><h2 id="网络I-O使用率（netstat）"><a href="#网络I-O使用率（netstat）" class="headerlink" title="网络I/O使用率（netstat）"></a>网络I/O使用率（netstat）</h2><h3 id="nicstat工具"><a href="#nicstat工具" class="headerlink" title="nicstat工具"></a>nicstat工具</h3><h3 id="应用性改进的考虑"><a href="#应用性改进的考虑" class="headerlink" title="应用性改进的考虑"></a>应用性改进的考虑</h3></li>
+<li><strong>单次读写数据量小而网络读写量大的应用会消耗大量的系统态CPU</strong></li>
+<li><strong>使用非阻塞的JAVA NIO而不是阻塞的java.net.Socket</strong><h2 id="磁盘I-O使用率（iostat-xm-5）"><a href="#磁盘I-O使用率（iostat-xm-5）" class="headerlink" title="磁盘I/O使用率（iostat -xm 5）"></a>磁盘I/O使用率（iostat -xm 5）</h2></li>
+<li>使用缓冲数据结构 BufferedInputStream BufferedOutputStream<h2 id="其他命令行工具（sar）"><a href="#其他命令行工具（sar）" class="headerlink" title="其他命令行工具（sar）"></a>其他命令行工具（sar）</h2></li>
 </ul>
 
           
@@ -1846,185 +1990,6 @@ public static final Thing[] VALUES = {...};
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/04/Effective Java - 对于所有对象都通用的方法（一）/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="EtanWatson">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/header.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="EWSUN">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/01/04/Effective Java - 对于所有对象都通用的方法（一）/" itemprop="url">Effective Java - 对于所有对象都通用的方法（一）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-04T11:07:53+08:00">
-                2018-01-04
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JavaSE/" itemprop="url" rel="index">
-                    <span itemprop="name">JavaSE</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>本节将讲述何时以及如何覆盖这些非final的Object方法</p>
-<h2 id="第八条：覆盖equals时请遵守通用约定"><a href="#第八条：覆盖equals时请遵守通用约定" class="headerlink" title="第八条：覆盖equals时请遵守通用约定"></a>第八条：覆盖equals时请遵守通用约定</h2><p>满足下列任何一个条件，这就正是所期望的结果</p>
-<ul>
-<li><strong>类的每个实例本质上都是唯一的</strong></li>
-<li><strong>不关心类是否提供了”逻辑相等”的测试功能</strong></li>
-<li><strong>超类已经覆盖了equals，从超类继承过来的行为对于子类也是合适的</strong></li>
-<li><strong>类是私有的或是包级私有的，可以确定它的equals方法永远不会被调用</strong></li>
-</ul>
-<p>那么，什么时候应该覆盖Object.equeals呢？<strong>如果类具有自己的『逻辑相等』概念（不同于对象等同的概念），而且超类还没有覆盖equals以实现期望的行为，这是我们就需要覆盖equals方法</strong>这通常属于『值类(value class)』的情形，值类仅仅是表示值的类，例如<strong>Interger或者Date</strong>，有两大好处：<em>（1）</em>希望知道它们在逻辑上是否相等，而不是想了解它们是否指向同一个对象<em>（2）</em>而且这样做也使得这个类的实例可以被用做映射表（map）的键（key），或者集合（set）的元素，是映射或者集合表现出预期的行为<br><strong>实例受控</strong>:确保『每个值至多只存在一个对象』的类，例如枚举类型，对于这样的类而言，逻辑相同与对象等同是一回事<br>在覆盖equals方法的时候，你必须遵守它的通用约定</p>
-<ul>
-<li><strong>自反性</strong> 对于任何非null的引用值x，x.equals必须返回true</li>
-<li><strong>对称性</strong> 对于任何非null的引用值x和y，当且仅当y.equals(x)返回true时，x.equals(y)必须返回ture</li>
-<li><strong>传递性</strong> 对于任何非null的引用值x,y和z，如果x.equals(y)返回true，并且y.equals(z)也返回true，那么x.equals(z)也必须返回true</li>
-<li><strong>一致性</strong> 对于任何非null的引用值x和y，只要equals的比较操作在对象中所用的信息没有被修改，多次调用x.equals(y)就会一致的返回true，或者一致的返回false，<strong>无论类是否是不可变的，都不要使equals方法依赖于不可靠的资源</strong></li>
-<li><strong>非空性</strong>对与任何非null的引用值x，x.equals(null)必须返回false</li>
-</ul>
-<p><strong><em>里氏代换原则认为：</em></strong>一个类型的任何重要属性也将适用于它的子类型，因此为该类型编写的任何方法，在它的子类型上也应该同样运行的很好<br><strong>综合所有要求，得出以下实现高质量equals方法的诀窍</strong></p>
-<ul>
-<li><strong>使用==操作符检查『参数是否为这个对象的引用』</strong>。如果是，则返回true。这只不过是一种性能优化，如果比较操作有可能很昂贵，就值得这么做</li>
-<li><strong>使用instanceof操作符检查『参数是否为正确的类型』</strong> 正确类型是指equals方法所在的那个类，有些情况下，是指该类所现实的某个接口</li>
-<li><strong>把参数转换成正确的类型</strong></li>
-<li><strong>对于该类中的每个关键域，检查参数中的域是否与该对象中对应的域相匹配</strong><br><em>有些对象引用域包含null可能是合法的，所以，为了避免可能导致的NullPointerException异常，则使用下面的习惯用法来比较这样的域</em><br>(field == null ? o.field == null : field.equals(o.field)<br><strong><em>最后一些告诫</em></strong></li>
-<li>覆盖equals时总要覆盖hashCode</li>
-<li>不要企图让equals方法过于智能</li>
-<li>不要将equals声明中的Object对象替换为其他的类型<br> public boolean equals(MyClass o){<br> }<br> 该方式是方法的重载，而不是覆写<h2 id="第九条：覆盖equals时总要覆盖hashCode"><a href="#第九条：覆盖equals时总要覆盖hashCode" class="headerlink" title="第九条：覆盖equals时总要覆盖hashCode"></a>第九条：覆盖equals时总要覆盖hashCode</h2>如果不这样做，就会违反Object.hashCode的通用约定，导致该类无法结合所有基于散列的集合一起正常运行<br><strong>覆写hashCode()的解决方案：</strong></li>
-<li>把某个非零的常数值，比如说17，保存在一个名为reuslt的int类型的变量中</li>
-<li>对于对象每个关键于f（指equals方法中涉及的每个域），完成下列步骤</li>
-<li>返回result</li>
-<li><p>编写单元测试<br>1、如果一个类是不可变的，并且计算散列码的开销也比比较大，就应该考虑把散列码缓存在对象内部，而不是每次请求的时候都要重新计算<br>2、选择延迟初始化散列码，一直到hashCode被第一次调用的时候才初始化<br><strong>不要试图从散列码计算中排除掉一个对象的关键部分来提高性能</strong></p>
-<h2 id="第十条：要始终覆盖toString"><a href="#第十条：要始终覆盖toString" class="headerlink" title="第十条：要始终覆盖toString"></a>第十条：要始终覆盖toString</h2><h2 id="第十一条谨慎的覆盖clone"><a href="#第十一条谨慎的覆盖clone" class="headerlink" title="第十一条谨慎的覆盖clone"></a>第十一条谨慎的覆盖clone</h2><p>cloneable接口的目的是作为对象的一个mixin接口，表明这样的对象允许被clone<br>如果一个类实现了Cloneable,Object的clone方法就返回该对象的逐域copy，否则就会抛出CloneNotSupportedException异常<br><strong><em>准则</em></strong>:永远不要让客户去做任何类库能够替客户完成的事情<br><strong><em>实际上，clone方法就是另外一个构造器；你必须确保它不会伤害到原始的对象，并且确保正确的创建被克隆对象中的约束条件</em></strong><br>clone架构与引用可变对象的final域的正常用法是不相兼容的<br><strong>另外一个实现队形拷贝的好办法是提供一个拷贝构造器（copy constructor）或拷贝工厂（copy factory）</strong><br>拷贝构造器：<code>public Yum(Yum yum);</code><br>拷贝工厂：<code>public static Yum newInstance(Yum yum);</code></p>
-<h2 id="第十二条：考虑实现Comparable接口"><a href="#第十二条：考虑实现Comparable接口" class="headerlink" title="第十二条：考虑实现Comparable接口"></a>第十二条：考虑实现Comparable接口</h2><p>类实现了Comparable接口，就表明它的实例具有内在的排序关系。如果你正在编写一个值类，它具有非常明显的内在排序关系，那你就应该坚决考虑实现这个接口；如果两个被比较的对象引用不同类的对象，compareTo可以抛出ClassCastException异常<br>如果你想为一个实现了Comparable接口的类增加值组件，请不要扩展这个类；而是要编写一个不相关的类，其中包含第一个类的一个实例。然后提供一个视图方法返回这个实例；如果你需要使用一个非标准的排序关系，就可以使用一个显式的Comparator来代替。或者编写自己的Comparato，或者使用以有的Comparator</p>
-<p> public final class CaseInsensitiveString implements Comparable<caseinsensitivesttring>{</caseinsensitivesttring></p>
-<pre><code>public int compareTo(CaseInsensitiveString cis){
-    return String.CASE_INSENSITIVE_ORDER.compare(s,cis.s);
-}
-</code></pre><p> }</p>
-</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2078,7 +2043,7 @@ public static final Thing[] VALUES = {...};
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">53</span>
+                <span class="site-state-item-count">54</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -2089,7 +2054,7 @@ public static final Thing[] VALUES = {...};
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-count">15</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -2100,7 +2065,7 @@ public static final Thing[] VALUES = {...};
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-count">15</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

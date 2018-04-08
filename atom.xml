@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-04-08T10:37:48.639Z</updated>
+  <updated>2018-04-08T10:43:19.929Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -17,11 +17,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>设计模式-代理模式</title>
+    <title>我的Spring之路（六）-Spring Boot （2）</title>
     <link href="http://yoursite.com/2018/04/08/2018-04-08/"/>
     <id>http://yoursite.com/2018/04/08/2018-04-08/</id>
     <published>2018-04-08T10:26:06.908Z</published>
-    <updated>2018-04-08T10:37:48.639Z</updated>
+    <updated>2018-04-08T10:43:19.929Z</updated>
     
     <content type="html"><![CDATA[<h1 id="为别人做嫁衣———-代理模式"><a href="#为别人做嫁衣———-代理模式" class="headerlink" title="为别人做嫁衣———-代理模式"></a>为别人做嫁衣———-代理模式</h1><blockquote><p>为其他对象提供一种代理以控制对这个对象的访问<br>先上图<br><img src="/images/15231832939163.jpg" alt=""></p><p>注：该图画的是大话设计模式中的代理追女孩的图，这里Pursuit里面维护了一个SchoolGril，这个对象是通过Proxy传递过来的</p></blockquote><p>接下来上码：<br>GiveGift</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">public interface GiveGift &#123;</div><div class="line">    public void giveDolls();</div><div class="line">    public void giveFlowers();</div><div class="line">    public void giveChocolate();</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>Pursuit</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">public class Pursuit implements GiveGift&#123;</div><div class="line"></div><div class="line">    private SchoolGirl mm;</div><div class="line"></div><div class="line">    public Pursuit(SchoolGirl mm)&#123;</div><div class="line">        this.mm = mm;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void giveDolls() &#123;</div><div class="line">        System.out.println(&quot;送洋娃娃!&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void giveFlowers() &#123;</div><div class="line">        System.out.println(&quot;送花&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void giveChocolate() &#123;</div><div class="line">        System.out.println(&quot;送巧克力&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>Proxy</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">public class Proxy implements GiveGift&#123;</div><div class="line"></div><div class="line">    private Pursuit gg;</div><div class="line"></div><div class="line">    public Proxy(SchoolGirl mm)&#123;</div><div class="line">        this.gg = new Pursuit(mm);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void giveDolls() &#123;</div><div class="line">        gg.giveDolls();</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void giveFlowers() &#123;</div><div class="line">        gg.giveFlowers();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void giveChocolate() &#123;</div><div class="line">        gg.giveChocolate();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>Clinet</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">public class Client &#123;</div><div class="line">    public static void main(String [] args)&#123;</div><div class="line">        SchoolGirl mm = new SchoolGirl();</div><div class="line">        Proxy proxy = new Proxy(mm);</div><div class="line">        proxy.giveChocolate();</div><div class="line">        proxy.giveDolls();</div><div class="line">        proxy.giveFlowers();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>]]></content>
     
@@ -35,10 +35,10 @@
     
     </summary>
     
-      <category term="设计模式" scheme="http://yoursite.com/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+      <category term="Spring" scheme="http://yoursite.com/categories/Spring/"/>
     
     
-      <category term="设计模式 代理模式" scheme="http://yoursite.com/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F-%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/"/>
+      <category term="Spring" scheme="http://yoursite.com/tags/Spring/"/>
     
   </entry>
   
@@ -115,6 +115,29 @@
     
     
       <category term="Spring" scheme="http://yoursite.com/tags/Spring/"/>
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="http://yoursite.com/2018/03/11/java%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%80%A7%E8%83%BD%E7%9B%91%E6%8E%A7%EF%BC%88%E4%B8%80%EF%BC%89/"/>
+    <id>http://yoursite.com/2018/03/11/java性能优化-操作系统性能监控（一）/</id>
+    <published>2018-03-11T05:58:55.378Z</published>
+    <updated>2018-04-08T10:40:50.450Z</updated>
+    
+    <content type="html"><![CDATA[<hr><p>title: java性能优化-操作系统性能监控（一）<br>date: 2018-02-07 20:10:23<br>tags: JVM性能相关</p><h2 id="categories-JVM性能相关"><a href="#categories-JVM性能相关" class="headerlink" title="categories: JVM性能相关"></a>categories: JVM性能相关</h2><h2 id="改善性能的3种活动"><a href="#改善性能的3种活动" class="headerlink" title="改善性能的3种活动"></a>改善性能的3种活动</h2><ul><li>性能监控（非侵入式）</li><li>性能分析（侵入式）</li><li>性能调优：为改善应用响应性或吞吐量而更改参数（Tune-able）、源代码或者属性配置的活动。<h2 id="CPU使用率"><a href="#CPU使用率" class="headerlink" title="CPU使用率"></a>CPU使用率</h2></li><li>尽可能降低系统态CPU使用率</li><li>减少停滞或者改善CPu告诉缓存使用率，从而减少CPU在等待内存数据时浪费的时钟周期<h2 id="监控CPU使用率：Linux"><a href="#监控CPU使用率：Linux" class="headerlink" title="监控CPU使用率：Linux"></a>监控CPU使用率：Linux</h2><h3 id="GNOME-System-Monitor"><a href="#GNOME-System-Monitor" class="headerlink" title="GNOME System Monitor"></a>GNOME System Monitor</h3><h3 id="xosview"><a href="#xosview" class="headerlink" title="xosview"></a>xosview</h3><h2 id="命令行监控CPU使用率：Linux和Solaris"><a href="#命令行监控CPU使用率：Linux和Solaris" class="headerlink" title="命令行监控CPU使用率：Linux和Solaris"></a>命令行监控CPU使用率：Linux和Solaris</h2></li></ul><ul><li>vmstat</li><li>mpstat</li><li>top<h2 id="CPU调度程序运行队列"><a href="#CPU调度程序运行队列" class="headerlink" title="CPU调度程序运行队列"></a>CPU调度程序运行队列</h2><em>一般性指导原则：如果在很长一段时间里，运行队列的长度一直都超过虚拟处理器的个数的1倍，就需要关注了，如果很长一段时间里，运行队列的长度达到虚拟处理器个数的3~4倍或更高，则需要立刻引起注意或采取行动</em><h3 id="监控CPU调度程序运行队列：Linux"><a href="#监控CPU调度程序运行队列：Linux" class="headerlink" title="监控CPU调度程序运行队列：Linux"></a>监控CPU调度程序运行队列：Linux</h3></li><li>vmstat 第一列（运行队列长度）<h2 id="内存使用率"><a href="#内存使用率" class="headerlink" title="内存使用率"></a>内存使用率</h2></li><li><strong>系统在进行页面交换或使用虚拟内存时，java应用或JVM会表现出明显的性能问题</strong></li><li><strong>JVM垃圾收集器在系统页面交换时的性能也很差</strong><h3 id="监控内存使用率：Linux（vmstat）"><a href="#监控内存使用率：Linux（vmstat）" class="headerlink" title="监控内存使用率：Linux（vmstat）"></a>监控内存使用率：Linux（vmstat）</h3></li><li>free列监控页面交换</li><li>si、so内存页面换入和换出量<h2 id="监控锁竞争Linux（sysstat包中的pidstat命令监控竞争锁）"><a href="#监控锁竞争Linux（sysstat包中的pidstat命令监控竞争锁）" class="headerlink" title="监控锁竞争Linux（sysstat包中的pidstat命令监控竞争锁）"></a>监控锁竞争Linux（sysstat包中的pidstat命令监控竞争锁）</h2></li><li>pidstat -w 中的cswch/s(不包含所有的上下文切换)，浪费掉的时钟周期，可以有pidstat -w的让步式切换数除以虚拟处理器的数目而得</li><li><code>pidstat -w -I -p 9391 5</code> 每五秒监控进程id为9391的JAVA应用程序</li><li>(cswch/s) / 2(cpu内核数) * 8000 / 3.0G(cpu主频)<h3 id="隔离竞争锁-Oracle-Solaris-Studio-Performance-Analyzer工具"><a href="#隔离竞争锁-Oracle-Solaris-Studio-Performance-Analyzer工具" class="headerlink" title="隔离竞争锁 Oracle Solaris Studio Performance Analyzer工具"></a>隔离竞争锁 Oracle Solaris Studio Performance Analyzer工具</h3><h3 id="监控抢占式上下文-pidstat-w（icsw）"><a href="#监控抢占式上下文-pidstat-w（icsw）" class="headerlink" title="监控抢占式上下文 pidstat -w（icsw）"></a>监控抢占式上下文 pidstat -w（icsw）</h3><h3 id="监控线程迁移"><a href="#监控线程迁移" class="headerlink" title="监控线程迁移"></a>监控线程迁移</h3><h2 id="网络I-O使用率（netstat）"><a href="#网络I-O使用率（netstat）" class="headerlink" title="网络I/O使用率（netstat）"></a>网络I/O使用率（netstat）</h2><h3 id="nicstat工具"><a href="#nicstat工具" class="headerlink" title="nicstat工具"></a>nicstat工具</h3><h3 id="应用性改进的考虑"><a href="#应用性改进的考虑" class="headerlink" title="应用性改进的考虑"></a>应用性改进的考虑</h3></li><li><strong>单次读写数据量小而网络读写量大的应用会消耗大量的系统态CPU</strong></li><li><strong>使用非阻塞的JAVA NIO而不是阻塞的java.net.Socket</strong><h2 id="磁盘I-O使用率（iostat-xm-5）"><a href="#磁盘I-O使用率（iostat-xm-5）" class="headerlink" title="磁盘I/O使用率（iostat -xm 5）"></a>磁盘I/O使用率（iostat -xm 5）</h2></li><li>使用缓冲数据结构 BufferedInputStream BufferedOutputStream<h2 id="其他命令行工具（sar）"><a href="#其他命令行工具（sar）" class="headerlink" title="其他命令行工具（sar）"></a>其他命令行工具（sar）</h2></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;hr&gt;
+&lt;p&gt;title: java性能优化-操作系统性能监控（一）&lt;br&gt;date: 2018-02-07 20:10:23&lt;br&gt;tags: JVM性能相关&lt;/p&gt;
+&lt;h2 id=&quot;categories-JVM性能相关&quot;&gt;&lt;a href=&quot;#categories-JVM性能
+      
+    
+    </summary>
+    
     
   </entry>
   
@@ -426,6 +449,32 @@
   </entry>
   
   <entry>
+    <title>递归</title>
+    <link href="http://yoursite.com/2017/10/09/%E9%80%92%E5%BD%92/"/>
+    <id>http://yoursite.com/2017/10/09/递归/</id>
+    <published>2017-10-09T07:08:10.000Z</published>
+    <updated>2017-10-09T08:04:33.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h1><p>恨它的，爱它的以及恨了几年有爱上它的（比较经典，记下了）</p><h2 id="while与递归的对比"><a href="#while与递归的对比" class="headerlink" title="while与递归的对比"></a>while与递归的对比</h2><p>伪代码实现<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#while 实现</span></div><div class="line">def look_for_key(main_box):</div><div class="line">pile = main_box.make_a_pile_to_look_through()</div><div class="line"><span class="keyword">while</span> pile is not empty:</div><div class="line">box = pile.grab_a_box()</div><div class="line"><span class="keyword">for</span> item <span class="keyword">in</span> box:</div><div class="line"><span class="keyword">if</span> item.is_a_box():</div><div class="line">pile.append(item)</div><div class="line"><span class="keyword">elif</span> item.is_a_key():</div><div class="line"><span class="built_in">print</span>(“found the key!”)</div><div class="line"><span class="comment">#递归实现</span></div><div class="line">def look_for_key(box):</div><div class="line"><span class="keyword">for</span> item <span class="keyword">in</span> box:</div><div class="line"><span class="keyword">if</span> item.is_a_box():</div><div class="line">look_for_key(item)</div><div class="line"><span class="keyword">elif</span> item.is_a_key():</div><div class="line"><span class="built_in">print</span>(“found the key!”)</div></pre></td></tr></table></figure></p><p>#这两种方法的作用相同，第二种方法更清晰。递归只是让解决方案更清晰 ，并没有性能上的优势，实际上，在有些情况下，使用循环的性能更好。<br>再引入一句大神说的话：Loops may achieve a performance gain for your program. Recursion may achieve a performance gain for your programmer. Choose which is more important in your situation!</p><h2 id="基线条件和递归条件"><a href="#基线条件和递归条件" class="headerlink" title="基线条件和递归条件"></a>基线条件和递归条件</h2><p>每个递归函数都有两个部分：基线条件和递归条件<br>递归条件指的是函数调用自己，而基线条件则指的是函数不在调用自己，从而避免形成无线循环<br>ex：<br>def countdown(i):<br>    print i<br>    countdown(i-1)<br>上述代码，会导致死循环<br>我们来给countdown添加基线条件<br>def countdown(i):<br>    print i</p><pre><code>#基线条件if i &lt;= 0:returnelse:  #递归条件countdown(i-1)</code></pre><h2 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h2><h3 id="调用栈"><a href="#调用栈" class="headerlink" title="调用栈"></a>调用栈</h3><p>def greet(name):<br>    print (“hello, “ + name + “i”)<br>    greet2(name)<br>    print (getting ready to say bye…)<br>    bye()</p><p>#这个函数问候用户，在调用另外两个函数。这两个函数的代码如下。<br>def greet2(name):<br>    print (”how are you, ” + name + ‘?’)<br>    def bye():<br>        print(“ok bye!”)</p><h3 id="递归调用栈"><a href="#递归调用栈" class="headerlink" title="递归调用栈"></a>递归调用栈</h3><h4 id="计算阶乘的"><a href="#计算阶乘的" class="headerlink" title="计算阶乘的"></a>计算阶乘的</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">def fact(x):</div><div class="line"><span class="keyword">if</span> x == 1:</div><div class="line"><span class="built_in">return</span> 1</div><div class="line"><span class="keyword">else</span>:</div><div class="line">   <span class="built_in">return</span> x*fact(x-1)</div></pre></td></tr></table></figure><p>使用栈虽然很方便，但是也要付出代价:存储详尽的信息可能占用大量的内存。每个函数调 用都要占用一定的内存，如果栈很高，就意味着计算机存储了大量函数调用的信息。在这种情况 下，你有两种选择。<br> 重新编写代码，转而使用循环。<br> 使用尾递归。这是一个高级递归主题，不在本书的讨论范围内。另外，并非所有的语言<br>都支持尾递归。</p><h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p> 递归指的是调用自己的函数。<br> 每个递归函数都有两个条件:基线条件和递归条件。  栈有两种操作:压入和弹出。<br> 所有函数调用都进入调用栈。<br> 调用栈可能很长，这将占用大量的内存。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;递归&quot;&gt;&lt;a href=&quot;#递归&quot; class=&quot;headerlink&quot; title=&quot;递归&quot;&gt;&lt;/a&gt;递归&lt;/h1&gt;&lt;p&gt;恨它的，爱它的以及恨了几年有爱上它的（比较经典，记下了）&lt;/p&gt;
+&lt;h2 id=&quot;while与递归的对比&quot;&gt;&lt;a href=&quot;#while与
+      
+    
+    </summary>
+    
+      <category term="algorithm" scheme="http://yoursite.com/categories/algorithm/"/>
+    
+    
+      <category term="algorithm" scheme="http://yoursite.com/tags/algorithm/"/>
+    
+  </entry>
+  
+  <entry>
     <title>深入分析Java I/O的工作原理</title>
     <link href="http://yoursite.com/2017/10/09/%E6%B7%B1%E5%85%A5%E5%88%86%E6%9E%90Java%20I:O%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/"/>
     <id>http://yoursite.com/2017/10/09/深入分析Java I:O的工作原理/</id>
@@ -472,57 +521,6 @@
     
     
       <category term="JavaWeb" scheme="http://yoursite.com/tags/JavaWeb/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>递归</title>
-    <link href="http://yoursite.com/2017/10/09/%E9%80%92%E5%BD%92/"/>
-    <id>http://yoursite.com/2017/10/09/递归/</id>
-    <published>2017-10-09T07:08:10.000Z</published>
-    <updated>2017-10-09T08:04:33.000Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h1><p>恨它的，爱它的以及恨了几年有爱上它的（比较经典，记下了）</p><h2 id="while与递归的对比"><a href="#while与递归的对比" class="headerlink" title="while与递归的对比"></a>while与递归的对比</h2><p>伪代码实现<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#while 实现</span></div><div class="line">def look_for_key(main_box):</div><div class="line">pile = main_box.make_a_pile_to_look_through()</div><div class="line"><span class="keyword">while</span> pile is not empty:</div><div class="line">box = pile.grab_a_box()</div><div class="line"><span class="keyword">for</span> item <span class="keyword">in</span> box:</div><div class="line"><span class="keyword">if</span> item.is_a_box():</div><div class="line">pile.append(item)</div><div class="line"><span class="keyword">elif</span> item.is_a_key():</div><div class="line"><span class="built_in">print</span>(“found the key!”)</div><div class="line"><span class="comment">#递归实现</span></div><div class="line">def look_for_key(box):</div><div class="line"><span class="keyword">for</span> item <span class="keyword">in</span> box:</div><div class="line"><span class="keyword">if</span> item.is_a_box():</div><div class="line">look_for_key(item)</div><div class="line"><span class="keyword">elif</span> item.is_a_key():</div><div class="line"><span class="built_in">print</span>(“found the key!”)</div></pre></td></tr></table></figure></p><p>#这两种方法的作用相同，第二种方法更清晰。递归只是让解决方案更清晰 ，并没有性能上的优势，实际上，在有些情况下，使用循环的性能更好。<br>再引入一句大神说的话：Loops may achieve a performance gain for your program. Recursion may achieve a performance gain for your programmer. Choose which is more important in your situation!</p><h2 id="基线条件和递归条件"><a href="#基线条件和递归条件" class="headerlink" title="基线条件和递归条件"></a>基线条件和递归条件</h2><p>每个递归函数都有两个部分：基线条件和递归条件<br>递归条件指的是函数调用自己，而基线条件则指的是函数不在调用自己，从而避免形成无线循环<br>ex：<br>def countdown(i):<br>    print i<br>    countdown(i-1)<br>上述代码，会导致死循环<br>我们来给countdown添加基线条件<br>def countdown(i):<br>    print i</p><pre><code>#基线条件if i &lt;= 0:returnelse:  #递归条件countdown(i-1)</code></pre><h2 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h2><h3 id="调用栈"><a href="#调用栈" class="headerlink" title="调用栈"></a>调用栈</h3><p>def greet(name):<br>    print (“hello, “ + name + “i”)<br>    greet2(name)<br>    print (getting ready to say bye…)<br>    bye()</p><p>#这个函数问候用户，在调用另外两个函数。这两个函数的代码如下。<br>def greet2(name):<br>    print (”how are you, ” + name + ‘?’)<br>    def bye():<br>        print(“ok bye!”)</p><h3 id="递归调用栈"><a href="#递归调用栈" class="headerlink" title="递归调用栈"></a>递归调用栈</h3><h4 id="计算阶乘的"><a href="#计算阶乘的" class="headerlink" title="计算阶乘的"></a>计算阶乘的</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">def fact(x):</div><div class="line"><span class="keyword">if</span> x == 1:</div><div class="line"><span class="built_in">return</span> 1</div><div class="line"><span class="keyword">else</span>:</div><div class="line">   <span class="built_in">return</span> x*fact(x-1)</div></pre></td></tr></table></figure><p>使用栈虽然很方便，但是也要付出代价:存储详尽的信息可能占用大量的内存。每个函数调 用都要占用一定的内存，如果栈很高，就意味着计算机存储了大量函数调用的信息。在这种情况 下，你有两种选择。<br> 重新编写代码，转而使用循环。<br> 使用尾递归。这是一个高级递归主题，不在本书的讨论范围内。另外，并非所有的语言<br>都支持尾递归。</p><h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p> 递归指的是调用自己的函数。<br> 每个递归函数都有两个条件:基线条件和递归条件。  栈有两种操作:压入和弹出。<br> 所有函数调用都进入调用栈。<br> 调用栈可能很长，这将占用大量的内存。</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h1 id=&quot;递归&quot;&gt;&lt;a href=&quot;#递归&quot; class=&quot;headerlink&quot; title=&quot;递归&quot;&gt;&lt;/a&gt;递归&lt;/h1&gt;&lt;p&gt;恨它的，爱它的以及恨了几年有爱上它的（比较经典，记下了）&lt;/p&gt;
-&lt;h2 id=&quot;while与递归的对比&quot;&gt;&lt;a href=&quot;#while与
-      
-    
-    </summary>
-    
-      <category term="algorithm" scheme="http://yoursite.com/categories/algorithm/"/>
-    
-    
-      <category term="algorithm" scheme="http://yoursite.com/tags/algorithm/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>选择排序</title>
-    <link href="http://yoursite.com/2017/10/09/%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F/"/>
-    <id>http://yoursite.com/2017/10/09/选择排序/</id>
-    <published>2017-10-09T01:39:40.000Z</published>
-    <updated>2017-10-09T07:07:23.000Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h1><h2 id="链表和数组"><a href="#链表和数组" class="headerlink" title="链表和数组"></a>链表和数组</h2><h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><p>优点：读取的时间复杂度为O(1) 常量时间<br>缺点：插入的时间复杂度为O(n) 线性时间</p><h3 id="链表"><a href="#链表" class="headerlink" title="链表"></a>链表</h3><p>中间插入，删除</p><h2 id="选择排序-1"><a href="#选择排序-1" class="headerlink" title="选择排序"></a>选择排序</h2><h3 id="需要检查的元素越来越少"><a href="#需要检查的元素越来越少" class="headerlink" title="需要检查的元素越来越少"></a>需要检查的元素越来越少</h3><p>第一次需要检查n个元素，但随后检查的元素 数依次为n  1, n – 2, …, 2和1。平均每次检查的元素数为1/2 × n，因此运行时间为O(n × 1/2 × n)。</p><h3 id="示例代码"><a href="#示例代码" class="headerlink" title="示例代码"></a>示例代码</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">def findSmallest(arr):</div><div class="line"><span class="comment"># 存储最小的值</span></div><div class="line">smallest = arr[0]</div><div class="line"><span class="comment"># 存储最小元素的索引</span></div><div class="line">smallest_index = 0</div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> reange(1, len(arr)):</div><div class="line"><span class="keyword">if</span> arr[i] &lt; smallest:</div><div class="line">smallest = arr[i]</div><div class="line">smallest_index = i</div><div class="line"><span class="built_in">return</span> smallest_index</div><div class="line"></div><div class="line"><span class="comment">#现在可以使用这个函数来编写选择排序算法了</span></div><div class="line">def selectionSort(arr):</div><div class="line">newArr = []</div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(len(arr)):</div><div class="line">smallest = findSmallest(arr)    <span class="comment">#找出数组中最小的元素，</span></div><div class="line"><span class="comment">#并将其加入到新数组中</span></div><div class="line">newArr.append(arr.pop(smallest))</div><div class="line"><span class="built_in">return</span> newArr</div></pre></td></tr></table></figure><h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p> 计算机内存犹如一大堆抽屉。<br> 需要存储多个元素时，可使用数组或链表。<br> 数组的元素都在一起。<br> 链表的元素是分开的，其中每个元素都存储了下一个元素的地址。<br> 数组的读取速度很快。<br> 链表的插入和删除速度很快。<br> 在同一个数组中，所有元素的类型都必须相同(都为int、double等)。</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h1 id=&quot;选择排序&quot;&gt;&lt;a href=&quot;#选择排序&quot; class=&quot;headerlink&quot; title=&quot;选择排序&quot;&gt;&lt;/a&gt;选择排序&lt;/h1&gt;&lt;h2 id=&quot;链表和数组&quot;&gt;&lt;a href=&quot;#链表和数组&quot; class=&quot;headerlink&quot; title=&quot;链表和数组&quot;&gt;
-      
-    
-    </summary>
-    
-      <category term="algorithm" scheme="http://yoursite.com/categories/algorithm/"/>
-    
-    
-      <category term="algorithm" scheme="http://yoursite.com/tags/algorithm/"/>
     
   </entry>
   
