@@ -79,7 +79,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="algorithm," />
+  <meta name="keywords" content="设计模式," />
 
 
 
@@ -97,18 +97,20 @@
 
 
 
-<meta name="description" content="二分查找二分查找的工作原理你的目标是以最少的次数猜到这个数字。你每次猜测后，我会说小了、大了或对了。 假设你从1开始依次往上猜，猜测过程会是这样。（一种糟糕的猜数法）一种好的猜数法，从50开始。如果小了，接下来猜75……,不管是什么数，在第七次一定能猜到一般而言，对于包含n个元素的列表，用二分查找最多需要log2n步，而简单查找最多需要n步。注：仅当列表有序的时候，二分查找才管用 代码实现（pyt">
-<meta name="keywords" content="algorithm">
+<meta name="description" content="穿什么有这么重要———装饰模式 动态地给一个对象添加一些额外的职责，就增加功能来说，装饰模式比生成子类更为灵活  先上图 在上码：Component 123public abstract class Component &amp;#123;    public abstract void Operation();&amp;#125; ConcreteComponent 123456public class Con">
+<meta name="keywords" content="设计模式">
 <meta property="og:type" content="article">
-<meta property="og:title" content="二分查找">
-<meta property="og:url" content="http://yoursite.com/2017/10/09/二分查找/index.html">
+<meta property="og:title" content="设计模式之装饰模式">
+<meta property="og:url" content="http://yoursite.com/2018/04/08/设计模式之装饰模式/index.html">
 <meta property="og:site_name" content="EWSUN">
-<meta property="og:description" content="二分查找二分查找的工作原理你的目标是以最少的次数猜到这个数字。你每次猜测后，我会说小了、大了或对了。 假设你从1开始依次往上猜，猜测过程会是这样。（一种糟糕的猜数法）一种好的猜数法，从50开始。如果小了，接下来猜75……,不管是什么数，在第七次一定能猜到一般而言，对于包含n个元素的列表，用二分查找最多需要log2n步，而简单查找最多需要n步。注：仅当列表有序的时候，二分查找才管用 代码实现（pyt">
+<meta property="og:description" content="穿什么有这么重要———装饰模式 动态地给一个对象添加一些额外的职责，就增加功能来说，装饰模式比生成子类更为灵活  先上图 在上码：Component 123public abstract class Component &amp;#123;    public abstract void Operation();&amp;#125; ConcreteComponent 123456public class Con">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-10-09T01:37:05.000Z">
+<meta property="og:image" content="http://yoursite.com/images/15231875428520.jpg">
+<meta property="og:updated_time" content="2018-04-08T11:39:08.208Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="二分查找">
-<meta name="twitter:description" content="二分查找二分查找的工作原理你的目标是以最少的次数猜到这个数字。你每次猜测后，我会说小了、大了或对了。 假设你从1开始依次往上猜，猜测过程会是这样。（一种糟糕的猜数法）一种好的猜数法，从50开始。如果小了，接下来猜75……,不管是什么数，在第七次一定能猜到一般而言，对于包含n个元素的列表，用二分查找最多需要log2n步，而简单查找最多需要n步。注：仅当列表有序的时候，二分查找才管用 代码实现（pyt">
+<meta name="twitter:title" content="设计模式之装饰模式">
+<meta name="twitter:description" content="穿什么有这么重要———装饰模式 动态地给一个对象添加一些额外的职责，就增加功能来说，装饰模式比生成子类更为灵活  先上图 在上码：Component 123public abstract class Component &amp;#123;    public abstract void Operation();&amp;#125; ConcreteComponent 123456public class Con">
+<meta name="twitter:image" content="http://yoursite.com/images/15231875428520.jpg">
 
 
 
@@ -138,13 +140,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/10/09/二分查找/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/04/08/设计模式之装饰模式/"/>
 
 
 
 
 
-  <title>二分查找 | EWSUN</title>
+  <title>设计模式之装饰模式 | EWSUN</title>
   
 
 
@@ -311,7 +313,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/09/二分查找/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/08/设计模式之装饰模式/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="EtanWatson">
@@ -328,7 +330,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">二分查找</h1>
+          <h1 class="post-title" itemprop="name headline">设计模式之装饰模式</h1>
         
 
         <div class="post-meta">
@@ -340,8 +342,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-09T08:27:35+08:00">
-                2017-10-09
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-08T19:33:10+08:00">
+                2018-04-08
               </time>
             
 
@@ -363,8 +365,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/algorithm/" itemprop="url" rel="index">
-                    <span itemprop="name">algorithm</span>
+                  <a href="/categories/设计模式/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式</span>
                   </a>
                 </span>
 
@@ -400,41 +402,32 @@
       
 
       
-        <h1 id="二分查找"><a href="#二分查找" class="headerlink" title="二分查找"></a>二分查找</h1><h2 id="二分查找的工作原理"><a href="#二分查找的工作原理" class="headerlink" title="二分查找的工作原理"></a>二分查找的工作原理</h2><p>你的目标是以最少的次数猜到这个数字。你每次猜测后，我会说小了、大了或对了。 假设你从1开始依次往上猜，猜测过程会是这样。（一种糟糕的猜数法）<br>一种好的猜数法，从50开始。如果小了，接下来猜75……,不管是什么数，在第七次一定能猜到<br>一般而言，对于包含n个元素的列表，用二分查找最多需要log2n步，而简单查找最多需要n步。<br>注：仅当列表有序的时候，二分查找才管用</p>
-<h3 id="代码实现（python-2-7）"><a href="#代码实现（python-2-7）" class="headerlink" title="代码实现（python 2.7）"></a>代码实现（python 2.7）</h3><pre><code class="bash"><span class="comment">#范围</span>
-low = 0
-heigh = len(list) - 1
-<span class="comment">#每次检查的中间的元素</span>
-mid = (low + heigh) / 2
-guess = list[mid]
-<span class="comment">#如果数猜小了，就相应的修改low</span>
-<span class="keyword">if</span> guess &lt; item:
-    low = mid + 1
-<span class="comment">#如果数猜大了，就修改heigh</span>
-<span class="comment">#完整代码如下</span>
-def binary_search(list, item)
-    low = 0
-    heigh = len(list) - 1
-
-    <span class="keyword">while</span> low &lt;= heigh:
-        mid = (low + heigh)
-        guess = list[mid]
-        <span class="keyword">if</span> guess == item:     <span class="comment">#放在第一个判断可以减少下面的操作</span>
-            <span class="built_in">return</span> mid
-        <span class="keyword">if</span> guess &lt; item:
-            low = mid + 1
-        <span class="keyword">else</span>:
-            heigh = mid - 1
-    <span class="built_in">return</span> None
-</code></pre>
-<h2 id="运行时间"><a href="#运行时间" class="headerlink" title="运行时间"></a>运行时间</h2><p>最多需要猜测的次数与列表长度相同，这被称为线性 时间(linear time)。<br>二分查找的运行时间为对数时间(或log时间)</p>
-<h2 id="大O表示法"><a href="#大O表示法" class="headerlink" title="大O表示法"></a>大O表示法</h2><h3 id="运算时间以不同的速度增加"><a href="#运算时间以不同的速度增加" class="headerlink" title="运算时间以不同的速度增加"></a>运算时间以不同的速度增加</h3><pre><code>简单查找          二分查找
-</code></pre><p>100个元素                100毫秒          7毫秒<br>10000个元素            10秒        14毫秒<br>1000000000个元素        11天        32毫秒<br>注：以上表示的是至多查找时间<br>有鉴于此，仅知道算法 需要多长时间才能运行完毕还不够，还需知道运行时间如何随列表增长 而增加。这正是大O表示法的用武之地。</p>
-<h3 id="理解不同的大O运行时间"><a href="#理解不同的大O运行时间" class="headerlink" title="理解不同的大O运行时间"></a>理解不同的大O运行时间</h3><p>O(n) 与 O（log n）  注：非特殊说明，均以2为底</p>
-<h3 id="大O表示法指出了最糟糕情况下的运行时间"><a href="#大O表示法指出了最糟糕情况下的运行时间" class="headerlink" title="大O表示法指出了最糟糕情况下的运行时间"></a>大O表示法指出了最糟糕情况下的运行时间</h3><h3 id="一些常见的大O运行时间"><a href="#一些常见的大O运行时间" class="headerlink" title="一些常见的大O运行时间"></a>一些常见的大O运行时间</h3><p>O(log n)，也叫对数时间，这样的算法包括二分查找。<br>O(n)，也叫线性时间，这样的算法包括简单查找。<br>O(n*log n)，这样的算法包括第4章将介绍的快速排序——一种速度较快的排序算法<br>O(n^2)，这样的算法包括第2章将介绍的选择排序——一种速度较慢的排序算法。<br>O(n!)，这样的算法包括接下来将介绍的旅行商问题的解决方案——一种非常慢的算法。</p>
-<p>主要启示：<br>算法的速度并非时间，二十操作数的增速<br>谈论算法的速度时，我们说的是随着输入增加，其运行时间将以什么样的速度增加。<br>算法的运行时间用大O表示法表示<br>O(logn)比O(n)快，当需要搜索的元素越多时，前者比后者快的越多</p>
-<h3 id="旅行商问题"><a href="#旅行商问题" class="headerlink" title="旅行商问题"></a>旅行商问题</h3><p>有一位旅行商。 他需要前往5个城市。<br>这位旅行商(姑且称之为Opus吧)要前往这5个城市，同时要确保旅程最短。为此，可考虑 前往这些城市的各种可能顺序。<br>对于每种顺序，他都计算总旅程，再挑选出旅程最短的路线。5个城市有120种不同的排列方 式。因此，在涉及5个城市时，解决这个问题需要执行120次操作。涉及6个城市时，需要执行720 次操作(有720种不同的排列方式)。涉及7个城市时，需要执行5040次操作!故，可以推出，涉及n个城市时，需要执行n!(n的阶乘)次操作才能计算出结果。如果涉及的城市 数超过100，根本就不能在合理的时间内计算出结果——等你计算出结果，太阳都没了。O(n!),由于目前还没有更巧妙的算法，所以我们能做的只是去找出近似答案。</p>
-<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>二分查找的速度比简单查找快得多。<br>O(log n)比O(n)快。需要搜索的元素越多，前者比后者就快得越多。  算法运行时间并不以秒为单位。<br>算法运行时间是从其增速的角度度量的。<br>算法运行时间用大O表示法表示。</p>
+        <h1 id="穿什么有这么重要———装饰模式"><a href="#穿什么有这么重要———装饰模式" class="headerlink" title="穿什么有这么重要———装饰模式"></a>穿什么有这么重要———装饰模式</h1><blockquote>
+<p>动态地给一个对象添加一些额外的职责，就增加功能来说，装饰模式比生成子类更为灵活</p>
+</blockquote>
+<p>先上图<br><img src="/images/15231875428520.jpg" alt=""></p>
+<p>在上码：<br>Component</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public abstract class Component &#123;</div><div class="line">    public abstract void Operation();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>ConcreteComponent</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">public class ConcreteComponent extends Component&#123;</div><div class="line">    @Override</div><div class="line">    public void Operation() &#123;</div><div class="line">        System.out.println(&quot;具体对象操作&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Decorator</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">public abstract class Decorator extends Component&#123;</div><div class="line">    protected Component component;</div><div class="line">    public void setComponent(Component component)&#123;</div><div class="line">        this.component = component;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void Operation()&#123;</div><div class="line">        if(component != null)&#123;</div><div class="line">            component.Operation();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>ConcreteDecoratorA</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">public class ConcreteDecoratorA extends Decorator&#123;</div><div class="line">    private String addedState;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void Operation() &#123;</div><div class="line">        super.Operation();</div><div class="line">        addedState = &quot;New State&quot;;</div><div class="line">        System.out.println(&quot;具体装饰对象A的操作&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>ConcreteDecoratorB</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">public class ConcreteDecoratorB extends Decorator&#123;</div><div class="line">    @Override</div><div class="line">    public void Operation() &#123;</div><div class="line">        super.Operation();</div><div class="line">        addedBehavior();</div><div class="line">        System.out.println(&quot;具体装饰对象B的操作&quot;);</div><div class="line">    &#125;</div><div class="line">    public void addedBehavior()&#123;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Component是定义一个对象接口，可以给这些对象动态的添加职责。ConcreComponent是定义了一个具体的对象，也可以给这个对象添加一些职责。Decorator，装饰抽象类，继承了Component，从外类扩展Component类的功能，但对于Component来说，是无需知道Decorator的存在的，至于ConcreteDecorator就是具体的装饰对象，起到给Component添加职责的功能</p>
+<blockquote>
+<p>装饰模式是利用SetComponent来对对象进行包装的。这样每个装饰对象的实现就和如何使用这个对象分离开了，每个装饰对象只关心自己的功能，不需要关心如何被添加到对象链当中</p>
+</blockquote>
+<p>如果只有一个ConcreteComponent类而没有抽象的Component类，那么Decorator类可以是ConcreteComponent的一个子类，同样道理，如果只有一个ConcreteDecorator类，那么就没有必要建立一个单独的Decorator类，而是把Decorator和ConcreteDecorator的责任合成一个类</p>
+<blockquote>
+<p>把类中的装饰功能从勒种搬移去除，这样可以化简原有的类，这样可以有效的把类的核心职责和装饰功能区分开。而且可以去除相关类中重复的装饰逻辑</p>
+</blockquote>
+<hr>
+<blockquote>
+<p><strong><em>做一个有文艺气息的码农 ^ _ ^</em></strong></p>
+</blockquote>
 
       
     </div>
@@ -452,7 +445,7 @@ def binary_search(list, item)
       
         <div class="post-tags">
           
-            <a href="/tags/algorithm/" rel="tag"># algorithm</a>
+            <a href="/tags/设计模式/" rel="tag"># 设计模式</a>
           
         </div>
       
@@ -465,8 +458,8 @@ def binary_search(list, item)
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/10/08/python收集（图像识别与文字处理）/" rel="next" title="python收集（图像识别与文字处理）">
-                <i class="fa fa-chevron-left"></i> python收集（图像识别与文字处理）
+              <a href="/2018/04/08/设计模式之代理模式/" rel="next" title="设计模式之代理模式">
+                <i class="fa fa-chevron-left"></i> 设计模式之代理模式
               </a>
             
           </div>
@@ -475,8 +468,8 @@ def binary_search(list, item)
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/10/09/选择排序/" rel="prev" title="选择排序">
-                选择排序 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/04/08/设计模式之工厂方法模式/" rel="prev" title="设计模式之工厂方法模式">
+                设计模式之工厂方法模式 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -621,7 +614,7 @@ def binary_search(list, item)
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#二分查找"><span class="nav-number">1.</span> <span class="nav-text">二分查找</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#二分查找的工作原理"><span class="nav-number">1.1.</span> <span class="nav-text">二分查找的工作原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#代码实现（python-2-7）"><span class="nav-number">1.1.1.</span> <span class="nav-text">代码实现（python 2.7）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运行时间"><span class="nav-number">1.2.</span> <span class="nav-text">运行时间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#大O表示法"><span class="nav-number">1.3.</span> <span class="nav-text">大O表示法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#运算时间以不同的速度增加"><span class="nav-number">1.3.1.</span> <span class="nav-text">运算时间以不同的速度增加</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#理解不同的大O运行时间"><span class="nav-number">1.3.2.</span> <span class="nav-text">理解不同的大O运行时间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#大O表示法指出了最糟糕情况下的运行时间"><span class="nav-number">1.3.3.</span> <span class="nav-text">大O表示法指出了最糟糕情况下的运行时间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一些常见的大O运行时间"><span class="nav-number">1.3.4.</span> <span class="nav-text">一些常见的大O运行时间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#旅行商问题"><span class="nav-number">1.3.5.</span> <span class="nav-text">旅行商问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小结"><span class="nav-number">1.3.6.</span> <span class="nav-text">小结</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#穿什么有这么重要———装饰模式"><span class="nav-number">1.</span> <span class="nav-text">穿什么有这么重要———装饰模式</span></a></li></ol></div>
             
 
           </div>

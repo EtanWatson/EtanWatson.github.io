@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-04-08T10:46:15.264Z</updated>
+  <updated>2018-04-08T13:13:01.127Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -17,11 +17,63 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>设计模式之工厂方法模式</title>
+    <link href="http://yoursite.com/2018/04/08/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F/"/>
+    <id>http://yoursite.com/2018/04/08/设计模式之工厂方法模式/</id>
+    <published>2018-04-08T11:40:05.441Z</published>
+    <updated>2018-04-08T13:13:01.127Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="雷锋依然在人间——-工厂方法模式"><a href="#雷锋依然在人间——-工厂方法模式" class="headerlink" title="雷锋依然在人间——-工厂方法模式"></a>雷锋依然在人间——-工厂方法模式</h1><blockquote><p>定义一个用于创建对象的接口，让子类决定实例化哪一个类。工厂方法使一个类的实例化延迟到其子类</p></blockquote><p>简单工厂模式的最大优点在于<strong>工厂类中包含了必要的逻辑判断</strong>，根据客户端的选择动态实例化相关类，对于客户端来说，去除了与具体产品的依赖<br><strong>工厂方法</strong>把简单工厂的内部逻辑判断移到了客户端代码来进行。你要想加功能，本来要改工厂类的，而现在是修改客户端</p><p>先看抽象的类图<br><img src="/images/15231890008404.jpg" alt=""></p><p>Product接口定义工厂方法所创建的对象接口，Creator声明工厂方法，该方法返回一个Product类型的对象</p><p>接下来使用一个学雷锋做好事儿的例子实现一下工厂方法模式（来源大话设计模式）</p><p>LeiFen</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">public class LeiFeng &#123;</div><div class="line">    public void Sweep()&#123;</div><div class="line">        System.out.println(&quot;扫地&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void Wash()&#123;</div><div class="line">        System.out.println(&quot;洗衣&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void BuyRice()&#123;</div><div class="line">        System.out.println(&quot;买米&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>ILeiFengFactory</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">public interface ILeiFengFactory &#123;</div><div class="line"></div><div class="line">    LeiFeng CreateLeiFeng();</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>Undergraduate</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">public class Undergraduate extends LeiFeng&#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>UndergraduateFactory</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">public class UndergraduateFactory implements ILeiFengFactory&#123;</div><div class="line">    @Override</div><div class="line">    public LeiFeng CreateLeiFeng() &#123;</div><div class="line">        return new Undergraduate();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>Volunteer</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">public class Volunteer extends LeiFeng&#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>VolunteerFactory</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">public class VolunteerFactory implements ILeiFengFactory&#123;</div><div class="line">    @Override</div><div class="line">    public LeiFeng CreateLeiFeng() &#123;</div><div class="line">        return new Volunteer();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>Client</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">public class Client &#123;</div><div class="line"></div><div class="line">    public static void main(String [] args)&#123;</div><div class="line">        ILeiFengFactory factory = new UndergraduateFactory();</div><div class="line">        LeiFeng student = factory.CreateLeiFeng();</div><div class="line"></div><div class="line">        student.BuyRice();</div><div class="line">        student.Sweep();</div><div class="line">        student.Wash();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>由于客户端还要修改代码，所以还不够完美，所以需要使用反射技术来实现，抽象工厂模式</p><blockquote><p><strong><em>做一个有文艺气息的码农 ^ _ ^</em></strong></p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;雷锋依然在人间——-工厂方法模式&quot;&gt;&lt;a href=&quot;#雷锋依然在人间——-工厂方法模式&quot; class=&quot;headerlink&quot; title=&quot;雷锋依然在人间——-工厂方法模式&quot;&gt;&lt;/a&gt;雷锋依然在人间——-工厂方法模式&lt;/h1&gt;&lt;blockquote&gt;
+&lt;p&gt;定
+      
+    
+    </summary>
+    
+      <category term="设计模式" scheme="http://yoursite.com/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+    
+      <category term="设计模式" scheme="http://yoursite.com/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>设计模式之装饰模式</title>
+    <link href="http://yoursite.com/2018/04/08/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E8%A3%85%E9%A5%B0%E6%A8%A1%E5%BC%8F/"/>
+    <id>http://yoursite.com/2018/04/08/设计模式之装饰模式/</id>
+    <published>2018-04-08T11:33:10.664Z</published>
+    <updated>2018-04-08T11:39:08.208Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="穿什么有这么重要———装饰模式"><a href="#穿什么有这么重要———装饰模式" class="headerlink" title="穿什么有这么重要———装饰模式"></a>穿什么有这么重要———装饰模式</h1><blockquote><p>动态地给一个对象添加一些额外的职责，就增加功能来说，装饰模式比生成子类更为灵活</p></blockquote><p>先上图<br><img src="/images/15231875428520.jpg" alt=""></p><p>在上码：<br>Component</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public abstract class Component &#123;</div><div class="line">    public abstract void Operation();</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>ConcreteComponent</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">public class ConcreteComponent extends Component&#123;</div><div class="line">    @Override</div><div class="line">    public void Operation() &#123;</div><div class="line">        System.out.println(&quot;具体对象操作&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>Decorator</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">public abstract class Decorator extends Component&#123;</div><div class="line">    protected Component component;</div><div class="line">    public void setComponent(Component component)&#123;</div><div class="line">        this.component = component;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void Operation()&#123;</div><div class="line">        if(component != null)&#123;</div><div class="line">            component.Operation();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>ConcreteDecoratorA</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">public class ConcreteDecoratorA extends Decorator&#123;</div><div class="line">    private String addedState;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void Operation() &#123;</div><div class="line">        super.Operation();</div><div class="line">        addedState = &quot;New State&quot;;</div><div class="line">        System.out.println(&quot;具体装饰对象A的操作&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>ConcreteDecoratorB</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">public class ConcreteDecoratorB extends Decorator&#123;</div><div class="line">    @Override</div><div class="line">    public void Operation() &#123;</div><div class="line">        super.Operation();</div><div class="line">        addedBehavior();</div><div class="line">        System.out.println(&quot;具体装饰对象B的操作&quot;);</div><div class="line">    &#125;</div><div class="line">    public void addedBehavior()&#123;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>Component是定义一个对象接口，可以给这些对象动态的添加职责。ConcreComponent是定义了一个具体的对象，也可以给这个对象添加一些职责。Decorator，装饰抽象类，继承了Component，从外类扩展Component类的功能，但对于Component来说，是无需知道Decorator的存在的，至于ConcreteDecorator就是具体的装饰对象，起到给Component添加职责的功能</p><blockquote><p>装饰模式是利用SetComponent来对对象进行包装的。这样每个装饰对象的实现就和如何使用这个对象分离开了，每个装饰对象只关心自己的功能，不需要关心如何被添加到对象链当中</p></blockquote><p>如果只有一个ConcreteComponent类而没有抽象的Component类，那么Decorator类可以是ConcreteComponent的一个子类，同样道理，如果只有一个ConcreteDecorator类，那么就没有必要建立一个单独的Decorator类，而是把Decorator和ConcreteDecorator的责任合成一个类</p><blockquote><p>把类中的装饰功能从勒种搬移去除，这样可以化简原有的类，这样可以有效的把类的核心职责和装饰功能区分开。而且可以去除相关类中重复的装饰逻辑</p></blockquote><hr><blockquote><p><strong><em>做一个有文艺气息的码农 ^ _ ^</em></strong></p></blockquote>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;穿什么有这么重要———装饰模式&quot;&gt;&lt;a href=&quot;#穿什么有这么重要———装饰模式&quot; class=&quot;headerlink&quot; title=&quot;穿什么有这么重要———装饰模式&quot;&gt;&lt;/a&gt;穿什么有这么重要———装饰模式&lt;/h1&gt;&lt;blockquote&gt;
+&lt;p&gt;动态地给一
+      
+    
+    </summary>
+    
+      <category term="设计模式" scheme="http://yoursite.com/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+    
+      <category term="设计模式" scheme="http://yoursite.com/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+  </entry>
+  
+  <entry>
     <title>设计模式之代理模式</title>
     <link href="http://yoursite.com/2018/04/08/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/"/>
     <id>http://yoursite.com/2018/04/08/设计模式之代理模式/</id>
     <published>2018-04-08T10:26:06.908Z</published>
-    <updated>2018-04-08T10:46:15.264Z</updated>
+    <updated>2018-04-08T11:36:54.083Z</updated>
     
     <content type="html"><![CDATA[<h1 id="为别人做嫁衣———-代理模式"><a href="#为别人做嫁衣———-代理模式" class="headerlink" title="为别人做嫁衣———-代理模式"></a>为别人做嫁衣———-代理模式</h1><blockquote><p>为其他对象提供一种代理以控制对这个对象的访问<br>先上图<br><img src="/images/15231832939163.jpg" alt=""></p><p>注：该图画的是大话设计模式中的代理追女孩的图，这里Pursuit里面维护了一个SchoolGril，这个对象是通过Proxy传递过来的</p></blockquote><p>接下来上码：<br>GiveGift</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">public interface GiveGift &#123;</div><div class="line">    public void giveDolls();</div><div class="line">    public void giveFlowers();</div><div class="line">    public void giveChocolate();</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>Pursuit</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">public class Pursuit implements GiveGift&#123;</div><div class="line"></div><div class="line">    private SchoolGirl mm;</div><div class="line"></div><div class="line">    public Pursuit(SchoolGirl mm)&#123;</div><div class="line">        this.mm = mm;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void giveDolls() &#123;</div><div class="line">        System.out.println(&quot;送洋娃娃!&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void giveFlowers() &#123;</div><div class="line">        System.out.println(&quot;送花&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void giveChocolate() &#123;</div><div class="line">        System.out.println(&quot;送巧克力&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>Proxy</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">public class Proxy implements GiveGift&#123;</div><div class="line"></div><div class="line">    private Pursuit gg;</div><div class="line"></div><div class="line">    public Proxy(SchoolGirl mm)&#123;</div><div class="line">        this.gg = new Pursuit(mm);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void giveDolls() &#123;</div><div class="line">        gg.giveDolls();</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void giveFlowers() &#123;</div><div class="line">        gg.giveFlowers();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void giveChocolate() &#123;</div><div class="line">        gg.giveChocolate();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>Clinet</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">public class Client &#123;</div><div class="line">    public static void main(String [] args)&#123;</div><div class="line">        SchoolGirl mm = new SchoolGirl();</div><div class="line">        Proxy proxy = new Proxy(mm);</div><div class="line">        proxy.giveChocolate();</div><div class="line">        proxy.giveDolls();</div><div class="line">        proxy.giveFlowers();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>]]></content>
     
@@ -447,56 +499,6 @@
     
     
       <category term="python数据收集" scheme="http://yoursite.com/tags/python%E6%95%B0%E6%8D%AE%E6%94%B6%E9%9B%86/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>深入Web请求过程</title>
-    <link href="http://yoursite.com/2017/10/09/%E6%B7%B1%E5%85%A5Web%E8%AF%B7%E6%B1%82%E8%BF%87%E7%A8%8B/"/>
-    <id>http://yoursite.com/2017/10/09/深入Web请求过程/</id>
-    <published>2017-10-09T07:08:10.000Z</published>
-    <updated>2018-04-02T02:02:50.593Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="深入Web请求过程"><a href="#深入Web请求过程" class="headerlink" title="深入Web请求过程"></a>深入Web请求过程</h1><p>curl https:baidu.com<br>返回的是302重定向<br>是否是缺少cookie信息造成的？（添加cookie仍无法访问）</p><h2 id="浏览器的缓存机制Cache-Control-Pragma"><a href="#浏览器的缓存机制Cache-Control-Pragma" class="headerlink" title="浏览器的缓存机制Cache-Control/Pragma"></a>浏览器的缓存机制Cache-Control/Pragma</h2><p>火狐浏览器（mac）下按shift+command+r重新访问<br>Expires:Mon, 02 Apr 2018 00:40:17 </p><h2 id="域名解析过程"><a href="#域名解析过程" class="headerlink" title="域名解析过程"></a>域名解析过程</h2><h3 id="浏览器会检查缓存中有没有这个域名对应的解析过的ip地址"><a href="#浏览器会检查缓存中有没有这个域名对应的解析过的ip地址" class="headerlink" title="浏览器会检查缓存中有没有这个域名对应的解析过的ip地址"></a>浏览器会检查缓存中有没有这个域名对应的解析过的ip地址</h3><h3 id="操作系统缓存中是否有这个域名对应的的DNS解析结果"><a href="#操作系统缓存中是否有这个域名对应的的DNS解析结果" class="headerlink" title="操作系统缓存中是否有这个域名对应的的DNS解析结果"></a>操作系统缓存中是否有这个域名对应的的DNS解析结果</h3><h3 id="LDNS"><a href="#LDNS" class="headerlink" title="LDNS"></a>LDNS</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cat /etc/resolv.confg</div></pre></td></tr></table></figure><p>在mac下，会有这样一段提示<br>This file is not consulted for DNS hostname resolution, address resolution, or the DNS query routing mechanism used by most processes on this system.<br>To view the DNS configuration used by this system, use:<br> scutil –dns</p><p> SEE ALSO<br>   dns-sd(1), scutil(8)</p><h3 id="Root-Server域名服务器请求解析"><a href="#Root-Server域名服务器请求解析" class="headerlink" title="Root Server域名服务器请求解析"></a>Root Server域名服务器请求解析</h3><h3 id="返回一个所查询域的主域名服务器"><a href="#返回一个所查询域的主域名服务器" class="headerlink" title="返回一个所查询域的主域名服务器"></a>返回一个所查询域的主域名服务器</h3><h3 id="LDNS向gTLD发送请求"><a href="#LDNS向gTLD发送请求" class="headerlink" title="LDNS向gTLD发送请求"></a>LDNS向gTLD发送请求</h3><h3 id="gTLD查找并返回此域名对应的Name-Server域名服务器的地址"><a href="#gTLD查找并返回此域名对应的Name-Server域名服务器的地址" class="headerlink" title="gTLD查找并返回此域名对应的Name Server域名服务器的地址"></a>gTLD查找并返回此域名对应的Name Server域名服务器的地址</h3><h3 id="Name-Server域名服务器会查询存储的域名和IP的映射关系表，会根据域名得到目标IP记录，连同一个TTL值返回给DNS-Server域名服务器"><a href="#Name-Server域名服务器会查询存储的域名和IP的映射关系表，会根据域名得到目标IP记录，连同一个TTL值返回给DNS-Server域名服务器" class="headerlink" title="Name Server域名服务器会查询存储的域名和IP的映射关系表，会根据域名得到目标IP记录，连同一个TTL值返回给DNS Server域名服务器"></a>Name Server域名服务器会查询存储的域名和IP的映射关系表，会根据域名得到目标IP记录，连同一个TTL值返回给DNS Server域名服务器</h3><h3 id="LDNS会缓存这个域名和IP的对应关系，缓存的时间有TTL值控制"><a href="#LDNS会缓存这个域名和IP的对应关系，缓存的时间有TTL值控制" class="headerlink" title="LDNS会缓存这个域名和IP的对应关系，缓存的时间有TTL值控制"></a>LDNS会缓存这个域名和IP的对应关系，缓存的时间有TTL值控制</h3><h3 id="把解析的结果返回给用户，用户根据TTL值缓存在本地系统缓存中，域名解析过程结束"><a href="#把解析的结果返回给用户，用户根据TTL值缓存在本地系统缓存中，域名解析过程结束" class="headerlink" title="把解析的结果返回给用户，用户根据TTL值缓存在本地系统缓存中，域名解析过程结束"></a>把解析的结果返回给用户，用户根据TTL值缓存在本地系统缓存中，域名解析过程结束</h3><h2 id="跟踪域名解析过程-nslookup-dig"><a href="#跟踪域名解析过程-nslookup-dig" class="headerlink" title="跟踪域名解析过程 nslookup/dig"></a>跟踪域名解析过程 nslookup/dig</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">nslookup www.baidu.com</div></pre></td></tr></table></figure><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">dig www.baidu.com +trace <span class="comment"># 在mac下一直是timeout</span></div></pre></td></tr></table></figure><h2 id="清除域名缓存"><a href="#清除域名缓存" class="headerlink" title="清除域名缓存"></a>清除域名缓存</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/etc/init.d/nscd restart <span class="comment"># linux下 重启</span></div></pre></td></tr></table></figure><h3 id="JVM缓存DNS解析结果"><a href="#JVM缓存DNS解析结果" class="headerlink" title="JVM缓存DNS解析结果"></a>JVM缓存DNS解析结果</h3><p>这个缓存是在InetAddress类中完成<br>缓存时间有两种策略<br>在%JAVA_HOME%\lib\security\java.serurity文件中配置</p><h4 id="正确解析缓存结果"><a href="#正确解析缓存结果" class="headerlink" title="正确解析缓存结果"></a>正确解析缓存结果</h4><p>networkaddress.cache.ttl 默认时间(-1)永不失效</p><h4 id="失败的解析缓存结果"><a href="#失败的解析缓存结果" class="headerlink" title="失败的解析缓存结果"></a>失败的解析缓存结果</h4><p>networkaddress.cache.negative.ttl 默认时间(10秒)<br>如果要使用InetAddress类解析域名，必须是单例模式，如果每次都创建InetAddress实例，则每次都要进行一次完整的域名解析，非常耗时</p><h3 id="域名解析的几种方式"><a href="#域名解析的几种方式" class="headerlink" title="域名解析的几种方式"></a>域名解析的几种方式</h3><h4 id="A记录（Address）"><a href="#A记录（Address）" class="headerlink" title="A记录（Address）"></a>A记录（Address）</h4><p>用来指定域名对应的IP地址，可以将多个域名解析到一个IP地址，但是不能将一个域名解析到多个IP地址</p><h4 id="MX记录（Mail-Exchange）"><a href="#MX记录（Mail-Exchange）" class="headerlink" title="MX记录（Mail Exchange）"></a>MX记录（Mail Exchange）</h4><p>就是可以将某个域名下的邮件服务器指向自己的Mail Server</p><h4 id="CNAME记录（Canonical-Name）别名解析"><a href="#CNAME记录（Canonical-Name）别名解析" class="headerlink" title="CNAME记录（Canonical Name）别名解析"></a>CNAME记录（Canonical Name）别名解析</h4><p>所谓别名解析，就是可以为一个域名设置一个或多个别名</p><h4 id="NS记录"><a href="#NS记录" class="headerlink" title="NS记录"></a>NS记录</h4><p>这个域名有指定的IP地址的DNS服务器去解析</p><h4 id="TXT记录"><a href="#TXT记录" class="headerlink" title="TXT记录"></a>TXT记录</h4><p>为某个主机或域名设置说明</p><h2 id="CDN（内容分布式网络）-工作原理"><a href="#CDN（内容分布式网络）-工作原理" class="headerlink" title="CDN（内容分布式网络） 工作原理"></a>CDN（内容分布式网络） 工作原理</h2><p>将网站的内容发布到最接近用户网络的边缘<br>CDN=Mirror+Cache+GSLB(整体负载均衡)</p><h3 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h3><h4 id="链路负载均衡"><a href="#链路负载均衡" class="headerlink" title="链路负载均衡"></a>链路负载均衡</h4><h4 id="集群负载均衡"><a href="#集群负载均衡" class="headerlink" title="集群负载均衡"></a>集群负载均衡</h4><h4 id="操作系统负载均衡"><a href="#操作系统负载均衡" class="headerlink" title="操作系统负载均衡"></a>操作系统负载均衡</h4><h3 id="CDN动态加速"><a href="#CDN动态加速" class="headerlink" title="CDN动态加速"></a>CDN动态加速</h3>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h1 id=&quot;深入Web请求过程&quot;&gt;&lt;a href=&quot;#深入Web请求过程&quot; class=&quot;headerlink&quot; title=&quot;深入Web请求过程&quot;&gt;&lt;/a&gt;深入Web请求过程&lt;/h1&gt;&lt;p&gt;curl https:baidu.com&lt;br&gt;返回的是302重定向&lt;br&gt;是否是缺
-      
-    
-    </summary>
-    
-      <category term="JavaWeb" scheme="http://yoursite.com/categories/JavaWeb/"/>
-    
-    
-      <category term="JavaWeb" scheme="http://yoursite.com/tags/JavaWeb/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>深入分析Java I/O的工作原理</title>
-    <link href="http://yoursite.com/2017/10/09/%E6%B7%B1%E5%85%A5%E5%88%86%E6%9E%90Java%20I:O%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86/"/>
-    <id>http://yoursite.com/2017/10/09/深入分析Java I:O的工作原理/</id>
-    <published>2017-10-09T07:08:10.000Z</published>
-    <updated>2018-04-02T02:09:38.839Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="深入分析Java-I-O的工作原理"><a href="#深入分析Java-I-O的工作原理" class="headerlink" title="深入分析Java I/O的工作原理"></a>深入分析Java I/O的工作原理</h1><h2 id="java的I-O类库的基本架构"><a href="#java的I-O类库的基本架构" class="headerlink" title="java的I/O类库的基本架构"></a>java的I/O类库的基本架构</h2><h3 id="基于字节的I-O操作接口"><a href="#基于字节的I-O操作接口" class="headerlink" title="基于字节的I/O操作接口"></a>基于字节的I/O操作接口</h3><p>InputStream和OutPutStream</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h1 id=&quot;深入分析Java-I-O的工作原理&quot;&gt;&lt;a href=&quot;#深入分析Java-I-O的工作原理&quot; class=&quot;headerlink&quot; title=&quot;深入分析Java I/O的工作原理&quot;&gt;&lt;/a&gt;深入分析Java I/O的工作原理&lt;/h1&gt;&lt;h2 id=&quot;java的
-      
-    
-    </summary>
-    
-      <category term="JavaWeb" scheme="http://yoursite.com/categories/JavaWeb/"/>
-    
-    
-      <category term="JavaWeb" scheme="http://yoursite.com/tags/JavaWeb/"/>
     
   </entry>
   

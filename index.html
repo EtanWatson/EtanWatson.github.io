@@ -310,6 +310,339 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/08/设计模式之工厂方法模式/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EtanWatson">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EWSUN">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/08/设计模式之工厂方法模式/" itemprop="url">设计模式之工厂方法模式</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-08T19:40:05+08:00">
+                2018-04-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/设计模式/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="雷锋依然在人间——-工厂方法模式"><a href="#雷锋依然在人间——-工厂方法模式" class="headerlink" title="雷锋依然在人间——-工厂方法模式"></a>雷锋依然在人间——-工厂方法模式</h1><blockquote>
+<p>定义一个用于创建对象的接口，让子类决定实例化哪一个类。工厂方法使一个类的实例化延迟到其子类</p>
+</blockquote>
+<p>简单工厂模式的最大优点在于<strong>工厂类中包含了必要的逻辑判断</strong>，根据客户端的选择动态实例化相关类，对于客户端来说，去除了与具体产品的依赖<br><strong>工厂方法</strong>把简单工厂的内部逻辑判断移到了客户端代码来进行。你要想加功能，本来要改工厂类的，而现在是修改客户端</p>
+<p>先看抽象的类图<br><img src="/images/15231890008404.jpg" alt=""></p>
+<p>Product接口定义工厂方法所创建的对象接口，Creator声明工厂方法，该方法返回一个Product类型的对象</p>
+<p>接下来使用一个学雷锋做好事儿的例子实现一下工厂方法模式（来源大话设计模式）</p>
+<p>LeiFen</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">public class LeiFeng &#123;</div><div class="line">    public void Sweep()&#123;</div><div class="line">        System.out.println(&quot;扫地&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void Wash()&#123;</div><div class="line">        System.out.println(&quot;洗衣&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void BuyRice()&#123;</div><div class="line">        System.out.println(&quot;买米&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>ILeiFengFactory</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">public interface ILeiFengFactory &#123;</div><div class="line"></div><div class="line">    LeiFeng CreateLeiFeng();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Undergraduate</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">public class Undergraduate extends LeiFeng&#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>UndergraduateFactory</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">public class UndergraduateFactory implements ILeiFengFactory&#123;</div><div class="line">    @Override</div><div class="line">    public LeiFeng CreateLeiFeng() &#123;</div><div class="line">        return new Undergraduate();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Volunteer</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">public class Volunteer extends LeiFeng&#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>VolunteerFactory</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">public class VolunteerFactory implements ILeiFengFactory&#123;</div><div class="line">    @Override</div><div class="line">    public LeiFeng CreateLeiFeng() &#123;</div><div class="line">        return new Volunteer();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Client</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">public class Client &#123;</div><div class="line"></div><div class="line">    public static void main(String [] args)&#123;</div><div class="line">        ILeiFengFactory factory = new UndergraduateFactory();</div><div class="line">        LeiFeng student = factory.CreateLeiFeng();</div><div class="line"></div><div class="line">        student.BuyRice();</div><div class="line">        student.Sweep();</div><div class="line">        student.Wash();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>由于客户端还要修改代码，所以还不够完美，所以需要使用反射技术来实现，抽象工厂模式</p>
+<blockquote>
+<p><strong><em>做一个有文艺气息的码农 ^ _ ^</em></strong></p>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/08/设计模式之装饰模式/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EtanWatson">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EWSUN">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/08/设计模式之装饰模式/" itemprop="url">设计模式之装饰模式</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-08T19:33:10+08:00">
+                2018-04-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/设计模式/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="穿什么有这么重要———装饰模式"><a href="#穿什么有这么重要———装饰模式" class="headerlink" title="穿什么有这么重要———装饰模式"></a>穿什么有这么重要———装饰模式</h1><blockquote>
+<p>动态地给一个对象添加一些额外的职责，就增加功能来说，装饰模式比生成子类更为灵活</p>
+</blockquote>
+<p>先上图<br><img src="/images/15231875428520.jpg" alt=""></p>
+<p>在上码：<br>Component</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public abstract class Component &#123;</div><div class="line">    public abstract void Operation();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>ConcreteComponent</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">public class ConcreteComponent extends Component&#123;</div><div class="line">    @Override</div><div class="line">    public void Operation() &#123;</div><div class="line">        System.out.println(&quot;具体对象操作&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Decorator</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">public abstract class Decorator extends Component&#123;</div><div class="line">    protected Component component;</div><div class="line">    public void setComponent(Component component)&#123;</div><div class="line">        this.component = component;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void Operation()&#123;</div><div class="line">        if(component != null)&#123;</div><div class="line">            component.Operation();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>ConcreteDecoratorA</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">public class ConcreteDecoratorA extends Decorator&#123;</div><div class="line">    private String addedState;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void Operation() &#123;</div><div class="line">        super.Operation();</div><div class="line">        addedState = &quot;New State&quot;;</div><div class="line">        System.out.println(&quot;具体装饰对象A的操作&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>ConcreteDecoratorB</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">public class ConcreteDecoratorB extends Decorator&#123;</div><div class="line">    @Override</div><div class="line">    public void Operation() &#123;</div><div class="line">        super.Operation();</div><div class="line">        addedBehavior();</div><div class="line">        System.out.println(&quot;具体装饰对象B的操作&quot;);</div><div class="line">    &#125;</div><div class="line">    public void addedBehavior()&#123;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Component是定义一个对象接口，可以给这些对象动态的添加职责。ConcreComponent是定义了一个具体的对象，也可以给这个对象添加一些职责。Decorator，装饰抽象类，继承了Component，从外类扩展Component类的功能，但对于Component来说，是无需知道Decorator的存在的，至于ConcreteDecorator就是具体的装饰对象，起到给Component添加职责的功能</p>
+<blockquote>
+<p>装饰模式是利用SetComponent来对对象进行包装的。这样每个装饰对象的实现就和如何使用这个对象分离开了，每个装饰对象只关心自己的功能，不需要关心如何被添加到对象链当中</p>
+</blockquote>
+<p>如果只有一个ConcreteComponent类而没有抽象的Component类，那么Decorator类可以是ConcreteComponent的一个子类，同样道理，如果只有一个ConcreteDecorator类，那么就没有必要建立一个单独的Decorator类，而是把Decorator和ConcreteDecorator的责任合成一个类</p>
+<blockquote>
+<p>把类中的装饰功能从勒种搬移去除，这样可以化简原有的类，这样可以有效的把类的核心职责和装饰功能区分开。而且可以去除相关类中重复的装饰逻辑</p>
+</blockquote>
+<hr>
+<blockquote>
+<p><strong><em>做一个有文艺气息的码农 ^ _ ^</em></strong></p>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/08/设计模式之代理模式/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1685,333 +2018,6 @@ request.setAttribute(&quot;handlingTime&quot;, endTime - startTime);
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/05/java性能调优-策略、方法和方法论（一）/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="EtanWatson">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/header.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="EWSUN">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/02/05/java性能调优-策略、方法和方法论（一）/" itemprop="url">java性能调优-策略、方法和方法论（一）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-05T22:30:13+08:00">
-                2018-02-05
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JVM性能相关/" itemprop="url" rel="index">
-                    <span itemprop="name">JVM性能相关</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <ul>
-<li>花似雾中看（I don’t know what I don’t know）</li>
-<li>悠然见南山（I know what I don’t know）</li>
-<li>一览众山小（I already konw what I need to know）<h2 id="性能分析的两种方法：自顶向下和自底向上"><a href="#性能分析的两种方法：自顶向下和自底向上" class="headerlink" title="性能分析的两种方法：自顶向下和自底向上"></a>性能分析的两种方法：自顶向下和自底向上</h2><h3 id="自顶向下"><a href="#自顶向下" class="headerlink" title="自顶向下"></a>自顶向下</h3><h3 id="自底向上"><a href="#自底向上" class="headerlink" title="自底向上"></a>自底向上</h3></li>
-</ul>
-<hr>
-<p>cpu指令数和高速缓存未命中率</p>
-<h2 id="选择正确的平台并评估系统性能"><a href="#选择正确的平台并评估系统性能" class="headerlink" title="选择正确的平台并评估系统性能"></a>选择正确的平台并评估系统性能</h2>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/07/Effective Java - 类和接口（一）/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="EtanWatson">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/header.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="EWSUN">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/01/07/Effective Java - 类和接口（一）/" itemprop="url">Effective Java - 类和接口（一）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-07T14:17:13+08:00">
-                2018-01-07
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JavaSE/" itemprop="url" rel="index">
-                    <span itemprop="name">JavaSE</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="第十三条：使类和成员的可访问性最小化"><a href="#第十三条：使类和成员的可访问性最小化" class="headerlink" title="第十三条：使类和成员的可访问性最小化"></a>第十三条：使类和成员的可访问性最小化</h2><p>设计良好的模块会影藏所有的实现细节，把它的API与它的实现清晰的隔离开来。一个模块不需要知道其他模块的内部工作情况。这个概念被称为信息隐藏或封装。实体的访问性可由该实体声明所在的位置，以及该实体声明中所出现的访问修饰符<br><strong>第一条规则很简单：尽可能的使每个类或者成员不被外界访问</strong><br>（顶层类）如果一个类或接口能做成包级私有的，那他就应该被做成包级私有，如果包级私有的顶层类（或者接口）只是在某个类的内部被用到，就应该考虑使它成为使用它的那个类的私有嵌套类<br>私有成员和包级私有成员都是一个类的实现中的一部分，一般不会影响它的导出的API，然而这个类实现了Serializable接口，这些域就有可能会被泄露到导出的API中。受保护的成员应该尽量少用。<br><strong>实例与决不能是公有的</strong>包含公有可变与的类并不是线程安全的。同样的建议也适用于静态域。假设常量构成了类提供的整个抽象中的一部分，可以通过公有的静态final域来暴露这些常量，很重要的一点是：<strong>这些域要么包含基本类型的值，要么包含指向不可变对象的引用</strong>,如果final域中包含可变对象的引用，它便具有非final域的所有缺点。虽然引用本身不能被修改，但是它所引用的对象却可以被修改</p>
-<pre><code>// Potential security hole!
-public static final Thing[] VALUES = {...};
-</code></pre><p>解决方案：</p>
-<ul>
-<li>可以使公有数组变成私有的，并增加一个公有的不可变列表：<br> <code>private static final Thing[] PRIVATE_VALUES={....}</code><br> <code>public static final List&lt;Thing&gt; VALUES=Collections.unmodifiableList(Arrays.asList(PRIVATE_VALUES))</code></li>
-<li>可以使数组变变成私有的，并添加一个公有方法，它返回私有数组的一个备份：<br><code>private static final Thing[] PRIVATE_VALUES={....}</code><br><code>public staitc final Thing[] values(){return PRIVATE_VALUES.clone();}</code><h2 id="第十四条：在公有类中使用访问方法而非公有域"><a href="#第十四条：在公有类中使用访问方法而非公有域" class="headerlink" title="第十四条：在公有类中使用访问方法而非公有域"></a>第十四条：在公有类中使用访问方法而非公有域</h2><strong>如果类可以在它所在的包的外部进行访问，就提供访问方法</strong><br><strong>如果类是包级私有的，或者是私有的嵌套类、直接暴露它的数据域并没有本质的错误</strong><br><strong>公有类不应该直接暴露数据域（java平台类库中有几个类违反了）</strong><h2 id="第15条：使可变性最小化"><a href="#第15条：使可变性最小化" class="headerlink" title="第15条：使可变性最小化"></a>第15条：使可变性最小化</h2>为了使类成为不可变，要遵循下面五条规则：</li>
-<li><strong>不要提供任何会修改对象的状态</strong></li>
-<li><strong>保证类不会被扩展</strong></li>
-<li><strong>使所有的域都是final的</strong></li>
-<li><strong>使所有的域都成为私有的</strong></li>
-<li><p><strong>确保对于任何可变组件的互斥访问：</strong>如果类具有指向可变对象的域，则必须确保该类的客户端无法或非指向这些对象的引用，并且，永远不要用客户端提供的对象引用来初始化这样的域，也不要从任何方法中返回该对象引用（请使用保护性copy）。</p>
-<p> // 创建并返回新的Complex实例，而不是修改这个实例，它被称为functional方法<br> public Complex add(complex c){</p>
-<pre><code>return new Complex(re + c.re, im + c.im);
-</code></pre><p> }<br><strong>它带来的不可变性，具有很多优点：</strong></p>
-</li>
-<li><p><strong>不可变对象比较简单</strong>：只有创建时的一种状态</p>
-</li>
-<li><strong>可变对象可以有任意复杂的状态空间</strong>，如果文档中没有对mutator方要可靠的使用一个可变类是非常困难的，甚至是不可能的</li>
-<li><p><strong>不可变对象本质上是线程安全的</strong>，它们不要求同步，不可变对象可以被自由的共享，不可变类应该充分利用这种优势，鼓励客户端尽可能地重用现有的实例，要做到这一点，一个简单的办法就是，对于频繁使用到的值，为它们提供公有的静态final常量。<br> 例如：<code>public static final Complex ZERO = new Complex(0,0)</code></p>
-</li>
-<li><p><strong>不仅可以共享不可变对象，甚至也可以共享它们的内部信息</strong></p>
-</li>
-<li><strong>不可变对象为其他对象提供了大量的构件</strong>如果知道一个复杂对象内部组件对象不会改变，要维护它的不变性约束是比较容易的</li>
-<li><strong>不可变类的真正唯一缺点是</strong>对于每个不同的值都需要一个单独的对象。如果无法预测客户端要在不可变的类上执行哪些复杂的多阶段操作，做好的办法是提供一个公有的可变套装类，类似与String与StringBuilder</li>
-<li><strong>坚决不要为每一个get方法编写一个相应的set方法，除非有很好的理由要让类称为可变的类，否则就应该是不可变的</strong></li>
-<li>如果类不能被做成是不可变的<strong>仍然尽可能地限制它的可变性</strong>，除非有令人信服的理由要使域变成是非final的，否则要<strong>使每个域都是final的</strong></li>
-</ul>
-<h2 id="第16条-复合优先于继承"><a href="#第16条-复合优先于继承" class="headerlink" title="第16条 复合优先于继承"></a>第16条 复合优先于继承</h2><p>在包的内部使用继承是非常安全的，对于专门为了继承而设计，并且具有良好的文档说明的类来说，使用继承也是非常安全的（只讨论实现继承，而不适用于接口继承）<strong>包装类</strong> <strong>SELE问题</strong> <strong>用复合和转发的机制来代替继承</strong></p>
-<h2 id="第17条：要么为继承而设计，并提供文档说明，要么就禁止继承"><a href="#第17条：要么为继承而设计，并提供文档说明，要么就禁止继承" class="headerlink" title="第17条：要么为继承而设计，并提供文档说明，要么就禁止继承"></a>第17条：要么为继承而设计，并提供文档说明，要么就禁止继承</h2><p>对于专门为了继承而设计并且有良好文档说明的类而言：</p>
-<ul>
-<li>该类文档说明它可覆盖（overridable）的方法的自用性（self-use）,好的API文档应该描述一个给定的方法做了什么工作，而不是描述它如何做到的</li>
-<li>类必须通过某种形式提供适当的钩子，以便能够进入到它的内部工作流程中，这种形式可以是精心选择的受保护的方法，也可以是受保护的域</li>
-<li>对于为了继承而设计的类，唯一的测试方法就是编写子类。3个子类通常就足以测试一个可扩展的类</li>
-<li>构造器决不能调用可被覆盖的方法，无论是直接调用还是间接调用</li>
-<li>实现Cloneable和Serializable接口都不是好主意（11、74的特殊手段），<strong>无论clone还是readObject，都不可调用可覆盖的方法</strong>,<em>为了允许继承，而把现实细节变成一个类的API的一部分</em>例如 实现Serializable，该类就必须使readResolve或者writeReplace成为受保护的方法</li>
-<li>对于那些并非为了安全地进行子类化而设计和编写文档的类，要禁止子类化</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2065,7 +2071,7 @@ public static final Thing[] VALUES = {...};
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">54</span>
+                <span class="site-state-item-count">56</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
