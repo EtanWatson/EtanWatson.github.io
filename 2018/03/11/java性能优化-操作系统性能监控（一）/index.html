@@ -97,17 +97,17 @@
 
 
 
-<meta name="description" content="title: java性能优化-操作系统性能监控（一）date: 2018-02-07 20:10:23tags: JVM性能相关 categories: JVM性能相关改善性能的3种活动 性能监控（非侵入式） 性能分析（侵入式） 性能调优：为改善应用响应性或吞吐量而更改参数（Tune-able）、源代码或者属性配置的活动。CPU使用率 尽可能降低系统态CPU使用率 减少停滞或者改善CPu告诉缓">
+<meta name="description" content="title: java性能优化-操作系统性能监控（一）tags: JVM性能相关 categories: JVM性能相关改善性能的3种活动 性能监控（非侵入式） 性能分析（侵入式） 性能调优：为改善应用响应性或吞吐量而更改参数（Tune-able）、源代码或者属性配置的活动。CPU使用率 尽可能降低系统态CPU使用率 减少停滞或者改善CPu告诉缓存使用率，从而减少CPU在等待内存数据时浪费的时钟周">
 <meta property="og:type" content="article">
 <meta property="og:title" content="EWSUN">
 <meta property="og:url" content="http://yoursite.com/2018/03/11/java性能优化-操作系统性能监控（一）/index.html">
 <meta property="og:site_name" content="EWSUN">
-<meta property="og:description" content="title: java性能优化-操作系统性能监控（一）date: 2018-02-07 20:10:23tags: JVM性能相关 categories: JVM性能相关改善性能的3种活动 性能监控（非侵入式） 性能分析（侵入式） 性能调优：为改善应用响应性或吞吐量而更改参数（Tune-able）、源代码或者属性配置的活动。CPU使用率 尽可能降低系统态CPU使用率 减少停滞或者改善CPu告诉缓">
+<meta property="og:description" content="title: java性能优化-操作系统性能监控（一）tags: JVM性能相关 categories: JVM性能相关改善性能的3种活动 性能监控（非侵入式） 性能分析（侵入式） 性能调优：为改善应用响应性或吞吐量而更改参数（Tune-able）、源代码或者属性配置的活动。CPU使用率 尽可能降低系统态CPU使用率 减少停滞或者改善CPu告诉缓存使用率，从而减少CPU在等待内存数据时浪费的时钟周">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-08T10:40:50.450Z">
+<meta property="og:updated_time" content="2018-04-08T10:47:34.916Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="EWSUN">
-<meta name="twitter:description" content="title: java性能优化-操作系统性能监控（一）date: 2018-02-07 20:10:23tags: JVM性能相关 categories: JVM性能相关改善性能的3种活动 性能监控（非侵入式） 性能分析（侵入式） 性能调优：为改善应用响应性或吞吐量而更改参数（Tune-able）、源代码或者属性配置的活动。CPU使用率 尽可能降低系统态CPU使用率 减少停滞或者改善CPu告诉缓">
+<meta name="twitter:description" content="title: java性能优化-操作系统性能监控（一）tags: JVM性能相关 categories: JVM性能相关改善性能的3种活动 性能监控（非侵入式） 性能分析（侵入式） 性能调优：为改善应用响应性或吞吐量而更改参数（Tune-able）、源代码或者属性配置的活动。CPU使用率 尽可能降低系统态CPU使用率 减少停滞或者改善CPu告诉缓存使用率，从而减少CPU在等待内存数据时浪费的时钟周">
 
 
 
@@ -377,20 +377,21 @@
       
 
       
-        <hr>
-<p>title: java性能优化-操作系统性能监控（一）<br>date: 2018-02-07 20:10:23<br>tags: JVM性能相关</p>
+        <p>title: java性能优化-操作系统性能监控（一）<br>tags: JVM性能相关</p>
 <h2 id="categories-JVM性能相关"><a href="#categories-JVM性能相关" class="headerlink" title="categories: JVM性能相关"></a>categories: JVM性能相关</h2><h2 id="改善性能的3种活动"><a href="#改善性能的3种活动" class="headerlink" title="改善性能的3种活动"></a>改善性能的3种活动</h2><ul>
 <li>性能监控（非侵入式）</li>
 <li>性能分析（侵入式）</li>
 <li>性能调优：为改善应用响应性或吞吐量而更改参数（Tune-able）、源代码或者属性配置的活动。<h2 id="CPU使用率"><a href="#CPU使用率" class="headerlink" title="CPU使用率"></a>CPU使用率</h2></li>
 <li>尽可能降低系统态CPU使用率</li>
 <li>减少停滞或者改善CPu告诉缓存使用率，从而减少CPU在等待内存数据时浪费的时钟周期<h2 id="监控CPU使用率：Linux"><a href="#监控CPU使用率：Linux" class="headerlink" title="监控CPU使用率：Linux"></a>监控CPU使用率：Linux</h2><h3 id="GNOME-System-Monitor"><a href="#GNOME-System-Monitor" class="headerlink" title="GNOME System Monitor"></a>GNOME System Monitor</h3><h3 id="xosview"><a href="#xosview" class="headerlink" title="xosview"></a>xosview</h3><h2 id="命令行监控CPU使用率：Linux和Solaris"><a href="#命令行监控CPU使用率：Linux和Solaris" class="headerlink" title="命令行监控CPU使用率：Linux和Solaris"></a>命令行监控CPU使用率：Linux和Solaris</h2></li>
-</ul>
-<ul>
 <li>vmstat</li>
 <li>mpstat</li>
 <li>top<h2 id="CPU调度程序运行队列"><a href="#CPU调度程序运行队列" class="headerlink" title="CPU调度程序运行队列"></a>CPU调度程序运行队列</h2><em>一般性指导原则：如果在很长一段时间里，运行队列的长度一直都超过虚拟处理器的个数的1倍，就需要关注了，如果很长一段时间里，运行队列的长度达到虚拟处理器个数的3~4倍或更高，则需要立刻引起注意或采取行动</em><h3 id="监控CPU调度程序运行队列：Linux"><a href="#监控CPU调度程序运行队列：Linux" class="headerlink" title="监控CPU调度程序运行队列：Linux"></a>监控CPU调度程序运行队列：Linux</h3></li>
+</ul>
+<ul>
 <li>vmstat 第一列（运行队列长度）<h2 id="内存使用率"><a href="#内存使用率" class="headerlink" title="内存使用率"></a>内存使用率</h2></li>
+</ul>
+<ul>
 <li><strong>系统在进行页面交换或使用虚拟内存时，java应用或JVM会表现出明显的性能问题</strong></li>
 <li><strong>JVM垃圾收集器在系统页面交换时的性能也很差</strong><h3 id="监控内存使用率：Linux（vmstat）"><a href="#监控内存使用率：Linux（vmstat）" class="headerlink" title="监控内存使用率：Linux（vmstat）"></a>监控内存使用率：Linux（vmstat）</h3></li>
 <li>free列监控页面交换</li>
