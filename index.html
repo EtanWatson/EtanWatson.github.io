@@ -1057,151 +1057,6 @@ request.setAttribute(&quot;handlingTime&quot;, endTime - startTime);
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/11/java性能优化-操作系统性能监控（一）/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="EtanWatson">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/header.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="EWSUN">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/11/java性能优化-操作系统性能监控（一）/" itemprop="url">未命名</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-11T13:58:55+08:00">
-                2018-03-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>title: java性能优化-操作系统性能监控（一）<br>tags: JVM性能相关</p>
-<h2 id="categories-JVM性能相关"><a href="#categories-JVM性能相关" class="headerlink" title="categories: JVM性能相关"></a>categories: JVM性能相关</h2><h2 id="改善性能的3种活动"><a href="#改善性能的3种活动" class="headerlink" title="改善性能的3种活动"></a>改善性能的3种活动</h2><ul>
-<li>性能监控（非侵入式）</li>
-<li>性能分析（侵入式）</li>
-<li>性能调优：为改善应用响应性或吞吐量而更改参数（Tune-able）、源代码或者属性配置的活动。<h2 id="CPU使用率"><a href="#CPU使用率" class="headerlink" title="CPU使用率"></a>CPU使用率</h2></li>
-<li>尽可能降低系统态CPU使用率</li>
-<li>减少停滞或者改善CPu告诉缓存使用率，从而减少CPU在等待内存数据时浪费的时钟周期<h2 id="监控CPU使用率：Linux"><a href="#监控CPU使用率：Linux" class="headerlink" title="监控CPU使用率：Linux"></a>监控CPU使用率：Linux</h2><h3 id="GNOME-System-Monitor"><a href="#GNOME-System-Monitor" class="headerlink" title="GNOME System Monitor"></a>GNOME System Monitor</h3><h3 id="xosview"><a href="#xosview" class="headerlink" title="xosview"></a>xosview</h3><h2 id="命令行监控CPU使用率：Linux和Solaris"><a href="#命令行监控CPU使用率：Linux和Solaris" class="headerlink" title="命令行监控CPU使用率：Linux和Solaris"></a>命令行监控CPU使用率：Linux和Solaris</h2></li>
-<li>vmstat</li>
-<li>mpstat</li>
-<li>top<h2 id="CPU调度程序运行队列"><a href="#CPU调度程序运行队列" class="headerlink" title="CPU调度程序运行队列"></a>CPU调度程序运行队列</h2><em>一般性指导原则：如果在很长一段时间里，运行队列的长度一直都超过虚拟处理器的个数的1倍，就需要关注了，如果很长一段时间里，运行队列的长度达到虚拟处理器个数的3~4倍或更高，则需要立刻引起注意或采取行动</em><h3 id="监控CPU调度程序运行队列：Linux"><a href="#监控CPU调度程序运行队列：Linux" class="headerlink" title="监控CPU调度程序运行队列：Linux"></a>监控CPU调度程序运行队列：Linux</h3></li>
-</ul>
-<ul>
-<li>vmstat 第一列（运行队列长度）<h2 id="内存使用率"><a href="#内存使用率" class="headerlink" title="内存使用率"></a>内存使用率</h2></li>
-</ul>
-<ul>
-<li><strong>系统在进行页面交换或使用虚拟内存时，java应用或JVM会表现出明显的性能问题</strong></li>
-<li><strong>JVM垃圾收集器在系统页面交换时的性能也很差</strong><h3 id="监控内存使用率：Linux（vmstat）"><a href="#监控内存使用率：Linux（vmstat）" class="headerlink" title="监控内存使用率：Linux（vmstat）"></a>监控内存使用率：Linux（vmstat）</h3></li>
-<li>free列监控页面交换</li>
-<li>si、so内存页面换入和换出量<h2 id="监控锁竞争Linux（sysstat包中的pidstat命令监控竞争锁）"><a href="#监控锁竞争Linux（sysstat包中的pidstat命令监控竞争锁）" class="headerlink" title="监控锁竞争Linux（sysstat包中的pidstat命令监控竞争锁）"></a>监控锁竞争Linux（sysstat包中的pidstat命令监控竞争锁）</h2></li>
-<li>pidstat -w 中的cswch/s(不包含所有的上下文切换)，浪费掉的时钟周期，可以有pidstat -w的让步式切换数除以虚拟处理器的数目而得</li>
-<li><code>pidstat -w -I -p 9391 5</code> 每五秒监控进程id为9391的JAVA应用程序</li>
-<li>(cswch/s) / 2(cpu内核数) * 8000 / 3.0G(cpu主频)<h3 id="隔离竞争锁-Oracle-Solaris-Studio-Performance-Analyzer工具"><a href="#隔离竞争锁-Oracle-Solaris-Studio-Performance-Analyzer工具" class="headerlink" title="隔离竞争锁 Oracle Solaris Studio Performance Analyzer工具"></a>隔离竞争锁 Oracle Solaris Studio Performance Analyzer工具</h3><h3 id="监控抢占式上下文-pidstat-w（icsw）"><a href="#监控抢占式上下文-pidstat-w（icsw）" class="headerlink" title="监控抢占式上下文 pidstat -w（icsw）"></a>监控抢占式上下文 pidstat -w（icsw）</h3><h3 id="监控线程迁移"><a href="#监控线程迁移" class="headerlink" title="监控线程迁移"></a>监控线程迁移</h3><h2 id="网络I-O使用率（netstat）"><a href="#网络I-O使用率（netstat）" class="headerlink" title="网络I/O使用率（netstat）"></a>网络I/O使用率（netstat）</h2><h3 id="nicstat工具"><a href="#nicstat工具" class="headerlink" title="nicstat工具"></a>nicstat工具</h3><h3 id="应用性改进的考虑"><a href="#应用性改进的考虑" class="headerlink" title="应用性改进的考虑"></a>应用性改进的考虑</h3></li>
-<li><strong>单次读写数据量小而网络读写量大的应用会消耗大量的系统态CPU</strong></li>
-<li><strong>使用非阻塞的JAVA NIO而不是阻塞的java.net.Socket</strong><h2 id="磁盘I-O使用率（iostat-xm-5）"><a href="#磁盘I-O使用率（iostat-xm-5）" class="headerlink" title="磁盘I/O使用率（iostat -xm 5）"></a>磁盘I/O使用率（iostat -xm 5）</h2></li>
-<li>使用缓冲数据结构 BufferedInputStream BufferedOutputStream<h2 id="其他命令行工具（sar）"><a href="#其他命令行工具（sar）" class="headerlink" title="其他命令行工具（sar）"></a>其他命令行工具（sar）</h2></li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/10/我的Spring之路（二）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1476,6 +1331,172 @@ request.setAttribute(&quot;handlingTime&quot;, endTime - startTime);
 <li>自定义事件，集成ApplicationEvent</li>
 <li>定义事件监听器，实现ApplicationListener</li>
 <li>使用容器发布事件</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/09/java性能优化-操作系统性能监控（一）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EtanWatson">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EWSUN">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/02/09/java性能优化-操作系统性能监控（一）/" itemprop="url">java性能优化-操作系统性能监控（一）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-09T18:22:13+08:00">
+                2018-02-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JVM性能相关/" itemprop="url" rel="index">
+                    <span itemprop="name">JVM性能相关</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="java性能优化-操作系统性能监控（一）"><a href="#java性能优化-操作系统性能监控（一）" class="headerlink" title="java性能优化-操作系统性能监控（一）"></a>java性能优化-操作系统性能监控（一）</h1><h2 id="改善性能的3种活动"><a href="#改善性能的3种活动" class="headerlink" title="改善性能的3种活动"></a>改善性能的3种活动</h2><ul>
+<li>性能监控（非侵入式）</li>
+<li>性能分析（侵入式）</li>
+<li>性能调优：为改善应用响应性或吞吐量而更改参数（Tune-able）、源代码或者属性配置的活动。<h2 id="CPU使用率"><a href="#CPU使用率" class="headerlink" title="CPU使用率"></a>CPU使用率</h2></li>
+<li>尽可能降低系统态CPU使用率</li>
+<li>减少停滞或者改善CPu告诉缓存使用率，从而减少CPU在等待内存数据时浪费的时钟周期<h2 id="监控CPU使用率：Linux"><a href="#监控CPU使用率：Linux" class="headerlink" title="监控CPU使用率：Linux"></a>监控CPU使用率：Linux</h2><h3 id="GNOME-System-Monitor"><a href="#GNOME-System-Monitor" class="headerlink" title="GNOME System Monitor"></a>GNOME System Monitor</h3><h3 id="xosview"><a href="#xosview" class="headerlink" title="xosview"></a>xosview</h3><h2 id="命令行监控CPU使用率：Linux和Solaris"><a href="#命令行监控CPU使用率：Linux和Solaris" class="headerlink" title="命令行监控CPU使用率：Linux和Solaris"></a>命令行监控CPU使用率：Linux和Solaris</h2></li>
+<li>vmstat</li>
+<li>mpstat</li>
+<li>top<h2 id="CPU调度程序运行队列"><a href="#CPU调度程序运行队列" class="headerlink" title="CPU调度程序运行队列"></a>CPU调度程序运行队列</h2><em>一般性指导原则：如果在很长一段时间里，运行队列的长度一直都超过虚拟处理器的个数的1倍，就需要关注了，如果很长一段时间里，运行队列的长度达到虚拟处理器个数的3~4倍或更高，则需要立刻引起注意或采取行动</em><h3 id="监控CPU调度程序运行队列：Linux"><a href="#监控CPU调度程序运行队列：Linux" class="headerlink" title="监控CPU调度程序运行队列：Linux"></a>监控CPU调度程序运行队列：Linux</h3></li>
+</ul>
+<ul>
+<li>vmstat 第一列（运行队列长度）<h2 id="内存使用率"><a href="#内存使用率" class="headerlink" title="内存使用率"></a>内存使用率</h2></li>
+</ul>
+<ul>
+<li><strong>系统在进行页面交换或使用虚拟内存时，java应用或JVM会表现出明显的性能问题</strong></li>
+<li><strong>JVM垃圾收集器在系统页面交换时的性能也很差</strong><h3 id="监控内存使用率：Linux（vmstat）"><a href="#监控内存使用率：Linux（vmstat）" class="headerlink" title="监控内存使用率：Linux（vmstat）"></a>监控内存使用率：Linux（vmstat）</h3></li>
+<li>free列监控页面交换</li>
+<li>si、so内存页面换入和换出量<h2 id="监控锁竞争Linux（sysstat包中的pidstat命令监控竞争锁）"><a href="#监控锁竞争Linux（sysstat包中的pidstat命令监控竞争锁）" class="headerlink" title="监控锁竞争Linux（sysstat包中的pidstat命令监控竞争锁）"></a>监控锁竞争Linux（sysstat包中的pidstat命令监控竞争锁）</h2></li>
+<li>pidstat -w 中的cswch/s(不包含所有的上下文切换)，浪费掉的时钟周期，可以有pidstat -w的让步式切换数除以虚拟处理器的数目而得</li>
+<li><code>pidstat -w -I -p 9391 5</code> 每五秒监控进程id为9391的JAVA应用程序</li>
+<li>(cswch/s) / 2(cpu内核数) * 8000 / 3.0G(cpu主频)<h3 id="隔离竞争锁-Oracle-Solaris-Studio-Performance-Analyzer工具"><a href="#隔离竞争锁-Oracle-Solaris-Studio-Performance-Analyzer工具" class="headerlink" title="隔离竞争锁 Oracle Solaris Studio Performance Analyzer工具"></a>隔离竞争锁 Oracle Solaris Studio Performance Analyzer工具</h3><h3 id="监控抢占式上下文-pidstat-w（icsw）"><a href="#监控抢占式上下文-pidstat-w（icsw）" class="headerlink" title="监控抢占式上下文 pidstat -w（icsw）"></a>监控抢占式上下文 pidstat -w（icsw）</h3><h3 id="监控线程迁移"><a href="#监控线程迁移" class="headerlink" title="监控线程迁移"></a>监控线程迁移</h3><h2 id="网络I-O使用率（netstat）"><a href="#网络I-O使用率（netstat）" class="headerlink" title="网络I/O使用率（netstat）"></a>网络I/O使用率（netstat）</h2><h3 id="nicstat工具"><a href="#nicstat工具" class="headerlink" title="nicstat工具"></a>nicstat工具</h3><h3 id="应用性改进的考虑"><a href="#应用性改进的考虑" class="headerlink" title="应用性改进的考虑"></a>应用性改进的考虑</h3></li>
+<li><strong>单次读写数据量小而网络读写量大的应用会消耗大量的系统态CPU</strong></li>
+<li><strong>使用非阻塞的JAVA NIO而不是阻塞的java.net.Socket</strong><h2 id="磁盘I-O使用率（iostat-xm-5）"><a href="#磁盘I-O使用率（iostat-xm-5）" class="headerlink" title="磁盘I/O使用率（iostat -xm 5）"></a>磁盘I/O使用率（iostat -xm 5）</h2></li>
+<li>使用缓冲数据结构 BufferedInputStream BufferedOutputStream<h2 id="其他命令行工具（sar）"><a href="#其他命令行工具（sar）" class="headerlink" title="其他命令行工具（sar）"></a>其他命令行工具（sar）</h2></li>
 </ul>
 
           
