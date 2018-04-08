@@ -310,6 +310,316 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/02/Effective Java(1)-创建和销毁对象/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EtanWatson">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EWSUN">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/01/02/Effective Java(1)-创建和销毁对象/" itemprop="url">Effective Java（1）-创建和销毁对象</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-02T21:10:13+08:00">
+                2018-01-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaSE/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaSE</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>何时以及如何创建对象，何时以及如何避免创建对象，如何确保它们能够适时地销毁，以及如何管理对象销毁之前必须进行的各种清理动作</p>
+<h2 id="第一条：考虑用静态工厂方法代替构造器"><a href="#第一条：考虑用静态工厂方法代替构造器" class="headerlink" title="第一条：考虑用静态工厂方法代替构造器"></a>第一条：考虑用静态工厂方法代替构造器</h2><p>类可以提供一个公有的静态工厂方法，它只是一个返回类的实例的静态方法</p>
+<pre><code>public static Boolean valueOf(boolean b){
+    return b ? Boolean.TRUE : Boolean.FALSE;
+}
+</code></pre><p>这个方法将boolean基本类型值转换成一个Boolean对象的引用<br><em>注：静态工厂方法与设计模式中的工厂方法模式不同，本条目所指的静态工厂方法并不直接对应于设计模式中的工厂方法</em></p>
+<h3 id="这样做具有几大优势"><a href="#这样做具有几大优势" class="headerlink" title="这样做具有几大优势"></a>这样做具有几大优势</h3><ul>
+<li><strong>第一大优势，它们有名称</strong>，当一个类需要多个带有相同签名的构造器时，就用静态方法代替构造器，并且慎重的选择名称以便突出它们之间的区别</li>
+<li><strong>不必在每次调用它们的时候都创建一个新对象</strong>：可以使用预先构建好的实例，或者将构建好的实例缓存起来，从而避免创建不必要的对象；静态工厂方法能够为重复的调用返回相同对象，<em>实例受控类</em>，可以使类确保它是一个Singleton或者是不可实例化的；它还使得不可变的类可以确保不会存在两个相等的实例（使用==代替equals(Object)）</li>
+<li><strong>它们可以返回原返回类型的任何子类型的对象，这样在选择返回对象的类时就有了更大的灵活性</strong>；一种应用是：API可以返回对象，同时又不会使对象的类变成公有的（返回非公有类的对象），以这种方式隐藏实现类会使API变得非常简洁；该类还可以随着每次的调用而发生变化，这取决于静态工厂方法的参数值，只要是已声明的返回类型的子类型，都是允许的；静态工厂方法返回的对象所属的类，在编写包含静态工厂方法的类是可以不必存在，这种灵活的静态工厂方法构成了服务提供者框架的基础（例如JDBC）；<strong>服务提供者框架</strong>：多个服务提供者实现一个服务，系统为服务提供者的客户端提供多个实现，并把他们从多个实现中解耦出来；框架的三个重要组件（1）服务接口：这是提供者实现的；（2）提供者注册API：这是系统用来注册实现的，让客户端访问它们的 （3）服务访问API，是客户端用来获取服务实例的（4）服务提供者接口：这些提供者负责创建其服务实现的实例；例如：对于JDBC来说，Connection就是它的服务接口；DriverManager.registerDriver是提供者注册API， DriverManager.getConnection是服务访问API；Driver就是服务提供者接口；Driver就是服务提供者接口<br><strong>例</strong></li>
+</ul>
+<pre><code>// Service proider framework sketch
+ // Service interface
+ public interface Service{
+     ... // Service-specific methods go here
+ }
+
+ // Service provider interface
+ public interface Provider{
+     Service newService();
+ }
+ // Noninstantiable class for service registration and access 
+ public class Service{
+     private Services(){} // Prevents instantiation (Item 4)
+     private static final Map&lt;String, Provider&gt; providers = new ConurrentHashMap&lt;String, Provider&gt;();
+     public static final String DEFAULT_PROVIDE_NAME = &quot;&lt;def&gt;&quot;;
+     // Provider registration API
+     public static void registerDefaultProvider(Provider p){
+     registerProvider(DEFAULT_PROVIDER_NAME, p);
+     }
+     public static void registerProvider(String name, Provider p){
+     providers.put(name,p);
+     }
+     // Service access API
+     public static Service newInstance(){
+         return newInstance(DEFAULT_PROVIDER_NAME);
+     }
+     public static Service newInstance(String name){
+         Provider p = providers.get(name);
+         if(p == null){
+             throw new IllegalArgumentException(&quot;No provider registered with name:&quot; + name);
+         }
+         return p.newService();
+     }
+ }
+</code></pre><ul>
+<li><strong>第四大优势，在创建参数化实例的时候，它们使代码变得更加简洁</strong>，在调用参数化类的构造器时，即使类型参数很明显，也必须指明，要求你接连两次提供类型参数：<br><code>Map&lt;String, List&lt;String&gt;&gt; m = new HashMap&lt;String,List&lt;String&gt;&gt;();</code><br>使用<strong>类型推导</strong>编译器可以替你找到类型参数，例如：假设HashMap提供了这个静态工厂<br><code>public static &lt;K, V&gt; HashMap&lt;K,V&gt; newInstance(){return new HashMap&lt;K, V}();</code><br>这样，你就可以使用这句简洁的代码代替上面这段繁琐的声明<br><code>Map&lt;String, List&lt;String&gt;&gt; m = HashMap.newInstance();</code><h3 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h3></li>
+<li><strong>类如果不含有公有的或受保护的构造器，就不能被子类化</strong>，但是这样也许会因祸得福，因为它鼓励程序员<strong>使用复合，而不是继承</strong></li>
+<li><strong>它们与其他静态方法实际上没有任何区别</strong>，这样使你想要查明如何实例化一个类是非常困难的，解决方法注释和命名规范，常用的命名规范：<strong>valueOf、of、getInstance、newInstance、getType、newType</strong><h2 id="第二条遇到多个构造器参数时要考虑用构建器"><a href="#第二条遇到多个构造器参数时要考虑用构建器" class="headerlink" title="第二条遇到多个构造器参数时要考虑用构建器"></a>第二条遇到多个构造器参数时要考虑用构建器</h2>静态工厂和构造器有个共同的局限性：<strong>它们都不能很好地扩展到大量的可选参数</strong></li>
+<li>对于多个可选参数，程序员一贯采用<strong>重叠构造器</strong>（telescope constructor）模式，重叠构造器模式可行，但是当有许多参数的时候，客户端代码很难编写，并且难以阅读</li>
+<li><strong>javaBeans模式</strong>：调用一个无参构造器来创建对象，然后调用setter方法来设置每个必要的参数，以及每个相关的可选参数。<br><strong>不足：</strong> <strong><em>1、</em></strong>因为构造过程被分到了几个调用中，在构造过程中JavaBean可能处于不一致的状态。类无法仅仅通过检验构造器参数的有效性来保证一致性 <strong><em>2、</em></strong>javaBeans模式阻止了把类做成不可变的可能，这就需要程序员付出额外的努力来确保它的线程安全</li>
+<li><p><strong>Builder模式</strong> 既能保证像重叠构造模式那样的安全性，也能保证像JavaBeans模式那么好的可读性。<em>1.不直接生成想要的对象</em>，而是客户端利用所有必要的参数调用构造器（或者静态工厂），得到一个builder对象 <em>2. 客户端在builder对象上调用类似setter的方法</em>，来设置每个相关的可选参数 <em>3.客户端调用无参的build方法生成不可变的对象</em>,这个builder是它构建的类的静态成员类</p>
+<p> // Builder Pattern<br> public class NutritionFacts{</p>
+<pre><code>private final int servingSize;
+private final int servings;
+private final int calories;
+private final int fat;
+private final int sodium;
+private final int carbohydrate;
+
+public static class Builder{
+    // Required parameters
+    private final int servingSize;
+    private final int servings
+
+    // Optional parameters - initialized to default values
+    private int calories = 0;
+    private int fat = 0;
+    private int carbohydrate = 0;
+    private int sodium = 0;
+
+    public Builder(int servingSize, int servings){
+        this.servingSize = servingSize;
+        this.servings = servings;
+    }
+    public Builder calories(int val){
+        colories = val; reutrn this;
+    }
+    public Builder fat(int val){
+        fat = val; return this;
+    }
+    public Builder carbohydrate(int val){
+        carbohydrate = val; return this;
+    }
+    public Builder sodium(int val){
+        sodium = val; reuturn this;
+    }
+    public NutritionFacts build(){
+        return new NutritionFacts(this);
+    }
+}
+
+private NutritionFacts(Builder builder){
+    seringSize = builder.servingSzie;
+    servings = builder.servings;
+    calories = builder.calories;
+    fat = builder.fat;
+    sodium = builder.sodium;
+    carbohydrate = builder.carbohydrate;
+}
+</code></pre><p> }<br> // 客户端调用代码<br> NutritionFacts cocacola = new NutritionFacts.Builder(240, 8).calories(100).sodium(35).carbohydrate(27).builder();<br> // A builder for objects of type T<br> public interface Builder<t>{</t></p>
+<pre><code>public T build();
+</code></pre><p> }<br><strong>简而言之，如果类的构造器或者静态工厂中具有多个参数，设计这种类时，<em>Builder模式</em>就是种不错的选择</strong></p>
+</li>
+</ul>
+<h2 id="第三条：用私有构造器或者枚举类型强化Singleton属性（没太看明白）"><a href="#第三条：用私有构造器或者枚举类型强化Singleton属性（没太看明白）" class="headerlink" title="第三条：用私有构造器或者枚举类型强化Singleton属性（没太看明白）"></a>第三条：用私有构造器或者枚举类型强化Singleton属性（没太看明白）</h2><h2 id="第四条：通过私有构造器强化不可实例化的能力"><a href="#第四条：通过私有构造器强化不可实例化的能力" class="headerlink" title="第四条：通过私有构造器强化不可实例化的能力"></a>第四条：通过私有构造器强化不可实例化的能力</h2><p>企图通过将类做成抽象类来强制该类不可被实例化，这是行不通的。因此我们只要让这个类包含私有构造器，它就不能被实例化了：</p>
+<pre><code>// Noninstantiable utility class
+public class UtilityClass{
+    // Suppress default constructor for noninstantiability
+    private UtilityClass(){
+        throw new AssertionErrot();
+    }
+    ... // Remainder omitted
+}
+</code></pre><p><strong>这样做有一个副作用: 它使得一个类不能被子类化</strong></p>
+<h2 id="第五条：避免创建不必要的对象"><a href="#第五条：避免创建不必要的对象" class="headerlink" title="第五条：避免创建不必要的对象"></a>第五条：避免创建不必要的对象</h2><p>重用不可变的对象以及重用已知不会被修改的可变对象<br><strong>要优先使用基本类型而不是装箱基本类型，要当心无意识的自动装箱</strong><br><em>小对象的创建和回收动作是非常廉价的，通过维护自己的对象池（object pool）来避免创建对象并不是一种好的做法，除非池中的对象是非常重量级，真正正确使用对象池的典型对象示例就是数据库连接池</em>一般而言，维护自己的对象池必定会把代码弄得很乱，同时增加内存占用，并且还会损害性能</p>
+<h2 id="第六条：清除过期的对象引用"><a href="#第六条：清除过期的对象引用" class="headerlink" title="第六条：清除过期的对象引用"></a>第六条：清除过期的对象引用</h2><p>考虑下面这个例子</p>
+<pre><code>// Can you spot the &quot;memory leak&quot;?
+public class Stack{
+    private Object[] elements;
+    private int size = 0;
+    private static final int DEFAULT_INITIAL_CAPACITY = 16;
+
+    public Stack(){
+        elements = new Object[DEFAULT_INITIAL_CAPACITY];
+    }
+
+    public void push(Object e){
+        ensureCapacity();
+        elements[size++] = e;
+    }
+    public Object pop(){
+        if(size == 0){
+            throw new EmptyStackException();
+        }
+        return elements[--size];
+    }
+    /**
+     * Ensure space for at least one more element,roughly
+     * doubling the capacity each time the array needs to grow
+     */
+    private void ensureCapacity(){
+        if(elements.length == size){
+            elements = Arrays.copyOf(elements, 2 * size + 1);
+        }
+    } 
+}
+</code></pre><p>从栈中弹出来的对象将不会被当做垃圾回收，即使使用栈的程序不在引用这些对象，他们也不会被回收，这是因为，栈内部维护这对这些对象的过期引用（obsolete reference），所谓过期引用，是指永远也不会在被解除的引用。无意识对象保持（unintentional object retention）<br>故修改上例栈pop方法</p>
+<pre><code>public Object pop(){
+    if(size == 0){
+        throw new EmptyStackException();
+    }
+    Object result = elements[--size];
+    elements[size] = null; //Eliminate obsolete reference
+    return result;
+}
+</code></pre><p>清空引用的另外一个好处的是，如果它们以后又被错误的解除引用，程序就会立即抛出NullPointerException异常<br><em>清空对象引用应该是一种例外，而不是一种规范行为</em></p>
+<ul>
+<li><strong><em>一般而言，只要类是自己管理内存，程序员就应该警惕内存泄露问题</em></strong></li>
+<li><strong><em>内存泄露的另外一个常见的来源是缓存</em></strong></li>
+<li><strong><em>内存泄露的第三个常见来源是监听器和其他回调</em></strong></li>
+</ul>
+<h2 id="避免使用终结方法（finalizer）"><a href="#避免使用终结方法（finalizer）" class="headerlink" title="避免使用终结方法（finalizer）"></a>避免使用终结方法（finalizer）</h2><p>finalizer方法通常是不可预测的，也是很危险的，一般情况下是不必要的，使用终结方法会导致行为不稳定，降低性能，以及可移植问题</p>
+<ul>
+<li><strong>不应该依赖终结方法来更新最终要的持久状态</strong></li>
+<li><strong>如果未被捕获的异常在终结过程中被抛出来，那么这种异常可以被忽略</strong></li>
+<li><strong>使用终结方法有非常严重的性能损失</strong></li>
+<li><strong>如果类的对象中国年封装的资源确实需要终止，只需提供一个显示的终止方法。</strong>该实例必须记录下自己是否已经被终止了，显示终止的典型例子是InputStream 上的close方法</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/23/mysql-safe-update-mode-下出现的错误/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1059,6 +1369,303 @@ class TestAddition(unittest.TestCase):
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/09/递归/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EtanWatson">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EWSUN">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/09/递归/" itemprop="url">递归</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-09T15:08:10+08:00">
+                2017-10-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/algorithm/" itemprop="url" rel="index">
+                    <span itemprop="name">algorithm</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h1><p>恨它的，爱它的以及恨了几年有爱上它的（比较经典，记下了）</p>
+<h2 id="while与递归的对比"><a href="#while与递归的对比" class="headerlink" title="while与递归的对比"></a>while与递归的对比</h2><p>伪代码实现<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#while 实现</span></div><div class="line">def look_for_key(main_box):</div><div class="line">	pile = main_box.make_a_pile_to_look_through()</div><div class="line">	<span class="keyword">while</span> pile is not empty:</div><div class="line">		box = pile.grab_a_box()</div><div class="line">		<span class="keyword">for</span> item <span class="keyword">in</span> box:</div><div class="line">			<span class="keyword">if</span> item.is_a_box():</div><div class="line">				pile.append(item)</div><div class="line">			<span class="keyword">elif</span> item.is_a_key():</div><div class="line">				<span class="built_in">print</span>(“found the key!”)</div><div class="line"><span class="comment">#递归实现</span></div><div class="line">def look_for_key(box):</div><div class="line">	<span class="keyword">for</span> item <span class="keyword">in</span> box:</div><div class="line">		<span class="keyword">if</span> item.is_a_box():</div><div class="line">			look_for_key(item)</div><div class="line">		<span class="keyword">elif</span> item.is_a_key():</div><div class="line">			<span class="built_in">print</span>(“found the key!”)</div></pre></td></tr></table></figure></p>
+<p>#这两种方法的作用相同，第二种方法更清晰。递归只是让解决方案更清晰 ，并没有性能上的优势，实际上，在有些情况下，使用循环的性能更好。<br>再引入一句大神说的话：Loops may achieve a performance gain for your program. Recursion may achieve a performance gain for your programmer. Choose which is more important in your situation!</p>
+<h2 id="基线条件和递归条件"><a href="#基线条件和递归条件" class="headerlink" title="基线条件和递归条件"></a>基线条件和递归条件</h2><p>每个递归函数都有两个部分：基线条件和递归条件<br>递归条件指的是函数调用自己，而基线条件则指的是函数不在调用自己，从而避免形成无线循环<br>ex：<br>def countdown(i):<br>    print i<br>    countdown(i-1)<br>上述代码，会导致死循环<br>我们来给countdown添加基线条件<br>def countdown(i):<br>    print i</p>
+<pre><code>#基线条件
+if i &lt;= 0:
+return
+else:  #递归条件
+countdown(i-1)
+</code></pre><h2 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h2><h3 id="调用栈"><a href="#调用栈" class="headerlink" title="调用栈"></a>调用栈</h3><p>def greet(name):<br>    print (“hello, “ + name + “i”)<br>    greet2(name)<br>    print (getting ready to say bye…)<br>    bye()</p>
+<p>#这个函数问候用户，在调用另外两个函数。这两个函数的代码如下。<br>def greet2(name):<br>    print (”how are you, ” + name + ‘?’)<br>    def bye():<br>        print(“ok bye!”)</p>
+<h3 id="递归调用栈"><a href="#递归调用栈" class="headerlink" title="递归调用栈"></a>递归调用栈</h3><h4 id="计算阶乘的"><a href="#计算阶乘的" class="headerlink" title="计算阶乘的"></a>计算阶乘的</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">def fact(x):</div><div class="line">	<span class="keyword">if</span> x == 1:</div><div class="line">		<span class="built_in">return</span> 1</div><div class="line">	<span class="keyword">else</span>:</div><div class="line">	   <span class="built_in">return</span> x*fact(x-1)</div></pre></td></tr></table></figure>
+<p>使用栈虽然很方便，但是也要付出代价:存储详尽的信息可能占用大量的内存。每个函数调 用都要占用一定的内存，如果栈很高，就意味着计算机存储了大量函数调用的信息。在这种情况 下，你有两种选择。<br> 重新编写代码，转而使用循环。<br> 使用尾递归。这是一个高级递归主题，不在本书的讨论范围内。另外，并非所有的语言<br>都支持尾递归。</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p> 递归指的是调用自己的函数。<br> 每个递归函数都有两个条件:基线条件和递归条件。  栈有两种操作:压入和弹出。<br> 所有函数调用都进入调用栈。<br> 调用栈可能很长，这将占用大量的内存。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/09/深入分析Java I:O的工作原理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EtanWatson">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EWSUN">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/09/深入分析Java I:O的工作原理/" itemprop="url">深入分析Java I/O的工作原理</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-09T15:08:10+08:00">
+                2017-10-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaWeb/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaWeb</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="深入分析Java-I-O的工作原理"><a href="#深入分析Java-I-O的工作原理" class="headerlink" title="深入分析Java I/O的工作原理"></a>深入分析Java I/O的工作原理</h1><h2 id="java的I-O类库的基本架构"><a href="#java的I-O类库的基本架构" class="headerlink" title="java的I/O类库的基本架构"></a>java的I/O类库的基本架构</h2><h3 id="基于字节的I-O操作接口"><a href="#基于字节的I-O操作接口" class="headerlink" title="基于字节的I/O操作接口"></a>基于字节的I/O操作接口</h3><p>InputStream和OutPutStream</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/09/深入Web请求过程/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1170,161 +1777,6 @@ class TestAddition(unittest.TestCase):
 <h4 id="TXT记录"><a href="#TXT记录" class="headerlink" title="TXT记录"></a>TXT记录</h4><p>为某个主机或域名设置说明</p>
 <h2 id="CDN（内容分布式网络）-工作原理"><a href="#CDN（内容分布式网络）-工作原理" class="headerlink" title="CDN（内容分布式网络） 工作原理"></a>CDN（内容分布式网络） 工作原理</h2><p>将网站的内容发布到最接近用户网络的边缘<br>CDN=Mirror+Cache+GSLB(整体负载均衡)</p>
 <h3 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h3><h4 id="链路负载均衡"><a href="#链路负载均衡" class="headerlink" title="链路负载均衡"></a>链路负载均衡</h4><h4 id="集群负载均衡"><a href="#集群负载均衡" class="headerlink" title="集群负载均衡"></a>集群负载均衡</h4><h4 id="操作系统负载均衡"><a href="#操作系统负载均衡" class="headerlink" title="操作系统负载均衡"></a>操作系统负载均衡</h4><h3 id="CDN动态加速"><a href="#CDN动态加速" class="headerlink" title="CDN动态加速"></a>CDN动态加速</h3>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/09/递归/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="EtanWatson">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/header.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="EWSUN">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/10/09/递归/" itemprop="url">递归</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-09T15:08:10+08:00">
-                2017-10-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/algorithm/" itemprop="url" rel="index">
-                    <span itemprop="name">algorithm</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h1><p>恨它的，爱它的以及恨了几年有爱上它的（比较经典，记下了）</p>
-<h2 id="while与递归的对比"><a href="#while与递归的对比" class="headerlink" title="while与递归的对比"></a>while与递归的对比</h2><p>伪代码实现<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#while 实现</span></div><div class="line">def look_for_key(main_box):</div><div class="line">	pile = main_box.make_a_pile_to_look_through()</div><div class="line">	<span class="keyword">while</span> pile is not empty:</div><div class="line">		box = pile.grab_a_box()</div><div class="line">		<span class="keyword">for</span> item <span class="keyword">in</span> box:</div><div class="line">			<span class="keyword">if</span> item.is_a_box():</div><div class="line">				pile.append(item)</div><div class="line">			<span class="keyword">elif</span> item.is_a_key():</div><div class="line">				<span class="built_in">print</span>(“found the key!”)</div><div class="line"><span class="comment">#递归实现</span></div><div class="line">def look_for_key(box):</div><div class="line">	<span class="keyword">for</span> item <span class="keyword">in</span> box:</div><div class="line">		<span class="keyword">if</span> item.is_a_box():</div><div class="line">			look_for_key(item)</div><div class="line">		<span class="keyword">elif</span> item.is_a_key():</div><div class="line">			<span class="built_in">print</span>(“found the key!”)</div></pre></td></tr></table></figure></p>
-<p>#这两种方法的作用相同，第二种方法更清晰。递归只是让解决方案更清晰 ，并没有性能上的优势，实际上，在有些情况下，使用循环的性能更好。<br>再引入一句大神说的话：Loops may achieve a performance gain for your program. Recursion may achieve a performance gain for your programmer. Choose which is more important in your situation!</p>
-<h2 id="基线条件和递归条件"><a href="#基线条件和递归条件" class="headerlink" title="基线条件和递归条件"></a>基线条件和递归条件</h2><p>每个递归函数都有两个部分：基线条件和递归条件<br>递归条件指的是函数调用自己，而基线条件则指的是函数不在调用自己，从而避免形成无线循环<br>ex：<br>def countdown(i):<br>    print i<br>    countdown(i-1)<br>上述代码，会导致死循环<br>我们来给countdown添加基线条件<br>def countdown(i):<br>    print i</p>
-<pre><code>#基线条件
-if i &lt;= 0:
-return
-else:  #递归条件
-countdown(i-1)
-</code></pre><h2 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h2><h3 id="调用栈"><a href="#调用栈" class="headerlink" title="调用栈"></a>调用栈</h3><p>def greet(name):<br>    print (“hello, “ + name + “i”)<br>    greet2(name)<br>    print (getting ready to say bye…)<br>    bye()</p>
-<p>#这个函数问候用户，在调用另外两个函数。这两个函数的代码如下。<br>def greet2(name):<br>    print (”how are you, ” + name + ‘?’)<br>    def bye():<br>        print(“ok bye!”)</p>
-<h3 id="递归调用栈"><a href="#递归调用栈" class="headerlink" title="递归调用栈"></a>递归调用栈</h3><h4 id="计算阶乘的"><a href="#计算阶乘的" class="headerlink" title="计算阶乘的"></a>计算阶乘的</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">def fact(x):</div><div class="line">	<span class="keyword">if</span> x == 1:</div><div class="line">		<span class="built_in">return</span> 1</div><div class="line">	<span class="keyword">else</span>:</div><div class="line">	   <span class="built_in">return</span> x*fact(x-1)</div></pre></td></tr></table></figure>
-<p>使用栈虽然很方便，但是也要付出代价:存储详尽的信息可能占用大量的内存。每个函数调 用都要占用一定的内存，如果栈很高，就意味着计算机存储了大量函数调用的信息。在这种情况 下，你有两种选择。<br> 重新编写代码，转而使用循环。<br> 使用尾递归。这是一个高级递归主题，不在本书的讨论范围内。另外，并非所有的语言<br>都支持尾递归。</p>
-<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p> 递归指的是调用自己的函数。<br> 每个递归函数都有两个条件:基线条件和递归条件。  栈有两种操作:压入和弹出。<br> 所有函数调用都进入调用栈。<br> 调用栈可能很长，这将占用大量的内存。</p>
-
           
         
       
@@ -1505,456 +1957,6 @@ countdown(i-1)
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/09/二分查找/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="EtanWatson">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/header.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="EWSUN">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/10/09/二分查找/" itemprop="url">二分查找</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-09T08:27:35+08:00">
-                2017-10-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/algorithm/" itemprop="url" rel="index">
-                    <span itemprop="name">algorithm</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="二分查找"><a href="#二分查找" class="headerlink" title="二分查找"></a>二分查找</h1><h2 id="二分查找的工作原理"><a href="#二分查找的工作原理" class="headerlink" title="二分查找的工作原理"></a>二分查找的工作原理</h2><p>你的目标是以最少的次数猜到这个数字。你每次猜测后，我会说小了、大了或对了。 假设你从1开始依次往上猜，猜测过程会是这样。（一种糟糕的猜数法）<br>一种好的猜数法，从50开始。如果小了，接下来猜75……,不管是什么数，在第七次一定能猜到<br>一般而言，对于包含n个元素的列表，用二分查找最多需要log2n步，而简单查找最多需要n步。<br>注：仅当列表有序的时候，二分查找才管用</p>
-<h3 id="代码实现（python-2-7）"><a href="#代码实现（python-2-7）" class="headerlink" title="代码实现（python 2.7）"></a>代码实现（python 2.7）</h3><pre><code class="bash"><span class="comment">#范围</span>
-low = 0
-heigh = len(list) - 1
-<span class="comment">#每次检查的中间的元素</span>
-mid = (low + heigh) / 2
-guess = list[mid]
-<span class="comment">#如果数猜小了，就相应的修改low</span>
-<span class="keyword">if</span> guess &lt; item:
-    low = mid + 1
-<span class="comment">#如果数猜大了，就修改heigh</span>
-<span class="comment">#完整代码如下</span>
-def binary_search(list, item)
-    low = 0
-    heigh = len(list) - 1
-
-    <span class="keyword">while</span> low &lt;= heigh:
-        mid = (low + heigh)
-        guess = list[mid]
-        <span class="keyword">if</span> guess == item:     <span class="comment">#放在第一个判断可以减少下面的操作</span>
-            <span class="built_in">return</span> mid
-        <span class="keyword">if</span> guess &lt; item:
-            low = mid + 1
-        <span class="keyword">else</span>:
-            heigh = mid - 1
-    <span class="built_in">return</span> None
-</code></pre>
-<h2 id="运行时间"><a href="#运行时间" class="headerlink" title="运行时间"></a>运行时间</h2><p>最多需要猜测的次数与列表长度相同，这被称为线性 时间(linear time)。<br>二分查找的运行时间为对数时间(或log时间)</p>
-<h2 id="大O表示法"><a href="#大O表示法" class="headerlink" title="大O表示法"></a>大O表示法</h2><h3 id="运算时间以不同的速度增加"><a href="#运算时间以不同的速度增加" class="headerlink" title="运算时间以不同的速度增加"></a>运算时间以不同的速度增加</h3><pre><code>简单查找          二分查找
-</code></pre><p>100个元素                100毫秒          7毫秒<br>10000个元素            10秒        14毫秒<br>1000000000个元素        11天        32毫秒<br>注：以上表示的是至多查找时间<br>有鉴于此，仅知道算法 需要多长时间才能运行完毕还不够，还需知道运行时间如何随列表增长 而增加。这正是大O表示法的用武之地。</p>
-<h3 id="理解不同的大O运行时间"><a href="#理解不同的大O运行时间" class="headerlink" title="理解不同的大O运行时间"></a>理解不同的大O运行时间</h3><p>O(n) 与 O（log n）  注：非特殊说明，均以2为底</p>
-<h3 id="大O表示法指出了最糟糕情况下的运行时间"><a href="#大O表示法指出了最糟糕情况下的运行时间" class="headerlink" title="大O表示法指出了最糟糕情况下的运行时间"></a>大O表示法指出了最糟糕情况下的运行时间</h3><h3 id="一些常见的大O运行时间"><a href="#一些常见的大O运行时间" class="headerlink" title="一些常见的大O运行时间"></a>一些常见的大O运行时间</h3><p>O(log n)，也叫对数时间，这样的算法包括二分查找。<br>O(n)，也叫线性时间，这样的算法包括简单查找。<br>O(n*log n)，这样的算法包括第4章将介绍的快速排序——一种速度较快的排序算法<br>O(n^2)，这样的算法包括第2章将介绍的选择排序——一种速度较慢的排序算法。<br>O(n!)，这样的算法包括接下来将介绍的旅行商问题的解决方案——一种非常慢的算法。</p>
-<p>主要启示：<br>算法的速度并非时间，二十操作数的增速<br>谈论算法的速度时，我们说的是随着输入增加，其运行时间将以什么样的速度增加。<br>算法的运行时间用大O表示法表示<br>O(logn)比O(n)快，当需要搜索的元素越多时，前者比后者快的越多</p>
-<h3 id="旅行商问题"><a href="#旅行商问题" class="headerlink" title="旅行商问题"></a>旅行商问题</h3><p>有一位旅行商。 他需要前往5个城市。<br>这位旅行商(姑且称之为Opus吧)要前往这5个城市，同时要确保旅程最短。为此，可考虑 前往这些城市的各种可能顺序。<br>对于每种顺序，他都计算总旅程，再挑选出旅程最短的路线。5个城市有120种不同的排列方 式。因此，在涉及5个城市时，解决这个问题需要执行120次操作。涉及6个城市时，需要执行720 次操作(有720种不同的排列方式)。涉及7个城市时，需要执行5040次操作!故，可以推出，涉及n个城市时，需要执行n!(n的阶乘)次操作才能计算出结果。如果涉及的城市 数超过100，根本就不能在合理的时间内计算出结果——等你计算出结果，太阳都没了。O(n!),由于目前还没有更巧妙的算法，所以我们能做的只是去找出近似答案。</p>
-<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>二分查找的速度比简单查找快得多。<br>O(log n)比O(n)快。需要搜索的元素越多，前者比后者就快得越多。  算法运行时间并不以秒为单位。<br>算法运行时间是从其增速的角度度量的。<br>算法运行时间用大O表示法表示。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/08/python收集（图像识别与文字处理）/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="EtanWatson">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/header.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="EWSUN">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/10/08/python收集（图像识别与文字处理）/" itemprop="url">python收集（图像识别与文字处理）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-08T21:29:13+08:00">
-                2017-10-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/python数据收集/" itemprop="url" rel="index">
-                    <span itemprop="name">python数据收集</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="图像识别与文字处理"><a href="#图像识别与文字处理" class="headerlink" title="图像识别与文字处理"></a>图像识别与文字处理</h1><p>将图像翻译成文字一般被称为光学文字识别（Optical Character Recognition，OCR）</p>
-<h2 id="OCR库概述"><a href="#OCR库概述" class="headerlink" title="OCR库概述"></a>OCR库概述</h2><p>重点介绍两个库：Pillow(<a href="http://pillow.readthedocs.org/installation.html" target="_blank" rel="external">http://pillow.readthedocs.org/installation.html</a> )<br>        Tesseract(<a href="https://pypi.python.org/pypi/pytesseract" target="_blank" rel="external">https://pypi.python.org/pypi/pytesseract</a>)<br>或者使用pip进行安装<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&gt;&gt; pip3 install pillow</div><div class="line">&gt;&gt; pip3 install pytesseract</div></pre></td></tr></table></figure></p>
-<h3 id="Pillow"><a href="#Pillow" class="headerlink" title="Pillow"></a>Pillow</h3><p>Pillow也可以轻松的地导入代码，并通过大量的过滤，修饰甚至像素级的变换操作处理图片<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">from  PIL import Image, ImageFilter</div><div class="line"></div><div class="line">kitten = Image.open(<span class="string">"header.png"</span>)</div><div class="line">blurryKitten = kitten.filter(ImageFilter.GaussianBlur)</div><div class="line">blurryKitten.save(<span class="string">'header_blurred.png'</span>)</div><div class="line">blurryKitten.show()</div></pre></td></tr></table></figure></p>
-<p>经过处理的图片会变的非常模糊<br>Pillow 还可以完成许多复杂的图像处理工作。更多的信息，请查看 Pillow 文档 (<a href="http://pillow.readthedocs.org/)。" target="_blank" rel="external">http://pillow.readthedocs.org/)。</a></p>
-<h3 id="Tesseract"><a href="#Tesseract" class="headerlink" title="Tesseract"></a>Tesseract</h3><p>Tesseract 是目前公认最优秀、最精确的开源 OCR 系统。(由Google赞助)<br>高灵活性：通过训练，可以识别除任何字体<br>Tesseract是一个python的命令行工具（不是通过import语句）<br>安装Tesseract（安装以后，要用tesseract命令在Python的外面运行）<br>Mac OS X系统下：<br>如果没有安装Homebrew，先安装Homebrew</p>
-<blockquote>
-<p>$ruby -e “$(curl -fsSL <a href="https://raw.githubusercontent.com/Homebrew/" target="_blank" rel="external">https://raw.githubusercontent.com/Homebrew/</a> \ install/master/install)”<br>$brew install tesseract<br>为了能让Tesseract知道训练的数据文件存储在哪里，我们需要配置环境变量<br>$export TESSDATA_PREFIX=/usr/local/share/</p>
-</blockquote>
-<h3 id="NumPy-训练字符和字体时候，会用到它"><a href="#NumPy-训练字符和字体时候，会用到它" class="headerlink" title="NumPy(训练字符和字体时候，会用到它)"></a>NumPy(训练字符和字体时候，会用到它)</h3><p>在机器学习实战的文章里面有用到</p>
-<blockquote>
-<p>pip install numpy</p>
-</blockquote>
-<h2 id="处理格式规范的文字"><a href="#处理格式规范的文字" class="headerlink" title="处理格式规范的文字"></a>处理格式规范的文字</h2><p>通常规范文字的特点<br>• 使用一个标准字体(不包含手写体、草书，或者十分“花哨的”字体) • 虽然被复印或拍照，字体还是很清晰，没有多余的痕迹或污点<br>• 排列整齐，没有歪歪斜斜的字<br>• 没有超出图片范围，也没有残缺不全，或紧紧贴在图片的边缘</p>
-<blockquote>
-<p>$ tesseract text.png textoutput | cat textoutput.txt<br>Warning in pixReadMemPng: work-around: writing to a temp file</p>
-</blockquote>
-<h3 id="对于背景渐变以及文字模糊的，可以使用Pillow库预处理，让图片更加清晰"><a href="#对于背景渐变以及文字模糊的，可以使用Pillow库预处理，让图片更加清晰" class="headerlink" title="对于背景渐变以及文字模糊的，可以使用Pillow库预处理，让图片更加清晰"></a>对于背景渐变以及文字模糊的，可以使用Pillow库预处理，让图片更加清晰</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">from PIL import Image</div><div class="line">import subprocess</div><div class="line"></div><div class="line">def cleanFile(filePath, newFilePath):</div><div class="line">    image = Image.open(filePath)</div><div class="line"></div><div class="line">    <span class="comment"># 对图片进行阀值过滤，然后保存</span></div><div class="line">    image = image.point(lambda x: 0 <span class="keyword">if</span> x&lt;143 <span class="keyword">else</span> 255)</div><div class="line">    image.save(newFilePath)</div><div class="line"></div><div class="line">    <span class="comment"># 调用系统的tesseract</span></div><div class="line">    subprocess.call([<span class="string">"tesseract"</span>, newFilePath, <span class="string">"output"</span>])</div><div class="line"></div><div class="line">    <span class="comment"># 打开文件读取结果</span></div><div class="line">    outputFile = open(<span class="string">"output.txt"</span>, <span class="string">'r'</span>)</div><div class="line">    <span class="built_in">print</span>((outputFile.read()))</div><div class="line">    outputFile.close()</div><div class="line">cleanFile(<span class="string">"text_2.jpg"</span>,<span class="string">"text_2_clean.png"</span>)</div></pre></td></tr></table></figure>
-<h3 id="从网站图片中抓取文字"><a href="#从网站图片中抓取文字" class="headerlink" title="从网站图片中抓取文字"></a>从网站图片中抓取文字</h3><pre><code class="bash">import time 
-from urllib.request import urlretrieve
-import subprocess
-from selenium import webdriver
-
-<span class="comment">## 读取验证码与训练Tesseract</span>
-PHP内容管理系统Drupal有一个著名的验证码模块，https://www.drupal.org/project/captcha,可以生成不同难度
-的验证码。
-<span class="variable">$tesseract</span> captchaExample.png captcha | cat captcha.txt
-&gt;&gt; 4MMCJ
-
-<span class="comment">### 训练Tesseract</span>
-矩形定位文件（box file），一个验证码图片生成一个矩形定位文件，一个图片的矩形定位文件如下所示：
-    ··4 15 26 33 55 0
-      M 38 13 67 45 0
-      m 79 15 101 26 0
-      C 111 33 136 60 0
-      3 147 17 176 45 0
-第一列符号是图片中的每个字符，后面的 4 个数字分别是包围这个字符的最小矩形的坐标 (图片左下角是原点 (0,0)，4 个数字分别对应每个字符的左下角 x 坐标、左下角 y 坐标、右上角 x 坐标和右上角 y 坐标)，最后一个数字“0”表示图片样本的编号。
-在线工具Tesseract OCR Chopper(http://pp19dd.com/tesseract-ocr-chopper/)
-矩形定位文件必须保存在一个.box后缀的文本文件中。和图片文件一样，文本文件也是用验证码的世纪结果命名（例如，4MmC3.box）
-https://github.com/REMitchell/tesseract-trainer(OReilly.Web.Scraping.with.Python.2015.6的书的作者写的一个同时包图片和.box文件) 
-
-def main(self):
-    languageName = “eng”
-    fontName = “captchaFont”
-    directory = “”
-
-def runAll(self):
-    self.createFontFile()
-    self.cleanImages()
-    self.renameFiles()
-    self.extractUnicode()
-    self.runShapeClustering() 
-    self.runMfTraining() 
-    self.runCnTraining() 
-    self.createTessData()
-
-* language 
-Tesseract 用三个字母的语言缩写代码表示识别的语言种类。可能大多数情况下，你都会 用“eng”表示英语(English)。
-* fontName 
-表示你选择的字体名称，可以是任意名称，但必须是一个不包含空格的单词。
-* directory
-表示包含所有图片和 .box 文件的目录。建议你使用文件夹的绝对路径，但是如果你使 用相对路径，可能需要以 Python 代码运行的目录位置为原点。如果你使用绝对路径， 就可以在电脑的任意位置运行代码了。
-
-* runAll里每个函数的用法
-1.createFontFile 创建了一个 font_properties 文件，让 Tesseract 知道我们要创建的新字体:
-captchaFont 0 0 0 0 0（这个文件包括字体的名称，后面跟着若干 1 和 0，分别表示应该使用斜体、加粗或其他版 本的字体）
-2.cleanImages 首先创建所有样本图片的高对比度版本，然后转换成灰度图，并进行一些清 理，让 Tesseract 更容易读取图片文件。如果你要处理的验证码图片上面有一些很容易过滤 掉的噪点，那么你可以在这里增加一些步骤来处理它们。
-3.renameFiles 把所有的图片文件和 .box 文件的文件名改变成 Tesseract 需要的形式 (fileNumber 是文件序号，用来区别每个文件):
-• &lt;languageName&gt;.&lt;fontName&gt;.exp&lt;fileNumber&gt;.box • &lt;languageName&gt;.&lt;fontName&gt;.exp&lt;fileNumber&gt;.tiff
-4.extractUnicode 函数会检查所有已创建的 .box 文件，确定要训练的字符集范围。抽取出的 Unicode 会告诉你一共找到了多少个不重复的字符，这也是一个查询字符的好方法，如果 你漏了字符可以用这个结果快速排查。
-5.之后的三个函数，runShapeClustering、runMfTraining 和 runCtTraining 分别用来创建 文件 shapetable、pfftable 和 normproto。它们会生成每个字符的几何和形状信息，也为 Tesseract 提供计算字符若干可能结果的概率统计信息。
-6.最后，Tesseract 会用之前设置的语言名称对数据文件夹编译出的每个文件进行重命名(例 如，shapetable 被重命名为 eng.shapetable)，然后把所有的文件编译到最终的训练文件 eng. traineddata 中。
-你需要做的，就是用下面的Linux和Mac命令行把刚刚创建的eng.traineddata文件复制到tessdata文件夹里
-<span class="variable">$cp</span> /path/to/data/eng.traineddata <span class="variable">$TESSDATA_PREFIX</span>/tessdata(输入自己的路径)
-
-上面只是对Tesseract库强大的字体训练和识别能力的一个简略的概述。详细阅读Tesseract 的文档
-(https://github.com/tesseract-ocr/tesseract/wiki)。
-<span class="comment">## 获取验证码提交答案</span>
-大多数网站生成的验证码图片都具有以下属性
-• 它们是服务器端的程序动态生成的图片。验证码图片的src属性可能和普通图片不太一 样，比如&lt;img src=<span class="string">"WebForm.aspx?id=8AP85CQKE9TJ"</span>&gt;，但是可以和其他图片一样进行 下载和处理。
-• 图片的答案存储在服务器端的数据库里。
-• 很多验证码都有时间限制，如果你太长时间没解决就会失效。虽然这对网络机器人来说
- 不是什么问题，但是如果你想保留验证码的答案一会儿再使用，或者想通过一些方法延
- 长验证码的有效时限，可能很难成功。
-常用的办法就是，首先把验证码图片下载到硬盘里，清理干净，然后用Tesseract处理图片，最后返回符合网站要求的识别结果
-<span class="comment">### 演示如何用网络机器人破解验证码</span>
-``` bash 
-from urllib.request import urlretrieve
-from urllib.request import urlopen
-from bs4 import BeautifulSoup
-import subprocess
-import requests
-from PIL import Image
-from PIL import ImageOps
-
-def cleanImage(imagePath):
-    image = Image.open(imagePath)
-    image = Image.point(lambda x: 0 <span class="keyword">if</span> x &lt; 143 <span class="keyword">else</span> 255)
-    borderImage = ImageOps.expand(image, border=20, fill=<span class="string">'white'</span>)
-    borderImage.save(imagePath)
-
-html = urlopen(<span class="string">"http://www.pythonscraping.com/humans-only"</span>)
-bsObj = BeautifulSoup(html)
-<span class="comment"># 收集需要处理的表单数据（包括验证码和输入字段）</span>
-imageLocation = bsObj.find(<span class="string">"img"</span>,{<span class="string">"title"</span>: <span class="string">"Image CAPTCHA"</span>})[<span class="string">"src"</span>]
-fromBuildId = bsObj.find(<span class="string">"input"</span>,{<span class="string">"name"</span>: <span class="string">"from_build_id"</span>})[<span class="string">"value"</span>]
-captchaSid = bsObj.find(<span class="string">"input"</span>, {<span class="string">"name"</span>: <span class="string">"captcha_sid"</span>})[<span class="string">"value"</span>]
-captchaToken = bsObj.find(<span class="string">"input"</span>, {<span class="string">"name"</span>: <span class="string">"captcha_token"</span>})[<span class="string">"value"</span>]
-
-captchaUrl = <span class="string">"http://pythonscraping.com"</span>+imageLocation
-urlretrieve(captchaUrl,<span class="string">'captcha.jpg'</span>)
-cleanImage(<span class="string">"captcha,jpg"</span>)
-p = subprocess.Popen([<span class="string">"tesseract"</span>, <span class="string">"captcha.jpg"</span>, <span class="string">"captcha"</span>],stdout=
-                     subprocess.PIPE,stderr=subprocess.PIPE)
-p.wait()
-f = open(<span class="string">"captcha.txt"</span>, <span class="string">'r'</span>)
-
-<span class="comment"># 清理识别结果中的空格和换行符</span>
-captchResponse = f.read().replace(<span class="string">" "</span>,<span class="string">""</span>).replace(<span class="string">"\n"</span>,<span class="string">""</span>)
-<span class="built_in">print</span>(<span class="string">"Capcha solution attempt: "</span> + captchResponse)
-
-<span class="keyword">if</span> len(captchResponse) == 5:
-    params = {<span class="string">"captcha_token"</span>:captchaToken, <span class="string">"captcha_sid"</span>:fromBuildId,
-                <span class="string">"captcha_response"</span>:captchResponse, <span class="string">"name"</span>:<span class="string">"Ryan Mitchell"</span>,
-                <span class="string">"subject"</span>: <span class="string">"I come to seek the Grail"</span>,
-                <span class="string">"comment_body[und][0][value]"</span>:<span class="string">"...and I am definitely not a bot"</span>
-              }
-    r = requests.post(<span class="string">"http://www.pythonscraping.com/comment/reply/10"</span> ,data=params)
-    responseObj = BeautifulSoup(<span class="string">'r.text'</span>)
-    <span class="keyword">if</span> responseObj.find(<span class="string">"div"</span>,{<span class="string">"class"</span>:<span class="string">"messages"</span>}) is not None:
-        <span class="built_in">print</span>(responseObj.find(<span class="string">"div"</span>, {<span class="string">"class"</span>:<span class="string">"messages"</span>}).get_text())
-    <span class="keyword">else</span>:
-        <span class="built_in">print</span>(<span class="string">"There was a problem reading the CAPTCHA correctly"</span>)
-</code></pre>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2008,7 +2010,7 @@ captchResponse = f.read().replace(<span class="string">" "</span>,<span class="s
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">51</span>
+                <span class="site-state-item-count">53</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
