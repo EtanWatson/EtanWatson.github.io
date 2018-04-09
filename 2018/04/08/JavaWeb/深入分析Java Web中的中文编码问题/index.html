@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JavaWeb," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="EWSUN" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="深入分析Java Web中的中文编码问题几种常见的编码格式在Java中需要编码的场景在I/O操作中存在的编码 Reader类是JavaI/O中读字符的父类，InputStream类是读字节的父类，具体的字节到字符的编码实现，InputStreamReader委托StreamDecoder去做，在StreamDecoder解码过程中必须由用户指定Charset编码格式，默认使用本地环境中的字符集 下">
+<meta name="keywords" content="JavaWeb">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深入分析Java Web中的中文编码问题">
+<meta property="og:url" content="http://yoursite.com/2018/04/08/JavaWeb/深入分析Java Web中的中文编码问题/index.html">
+<meta property="og:site_name" content="EWSUN">
+<meta property="og:description" content="深入分析Java Web中的中文编码问题几种常见的编码格式在Java中需要编码的场景在I/O操作中存在的编码 Reader类是JavaI/O中读字符的父类，InputStream类是读字节的父类，具体的字节到字符的编码实现，InputStreamReader委托StreamDecoder去做，在StreamDecoder解码过程中必须由用户指定Charset编码格式，默认使用本地环境中的字符集 下">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/images/15231968450988.jpg">
+<meta property="og:image" content="http://yoursite.com/images/15231968596797.jpg">
+<meta property="og:updated_time" content="2018-04-08T14:18:13.841Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="深入分析Java Web中的中文编码问题">
+<meta name="twitter:description" content="深入分析Java Web中的中文编码问题几种常见的编码格式在Java中需要编码的场景在I/O操作中存在的编码 Reader类是JavaI/O中读字符的父类，InputStream类是读字节的父类，具体的字节到字符的编码实现，InputStreamReader委托StreamDecoder去做，在StreamDecoder解码过程中必须由用户指定Charset编码格式，默认使用本地环境中的字符集 下">
+<meta name="twitter:image" content="http://yoursite.com/images/15231968450988.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/04/08/JavaWeb/深入分析Java Web中的中文编码问题/"/>
+
+
+
+
+
+  <title>深入分析Java Web中的中文编码问题 | EWSUN</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">EWSUN</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-schedule">
+          <a href="/schedule/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br />
+            
+            日程表
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/08/JavaWeb/深入分析Java Web中的中文编码问题/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EtanWatson">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EWSUN">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">深入分析Java Web中的中文编码问题</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-08T22:13:38+08:00">
+                2018-04-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaWeb/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaWeb</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="深入分析Java-Web中的中文编码问题"><a href="#深入分析Java-Web中的中文编码问题" class="headerlink" title="深入分析Java Web中的中文编码问题"></a>深入分析Java Web中的中文编码问题</h1><h2 id="几种常见的编码格式"><a href="#几种常见的编码格式" class="headerlink" title="几种常见的编码格式"></a>几种常见的编码格式</h2><h2 id="在Java中需要编码的场景"><a href="#在Java中需要编码的场景" class="headerlink" title="在Java中需要编码的场景"></a>在Java中需要编码的场景</h2><h3 id="在I-O操作中存在的编码"><a href="#在I-O操作中存在的编码" class="headerlink" title="在I/O操作中存在的编码"></a>在I/O操作中存在的编码</h3><p><img src="/images/15231968450988.jpg" alt=""></p>
+<p>Reader类是JavaI/O中读字符的父类，InputStream类是读字节的父类，具体的字节到字符的编码实现，InputStreamReader委托StreamDecoder去做，在StreamDecoder解码过程中必须由用户指定Charset编码格式，默认使用本地环境中的字符集</p>
+<p>下面一段代码实现了文件读写操作<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">todo：后面增加代码</div><div class="line">String file = &quot;c:/stream.txt&quot;;</div></pre></td></tr></table></figure></p>
+<h3 id="在内存操作中的编码"><a href="#在内存操作中的编码" class="headerlink" title="在内存操作中的编码"></a>在内存操作中的编码</h3><ol>
+<li><p>String类提供转换到字节的方法 </p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">String s = &quot;这是一段中文字符串;          </div><div class="line">byte[] b = s.getBytes(&quot;UTF-8&quot;);</div><div class="line">String n = new String(b, &quot;UTF-8&quot;);</div></pre></td></tr></table></figure>
+</li>
+<li><p>Charset提供encode和decode，分别对应char[]到byte[]的编码和byte[]到char[]的编码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Charest charset = Charset.forName(&quot;UTF-8&quot;);</div><div class="line">ByteBuffer byteBuffer = charset.encode(string）</div><div class="line">CharsetBuffer charBuffet = charset.decode(byteBuffer);</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol>
+<li><p>ByteBuffer类，提供一种char和byte之间的软转换，它们之间转换不需要编码与解码，只是把一个16bit的char拆分为2个8bit的byte，它们的实际值没有修改，仅仅是数据的类型做了转换</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ByteBuffer heapByteBuffer = ByteBuffer.allocate(1024)</div><div class="line">ByteBuffer byteBuffer = heapByteBuffer.putChar(c)</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="在java中如何编解码"><a href="#在java中如何编解码" class="headerlink" title="在java中如何编解码"></a>在java中如何编解码</h2><p>以“I am 宇子”为例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">public static void encode()&#123;</div><div class="line">    String name = &quot;I am 宇子&quot;;</div><div class="line">    toHex(name.toCharArray()); //以16进制输出</div><div class="line">    try&#123;</div><div class="line">        byte[] iso8859 = name.getBytes(&quot;ISO-8859-1&quot;);</div><div class="line">        toHex(iso8859);</div><div class="line">        byte[] gb2312 = name.getBytes(&quot;GB2312&quot;);</div><div class="line">        toHex(gb2312);</div><div class="line">        byte[] gbk = name.getBytes(&quot;GBK&quot;);</div><div class="line">        toHex(gbk);</div><div class="line">        byte[] utf16 = name.getBytes(&quot;UTF-16&quot;);</div><div class="line">        toHex(utf16);</div><div class="line">        byte[] utf8 = name.getBytes(&quot;utf-8&quot;);</div><div class="line">        toHex(utf8);</div><div class="line">    &#125;catch(UnsupportedEncodingException e)&#123;</div><div class="line">        e.printStackTrace();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>java编码时序图<br><img src="/images/15231968596797.jpg" alt=""></p>
+<h3 id="对几种编码格式比较"><a href="#对几种编码格式比较" class="headerlink" title="对几种编码格式比较"></a>对几种编码格式比较</h3><ol>
+<li>GBK与GB2312规则类似，但是GBK范围更大</li>
+<li>UTF-16转换简单，适合在本地磁盘和内存之间使用</li>
+<li>UTF-8对单个字符校验，适合在网络上传输</li>
+</ol>
+<h2 id="在java-web中涉及的编解码"><a href="#在java-web中涉及的编解码" class="headerlink" title="在java web中涉及的编解码"></a>在java web中涉及的编解码</h2><p><strong>看一段文本的大小，只看字符本身是没有意义的，即使一样的字符，采用不同的编码最终存储的大小也会不同</strong><br>例如 整型数字1234567当做字符来存储，采用UTF-8编码占用7个字节，采用UTF-16占用16个字节，采用int型占用4个字节</p>
+<ol>
+<li>从客户端发送一个HTTP请求，需要编码的地方是URL，Cookie，Paramiter</li>
+<li>服务端收到HTTP请求后，URL，Cookie，POST表单中的数据需要解码</li>
+<li>服务端还可能读取本地或者网络中的数据库，这些数据可能存在编码问题</li>
+</ol>
+<h3 id="URL的编解码"><a href="#URL的编解码" class="headerlink" title="URL的编解码"></a>URL的编解码</h3><p>例如：URL为<br>http:( <strong><em>scheme</em></strong> )//localhost( <strong><em>domain</em></strong> ):8080( <strong><em>port</em></strong> )/example( <strong><em>contextPath</em></strong> )/servlets/servlet( <strong><em>ServletPath</em></strong> )/宇子( <strong><em>PathInfo</em></strong> )?author=宇子(<strong><em>QueryString</em></strong>)<br>URI：/example/servlets/servlet/宇子</p>
+<blockquote>
+<p><strong><em>以tomcat作为Servlet Engine为例：</em></strong><br>port：对应在Tomcat的 &lt; Connector prot = “8080”&gt;中配置<br>ContextPath:在&lt; Contextpath=”/example/“&gt;中配置<br>ServletPath：在web.xml的&lt; url-pattern&gt;中配置<br>PathInfo:就是我们请求的具体的Servlet<br>QueryString：就是要传递的参数（这里是讲Get）</p>
+</blockquote>
+<p>web.xml</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;servlet-mapping&gt;</div><div class="line">    &lt;servlet-name&gt;Example&lt;/servlet-name&gt; </div><div class="line">    &lt;url-pattern&gt;/servlets/servlet/*&lt;url-pattern&gt;</div><div class="line">&lt;/servlet-mapping&gt;</div></pre></td></tr></table></figure>
+<p>解析请求的URL是在org.apache.coyote.HTTP11.InternalInputBuffer的parseRequestLine方法中进行的，让后将其byte[]设置到org.apache.coyote.Request的相应属性中，这里的URL仍是byte格式，转换成char是在org.apache.catalina.connector.CoyoteAdpter的convertURI方法中完成的。</p>
+<blockquote>
+<p>URL中的URI部分进行解码的字符集是在connector的&lt; Connector URIEncoding=”UTF-8”/&gt;中定义的，如果没有定义，那么默认使用ISO-8859-1<br>QueryString:(Get)是作为Parameters保存的，都通过request.getParameter获取数值，对它们的解码是在在该方法第一次被调用时进行的，该方法被调用时会调用org.apache.catalina.connector.Request的parseParameter方法，这个方法会对Get和Post方式传递的参数进行解码，但是它们的解码字符集有可能不一样      </p>
+</blockquote>
+<p>QueryString 的解码字符集</p>
+<ul>
+<li>Header中的ContentType定义的Charset   </li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&lt; Connector URIEncoding = &quot;UTF-8&quot;, UseBodyEncodingForURI =&quot;true&quot;&gt; //设置为true    </div><div class="line"># 仅仅是对QueryString使用BodyEncoding解码，而不是整个URI</div></pre></td></tr></table></figure>
+<ul>
+<li>默认是ISO8859-1</li>
+</ul>
+<h3 id="HTTP-Header的编解码"><a href="#HTTP-Header的编解码" class="headerlink" title="HTTP Header的编解码"></a>HTTP Header的编解码</h3><p>如Cookie，redirectPath可能会存在编码问题</p>
+<ul>
+<li>解码是在调用request.getHeader时进行的</li>
+<li>如果请求的Header项没有解码，则调用MessageBytes的toString方法，这个方法对从byte到char转化的编码默认使用ISO-8859-1</li>
+<li>如果非要在Header中传递非ASSCII字符，先将这些字符用org.apache.catalina.util.URLEncoder编码，再添加到Header中，我们使用的时候，再按照相应的字符集解码即可</li>
+</ul>
+<h3 id="POST表单中的编解码"><a href="#POST表单中的编解码" class="headerlink" title="POST表单中的编解码"></a>POST表单中的编解码</h3><ul>
+<li>通过HTTP BODY传递</li>
+<li>浏览器首先根据ContentType中的Charset编码格式进行编码</li>
+<li>服务器也用ContentType中的字符集进行解码</li>
+<li>可以通过request.setCharacterEncoding(charset)来设置</li>
+</ul>
+<blockquote>
+<p>注意：第一次调用request.getParameter方法之前就设置request.setCharacterEncoding(charset),否者表单可能会出现乱码<br>针对multipart/from-data类型的参数，上传文件以字节流的方式传输到服务器的本地临时目录，这个过程没有涉及编解码，<strong><em>真正编码是在讲文件内容添加到parameters中</em></strong>     </p>
+</blockquote>
+<h3 id="HTTP-BODY的编解码"><a href="#HTTP-BODY的编解码" class="headerlink" title="HTTP BODY的编解码"></a>HTTP BODY的编解码</h3><ul>
+<li>可以通过response.setCharacterEncoding来设置，它会覆盖request.setCharacterEncoding的值，并通过Header的Content-Type返回客户端</li>
+<li>如果Content-Type没有是在Charset，浏览器根据HTML的&lt; meta HTTP-equiv = “Content-Type” content=”text/html”;charset=GBK”/&gt;中的charset来解码</li>
+<li>最后会用默认编码来解码</li>
+<li>JDBC来存取数据时要和数据的内置编码保持一致，可以通过URL来指定，例如：MYSQL: url=”jdbc:mysql://localhost:3306/DB?useUnicode=true&amp;characterEncoding=GBK”</li>
+</ul>
+<h2 id="在JS中的编码问题"><a href="#在JS中的编码问题" class="headerlink" title="在JS中的编码问题"></a>在JS中的编码问题</h2><h3 id="外部引入js文件"><a href="#外部引入js文件" class="headerlink" title="外部引入js文件"></a>外部引入js文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;script src=&quot;....js&quot; charset=&quot;gbk&quot;/&gt;</div></pre></td></tr></table></figure>
+<p>如果没有设置,则使用当前页面默认的字符集解析这个JS文件</p>
+<h3 id="JS的URL编码"><a href="#JS的URL编码" class="headerlink" title="JS的URL编码"></a>JS的URL编码</h3><ol>
+<li>endodeURI()</li>
+<li>encodeURIComponent()<br>这个函数通常用于将一个URL当做参数放在另外一个URL中</li>
+<li><p>java与JS编码问题</p>
+<ol>
+<li>java端处理URL编码有两个类，分别是java.net.URLEncoder和java.net.URLDecoder</li>
+<li><p>js默认编码是UTF-8，而服务端的中文有可能是GBK或者GB2312，解决办法是</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">encodeURIComponent(encodeURIComponent(str))</div></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ol>
+<h3 id="其他需要编码的地方"><a href="#其他需要编码的地方" class="headerlink" title="其他需要编码的地方"></a>其他需要编码的地方</h3><ul>
+<li>XML</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</div></pre></td></tr></table></figure>
+<ul>
+<li>Velocity模板设置编码格式如下</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">services.VelocityService.input.encoding=UTF-8</div></pre></td></tr></table></figure>
+<ul>
+<li>JSP</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;%@page contentType=&quot;text/html&quot;;charset=UTF-8 %&gt;</div></pre></td></tr></table></figure>
+<h2 id="常见问题分析"><a href="#常见问题分析" class="headerlink" title="常见问题分析"></a>常见问题分析</h2><h3 id="中文变成了看不懂的字符"><a href="#中文变成了看不懂的字符" class="headerlink" title="中文变成了看不懂的字符"></a>中文变成了看不懂的字符</h3><p>如果一个中文变成了两个乱码字符，这是编码字符集和解码字符集不一致导致的</p>
+<h3 id="一个汉字变成一个问号"><a href="#一个汉字变成一个问号" class="headerlink" title="一个汉字变成一个问号"></a>一个汉字变成一个问号</h3><p>不在码值范围内的字符会统一用3f表示，也就是常说的<strong><em>黑洞</em></strong></p>
+<h3 id="一个汉字变成了两个问号"><a href="#一个汉字变成了两个问号" class="headerlink" title="一个汉字变成了两个问号"></a>一个汉字变成了两个问号</h3><p>一般是中文经过多次编码</p>
+<h3 id="一种不正常的正确编码"><a href="#一种不正常的正确编码" class="headerlink" title="一种不正常的正确编码"></a>一种不正常的正确编码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">String value= String(request.getParameter(name).getBytes(&quot;ISO-8859-1&quot;),&quot;GBK&quot;);</div></pre></td></tr></table></figure>
+<blockquote>
+<p>ISO-8859-1字符集的编码范围是0000-00ff,正好和一个字节的范围相对应，这就使得刚开始用GBK编码的字符在用ISO-8859-1解码的时候，将两字节的中文拆分成两个欧文字符，再用ISO-8859-1编码，会还原原来字符的字节，所以再用GBK解码，就可以得到正确的汉字</p>
+</blockquote>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ol>
+<li>解决编码问题，首先要搞清楚哪些地方会引起从字符到字节的转换</li>
+<li>搞清楚操作这些数据的框架和系统是如何控制这些编码的</li>
+<li>正确设置编码格式，避免使用软件默认的或者操作系统平台默认的编码</li>
+</ol>
+<blockquote>
+<p>上文摘自深入分析JAVA WEB 技术内幕</p>
+<hr>
+<p><strong><em>做一个有文艺气息的码农 ^ _ ^</em></strong></p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaWeb/" rel="tag"># JavaWeb</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/08/设计模式/设计模式之简单工厂模式/" rel="next" title="设计模式之简单工厂模式">
+                <i class="fa fa-chevron-left"></i> 设计模式之简单工厂模式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/08/JavaWeb/深入分析Java I:O的工作机制/" rel="prev" title="深入分析Java I/O的工作机制">
+                深入分析Java I/O的工作机制 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          
+            <img class="site-author-image" itemprop="image"
+              src="/images/header.png"
+              alt="EtanWatson" />
+          
+            <p class="site-author-name" itemprop="name">EtanWatson</p>
+            <p class="site-description motion-element" itemprop="description">有所舍，有所爱，做一个感性的码农</p>
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives/">
+            
+                <span class="site-state-item-count">65</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#深入分析Java-Web中的中文编码问题"><span class="nav-number">1.</span> <span class="nav-text">深入分析Java Web中的中文编码问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#几种常见的编码格式"><span class="nav-number">1.1.</span> <span class="nav-text">几种常见的编码格式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在Java中需要编码的场景"><span class="nav-number">1.2.</span> <span class="nav-text">在Java中需要编码的场景</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#在I-O操作中存在的编码"><span class="nav-number">1.2.1.</span> <span class="nav-text">在I/O操作中存在的编码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在内存操作中的编码"><span class="nav-number">1.2.2.</span> <span class="nav-text">在内存操作中的编码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在java中如何编解码"><span class="nav-number">1.3.</span> <span class="nav-text">在java中如何编解码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#对几种编码格式比较"><span class="nav-number">1.3.1.</span> <span class="nav-text">对几种编码格式比较</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在java-web中涉及的编解码"><span class="nav-number">1.4.</span> <span class="nav-text">在java web中涉及的编解码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#URL的编解码"><span class="nav-number">1.4.1.</span> <span class="nav-text">URL的编解码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP-Header的编解码"><span class="nav-number">1.4.2.</span> <span class="nav-text">HTTP Header的编解码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#POST表单中的编解码"><span class="nav-number">1.4.3.</span> <span class="nav-text">POST表单中的编解码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP-BODY的编解码"><span class="nav-number">1.4.4.</span> <span class="nav-text">HTTP BODY的编解码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在JS中的编码问题"><span class="nav-number">1.5.</span> <span class="nav-text">在JS中的编码问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#外部引入js文件"><span class="nav-number">1.5.1.</span> <span class="nav-text">外部引入js文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JS的URL编码"><span class="nav-number">1.5.2.</span> <span class="nav-text">JS的URL编码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他需要编码的地方"><span class="nav-number">1.5.3.</span> <span class="nav-text">其他需要编码的地方</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常见问题分析"><span class="nav-number">1.6.</span> <span class="nav-text">常见问题分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#中文变成了看不懂的字符"><span class="nav-number">1.6.1.</span> <span class="nav-text">中文变成了看不懂的字符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一个汉字变成一个问号"><span class="nav-number">1.6.2.</span> <span class="nav-text">一个汉字变成一个问号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一个汉字变成了两个问号"><span class="nav-number">1.6.3.</span> <span class="nav-text">一个汉字变成了两个问号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一种不正常的正确编码"><span class="nav-number">1.6.4.</span> <span class="nav-text">一种不正常的正确编码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">1.7.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">EtanWatson</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.2</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
