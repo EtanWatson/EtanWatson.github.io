@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-04-08T14:18:02.095Z</updated>
+  <updated>2018-04-09T02:06:31.671Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title></title>
+    <link href="http://yoursite.com/2018/04/09/%E4%BD%BF%E7%94%A8VirtualBox%E6%90%AD%E5%BB%BAHadoop%E9%9B%86%E7%BE%A4%EF%BC%88%E4%B8%80%EF%BC%89/"/>
+    <id>http://yoursite.com/2018/04/09/使用VirtualBox搭建Hadoop集群（一）/</id>
+    <published>2018-04-09T02:06:31.671Z</published>
+    <updated>2018-04-09T02:06:31.671Z</updated>
+    
+    <content type="html"><![CDATA[<p># </p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;# &lt;/p&gt;
+
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>深入分析Java I/O的工作机制</title>
@@ -472,31 +494,6 @@
     
     
       <category term="Spring" scheme="http://yoursite.com/tags/Spring/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>java性能优化-JVM概述（一）</title>
-    <link href="http://yoursite.com/2018/02/09/java%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96-JVM%E6%A6%82%E8%BF%B0%EF%BC%88%E4%B8%80%EF%BC%89/"/>
-    <id>http://yoursite.com/2018/02/09/java性能优化-JVM概述（一）/</id>
-    <published>2018-02-09T10:22:13.000Z</published>
-    <updated>2018-03-31T03:18:21.658Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="HotSpot-VM的基本架构"><a href="#HotSpot-VM的基本架构" class="headerlink" title="HotSpot VM的基本架构"></a>HotSpot VM的基本架构</h2><p>垃圾收集器和JIT是可插拔的，HotSpot VM运行时系统为HotSpot JIT编译器和垃圾收集器提供服务和通用API</p><h2 id="HotSpot-VM运行时"><a href="#HotSpot-VM运行时" class="headerlink" title="HotSpot VM运行时"></a>HotSpot VM运行时</h2><h3 id="命令行选项"><a href="#命令行选项" class="headerlink" title="命令行选项"></a>命令行选项</h3><ul><li>标准选项</li><li>非标准选项（-X:+(-)）</li><li>非稳定选项（-XX:+(-)）<h3 id="VM生命周期"><a href="#VM生命周期" class="headerlink" title="VM生命周期"></a>VM生命周期</h3><strong>启动</strong></li><li>解析命令行选项</li><li>设置堆的大小和JIT编译器（默认自动优化）</li><li>设定环境变量如LD_LIBRARY_PATH和CLASSPATH</li><li>如果命令行有-jar选项，启动器则从指定JAR的manifest中查找Main—Class，否则从命令行读取Main—Class</li><li>使用标准Java本地接口</li></ul>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h2 id=&quot;HotSpot-VM的基本架构&quot;&gt;&lt;a href=&quot;#HotSpot-VM的基本架构&quot; class=&quot;headerlink&quot; title=&quot;HotSpot VM的基本架构&quot;&gt;&lt;/a&gt;HotSpot VM的基本架构&lt;/h2&gt;&lt;p&gt;垃圾收集器和JIT是可插拔的，Hot
-      
-    
-    </summary>
-    
-      <category term="JVM性能相关" scheme="http://yoursite.com/categories/JVM%E6%80%A7%E8%83%BD%E7%9B%B8%E5%85%B3/"/>
-    
-    
-      <category term="JVM性能相关" scheme="http://yoursite.com/tags/JVM%E6%80%A7%E8%83%BD%E7%9B%B8%E5%85%B3/"/>
     
   </entry>
   
