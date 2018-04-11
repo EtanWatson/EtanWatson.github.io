@@ -310,6 +310,175 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/01/Spring/我的Spring之路（一）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EtanWatson">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EWSUN">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/01/Spring/我的Spring之路（一）/" itemprop="url">我的Spring之路（一）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-01T08:27:35+08:00">
+                2018-03-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>之前有学习过一些Spring，但是总得来说就是太肤浅，只要有你不知道的错误，解决起来还是特别棘手，现在趁着自己想学习一下Spring-boot，在熟悉一下Spring4.x</p>
+<h2 id="整理一些以前没有了解到的知识"><a href="#整理一些以前没有了解到的知识" class="headerlink" title="整理一些以前没有了解到的知识"></a>整理一些以前没有了解到的知识</h2><h3 id="maven中心库中没有jar的处理方式（如oracle）"><a href="#maven中心库中没有jar的处理方式（如oracle）" class="headerlink" title="maven中心库中没有jar的处理方式（如oracle）"></a>maven中心库中没有jar的处理方式（如oracle）</h3><pre><code>你需要通过以下方式将
+</code></pre><h3 id="全局配置使用java配置（如数据库相关配置，MVC相关配置），业务Bean的配置使用注解配置（-Service、-Component、-Repository、-Controller）"><a href="#全局配置使用java配置（如数据库相关配置，MVC相关配置），业务Bean的配置使用注解配置（-Service、-Component、-Repository、-Controller）" class="headerlink" title="全局配置使用java配置（如数据库相关配置，MVC相关配置），业务Bean的配置使用注解配置（@Service、@Component、@Repository、@Controller）"></a>全局配置使用java配置（如数据库相关配置，MVC相关配置），业务Bean的配置使用注解配置（@Service、@Component、@Repository、@Controller）</h3><h2 id="AOP面向切面编程"><a href="#AOP面向切面编程" class="headerlink" title="AOP面向切面编程"></a>AOP面向切面编程</h2><ul>
+<li>使用@Aspect声明一个切面</li>
+<li>使用@After、Before、Around定义建言（advice），可直接将拦截规则（切点）作为参数。</li>
+<li>@PointCut：用来专门定义拦截规则，然后在上面参数中调用</li>
+<li>JoinPoint（连接点）<h2 id="Bean的Scope"><a href="#Bean的Scope" class="headerlink" title="Bean的Scope"></a>Bean的Scope</h2><h3 id="Scope描述的是Spring容器如何新建Bean的实例的，Spring的Scope有以下几种，通过-Scope注解来实现"><a href="#Scope描述的是Spring容器如何新建Bean的实例的，Spring的Scope有以下几种，通过-Scope注解来实现" class="headerlink" title="Scope描述的是Spring容器如何新建Bean的实例的，Spring的Scope有以下几种，通过@Scope注解来实现"></a>Scope描述的是Spring容器如何新建Bean的实例的，Spring的Scope有以下几种，通过@Scope注解来实现</h3></li>
+<li>Singleton：全容器共享一个实例</li>
+<li>Prototype：每次调用新建一个Bean的实例</li>
+<li>Request：Web项目中，给每个http request新建一个Bean实例</li>
+<li>Session：Web项目中，给每个http session新建一个Bean实例</li>
+<li>GlobalSession：只在portal应用中有用<h2 id="Spring-EL和资源调用"><a href="#Spring-EL和资源调用" class="headerlink" title="Spring EL和资源调用"></a>Spring EL和资源调用</h2><h3 id="Spring主要在注解-Value的参数中使用表达式"><a href="#Spring主要在注解-Value的参数中使用表达式" class="headerlink" title="Spring主要在注解@Value的参数中使用表达式"></a>Spring主要在注解@Value的参数中使用表达式</h3></li>
+<li>注入普通字符串</li>
+<li>注入操作系统属性</li>
+<li>注入表达式运算结果</li>
+<li>注入其他Bean的属性</li>
+<li>注入文件内容</li>
+<li>注入网址内容</li>
+<li>注入属性文件<h2 id="Bean的初始化和销毁"><a href="#Bean的初始化和销毁" class="headerlink" title="Bean的初始化和销毁"></a>Bean的初始化和销毁</h2><h3 id="经常会遇到在Bean在使用之前或者之后做一些必要的操作，使用方式"><a href="#经常会遇到在Bean在使用之前或者之后做一些必要的操作，使用方式" class="headerlink" title="经常会遇到在Bean在使用之前或者之后做一些必要的操作，使用方式"></a>经常会遇到在Bean在使用之前或者之后做一些必要的操作，使用方式</h3></li>
+<li>java配置方式 @Bean的initMethod和destroyMethod</li>
+<li>注解方式 利用JSR-250 @PostConstruct 和 @PreDestroy<h2 id="Profile"><a href="#Profile" class="headerlink" title="Profile"></a>Profile</h2><h3 id="在不同环境下使用不同的配置提供了支持"><a href="#在不同环境下使用不同的配置提供了支持" class="headerlink" title="在不同环境下使用不同的配置提供了支持"></a>在不同环境下使用不同的配置提供了支持</h3></li>
+<li>通过设定Environment的ActiveProfiles来设定当前context需要使用的配置环境，在开发中使用@Profile注解类或者方法，达到在不同情况下选择实例化不同的Bean</li>
+<li>通过设定JVM的spring.profiles.avtive参数来配置</li>
+<li>Web项目设置在Servlet的context parameter中<h2 id="事件"><a href="#事件" class="headerlink" title="事件"></a>事件</h2><h3 id="为Bean与Bean组件的消息通信提供了支持，流程如下："><a href="#为Bean与Bean组件的消息通信提供了支持，流程如下：" class="headerlink" title="为Bean与Bean组件的消息通信提供了支持，流程如下："></a>为Bean与Bean组件的消息通信提供了支持，流程如下：</h3></li>
+<li>自定义事件，集成ApplicationEvent</li>
+<li>定义事件监听器，实现ApplicationListener</li>
+<li>使用容器发布事件</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/09/JVM性能相关/java性能优化-JVM概述（一）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -413,6 +582,172 @@
 <li>设定环境变量如LD_LIBRARY_PATH和CLASSPATH</li>
 <li>如果命令行有-jar选项，启动器则从指定JAR的manifest中查找Main—Class，否则从命令行读取Main—Class</li>
 <li>使用标准Java本地接口</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/09/JVM性能相关/java性能优化-操作系统性能监控（一）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EtanWatson">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EWSUN">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/02/09/JVM性能相关/java性能优化-操作系统性能监控（一）/" itemprop="url">java性能优化-操作系统性能监控（一）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-09T18:22:13+08:00">
+                2018-02-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JVM性能相关/" itemprop="url" rel="index">
+                    <span itemprop="name">JVM性能相关</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="java性能优化-操作系统性能监控（一）"><a href="#java性能优化-操作系统性能监控（一）" class="headerlink" title="java性能优化-操作系统性能监控（一）"></a>java性能优化-操作系统性能监控（一）</h1><h2 id="改善性能的3种活动"><a href="#改善性能的3种活动" class="headerlink" title="改善性能的3种活动"></a>改善性能的3种活动</h2><ul>
+<li>性能监控（非侵入式）</li>
+<li>性能分析（侵入式）</li>
+<li>性能调优：为改善应用响应性或吞吐量而更改参数（Tune-able）、源代码或者属性配置的活动。<h2 id="CPU使用率"><a href="#CPU使用率" class="headerlink" title="CPU使用率"></a>CPU使用率</h2></li>
+<li>尽可能降低系统态CPU使用率</li>
+<li>减少停滞或者改善CPu告诉缓存使用率，从而减少CPU在等待内存数据时浪费的时钟周期<h2 id="监控CPU使用率：Linux"><a href="#监控CPU使用率：Linux" class="headerlink" title="监控CPU使用率：Linux"></a>监控CPU使用率：Linux</h2><h3 id="GNOME-System-Monitor"><a href="#GNOME-System-Monitor" class="headerlink" title="GNOME System Monitor"></a>GNOME System Monitor</h3><h3 id="xosview"><a href="#xosview" class="headerlink" title="xosview"></a>xosview</h3><h2 id="命令行监控CPU使用率：Linux和Solaris"><a href="#命令行监控CPU使用率：Linux和Solaris" class="headerlink" title="命令行监控CPU使用率：Linux和Solaris"></a>命令行监控CPU使用率：Linux和Solaris</h2></li>
+<li>vmstat</li>
+<li>mpstat</li>
+<li>top<h2 id="CPU调度程序运行队列"><a href="#CPU调度程序运行队列" class="headerlink" title="CPU调度程序运行队列"></a>CPU调度程序运行队列</h2><em>一般性指导原则：如果在很长一段时间里，运行队列的长度一直都超过虚拟处理器的个数的1倍，就需要关注了，如果很长一段时间里，运行队列的长度达到虚拟处理器个数的3~4倍或更高，则需要立刻引起注意或采取行动</em><h3 id="监控CPU调度程序运行队列：Linux"><a href="#监控CPU调度程序运行队列：Linux" class="headerlink" title="监控CPU调度程序运行队列：Linux"></a>监控CPU调度程序运行队列：Linux</h3></li>
+</ul>
+<ul>
+<li>vmstat 第一列（运行队列长度）<h2 id="内存使用率"><a href="#内存使用率" class="headerlink" title="内存使用率"></a>内存使用率</h2></li>
+</ul>
+<ul>
+<li><strong>系统在进行页面交换或使用虚拟内存时，java应用或JVM会表现出明显的性能问题</strong></li>
+<li><strong>JVM垃圾收集器在系统页面交换时的性能也很差</strong><h3 id="监控内存使用率：Linux（vmstat）"><a href="#监控内存使用率：Linux（vmstat）" class="headerlink" title="监控内存使用率：Linux（vmstat）"></a>监控内存使用率：Linux（vmstat）</h3></li>
+<li>free列监控页面交换</li>
+<li>si、so内存页面换入和换出量<h2 id="监控锁竞争Linux（sysstat包中的pidstat命令监控竞争锁）"><a href="#监控锁竞争Linux（sysstat包中的pidstat命令监控竞争锁）" class="headerlink" title="监控锁竞争Linux（sysstat包中的pidstat命令监控竞争锁）"></a>监控锁竞争Linux（sysstat包中的pidstat命令监控竞争锁）</h2></li>
+<li>pidstat -w 中的cswch/s(不包含所有的上下文切换)，浪费掉的时钟周期，可以有pidstat -w的让步式切换数除以虚拟处理器的数目而得</li>
+<li><code>pidstat -w -I -p 9391 5</code> 每五秒监控进程id为9391的JAVA应用程序</li>
+<li>(cswch/s) / 2(cpu内核数) * 8000 / 3.0G(cpu主频)<h3 id="隔离竞争锁-Oracle-Solaris-Studio-Performance-Analyzer工具"><a href="#隔离竞争锁-Oracle-Solaris-Studio-Performance-Analyzer工具" class="headerlink" title="隔离竞争锁 Oracle Solaris Studio Performance Analyzer工具"></a>隔离竞争锁 Oracle Solaris Studio Performance Analyzer工具</h3><h3 id="监控抢占式上下文-pidstat-w（icsw）"><a href="#监控抢占式上下文-pidstat-w（icsw）" class="headerlink" title="监控抢占式上下文 pidstat -w（icsw）"></a>监控抢占式上下文 pidstat -w（icsw）</h3><h3 id="监控线程迁移"><a href="#监控线程迁移" class="headerlink" title="监控线程迁移"></a>监控线程迁移</h3><h2 id="网络I-O使用率（netstat）"><a href="#网络I-O使用率（netstat）" class="headerlink" title="网络I/O使用率（netstat）"></a>网络I/O使用率（netstat）</h2><h3 id="nicstat工具"><a href="#nicstat工具" class="headerlink" title="nicstat工具"></a>nicstat工具</h3><h3 id="应用性改进的考虑"><a href="#应用性改进的考虑" class="headerlink" title="应用性改进的考虑"></a>应用性改进的考虑</h3></li>
+<li><strong>单次读写数据量小而网络读写量大的应用会消耗大量的系统态CPU</strong></li>
+<li><strong>使用非阻塞的JAVA NIO而不是阻塞的java.net.Socket</strong><h2 id="磁盘I-O使用率（iostat-xm-5）"><a href="#磁盘I-O使用率（iostat-xm-5）" class="headerlink" title="磁盘I/O使用率（iostat -xm 5）"></a>磁盘I/O使用率（iostat -xm 5）</h2></li>
+<li>使用缓冲数据结构 BufferedInputStream BufferedOutputStream<h2 id="其他命令行工具（sar）"><a href="#其他命令行工具（sar）" class="headerlink" title="其他命令行工具（sar）"></a>其他命令行工具（sar）</h2></li>
 </ul>
 
           
@@ -1705,315 +2040,6 @@ PATH=“**/**/**/chromedriver<span class="variable">${PATH}</span>”
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/13/python数据采集/python数据收集（用爬虫测试网站）/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="EtanWatson">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/header.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="EWSUN">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/10/13/python数据采集/python数据收集（用爬虫测试网站）/" itemprop="url">python数据收集（用爬虫测试网站）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-13T10:52:24+08:00">
-                2017-10-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/python数据收集/" itemprop="url" rel="index">
-                    <span itemprop="name">python数据收集</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="用爬虫测试网站"><a href="#用爬虫测试网站" class="headerlink" title="用爬虫测试网站"></a>用爬虫测试网站</h1><h2 id="Python单元测试"><a href="#Python单元测试" class="headerlink" title="Python单元测试"></a>Python单元测试</h2><p>Python的测试单元模块unittest，只要先导入模块然后继承unittest.TestCase类，就可以实现以下的功能：<br>• 为每个单元测试的开始和结束提供setUp和tearDown函数<br>• 提供不同类型的“断言”语句让测试成功或失败<br>• 把所有以test<em>开头的函数当作单元测试运行，忽略不带test</em>的函数</p>
-<h3 id="一个简单的例子"><a href="#一个简单的例子" class="headerlink" title="一个简单的例子"></a>一个简单的例子</h3><pre><code class="bash"><span class="string">""</span><span class="string">"一个简单的unit test"</span><span class="string">""</span>
-import unittest
-
-class TestAddition(unittest.TestCase):
-    def setUp(self):
-        <span class="built_in">print</span>(<span class="string">"Setting up the test"</span>)
-
-    def tearDown(self):
-        <span class="built_in">print</span>(<span class="string">"Tearing down the test"</span>)
-
-    def test_twoPlusTwo(self):
-        total = 2+2
-        self.assertEqual(4, total)
-
-<span class="keyword">if</span> __name__ == <span class="string">'__name__'</span>:
-    unittest.main()
-</code></pre>
-<p>虽然 setUp 和 tearDown 函数在这里并没有实现可用的功能，但是仍然达到了演示的目的。 需要注意的是，这两个函数在每个测试的开始和结束都会运行一次，而不是把类中所有测 试作为一个整体在开始或结束时各运行一次。</p>
-<h3 id="测试维基百科"><a href="#测试维基百科" class="headerlink" title="测试维基百科"></a>测试维基百科</h3>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/11/python数据采集/python数据收集-避开采集陷阱/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="EtanWatson">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/header.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="EWSUN">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/10/11/python数据采集/python数据收集-避开采集陷阱/" itemprop="url">python数据收集(避开采集陷阱)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-11T18:46:00+08:00">
-                2017-10-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/python数据收集/" itemprop="url" rel="index">
-                    <span itemprop="name">python数据收集</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="避开采集陷阱"><a href="#避开采集陷阱" class="headerlink" title="避开采集陷阱"></a>避开采集陷阱</h1><h2 id="道德规范"><a href="#道德规范" class="headerlink" title="道德规范"></a>道德规范</h2><h2 id="让网络-机器人看起来更像人类用户"><a href="#让网络-机器人看起来更像人类用户" class="headerlink" title="让网络 机器人看起来更像人类用户"></a>让网络 机器人看起来更像人类用户</h2><h3 id="修改请求头"><a href="#修改请求头" class="headerlink" title="修改请求头"></a>修改请求头</h3><p>只有下面的七个字段被大多数浏览器用来初始化所有网络请求<br>Host          <a href="https://www.google.com/" target="_blank" rel="external">https://www.google.com/</a><br>Connection    keep-alive<br>Accept    text/html，application/xhtml+xml，application/xml;q=0.9，image/webp，<em>/</em>;q=0.8<br>User-Agent Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_5) AppleWebKit/537.36 (KHTML, like        Gecko) Chrome/39.0.2171.95 Safari/537.36<br>Referrer   <a href="https://www.google.com/" target="_blank" rel="external">https://www.google.com/</a><br>Accept-Encoding  gzip，deflate，sdch<br>Accept-Language  en-US,en;q=0.8</p>
-<p>经典的Python爬虫在使用urllib标准库时，都会发送如下请求<br>Accept-Encoding identity<br>User-Agent     Python-urllib/3.4</p>
-<h4 id="示例代码"><a href="#示例代码" class="headerlink" title="示例代码"></a>示例代码</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">import requests</div><div class="line">from bs4 import BeautifulSoup</div><div class="line">session = requests.Session()</div><div class="line">headers = &#123;<span class="string">"User-Agent"</span>:<span class="string">"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) "</span></div><div class="line">                        <span class="string">"AppleWebKit/537.36 (KHTML, like Gecko) "</span></div><div class="line">                        <span class="string">"Chrome/61.0.3163.100 Safari/537.36"</span>,</div><div class="line">           <span class="string">"Accept"</span>:<span class="string">"text/html,application/xhtml+xml,application/xml;"</span></div><div class="line">                    <span class="string">"q = 0.9, image / webp, * / *;q = 0.8"</span></div><div class="line"></div><div class="line">           &#125;</div><div class="line">url = <span class="string">"https://www.whatismybrowser.com/developers/what-http-headers-is-my-browser-sending"</span></div><div class="line">req = session.get(url, headers = headers)</div><div class="line">bsObj = BeautifulSoup(req.text, <span class="string">"html.parser"</span>)</div><div class="line"><span class="built_in">print</span>(bsObj.find(<span class="string">"table"</span>,&#123;<span class="string">"class"</span>:<span class="string">"table-striped"</span>&#125;).get_text)</div></pre></td></tr></table></figure>
-<h3 id="处理cookie"><a href="#处理cookie" class="headerlink" title="处理cookie"></a>处理cookie</h3><p>网站会用cookie跟踪你的访问过程，发现爬虫异常行为就会中断你的访问，比如：特别快速的填写表单，或者浏览大量页面。虽然这些行为可以通过关闭或重新连接或者改变IP地址来伪装，但是如果cookie暴露了你的身份，再多努力也是白费<br>在采集一个或者几个目标网站，检查这些网站生成的 cookie，然后想想 哪一个 cookie 是爬虫需要处理的。<br>显示访问网站和离开网站时 cookie 是如何设置的插件。EditThisCookie(<a href="http://www.editthiscookie.com/)Chrome" target="_blank" rel="external">http://www.editthiscookie.com/)Chrome</a> 浏览器插件之一。<br>Google Analytics：只有当客户端脚本执行后才设置cookie（或者基于网页事件生成cookie，比如点击按钮）。为了处理这些动作，你需要用Selenium 和 PhantomJS包</p>
-<h4 id="调用webdriver的get-cookie"><a href="#调用webdriver的get-cookie" class="headerlink" title="调用webdriver的get_cookie()"></a>调用webdriver的get_cookie()</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">from selenium import webdriver</div><div class="line">driver = webdriver.PhantomJS(executable_path=<span class="string">"/Users/YT/MachineLearning/phantomjs-2.1.1-macosx/bin/phantomjs"</span>)</div><div class="line">driver.get(<span class="string">"http://pythonscraping.com"</span>)</div><div class="line">driver.implicitly_wait(1)</div><div class="line"><span class="built_in">print</span>(driver.get_cookies())</div></pre></td></tr></table></figure>
-<h4 id="一个更加综合的例子"><a href="#一个更加综合的例子" class="headerlink" title="一个更加综合的例子"></a>一个更加综合的例子</h4><p>调用delete_cookie(),add_cookie()和delete_all_cookies()方法来处理cookie。另外，还可以保存cookie以备其他网络爬虫使用。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div></pre></td><td class="code"><pre><div class="line">from selenium import webdriver</div><div class="line"></div><div class="line">driver = webdriver.PhantomJS(executable_path=<span class="string">"/Users/YT/MachineLearning/phantomjs-2.1.1-macosx/bin/phantomjs"</span>)</div><div class="line">driver.get(<span class="string">"http://pythonscraping.com"</span>)</div><div class="line">driver.implicitly_wait(1)</div><div class="line"><span class="built_in">print</span>(driver.get_cookies())</div><div class="line"></div><div class="line">saveCookies = driver.get_cookies()</div><div class="line"></div><div class="line">driver2 = webdriver.PhantomJS(executable_path=<span class="string">"/Users/YT/MachineLearning/phantomjs-2.1.1-macosx/bin/phantomjs"</span>)</div><div class="line">driver2.get(<span class="string">"http://pythonscraping.com"</span>)</div><div class="line">driver2.delete_all_cookies()</div><div class="line"><span class="keyword">for</span> cookie <span class="keyword">in</span> saveCookies:</div><div class="line">    driver2.add_cookie(cookie)</div><div class="line"></div><div class="line">driver2.get(<span class="string">"http://pythonscraping.com"</span>)</div><div class="line">driver.implicitly_wait(1)</div><div class="line"><span class="built_in">print</span>(driver2.get_cookies())</div><div class="line">``` </div><div class="line">该示例中，先将cookie值保存在saveCookies中，在第二次访问的时候，将同一个网站下的cookie都删除掉（必须先加载网络，不然selenium不知道有cookie的域），然后将第一次的cookie填入到该网站下，这样从Google Analytics角度来看</div><div class="line">第二个webdriver现在和第一个webdriver完全一样（cookie的时间戳，源代码和其他信息都一样）</div><div class="line"></div><div class="line"><span class="comment">### 时间就是一切</span></div><div class="line">尽量保证一次加载页面加载且数据请求最小化</div><div class="line">如果条件允许，尽量为每个页面访问 增加一点儿时间间隔，即使你要增加一行代码:time.sleep(3)<span class="comment">## 常见的表单安全措施</span></div><div class="line"><span class="comment">### 隐含输入字段值（主要用于阻止爬虫自动提交表单）</span></div><div class="line">第一种是表单页面上的一个字段可以用服务器生成的随机变量表示。如果提交时这个值不在表单处理页面上，服务器就有理由认为这个提交不是从原始表单页面上提交的。绕开这个问题的最佳方法就是，首先采集表单实在页面上生成的随机变量，然后再提交到表单处理页面</div><div class="line">第二种是蜜罐圈套。如果表单里包含一个具有普通名称的隐含字段，比如用户名或者”邮箱地址”，服务器火把所有隐含字段的真实值（或者与表单提交页面的默认值不同的值）都忽略，而且填写隐含字段的访问用户也可能被网站封杀</div><div class="line">还有其他一些检查，用来保 证这些当前生成的表单变量只被使用一次或是最近生成的</div><div class="line"></div><div class="line"><span class="comment">### 避免蜜罐</span></div><div class="line">因为 Selenium 可以获取访问页面的内容，所以它可以区分页面上的可见元素与隐含元素。通过 is_displayed() 可以判断元素在页面上是否可见。</div><div class="line">``` bash </div><div class="line"><span class="string">""</span><span class="string">"下面实例代码，用来查找隐含字段"</span><span class="string">""</span></div><div class="line">from selenium import  webdriver</div><div class="line">from selenium.webdriver.remote.webelement import WebElement</div><div class="line"></div><div class="line">driver = webdriver.PhantomJS(executable_path=<span class="string">"/Users/YT"</span></div><div class="line">                                             <span class="string">"/MachineLearning/phantomjs-2.1.1-macosx/bin/phantomjs"</span>)</div><div class="line">driver.get(<span class="string">"http://pythonscraping.com/pages/itsatrap.html"</span>)</div><div class="line">links = driver.find_elements_by_tag_name(<span class="string">"a"</span>)</div><div class="line"></div><div class="line"><span class="keyword">for</span> link <span class="keyword">in</span> links:</div><div class="line">    <span class="keyword">if</span> not link.is_displayed():</div><div class="line">        <span class="built_in">print</span>(<span class="string">"The link "</span> + link.get_attribute(<span class="string">'href'</span>))</div><div class="line"></div><div class="line">fields = driver.find_elements_by_tag_name(<span class="string">"input"</span>)</div><div class="line"><span class="keyword">for</span> field <span class="keyword">in</span> fields:</div><div class="line">    <span class="keyword">if</span> not field.is_displayed():</div><div class="line">        <span class="built_in">print</span>(<span class="string">"Do not change value of "</span>+field.get_attribute(<span class="string">"name"</span>))</div></pre></td></tr></table></figure></p>
-<p>虽然你不太可能会去访问你找到的那些隐含链接，但是在提交前，记得确认一下那些已经 在表单中、准备提交的隐含字段的值(或者让 Selenium 为你自动提交)。</p>
-<h2 id="问题检查表"><a href="#问题检查表" class="headerlink" title="问题检查表"></a>问题检查表</h2><p>• 首先，如果你从网络服务器收到的页面是空白的，缺少信息，或其遇到他不符合你预期 的情况(或者不是你在浏览器上看到的   内容)，有可能是因为网站创建页面的 JavaScript 执行有问题。可以看看第 10 章内容。<br>• 如果你准备向网站提交表单或发出POST请求，记得检查一下页面的内容，看看你想提 交的每个字段是不是都已经填好，而且格式也正确。用 Chrome 浏览器的网络面板(快 捷键 F12 打开开发者控制台，然后点击“Network”即可看到)查看发送到网站的 POST 命令，确认你的每个参数都是正确的。<br>• 如果你已经登录网站却不能保持登录状态，或者网站上出现了其他的“登录状态”异常， 请检查你的 cookie。确认在加载每个页面时 cookie 都被正确调用，而且你的 cookie 在 每次发起请求时都发送到了网站上。<br>• 如果你在客户端遇到了HTTP错误，尤其是403禁止访问错误，这可能说明网站已经把 你的 IP 当作机器人了，不再接受你的任何请求。你要么等待你的 IP 地址从网站黑名单 里移除，要么就换个 IP 地址(可以去星巴克上网，或者看看第 14 章的内容)。如果你 确定自己并没有被封杀，那么再检查下面的内容。<br>♦ 确认你的爬虫在网站上的速度不是特别快。快速采集是一种恶习，会对网管的服务 器造成沉重的负担，还会让你陷入违法境地，也是 IP 被网站列入黑名单的首要原因。给你的爬虫增加延迟，让它们在夜深人静的时候运行。切记:匆匆忙忙写程序或收<br> 集数据都是拙劣项目管理的表现;应该提前做好计划，避免临阵慌乱。<br>♦ 还有一件必须做的事情:修改你的请求头!有些网站会封杀任何声称自己是爬虫的访问者。如果你不确定请求头的值怎样才算合适，就用你自己浏览器的请求头吧。<br>♦ 确认你没有点击或访问任何人类用户通常不能点击或接入的信息(更多信息请查阅12.3.2 节)。<br>♦ 如果你用了一大堆复杂的手段才接入网站，考虑联系一下网管吧，告诉他们你的目的。试试发邮件到 webmaster@&lt; 域名 &gt; 或 admin@&lt; 域名 &gt;，请求网管允许你使用爬虫采 集数据。管理员也是人嘛!</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2067,7 +2093,7 @@ class TestAddition(unittest.TestCase):
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">65</span>
+                <span class="site-state-item-count">67</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -2078,7 +2104,7 @@ class TestAddition(unittest.TestCase):
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-count">17</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -2089,7 +2115,7 @@ class TestAddition(unittest.TestCase):
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-count">17</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

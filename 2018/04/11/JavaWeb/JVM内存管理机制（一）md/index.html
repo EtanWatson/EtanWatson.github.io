@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JavaWeb," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="EWSUN" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="JVM内存管理（一）在java中哪些组件需要内存Java堆用于存储java对象的内存区域，堆的大小在JVM启动时就一次向操作系统申请完成，通过-Xmx（最大）和-Xms（最小）两个选项来控制大小，一旦申请完成，即固定大小堆中内存管理由JVM来控制，对象创建由应用程序控制，空间释放由垃圾收集器完成 线程JVM运行实体是线程，每个线程创建时JVM都会为它创建一个堆栈，堆栈的大小根据不同的JVM实现而不">
+<meta name="keywords" content="JavaWeb">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JVM内存管理机制（一）">
+<meta property="og:url" content="http://yoursite.com/2018/04/11/JavaWeb/JVM内存管理机制（一）md/index.html">
+<meta property="og:site_name" content="EWSUN">
+<meta property="og:description" content="JVM内存管理（一）在java中哪些组件需要内存Java堆用于存储java对象的内存区域，堆的大小在JVM启动时就一次向操作系统申请完成，通过-Xmx（最大）和-Xms（最小）两个选项来控制大小，一旦申请完成，即固定大小堆中内存管理由JVM来控制，对象创建由应用程序控制，空间释放由垃圾收集器完成 线程JVM运行实体是线程，每个线程创建时JVM都会为它创建一个堆栈，堆栈的大小根据不同的JVM实现而不">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/images/15234423650730.jpg">
+<meta property="og:image" content="http://yoursite.com/images/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-04-11%20%E4%B8%8B%E5%8D%886.41.38.png">
+<meta property="og:updated_time" content="2018-04-11T10:56:52.426Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JVM内存管理机制（一）">
+<meta name="twitter:description" content="JVM内存管理（一）在java中哪些组件需要内存Java堆用于存储java对象的内存区域，堆的大小在JVM启动时就一次向操作系统申请完成，通过-Xmx（最大）和-Xms（最小）两个选项来控制大小，一旦申请完成，即固定大小堆中内存管理由JVM来控制，对象创建由应用程序控制，空间释放由垃圾收集器完成 线程JVM运行实体是线程，每个线程创建时JVM都会为它创建一个堆栈，堆栈的大小根据不同的JVM实现而不">
+<meta name="twitter:image" content="http://yoursite.com/images/15234423650730.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/04/11/JavaWeb/JVM内存管理机制（一）md/"/>
+
+
+
+
+
+  <title>JVM内存管理机制（一） | EWSUN</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">EWSUN</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-schedule">
+          <a href="/schedule/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br />
+            
+            日程表
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/11/JavaWeb/JVM内存管理机制（一）md/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EtanWatson">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EWSUN">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">JVM内存管理机制（一）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-11T16:23:45+08:00">
+                2018-04-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaWeb/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaWeb</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="JVM内存管理（一）"><a href="#JVM内存管理（一）" class="headerlink" title="JVM内存管理（一）"></a>JVM内存管理（一）</h1><h2 id="在java中哪些组件需要内存"><a href="#在java中哪些组件需要内存" class="headerlink" title="在java中哪些组件需要内存"></a>在java中哪些组件需要内存</h2><h3 id="Java堆"><a href="#Java堆" class="headerlink" title="Java堆"></a>Java堆</h3><p>用于存储java对象的内存区域，堆的大小在JVM启动时就一次向操作系统申请完成，通过-Xmx（最大）和-Xms（最小）两个选项来控制大小，<strong><em>一旦申请完成，即固定大小</em></strong><br>堆中内存管理由JVM来控制，对象创建由应用程序控制，空间释放由垃圾收集器完成</p>
+<h3 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h3><p>JVM运行实体是线程，每个线程创建时JVM都会为它创建一个堆栈，堆栈的大小根据不同的JVM实现而不同，通常是256kb~756kb</p>
+<h3 id="类和类加载器"><a href="#类和类加载器" class="headerlink" title="类和类加载器"></a>类和类加载器</h3><p>需要注意的一点是，JVM是按需加载类的。通常一个类能够被卸载，有如下条件需要被满足</p>
+<ul>
+<li>在Java堆中没有对表示该类加载器的java.lang.ClassLoader对象的引用</li>
+<li>Java堆没有表示对类加载器加载的类的任何java.lang.Class对象的引用</li>
+<li>在java堆上，该加载器加载的任何类的所有对象都不在存活（被引用）</li>
+</ul>
+<p><strong><em>任何系统类或通过应用程序类加载器加载的任何应用程序类都不能在运行时释放</em></strong></p>
+<h3 id="NIO"><a href="#NIO" class="headerlink" title="NIO"></a>NIO</h3><p>NIO使用java.nio.ByteBuffer.allocateDirect()方法分配内存，这种方式也是通常所说的NIO direct memory，这种分配的内存是使用本机内存，而不是java堆上面的内存。因为避免在Java堆和本机堆之间复制数据，所以比从操作系统的内核空间到java堆上的切换操作要快的多<br>一般情况下通过设置-XX:DisableExplicitGC来控制System.gc()的影响，但是又会导致NIO direct memory内存泄漏问题，如果显式调用System.gc()来释放NIO持有的内存，又会导致影响应用程序的性能</p>
+<h3 id="JIN"><a href="#JIN" class="headerlink" title="JIN"></a>JIN</h3><p>也即是native memory</p>
+<h2 id="JVM内存结构"><a href="#JVM内存结构" class="headerlink" title="JVM内存结构"></a>JVM内存结构</h2><p>运行时数据（Runtime Data）</p>
+<ul>
+<li>pc寄存器数据</li>
+<li>java栈</li>
+<li>堆</li>
+<li>方法区</li>
+<li>本地方法区</li>
+<li>运行时常量</li>
+</ul>
+<h3 id="pc寄存器"><a href="#pc寄存器" class="headerlink" title="pc寄存器"></a>pc寄存器</h3><p>如同记录员一样记录下哪个线程当前执行到哪些指令了，而对于native 方法，并没有要求记录执行的指针地址</p>
+<h3 id="Java栈"><a href="#Java栈" class="headerlink" title="Java栈"></a>Java栈</h3><p>每当创建一个线程时，JVM就会为这个线程创建一个对应的java栈，这个java栈中又会包含多个栈帧，这些栈帧是与每个方法关联起来的，每个运行的方法就会创建一个栈帧，每个栈帧会含有一些内部变量、操作栈和方法返回值等信息</p>
+<p>由于java栈是与java线程对应起来的，这个数据不是线程共享的，所以我们不用关心它的数据一致性问题，也不会存在同步锁的问题</p>
+<h3 id="堆"><a href="#堆" class="headerlink" title="堆"></a>堆</h3><p>堆是存储java对象的地方，它是应用程序与内存关心最密切的存储区域<br>每一个存储在堆中的java对象都会是这个对象的类的副本，它会复制包括继承自它父类的所有<strong><em>非静态属性</em></strong><br>堆是被所有Java线程所共享的，所以对它的访问需要注意<strong><em>同步问题</em></strong>，方法和对应的属性都需要保证一致性</p>
+<h3 id="方法区"><a href="#方法区" class="headerlink" title="方法区"></a>方法区</h3><p>方法区是用于存储类结构信息的地方，这个区域存储：常量池、域、方法体、构造函数，包括类中的专用方法、实例化初始化、接口初始化都存储在这个区域，属于java堆中的永久区，这个区域可以被所有的线程共享，并且它的大小可以通过参数来设置</p>
+<h3 id="运行时常量池"><a href="#运行时常量池" class="headerlink" title="运行时常量池"></a>运行时常量池</h3><p>代表运行时每个class文件中的常量表，它包含几种常量：编译期的数字常量、方法或者域的引用，是在JVM创建class或接口是创建的<br>它是方法区的一部分，如果常量池无法分配，会抛出OutOfMemoryError</p>
+<h3 id="本地方法栈"><a href="#本地方法栈" class="headerlink" title="本地方法栈"></a>本地方法栈</h3><p>是为JVM运行Native方法准备的空间，又叫C栈，JIT技术会将一些java方法重新编译为Native Code代码以后，也会利用这个栈来跟踪方法的执行状态的</p>
+<h2 id="JVM内存分配策略"><a href="#JVM内存分配策略" class="headerlink" title="JVM内存分配策略"></a>JVM内存分配策略</h2><h3 id="java栈"><a href="#java栈" class="headerlink" title="java栈"></a>java栈</h3><p>栈中主要存放一些基本数据类型的变量数据和对象句柄（引用）。存取速度要比堆块，仅次于寄存器，栈数据可以共享；缺点是：存在栈中的数据大小与生存周期必须是确定的，这也导致其缺乏灵活性<br>如我们先前分析过的一个class文件结构<br><img src="/images/15234423650730.jpg" alt=""></p>
+<p>对应的字节码为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line">public void stack(java.lang.String[]);</div><div class="line">    descriptor: ([Ljava/lang/String;)V</div><div class="line">    flags: ACC_PUBLIC</div><div class="line">    Code:</div><div class="line">      stack=2, locals=6, args_size=2</div><div class="line">         0: ldc           #5                  // String YT</div><div class="line">         2: astore_2</div><div class="line">         3: aload_2</div><div class="line">         4: ldc           #5                  // String YT</div><div class="line">         6: invokevirtual #6                  // Method java/lang/String.equals:(Ljava/lang/Object;)Z</div><div class="line">         9: ifeq          30</div><div class="line">        12: iconst_3</div><div class="line">        13: istore_3</div><div class="line">        14: iload_3</div><div class="line">        15: ifle          27</div><div class="line">        18: lconst_1</div><div class="line">        19: lstore        4</div><div class="line">        21: iinc          3, -1</div><div class="line">        24: goto          14</div><div class="line">        27: goto          40</div><div class="line">        30: bipush        97</div><div class="line">        32: istore_3</div><div class="line">        33: getstatic     #2                  // Field java/lang/System.out:Ljava/io/PrintStream;</div><div class="line">        36: iload_3</div><div class="line">        37: invokevirtual #7                  // Method java/io/PrintStream.println:(C)V</div><div class="line">        40: return</div><div class="line">      LineNumberTable:</div><div class="line">        line 13: 0</div><div class="line">        line 14: 3</div><div class="line">        line 15: 12</div><div class="line">        line 16: 14</div><div class="line">        line 17: 18</div><div class="line">        line 18: 21</div><div class="line">        line 19: 24</div><div class="line">        line 20: 27</div><div class="line">        line 21: 30</div><div class="line">        line 22: 33</div><div class="line">        line 24: 40</div><div class="line">      LocalVariableTable:</div><div class="line">        Start  Length  Slot  Name   Signature</div><div class="line">           21       3     4     j   J</div><div class="line">           14      13     3     i   I</div><div class="line">           33       7     3     b   C</div><div class="line">            0      41     0  this   Lcom/XXX/java_web_test/ClassParse;</div><div class="line">            0      41     1   arg   [Ljava/lang/String;</div><div class="line">            3      38     2   str   Ljava/lang/String;</div></pre></td></tr></table></figure>
+<p>在这个方法的attribute中就已经知道stack和local variable的大小，分别是2和6，这里指定的是最大值<br>建立一个对象时两个地方都分配内存，在堆中分配的内存实际建立这个对象，而在堆栈中分配的内存只是一个指向这个堆对象的引用</p>
+<h3 id="java堆"><a href="#java堆" class="headerlink" title="java堆"></a>java堆</h3><p>通过new、newarray、anewarry、和multianewarray等指令建立。优势是可以动态分配内存的大小。缺点是存取速度比较慢<br>如下图方法：<br><img src="/images/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-04-11%20%E4%B8%8B%E5%8D%886.41.38.png" alt="屏幕快照 2018-04-11 下午6.41.38"><br>对应的字节码为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">public static void main(java.lang.String[]);</div><div class="line">    descriptor: ([Ljava/lang/String;)V</div><div class="line">    flags: ACC_PUBLIC, ACC_STATIC</div><div class="line">    Code:</div><div class="line">      stack=3, locals=2, args_size=1</div><div class="line">         0: new           #2                  // class java/lang/String</div><div class="line">         3: dup</div><div class="line">         4: ldc           #3                  // String come on! YT</div><div class="line">         6: invokespecial #4                  // Method java/lang/String.&quot;&lt;init&gt;&quot;:(Ljava/lang/String;)V</div><div class="line">         9: astore_1</div><div class="line">        10: return</div><div class="line">      LineNumberTable:</div><div class="line">        line 8: 0</div><div class="line">        line 9: 10</div><div class="line">      LocalVariableTable:</div><div class="line">        Start  Length  Slot  Name   Signature</div><div class="line">            0      11     0  args   [Ljava/lang/String;</div><div class="line">           10       1     1   str   Ljava/lang/String;</div></pre></td></tr></table></figure>
+<p>这个new命令根据后面的16位的“#2”常量池索引创建指定类型的对象，JVM会为这个类的新对象分配一个空间，这个新对象的属性值都设置为默认值，最后执行这个新对象的objectref压入栈顶<br>new执行完成以后，得到的对象还没有初始化，所以这个新对象并没有创建完成，这个对象的引用这时不应该赋值给str变量，而是接下来调用这个类的构造函数初始化这个类，这时必须将objectref引用复制一份，在新对象初始化完成后再将这个引用赋值给本地变量。调用构造函数是通过invokespecial指令完成的，构造函数如果有参数要传递，则先将参数压栈。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaWeb/" rel="tag"># JavaWeb</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/09/Hadoop相关/使用VirtualBox搭建Hadoop集群（一）/" rel="next" title="使用VirtualBox搭建Hadoop集群（一）">
+                <i class="fa fa-chevron-left"></i> 使用VirtualBox搭建Hadoop集群（一）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/11/设计模式/设计模式之原型模式/" rel="prev" title="设计模式之原型模式">
+                设计模式之原型模式 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          
+            <img class="site-author-image" itemprop="image"
+              src="/images/header.png"
+              alt="EtanWatson" />
+          
+            <p class="site-author-name" itemprop="name">EtanWatson</p>
+            <p class="site-description motion-element" itemprop="description">有所舍，有所爱，做一个感性的码农</p>
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives/">
+            
+                <span class="site-state-item-count">67</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#JVM内存管理（一）"><span class="nav-number">1.</span> <span class="nav-text">JVM内存管理（一）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#在java中哪些组件需要内存"><span class="nav-number">1.1.</span> <span class="nav-text">在java中哪些组件需要内存</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Java堆"><span class="nav-number">1.1.1.</span> <span class="nav-text">Java堆</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#线程"><span class="nav-number">1.1.2.</span> <span class="nav-text">线程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类和类加载器"><span class="nav-number">1.1.3.</span> <span class="nav-text">类和类加载器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NIO"><span class="nav-number">1.1.4.</span> <span class="nav-text">NIO</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JIN"><span class="nav-number">1.1.5.</span> <span class="nav-text">JIN</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JVM内存结构"><span class="nav-number">1.2.</span> <span class="nav-text">JVM内存结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#pc寄存器"><span class="nav-number">1.2.1.</span> <span class="nav-text">pc寄存器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java栈"><span class="nav-number">1.2.2.</span> <span class="nav-text">Java栈</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#堆"><span class="nav-number">1.2.3.</span> <span class="nav-text">堆</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法区"><span class="nav-number">1.2.4.</span> <span class="nav-text">方法区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运行时常量池"><span class="nav-number">1.2.5.</span> <span class="nav-text">运行时常量池</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#本地方法栈"><span class="nav-number">1.2.6.</span> <span class="nav-text">本地方法栈</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JVM内存分配策略"><span class="nav-number">1.3.</span> <span class="nav-text">JVM内存分配策略</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#java栈"><span class="nav-number">1.3.1.</span> <span class="nav-text">java栈</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#java堆"><span class="nav-number">1.3.2.</span> <span class="nav-text">java堆</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">EtanWatson</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.2</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

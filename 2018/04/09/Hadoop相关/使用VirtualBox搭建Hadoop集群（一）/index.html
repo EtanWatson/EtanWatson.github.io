@@ -79,7 +79,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Hadoop相关," />
 
 
 
@@ -97,17 +97,21 @@
 
 
 
-<meta name="description" content="#">
+<meta name="description" content="使用VirtualBox搭建Hadoop集群（一）安装linux首先，我们交代一下环境：  macOS High Sierra 10.13.3、CentOS 6.5 64位(CentOS7的配置会有所不同)VirtualBox5.28  安装的时候会出现 no usable disks have been found选择Re-initialize会进入目录 配置网络 网卡一是NET模式。网卡二是H">
+<meta name="keywords" content="Hadoop相关">
 <meta property="og:type" content="article">
-<meta property="og:title" content="EWSUN">
+<meta property="og:title" content="使用VirtualBox搭建Hadoop集群（一）">
 <meta property="og:url" content="http://yoursite.com/2018/04/09/Hadoop相关/使用VirtualBox搭建Hadoop集群（一）/index.html">
 <meta property="og:site_name" content="EWSUN">
-<meta property="og:description" content="#">
+<meta property="og:description" content="使用VirtualBox搭建Hadoop集群（一）安装linux首先，我们交代一下环境：  macOS High Sierra 10.13.3、CentOS 6.5 64位(CentOS7的配置会有所不同)VirtualBox5.28  安装的时候会出现 no usable disks have been found选择Re-initialize会进入目录 配置网络 网卡一是NET模式。网卡二是H">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-09T02:06:31.671Z">
+<meta property="og:image" content="http://yoursite.com/images/15232476045380.jpg">
+<meta property="og:image" content="http://yoursite.com/images/15232578885369.jpg">
+<meta property="og:updated_time" content="2018-04-11T08:21:24.132Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="EWSUN">
-<meta name="twitter:description" content="#">
+<meta name="twitter:title" content="使用VirtualBox搭建Hadoop集群（一）">
+<meta name="twitter:description" content="使用VirtualBox搭建Hadoop集群（一）安装linux首先，我们交代一下环境：  macOS High Sierra 10.13.3、CentOS 6.5 64位(CentOS7的配置会有所不同)VirtualBox5.28  安装的时候会出现 no usable disks have been found选择Re-initialize会进入目录 配置网络 网卡一是NET模式。网卡二是H">
+<meta name="twitter:image" content="http://yoursite.com/images/15232476045380.jpg">
 
 
 
@@ -143,7 +147,7 @@
 
 
 
-  <title> | EWSUN</title>
+  <title>使用VirtualBox搭建Hadoop集群（一） | EWSUN</title>
   
 
 
@@ -327,7 +331,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline"></h1>
+          <h1 class="post-title" itemprop="name headline">使用VirtualBox搭建Hadoop集群（一）</h1>
         
 
         <div class="post-meta">
@@ -349,6 +353,28 @@
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Hadoop相关/" itemprop="url" rel="index">
+                    <span itemprop="name">Hadoop相关</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -377,7 +403,27 @@
       
 
       
-        <p># </p>
+        <h1 id="使用VirtualBox搭建Hadoop集群（一）"><a href="#使用VirtualBox搭建Hadoop集群（一）" class="headerlink" title="使用VirtualBox搭建Hadoop集群（一）"></a>使用VirtualBox搭建Hadoop集群（一）</h1><h2 id="安装linux"><a href="#安装linux" class="headerlink" title="安装linux"></a>安装linux</h2><p>首先，我们交代一下环境：</p>
+<blockquote>
+<p>macOS High Sierra 10.13.3、CentOS 6.5 64位(CentOS7的配置会有所不同)<br>VirtualBox5.28</p>
+</blockquote>
+<p>安装的时候会出现 <strong>no usable disks have been found</strong><br><img src="/images/15232476045380.jpg" alt=""><br>选择Re-initialize会进入目录</p>
+<h2 id="配置网络"><a href="#配置网络" class="headerlink" title="配置网络"></a>配置网络</h2><ol>
+<li><p>网卡一是NET模式。网卡二是HostOnly模式，网卡而二配置如下<br><img src="/images/15232578885369.jpg" alt=""></p>
+</li>
+<li><p>设置网络配置与DNS服务器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">vi /etc/sysconfig/network</div><div class="line"></div><div class="line">GATEWAY=192.168.0.1 # 这个是你的宿主机的网关</div><div class="line"></div><div class="line">vi /etc/resolv.conf</div><div class="line">nameserver 192.168.0.1 #使用你宿主机的dns</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol>
+<li><p>关闭防火墙</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">chkconfig iptables off # 永久关闭</div><div class="line">chkconfig --list iptables #查看列表</div><div class="line">service iptables stop #临时关闭</div></pre></td></tr></table></figure>
+</li>
+<li><p>尝试用你的宿主机ping虚拟机，用你的虚拟机ping主机以及外网</p>
+</li>
+<li>虚拟机互ping</li>
+</ol>
+<h2 id="一些常用的linux命令"><a href="#一些常用的linux命令" class="headerlink" title="一些常用的linux命令"></a>一些常用的linux命令</h2><p>netstat -ntlp<br>service network restart<br>woami<br>cat &gt; 与 cat &gt;&gt;的区别 （未完）</p>
 
       
     </div>
@@ -392,6 +438,12 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Hadoop相关/" rel="tag"># Hadoop相关</a>
+          
+        </div>
       
 
       
@@ -411,6 +463,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/11/JavaWeb/JVM内存管理机制（一）md/" rel="prev" title="JVM内存管理机制（一）">
+                JVM内存管理机制（一） <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -462,8 +518,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           
             <img class="site-author-image" itemprop="image"
@@ -481,7 +546,7 @@
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">65</span>
+                <span class="site-state-item-count">67</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -492,7 +557,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-count">17</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -503,7 +568,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-count">17</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -535,6 +600,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#使用VirtualBox搭建Hadoop集群（一）"><span class="nav-number">1.</span> <span class="nav-text">使用VirtualBox搭建Hadoop集群（一）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装linux"><span class="nav-number">1.1.</span> <span class="nav-text">安装linux</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置网络"><span class="nav-number">1.2.</span> <span class="nav-text">配置网络</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一些常用的linux命令"><span class="nav-number">1.3.</span> <span class="nav-text">一些常用的linux命令</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
