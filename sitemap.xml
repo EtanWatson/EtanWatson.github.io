@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2018/04/13/Hadoop%E7%9B%B8%E5%85%B3/shell%E7%BC%96%E7%A8%8B/</loc>
+    
+    <lastmod>2018-04-15T07:37:50.325Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2018/04/13/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E6%A8%A1%E6%9D%BF%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F/</loc>
+    
+    <lastmod>2018-04-15T07:34:05.574Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2018/04/14/Hadoop%E7%9B%B8%E5%85%B3/zookeeper%E7%9A%84%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA/</loc>
     
     <lastmod>2018-04-15T07:31:19.785Z</lastmod>
@@ -37,23 +51,9 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/2018/04/13/Hadoop%E7%9B%B8%E5%85%B3/shell%E7%BC%96%E7%A8%8B/</loc>
-    
-    <lastmod>2018-04-13T11:38:45.247Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://yoursite.com/2018/04/12/Hadoop%E7%9B%B8%E5%85%B3/%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85%E4%BB%A5%E5%8F%8A%E5%91%BD%E4%BB%A4%E7%9B%B8%E5%85%B3/</loc>
     
     <lastmod>2018-04-13T07:41:06.372Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2018/04/13/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/2018-04-13/</loc>
-    
-    <lastmod>2018-04-13T06:22:18.141Z</lastmod>
     
   </url>
   
