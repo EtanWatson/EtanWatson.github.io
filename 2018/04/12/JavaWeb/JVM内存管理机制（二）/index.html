@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JavaWeb," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="EWSUN" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="JVM内存管理机制（二）JVM 内存回收策略通常显示的内存申请有两种：一种是静态内存分配，另外一种是动态内存分配 静态内存分配和回收 Java被编译时就已经能够确定需要的内存空间，当程序被加载时，系统把内存一次性分配给它，这些内存不会再程序执行时发生变化，直到程序执行结束时内存才被回收  在java类和方法中的局部变量包括原生数据类型、和对象引用，都是静态分配内存的例如： 1234567publi">
+<meta name="keywords" content="JavaWeb">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JVM内存管理机制（二）">
+<meta property="og:url" content="http://yoursite.com/2018/04/12/JavaWeb/JVM内存管理机制（二）/index.html">
+<meta property="og:site_name" content="EWSUN">
+<meta property="og:description" content="JVM内存管理机制（二）JVM 内存回收策略通常显示的内存申请有两种：一种是静态内存分配，另外一种是动态内存分配 静态内存分配和回收 Java被编译时就已经能够确定需要的内存空间，当程序被加载时，系统把内存一次性分配给它，这些内存不会再程序执行时发生变化，直到程序执行结束时内存才被回收  在java类和方法中的局部变量包括原生数据类型、和对象引用，都是静态分配内存的例如： 1234567publi">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-04-12T02:05:28.243Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JVM内存管理机制（二）">
+<meta name="twitter:description" content="JVM内存管理机制（二）JVM 内存回收策略通常显示的内存申请有两种：一种是静态内存分配，另外一种是动态内存分配 静态内存分配和回收 Java被编译时就已经能够确定需要的内存空间，当程序被加载时，系统把内存一次性分配给它，这些内存不会再程序执行时发生变化，直到程序执行结束时内存才被回收  在java类和方法中的局部变量包括原生数据类型、和对象引用，都是静态分配内存的例如： 1234567publi">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/04/12/JavaWeb/JVM内存管理机制（二）/"/>
+
+
+
+
+
+  <title>JVM内存管理机制（二） | EWSUN</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">EWSUN</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-schedule">
+          <a href="/schedule/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br />
+            
+            日程表
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/12/JavaWeb/JVM内存管理机制（二）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EtanWatson">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EWSUN">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">JVM内存管理机制（二）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-12T08:50:15+08:00">
+                2018-04-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaWeb/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaWeb</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="JVM内存管理机制（二）"><a href="#JVM内存管理机制（二）" class="headerlink" title="JVM内存管理机制（二）"></a>JVM内存管理机制（二）</h1><h2 id="JVM-内存回收策略"><a href="#JVM-内存回收策略" class="headerlink" title="JVM 内存回收策略"></a>JVM 内存回收策略</h2><p>通常显示的内存申请有两种：一种是静态内存分配，另外一种是动态内存分配</p>
+<h3 id="静态内存分配和回收"><a href="#静态内存分配和回收" class="headerlink" title="静态内存分配和回收"></a>静态内存分配和回收</h3><blockquote>
+<p>Java被编译时就已经能够确定需要的内存空间，当程序被加载时，系统把内存一次性分配给它，这些内存不会再程序执行时发生变化，直到程序执行结束时内存才被回收</p>
+</blockquote>
+<p>在java类和方法中的局部变量包括原生数据类型、和对象引用，都是静态分配内存的<br>例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">public void staticData(int arg)&#123;</div><div class="line">    String s = &quot;YT&quot;;</div><div class="line">    long l = 1;</div><div class="line">    Long lg = 2L;</div><div class="line">    Object o = new Object();</div><div class="line">    Integer i = 0;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>int、String、long、Long、Object、Integer的静态内存空间是<strong>4+4+8+4+4+4</strong></p>
+<h3 id="动态内存分配和回收"><a href="#动态内存分配和回收" class="headerlink" title="动态内存分配和回收"></a>动态内存分配和回收</h3><p>对象的空间是动态分配的，内存分配是在对象创建时发生的，而内存的回收是以对象不再引用为前提</p>
+<h3 id="如何检测垃圾"><a href="#如何检测垃圾" class="headerlink" title="如何检测垃圾"></a>如何检测垃圾</h3><p>垃圾收集器必须能够完成两件事情：</p>
+<ol>
+<li>能够正确地检测出垃圾对象</li>
+<li>能够释放垃圾对象占用的内存空间</li>
+</ol>
+<p>根对象集合（根对象集合达到）</p>
+<ol>
+<li>在方法中局部变量去的对象的引用（如上面的lg，o，i）</li>
+<li>java操作栈中的对象引用</li>
+<li>在常量池中的对象引用</li>
+<li>在本地方法中持有的对象引用</li>
+<li>类的Class对象</li>
+</ol>
+<h3 id="基于分代的垃圾回收算法"><a href="#基于分代的垃圾回收算法" class="headerlink" title="基于分代的垃圾回收算法"></a>基于分代的垃圾回收算法</h3><blockquote>
+<p>把对象安装寿命的长短来分组，分为年轻代和老年代，新创建的对象被分在年轻代，如果对象经过几次回收后仍然存活，那么再把对象划分到老年代，老年代的收集频度不像年轻代那么频繁，从而减少每次垃圾收集是所要扫描到的对象的数量，从而提高了垃圾回收效率</p>
+</blockquote>
+<p>Young区：</p>
+<ol>
+<li>Edan区：新创建的对象，当Eden区满后会触发minor GC将Eden区仍然存活的对象复制到其中一个Survivor区，另外一个Survivor区中存活的对象也将复制到这个Survivor区中，<strong><em>要保证有一个Survivor是空的</em></strong></li>
+<li>Survivor（两个）</li>
+</ol>
+<p>Old区：</p>
+<ol>
+<li>Young区的Survivor满后触发的minor GC后仍然存活的对象</li>
+<li>Edan区满后，如果Survivor放不下Edan中存活的兑现，则直接放到Old区</li>
+<li>如果Survivor区中的对象足够老，则也将放到Old区</li>
+<li>如果Old区也满了，将会触发Full GC，回收整个堆内存</li>
+</ol>
+<p>Perm区：主要存放类的Class对象，如果一个类被频繁的加载，也可能导致Perm区满，Perm区的垃圾回收也是有Full GC触发的</p>
+<h4 id="三种垃圾回收算法"><a href="#三种垃圾回收算法" class="headerlink" title="三种垃圾回收算法"></a>三种垃圾回收算法</h4><h5 id="Serial-Collector"><a href="#Serial-Collector" class="headerlink" title="Serial Collector"></a>Serial Collector</h5><blockquote>
+<p>Client模式下的默认GC方式(jvm.cfg),64位只支持Server模式<br>可以通过JVM配置参数-XX:+UserSerialGC来指定GC使用该收集算法</p>
+</blockquote>
+<p>这里说一下XX参数的语法<br>对于boolean类型的参数 -XX:+<name>用于激活<name>选项 -XX:-<name>用于注销选项<br>对于非boolean参数 -XX:<name>=<value>是给<name>赋值<value></value></name></value></name></name></name></name></p>
+<p>Serial Collector的工作原理：</p>
+<ol>
+<li>当Edan区空间不足时就触发了minor GC，触发MinorGC是首先会检查之前每次MinorGC晋升到Old区的<strong><em>平均对象大小</em></strong>是否大于Old区的剩余空间，如果大于，则触发Full GC，如果小于，到第二步</li>
+<li>HandlePromotionFailure参数（-XX:-HandlePromotionFailure）的值，如果为true，仅触发MinorGC，否则，再触发Full GC</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaWeb/" rel="tag"># JavaWeb</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/11/设计模式/设计模式之原型模式/" rel="next" title="设计模式之原型模式">
+                <i class="fa fa-chevron-left"></i> 设计模式之原型模式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/12/Hadoop相关/软件安装以及命令相关/" rel="prev" title="软件安装以及命令相关">
+                软件安装以及命令相关 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          
+            <img class="site-author-image" itemprop="image"
+              src="/images/header.png"
+              alt="EtanWatson" />
+          
+            <p class="site-author-name" itemprop="name">EtanWatson</p>
+            <p class="site-description motion-element" itemprop="description">有所舍，有所爱，做一个感性的码农</p>
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives/">
+            
+                <span class="site-state-item-count">76</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#JVM内存管理机制（二）"><span class="nav-number">1.</span> <span class="nav-text">JVM内存管理机制（二）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#JVM-内存回收策略"><span class="nav-number">1.1.</span> <span class="nav-text">JVM 内存回收策略</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#静态内存分配和回收"><span class="nav-number">1.1.1.</span> <span class="nav-text">静态内存分配和回收</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#动态内存分配和回收"><span class="nav-number">1.1.2.</span> <span class="nav-text">动态内存分配和回收</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何检测垃圾"><span class="nav-number">1.1.3.</span> <span class="nav-text">如何检测垃圾</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基于分代的垃圾回收算法"><span class="nav-number">1.1.4.</span> <span class="nav-text">基于分代的垃圾回收算法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#三种垃圾回收算法"><span class="nav-number">1.1.4.1.</span> <span class="nav-text">三种垃圾回收算法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Serial-Collector"><span class="nav-number">1.1.4.1.1.</span> <span class="nav-text">Serial Collector</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">EtanWatson</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.2</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -310,6 +310,1838 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/11/JavaWeb/JVM内存管理机制（一）md/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EtanWatson">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EWSUN">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/11/JavaWeb/JVM内存管理机制（一）md/" itemprop="url">JVM内存管理机制（一）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-11T16:23:45+08:00">
+                2018-04-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaWeb/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaWeb</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="JVM内存管理（一）"><a href="#JVM内存管理（一）" class="headerlink" title="JVM内存管理（一）"></a>JVM内存管理（一）</h1><h2 id="在java中哪些组件需要内存"><a href="#在java中哪些组件需要内存" class="headerlink" title="在java中哪些组件需要内存"></a>在java中哪些组件需要内存</h2><h3 id="Java堆"><a href="#Java堆" class="headerlink" title="Java堆"></a>Java堆</h3><p>用于存储java对象的内存区域，堆的大小在JVM启动时就一次向操作系统申请完成，通过-Xmx（最大）和-Xms（最小）两个选项来控制大小，<strong><em>一旦申请完成，即固定大小</em></strong><br>堆中内存管理由JVM来控制，对象创建由应用程序控制，空间释放由垃圾收集器完成</p>
+<h3 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h3><p>JVM运行实体是线程，每个线程创建时JVM都会为它创建一个堆栈，堆栈的大小根据不同的JVM实现而不同，通常是256kb~756kb</p>
+<h3 id="类和类加载器"><a href="#类和类加载器" class="headerlink" title="类和类加载器"></a>类和类加载器</h3><p>需要注意的一点是，JVM是按需加载类的。通常一个类能够被卸载，有如下条件需要被满足</p>
+<ul>
+<li>在Java堆中没有对表示该类加载器的java.lang.ClassLoader对象的引用</li>
+<li>Java堆没有表示对类加载器加载的类的任何java.lang.Class对象的引用</li>
+<li>在java堆上，该加载器加载的任何类的所有对象都不在存活（被引用）</li>
+</ul>
+<p><strong><em>任何系统类或通过应用程序类加载器加载的任何应用程序类都不能在运行时释放</em></strong></p>
+<h3 id="NIO"><a href="#NIO" class="headerlink" title="NIO"></a>NIO</h3><p>NIO使用java.nio.ByteBuffer.allocateDirect()方法分配内存，这种方式也是通常所说的NIO direct memory，这种分配的内存是使用本机内存，而不是java堆上面的内存。因为避免在Java堆和本机堆之间复制数据，所以比从操作系统的内核空间到java堆上的切换操作要快的多<br>一般情况下通过设置-XX:DisableExplicitGC来控制System.gc()的影响，但是又会导致NIO direct memory内存泄漏问题，如果显式调用System.gc()来释放NIO持有的内存，又会导致影响应用程序的性能</p>
+<h3 id="JIN"><a href="#JIN" class="headerlink" title="JIN"></a>JIN</h3><p>也即是native memory</p>
+<h2 id="JVM内存结构"><a href="#JVM内存结构" class="headerlink" title="JVM内存结构"></a>JVM内存结构</h2><p>运行时数据（Runtime Data）</p>
+<ul>
+<li>pc寄存器数据</li>
+<li>java栈</li>
+<li>堆</li>
+<li>方法区</li>
+<li>本地方法区</li>
+<li>运行时常量</li>
+</ul>
+<h3 id="pc寄存器"><a href="#pc寄存器" class="headerlink" title="pc寄存器"></a>pc寄存器</h3><p>如同记录员一样记录下哪个线程当前执行到哪些指令了，而对于native 方法，并没有要求记录执行的指针地址</p>
+<h3 id="Java栈"><a href="#Java栈" class="headerlink" title="Java栈"></a>Java栈</h3><p>每当创建一个线程时，JVM就会为这个线程创建一个对应的java栈，这个java栈中又会包含多个栈帧，这些栈帧是与每个方法关联起来的，每个运行的方法就会创建一个栈帧，每个栈帧会含有一些内部变量、操作栈和方法返回值等信息</p>
+<p>由于java栈是与java线程对应起来的，这个数据不是线程共享的，所以我们不用关心它的数据一致性问题，也不会存在同步锁的问题</p>
+<h3 id="堆"><a href="#堆" class="headerlink" title="堆"></a>堆</h3><p>堆是存储java对象的地方，它是应用程序与内存关心最密切的存储区域<br>每一个存储在堆中的java对象都会是这个对象的类的副本，它会复制包括继承自它父类的所有<strong><em>非静态属性</em></strong><br>堆是被所有Java线程所共享的，所以对它的访问需要注意<strong><em>同步问题</em></strong>，方法和对应的属性都需要保证一致性</p>
+<h3 id="方法区"><a href="#方法区" class="headerlink" title="方法区"></a>方法区</h3><p>方法区是用于存储类结构信息的地方，这个区域存储：常量池、域、方法体、构造函数，包括类中的专用方法、实例化初始化、接口初始化都存储在这个区域，属于java堆中的永久区，这个区域可以被所有的线程共享，并且它的大小可以通过参数来设置</p>
+<h3 id="运行时常量池"><a href="#运行时常量池" class="headerlink" title="运行时常量池"></a>运行时常量池</h3><p>代表运行时每个class文件中的常量表，它包含几种常量：编译期的数字常量、方法或者域的引用，是在JVM创建class或接口是创建的<br>它是方法区的一部分，如果常量池无法分配，会抛出OutOfMemoryError</p>
+<h3 id="本地方法栈"><a href="#本地方法栈" class="headerlink" title="本地方法栈"></a>本地方法栈</h3><p>是为JVM运行Native方法准备的空间，又叫C栈，JIT技术会将一些java方法重新编译为Native Code代码以后，也会利用这个栈来跟踪方法的执行状态的</p>
+<h2 id="JVM内存分配策略"><a href="#JVM内存分配策略" class="headerlink" title="JVM内存分配策略"></a>JVM内存分配策略</h2><h3 id="java栈"><a href="#java栈" class="headerlink" title="java栈"></a>java栈</h3><p>栈中主要存放一些基本数据类型的变量数据和对象句柄（引用）。存取速度要比堆块，仅次于寄存器，栈数据可以共享；缺点是：存在栈中的数据大小与生存周期必须是确定的，这也导致其缺乏灵活性<br>如我们先前分析过的一个class文件结构<br><img src="/images/15234423650730.jpg" alt=""></p>
+<p>对应的字节码为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line">public void stack(java.lang.String[]);</div><div class="line">    descriptor: ([Ljava/lang/String;)V</div><div class="line">    flags: ACC_PUBLIC</div><div class="line">    Code:</div><div class="line">      stack=2, locals=6, args_size=2</div><div class="line">         0: ldc           #5                  // String YT</div><div class="line">         2: astore_2</div><div class="line">         3: aload_2</div><div class="line">         4: ldc           #5                  // String YT</div><div class="line">         6: invokevirtual #6                  // Method java/lang/String.equals:(Ljava/lang/Object;)Z</div><div class="line">         9: ifeq          30</div><div class="line">        12: iconst_3</div><div class="line">        13: istore_3</div><div class="line">        14: iload_3</div><div class="line">        15: ifle          27</div><div class="line">        18: lconst_1</div><div class="line">        19: lstore        4</div><div class="line">        21: iinc          3, -1</div><div class="line">        24: goto          14</div><div class="line">        27: goto          40</div><div class="line">        30: bipush        97</div><div class="line">        32: istore_3</div><div class="line">        33: getstatic     #2                  // Field java/lang/System.out:Ljava/io/PrintStream;</div><div class="line">        36: iload_3</div><div class="line">        37: invokevirtual #7                  // Method java/io/PrintStream.println:(C)V</div><div class="line">        40: return</div><div class="line">      LineNumberTable:</div><div class="line">        line 13: 0</div><div class="line">        line 14: 3</div><div class="line">        line 15: 12</div><div class="line">        line 16: 14</div><div class="line">        line 17: 18</div><div class="line">        line 18: 21</div><div class="line">        line 19: 24</div><div class="line">        line 20: 27</div><div class="line">        line 21: 30</div><div class="line">        line 22: 33</div><div class="line">        line 24: 40</div><div class="line">      LocalVariableTable:</div><div class="line">        Start  Length  Slot  Name   Signature</div><div class="line">           21       3     4     j   J</div><div class="line">           14      13     3     i   I</div><div class="line">           33       7     3     b   C</div><div class="line">            0      41     0  this   Lcom/XXX/java_web_test/ClassParse;</div><div class="line">            0      41     1   arg   [Ljava/lang/String;</div><div class="line">            3      38     2   str   Ljava/lang/String;</div></pre></td></tr></table></figure>
+<p>在这个方法的attribute中就已经知道stack和local variable的大小，分别是2和6，这里指定的是最大值<br>建立一个对象时两个地方都分配内存，在堆中分配的内存实际建立这个对象，而在堆栈中分配的内存只是一个指向这个堆对象的引用</p>
+<h3 id="java堆"><a href="#java堆" class="headerlink" title="java堆"></a>java堆</h3><p>通过new、newarray、anewarry、和multianewarray等指令建立。优势是可以动态分配内存的大小。缺点是存取速度比较慢<br>如下图方法：<br><img src="/images/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-04-11%20%E4%B8%8B%E5%8D%886.41.38.png" alt="屏幕快照 2018-04-11 下午6.41.38"><br>对应的字节码为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">public static void main(java.lang.String[]);</div><div class="line">    descriptor: ([Ljava/lang/String;)V</div><div class="line">    flags: ACC_PUBLIC, ACC_STATIC</div><div class="line">    Code:</div><div class="line">      stack=3, locals=2, args_size=1</div><div class="line">         0: new           #2                  // class java/lang/String</div><div class="line">         3: dup</div><div class="line">         4: ldc           #3                  // String come on! YT</div><div class="line">         6: invokespecial #4                  // Method java/lang/String.&quot;&lt;init&gt;&quot;:(Ljava/lang/String;)V</div><div class="line">         9: astore_1</div><div class="line">        10: return</div><div class="line">      LineNumberTable:</div><div class="line">        line 8: 0</div><div class="line">        line 9: 10</div><div class="line">      LocalVariableTable:</div><div class="line">        Start  Length  Slot  Name   Signature</div><div class="line">            0      11     0  args   [Ljava/lang/String;</div><div class="line">           10       1     1   str   Ljava/lang/String;</div></pre></td></tr></table></figure>
+<p>这个new命令根据后面的16位的“#2”常量池索引创建指定类型的对象，JVM会为这个类的新对象分配一个空间，这个新对象的属性值都设置为默认值，最后执行这个新对象的objectref压入栈顶<br>new执行完成以后，得到的对象还没有初始化，所以这个新对象并没有创建完成，这个对象的引用这时不应该赋值给str变量，而是接下来调用这个类的构造函数初始化这个类，这时必须将objectref引用复制一份，在新对象初始化完成后再将这个引用赋值给本地变量。调用构造函数是通过invokespecial指令完成的，构造函数如果有参数要传递，则先将参数压栈。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/09/Hadoop相关/使用VirtualBox搭建Hadoop集群（一）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EtanWatson">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EWSUN">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/09/Hadoop相关/使用VirtualBox搭建Hadoop集群（一）/" itemprop="url">使用VirtualBox搭建Hadoop集群（一）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-09T10:06:31+08:00">
+                2018-04-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Hadoop相关/" itemprop="url" rel="index">
+                    <span itemprop="name">Hadoop相关</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="使用VirtualBox搭建Hadoop集群（一）"><a href="#使用VirtualBox搭建Hadoop集群（一）" class="headerlink" title="使用VirtualBox搭建Hadoop集群（一）"></a>使用VirtualBox搭建Hadoop集群（一）</h1><h2 id="安装linux"><a href="#安装linux" class="headerlink" title="安装linux"></a>安装linux</h2><p>首先，我们交代一下环境：</p>
+<blockquote>
+<p>macOS High Sierra 10.13.3、CentOS 6.5 64位(CentOS7的配置会有所不同)<br>VirtualBox5.28</p>
+</blockquote>
+<p>安装的时候会出现 <strong>no usable disks have been found</strong><br><img src="/images/15232476045380.jpg" alt=""><br>选择Re-initialize会进入目录</p>
+<h2 id="配置网络"><a href="#配置网络" class="headerlink" title="配置网络"></a>配置网络</h2><ol>
+<li><p>网卡一是NET模式。网卡二是HostOnly模式，网卡而二配置如下<br><img src="/images/15232578885369.jpg" alt=""></p>
+</li>
+<li><p>设置网络配置与DNS服务器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">vi /etc/sysconfig/network</div><div class="line"></div><div class="line">GATEWAY=192.168.0.1 # 这个是你的宿主机的网关</div><div class="line"></div><div class="line">vi /etc/resolv.conf</div><div class="line">nameserver 192.168.0.1 #使用你宿主机的dns</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol>
+<li><p>关闭防火墙</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">chkconfig iptables off # 永久关闭</div><div class="line">chkconfig --list iptables #查看列表</div><div class="line">service iptables stop #临时关闭</div></pre></td></tr></table></figure>
+</li>
+<li><p>尝试用你的宿主机ping虚拟机，用你的虚拟机ping主机以及外网</p>
+</li>
+<li>虚拟机互ping</li>
+</ol>
+<h2 id="一些常用的linux命令"><a href="#一些常用的linux命令" class="headerlink" title="一些常用的linux命令"></a>一些常用的linux命令</h2><p>netstat -ntlp<br>service network restart<br>woami<br>cat &gt; 与 cat &gt;&gt;的区别 </p>
+<h2 id="ssh免密码登录"><a href="#ssh免密码登录" class="headerlink" title="ssh免密码登录"></a>ssh免密码登录</h2><p>安装SecureCRT，使用其远程登录</p>
+<p>生成密钥对：ssh-kengen<br>将公钥拷贝到其他机器的authorized_keys文件中</p>
+<blockquote>
+<p>这里认证的方式A-&gt;B,B会用A的共公钥加密一个code发送给A，A解密后发送给B，认证完成</p>
+</blockquote>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">ssh-keygen -t rsa //使用rsa非对称加密算法加密，默认在/root/.ssh/id_rsa目录下</div><div class="line">scp id_rsa.pub 192.168.2.3:/root/ //这样做太麻烦</div><div class="line"></div><div class="line">ssh-copy-id 192.168.xx.xx</div><div class="line">-bash: ssh-copy-id: command not found</div><div class="line"></div><div class="line">// 解决方案</div><div class="line">yum install －y openssh-server openssh-clinets // 尝试了一下，不行</div><div class="line">yum -y install openssh-clients //再安装这个 可以用了</div></pre></td></tr></table></figure>
+<p> 这样就可以实现从A免密登录B<br> 本机登录本机也是一样的，需要使用ssh-copy-id 本机ip，然后就可以使用ssh在本机免密登录</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/08/JavaWeb/深入分析Java I:O的工作机制/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EtanWatson">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EWSUN">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/08/JavaWeb/深入分析Java I:O的工作机制/" itemprop="url">深入分析Java I/O的工作机制</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-08T22:15:56+08:00">
+                2018-04-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaWeb/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaWeb</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="深入分析Java-I-O的工作机制"><a href="#深入分析Java-I-O的工作机制" class="headerlink" title="深入分析Java I/O的工作机制"></a>深入分析Java I/O的工作机制</h1><h2 id="java-I-O类库的基本架构"><a href="#java-I-O类库的基本架构" class="headerlink" title="java I/O类库的基本架构"></a>java I/O类库的基本架构</h2><h3 id="基于字节的I-O操作接口"><a href="#基于字节的I-O操作接口" class="headerlink" title="基于字节的I/O操作接口"></a>基于字节的I/O操作接口</h3><ol>
+<li>InputStream<br> <strong>UML类图</strong></li>
+<li>OutputStream<br> <strong>UML类图</strong>    </li>
+<li><p><strong>这里要说明两点</strong></p>
+<ul>
+<li><p>操作数据的方式是可以组合使用的    </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">OutputStream out = new BufferedOutputStream(new ObjectOutputStream(new FileOutputStream(&quot;fileName&quot;)))</div></pre></td></tr></table></figure>
+</li>
+<li><p>必须要指定流最终要写到什么地方，要么写到磁盘，要么写到网络，其实写网络也是写文件，只不过还有一步要处理</p>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="基于字符的I-O操作"><a href="#基于字符的I-O操作" class="headerlink" title="基于字符的I/O操作"></a>基于字符的I/O操作</h3><ol>
+<li>Writer<br> <strong>UML类图</strong></li>
+<li>Reader<br> <strong>UML类图</strong>    </li>
+<li><strong>只规定了怎么写或读，没有规定数据要写到哪里</strong>      </li>
+</ol>
+<h3 id="基于字符的I-O操作-1"><a href="#基于字符的I-O操作-1" class="headerlink" title="基于字符的I/O操作"></a>基于字符的I/O操作</h3><ol>
+<li>读转化过程<br>InputStreamReader类是从字节到字符转化桥梁<br>StreamDecoder完成从字节到字符的解码的实现类</li>
+<li><p>写转化过程<br>OutputStreamWriter类转换桥梁<br>StreamEncoder完成编码过程    </p>
+<h2 id="磁盘I-O工作机制"><a href="#磁盘I-O工作机制" class="headerlink" title="磁盘I/O工作机制"></a>磁盘I/O工作机制</h2><h3 id="几种访问文件的方式"><a href="#几种访问文件的方式" class="headerlink" title="几种访问文件的方式"></a>几种访问文件的方式</h3><ol>
+<li>标准访问文件的方式<br>read():如果内核高速缓存中没有数据的话，就从磁盘中读取<br>write():将数据从用户地址空间复制到内核地址空间的缓存中，如果不调用sync同步命令，这个是后对于用户进程来说，写操作已经完成</li>
+<li>直接I/O的方式<br>直接访问磁盘上的数据，数据库管理系统。数据不会在程序中缓存，直接从磁盘上加载，速度会缓慢，所以通常和异步I/O搭配使用</li>
+<li>同步访问文件的方式<br>数据的读取和写都是同步的，不同于标准I/O的写操作</li>
+<li>异步访问文件的方式<br>访问数据的线程发出请求以后，线程会接着去做去处理其他的事情，当请求的数据返回以后继续处理下面的事情，会提高程序的执行效率，但是不会改变文件的效率</li>
+<li>内存映射的方式<br>内存中的某一块区域与磁盘中的文件关联起来，当要访问内存中的一段数据时，转换为访问文件的某一段数据，从而减少数据从内核空间缓存到用户空间缓存的数据复制操作     </li>
+</ol>
+</li>
+</ol>
+<h3 id="Java访问磁盘文件"><a href="#Java访问磁盘文件" class="headerlink" title="Java访问磁盘文件"></a>Java访问磁盘文件</h3><ol>
+<li>首先会根据这个路径创建一个File对象来标识这个文件</li>
+<li>根据这个File对象创建真正读取文件的操作对象，这时会创建一个关联真实存在的磁盘文件的文件描述符FileDescriptor，通过这个对象可以直接控制这个磁盘文件</li>
+</ol>
+<h3 id="Java序列化对象"><a href="#Java序列化对象" class="headerlink" title="Java序列化对象"></a>Java序列化对象</h3><p>就是将一个对象转化成一串二进制表示的字节数组，通过保存或转移这些字节数据来达到持久化的目的<br>反序列化必须要有原始类作为模板，才能将这个对象还原</p>
+<ol>
+<li>当父类继承Serializable接口时，所有的子类都可以被序列化</li>
+<li>子类实现了Serializable接口，父类没有，父类中的属性不能序列化（不报错，数据会丢失），但是子类中属性仍能正确序列化</li>
+<li>如果序列化的属性是对象，则这个对象也必须实现Serializable接口，否则会报错</li>
+<li>在反序列化时，如果serialVersionUID被修改，则序列化是会失败</li>
+<li>在反序列化是，如果对象的属性有修改或者删减，则修改部分的属性会丢失，但是不会报错</li>
+</ol>
+<h2 id="网络I-O的工作机制"><a href="#网络I-O的工作机制" class="headerlink" title="网络I/O的工作机制"></a>网络I/O的工作机制</h2><h3 id="TCP状态转化"><a href="#TCP状态转化" class="headerlink" title="TCP状态转化"></a>TCP状态转化</h3><h2 id="NIO的工作方式"><a href="#NIO的工作方式" class="headerlink" title="NIO的工作方式"></a>NIO的工作方式</h2><h2 id="I-O调优"><a href="#I-O调优" class="headerlink" title="I/O调优"></a>I/O调优</h2><h3 id="磁盘I-O的优化"><a href="#磁盘I-O的优化" class="headerlink" title="磁盘I/O的优化"></a>磁盘I/O的优化</h3><ul>
+<li>性能检测<ol>
+<li>I/O wait指标是否正常</li>
+<li>IOPS,查看应用程序需要的最低的IOPS</li>
+<li>RAID</li>
+</ol>
+</li>
+<li>提升I/O性能    <ol>
+<li>增加缓存，减少I/O访问次数</li>
+<li>优化磁盘的管理系统，设计最优的磁盘方式策略，以及磁盘的寻址策略，这是在底层操作系统层面考虑的</li>
+<li>设计合理的磁盘存储数据块，以及访问这些数据块的策略，这是在应用层面考虑的，例如可以给存放的数据设计索引，通过寻址索引来加快和减少磁盘的访问量，还可以采用异步和非阻塞的方式加快磁盘的访问速度</li>
+<li>应用合理的RAID策略提升磁盘的I/O      </li>
+</ol>
+</li>
+</ul>
+<h3 id="TCP网路参数调优"><a href="#TCP网路参数调优" class="headerlink" title="TCP网路参数调优"></a>TCP网路参数调优</h3><ol>
+<li>增大端口范围<br> echo “1024 65535” &gt; /proc/sys/net/ipv4/ip_local_port_range</li>
+<li>TCP连接复用<br> echo 1 &gt; /proc/sys/net/ipv4/tcp_tw_reuse</li>
+<li>查看当前TCP统计信息<ul>
+<li>cat /proc/net/netstat <strong>//查看TCP的统计信息</strong></li>
+<li>cat /proc/net/snmp <strong>//查看当前系统的连接情况</strong></li>
+<li>netstat -s <strong>//查看网络的统计信息</strong></li>
+</ul>
+</li>
+</ol>
+<h3 id="网络I-O优化"><a href="#网络I-O优化" class="headerlink" title="网络I/O优化"></a>网络I/O优化</h3><ol>
+<li>减少网络交互次数<ul>
+<li>再网络交互的两端设置缓存</li>
+<li>合并访问请求</li>
+</ul>
+</li>
+<li>减少网络传输数据量的大小<ul>
+<li>将数据压缩以后在传输</li>
+<li>设计简单的协议，尽量通过读取协议头来获取有用的价值信息，如设计代理程序时，4层代理和7层代理都是在尽量避免要读取整个通信数据来取得需要的信息</li>
+</ul>
+</li>
+<li>尽量减少编码<br>尽量提前将字符转化为字节</li>
+<li>根据应用，设计合适的交互方式<ul>
+<li><strong>同步与异步</strong><br>同步：可靠的任务序列，一个任务完成时需要依赖另外一个任务时，只有等待被依赖的任务完成后，依赖的任务才能完成<br>异步：不需要等待依赖的任务完成</li>
+<li><strong>阻塞与非阻塞</strong>：主要是从cpu的消耗上来说的<br>阻塞：好处，线程需要要频繁的切换<br>非阻塞：好处，cpu不用长时间等待慢的操作</li>
+<li>组合方式有四种<br><strong>同步阻塞</strong>：最简单，I/O性能差，CPU大部分时间处于空闲状态<br><strong>同步非阻塞</strong>：提升I/O性能的常用手段，尤其实在长连接同时传输数据也不是很多的情况下，需要考虑系统的瓶颈是在I/O上还是在cpu上<br><strong>异步阻塞</strong>：分布式数据库上经常用到，通常写一条记录，一份是同步阻塞的记录，另外2-3份是异步阻塞<br><strong>异步非阻塞</strong>：比较复杂，只有在一些非常复杂的分布式情况下使用，集群之间的消息同步机制一般这种I/O方式，它适合同时要传多份相同的数据到集群中的不同的机器，同时传输量虽然不大但是却非常频繁的情况</li>
+</ul>
+</li>
+</ol>
+<h2 id="设计模式解析之适配器模式"><a href="#设计模式解析之适配器模式" class="headerlink" title="设计模式解析之适配器模式"></a>设计模式解析之适配器模式</h2><h3 id="java-I-O中的适配器模式"><a href="#java-I-O中的适配器模式" class="headerlink" title="java I/O中的适配器模式"></a>java I/O中的适配器模式</h3><p><img src="/images/15231970214576.jpg" alt=""><br>可以看到，InputStreamReader就是将InputStream适配到Reader，InputStreamReader实现了Reader接口，并通过StreamDecoder（因为byte到char需要进行编码）间接持有了InputStream的引用，很显然，适配器就是InputStreamReader类，源角色就是InputStream代表的实例对象，目标接口就是Reader类<br>类似的用法还有 StringReader ByteArrayInputStream</p>
+<h2 id="设计模式之装饰器模式"><a href="#设计模式之装饰器模式" class="headerlink" title="设计模式之装饰器模式"></a>设计模式之装饰器模式</h2><h3 id="java-I-O中的装饰器"><a href="#java-I-O中的装饰器" class="headerlink" title="java I/O中的装饰器"></a>java I/O中的装饰器</h3><p><img src="/images/15231970397782.jpg" alt=""></p>
+<p>InputStream以抽象组件存在的，FileInputStream就是具体组件，它实现了抽象组件的所有接口<br>FilterInputStream是装饰角色，它实现了InputStream所有接口，并持有InputStream的对象实例的引用；BufferedInputStream是具体的装饰器实现者，它给InputStream类附加了功能，这个装饰器类的作用就是使得InputStream读取的数据保存在内存中，提高读取的性能</p>
+<h2 id="适配器和装饰器的区别（别名-Wrapper）"><a href="#适配器和装饰器的区别（别名-Wrapper）" class="headerlink" title="适配器和装饰器的区别（别名 Wrapper）"></a>适配器和装饰器的区别（别名 Wrapper）</h2><p><strong>目的不一样</strong></p>
+<ol>
+<li>适配器：将一个接口转换为另外一个接口，通过改变接口来达到重复使用的目的</li>
+<li>装饰器：保持原有接口，但是增强原有对象的功能</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/08/JavaWeb/深入分析Java Web中的中文编码问题/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EtanWatson">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EWSUN">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/08/JavaWeb/深入分析Java Web中的中文编码问题/" itemprop="url">深入分析Java Web中的中文编码问题</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-08T22:13:38+08:00">
+                2018-04-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaWeb/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaWeb</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="深入分析Java-Web中的中文编码问题"><a href="#深入分析Java-Web中的中文编码问题" class="headerlink" title="深入分析Java Web中的中文编码问题"></a>深入分析Java Web中的中文编码问题</h1><h2 id="几种常见的编码格式"><a href="#几种常见的编码格式" class="headerlink" title="几种常见的编码格式"></a>几种常见的编码格式</h2><h2 id="在Java中需要编码的场景"><a href="#在Java中需要编码的场景" class="headerlink" title="在Java中需要编码的场景"></a>在Java中需要编码的场景</h2><h3 id="在I-O操作中存在的编码"><a href="#在I-O操作中存在的编码" class="headerlink" title="在I/O操作中存在的编码"></a>在I/O操作中存在的编码</h3><p><img src="/images/15231968450988.jpg" alt=""></p>
+<p>Reader类是JavaI/O中读字符的父类，InputStream类是读字节的父类，具体的字节到字符的编码实现，InputStreamReader委托StreamDecoder去做，在StreamDecoder解码过程中必须由用户指定Charset编码格式，默认使用本地环境中的字符集</p>
+<p>下面一段代码实现了文件读写操作<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">todo：后面增加代码</div><div class="line">String file = &quot;c:/stream.txt&quot;;</div></pre></td></tr></table></figure></p>
+<h3 id="在内存操作中的编码"><a href="#在内存操作中的编码" class="headerlink" title="在内存操作中的编码"></a>在内存操作中的编码</h3><ol>
+<li><p>String类提供转换到字节的方法 </p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">String s = &quot;这是一段中文字符串;          </div><div class="line">byte[] b = s.getBytes(&quot;UTF-8&quot;);</div><div class="line">String n = new String(b, &quot;UTF-8&quot;);</div></pre></td></tr></table></figure>
+</li>
+<li><p>Charset提供encode和decode，分别对应char[]到byte[]的编码和byte[]到char[]的编码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Charest charset = Charset.forName(&quot;UTF-8&quot;);</div><div class="line">ByteBuffer byteBuffer = charset.encode(string）</div><div class="line">CharsetBuffer charBuffet = charset.decode(byteBuffer);</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol>
+<li><p>ByteBuffer类，提供一种char和byte之间的软转换，它们之间转换不需要编码与解码，只是把一个16bit的char拆分为2个8bit的byte，它们的实际值没有修改，仅仅是数据的类型做了转换</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ByteBuffer heapByteBuffer = ByteBuffer.allocate(1024)</div><div class="line">ByteBuffer byteBuffer = heapByteBuffer.putChar(c)</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="在java中如何编解码"><a href="#在java中如何编解码" class="headerlink" title="在java中如何编解码"></a>在java中如何编解码</h2><p>以“I am 宇子”为例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">public static void encode()&#123;</div><div class="line">    String name = &quot;I am 宇子&quot;;</div><div class="line">    toHex(name.toCharArray()); //以16进制输出</div><div class="line">    try&#123;</div><div class="line">        byte[] iso8859 = name.getBytes(&quot;ISO-8859-1&quot;);</div><div class="line">        toHex(iso8859);</div><div class="line">        byte[] gb2312 = name.getBytes(&quot;GB2312&quot;);</div><div class="line">        toHex(gb2312);</div><div class="line">        byte[] gbk = name.getBytes(&quot;GBK&quot;);</div><div class="line">        toHex(gbk);</div><div class="line">        byte[] utf16 = name.getBytes(&quot;UTF-16&quot;);</div><div class="line">        toHex(utf16);</div><div class="line">        byte[] utf8 = name.getBytes(&quot;utf-8&quot;);</div><div class="line">        toHex(utf8);</div><div class="line">    &#125;catch(UnsupportedEncodingException e)&#123;</div><div class="line">        e.printStackTrace();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>java编码时序图<br><img src="/images/15231968596797.jpg" alt=""></p>
+<h3 id="对几种编码格式比较"><a href="#对几种编码格式比较" class="headerlink" title="对几种编码格式比较"></a>对几种编码格式比较</h3><ol>
+<li>GBK与GB2312规则类似，但是GBK范围更大</li>
+<li>UTF-16转换简单，适合在本地磁盘和内存之间使用</li>
+<li>UTF-8对单个字符校验，适合在网络上传输</li>
+</ol>
+<h2 id="在java-web中涉及的编解码"><a href="#在java-web中涉及的编解码" class="headerlink" title="在java web中涉及的编解码"></a>在java web中涉及的编解码</h2><p><strong>看一段文本的大小，只看字符本身是没有意义的，即使一样的字符，采用不同的编码最终存储的大小也会不同</strong><br>例如 整型数字1234567当做字符来存储，采用UTF-8编码占用7个字节，采用UTF-16占用16个字节，采用int型占用4个字节</p>
+<ol>
+<li>从客户端发送一个HTTP请求，需要编码的地方是URL，Cookie，Paramiter</li>
+<li>服务端收到HTTP请求后，URL，Cookie，POST表单中的数据需要解码</li>
+<li>服务端还可能读取本地或者网络中的数据库，这些数据可能存在编码问题</li>
+</ol>
+<h3 id="URL的编解码"><a href="#URL的编解码" class="headerlink" title="URL的编解码"></a>URL的编解码</h3><p>例如：URL为<br>http:( <strong><em>scheme</em></strong> )//localhost( <strong><em>domain</em></strong> ):8080( <strong><em>port</em></strong> )/example( <strong><em>contextPath</em></strong> )/servlets/servlet( <strong><em>ServletPath</em></strong> )/宇子( <strong><em>PathInfo</em></strong> )?author=宇子(<strong><em>QueryString</em></strong>)<br>URI：/example/servlets/servlet/宇子</p>
+<blockquote>
+<p><strong><em>以tomcat作为Servlet Engine为例：</em></strong><br>port：对应在Tomcat的 &lt; Connector prot = “8080”&gt;中配置<br>ContextPath:在&lt; Contextpath=”/example/“&gt;中配置<br>ServletPath：在web.xml的&lt; url-pattern&gt;中配置<br>PathInfo:就是我们请求的具体的Servlet<br>QueryString：就是要传递的参数（这里是讲Get）</p>
+</blockquote>
+<p>web.xml</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;servlet-mapping&gt;</div><div class="line">    &lt;servlet-name&gt;Example&lt;/servlet-name&gt; </div><div class="line">    &lt;url-pattern&gt;/servlets/servlet/*&lt;url-pattern&gt;</div><div class="line">&lt;/servlet-mapping&gt;</div></pre></td></tr></table></figure>
+<p>解析请求的URL是在org.apache.coyote.HTTP11.InternalInputBuffer的parseRequestLine方法中进行的，让后将其byte[]设置到org.apache.coyote.Request的相应属性中，这里的URL仍是byte格式，转换成char是在org.apache.catalina.connector.CoyoteAdpter的convertURI方法中完成的。</p>
+<blockquote>
+<p>URL中的URI部分进行解码的字符集是在connector的&lt; Connector URIEncoding=”UTF-8”/&gt;中定义的，如果没有定义，那么默认使用ISO-8859-1<br>QueryString:(Get)是作为Parameters保存的，都通过request.getParameter获取数值，对它们的解码是在在该方法第一次被调用时进行的，该方法被调用时会调用org.apache.catalina.connector.Request的parseParameter方法，这个方法会对Get和Post方式传递的参数进行解码，但是它们的解码字符集有可能不一样      </p>
+</blockquote>
+<p>QueryString 的解码字符集</p>
+<ul>
+<li>Header中的ContentType定义的Charset   </li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&lt; Connector URIEncoding = &quot;UTF-8&quot;, UseBodyEncodingForURI =&quot;true&quot;&gt; //设置为true    </div><div class="line"># 仅仅是对QueryString使用BodyEncoding解码，而不是整个URI</div></pre></td></tr></table></figure>
+<ul>
+<li>默认是ISO8859-1</li>
+</ul>
+<h3 id="HTTP-Header的编解码"><a href="#HTTP-Header的编解码" class="headerlink" title="HTTP Header的编解码"></a>HTTP Header的编解码</h3><p>如Cookie，redirectPath可能会存在编码问题</p>
+<ul>
+<li>解码是在调用request.getHeader时进行的</li>
+<li>如果请求的Header项没有解码，则调用MessageBytes的toString方法，这个方法对从byte到char转化的编码默认使用ISO-8859-1</li>
+<li>如果非要在Header中传递非ASSCII字符，先将这些字符用org.apache.catalina.util.URLEncoder编码，再添加到Header中，我们使用的时候，再按照相应的字符集解码即可</li>
+</ul>
+<h3 id="POST表单中的编解码"><a href="#POST表单中的编解码" class="headerlink" title="POST表单中的编解码"></a>POST表单中的编解码</h3><ul>
+<li>通过HTTP BODY传递</li>
+<li>浏览器首先根据ContentType中的Charset编码格式进行编码</li>
+<li>服务器也用ContentType中的字符集进行解码</li>
+<li>可以通过request.setCharacterEncoding(charset)来设置</li>
+</ul>
+<blockquote>
+<p>注意：第一次调用request.getParameter方法之前就设置request.setCharacterEncoding(charset),否者表单可能会出现乱码<br>针对multipart/from-data类型的参数，上传文件以字节流的方式传输到服务器的本地临时目录，这个过程没有涉及编解码，<strong><em>真正编码是在讲文件内容添加到parameters中</em></strong>     </p>
+</blockquote>
+<h3 id="HTTP-BODY的编解码"><a href="#HTTP-BODY的编解码" class="headerlink" title="HTTP BODY的编解码"></a>HTTP BODY的编解码</h3><ul>
+<li>可以通过response.setCharacterEncoding来设置，它会覆盖request.setCharacterEncoding的值，并通过Header的Content-Type返回客户端</li>
+<li>如果Content-Type没有是在Charset，浏览器根据HTML的&lt; meta HTTP-equiv = “Content-Type” content=”text/html”;charset=GBK”/&gt;中的charset来解码</li>
+<li>最后会用默认编码来解码</li>
+<li>JDBC来存取数据时要和数据的内置编码保持一致，可以通过URL来指定，例如：MYSQL: url=”jdbc:mysql://localhost:3306/DB?useUnicode=true&amp;characterEncoding=GBK”</li>
+</ul>
+<h2 id="在JS中的编码问题"><a href="#在JS中的编码问题" class="headerlink" title="在JS中的编码问题"></a>在JS中的编码问题</h2><h3 id="外部引入js文件"><a href="#外部引入js文件" class="headerlink" title="外部引入js文件"></a>外部引入js文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;script src=&quot;....js&quot; charset=&quot;gbk&quot;/&gt;</div></pre></td></tr></table></figure>
+<p>如果没有设置,则使用当前页面默认的字符集解析这个JS文件</p>
+<h3 id="JS的URL编码"><a href="#JS的URL编码" class="headerlink" title="JS的URL编码"></a>JS的URL编码</h3><ol>
+<li>endodeURI()</li>
+<li>encodeURIComponent()<br>这个函数通常用于将一个URL当做参数放在另外一个URL中</li>
+<li><p>java与JS编码问题</p>
+<ol>
+<li>java端处理URL编码有两个类，分别是java.net.URLEncoder和java.net.URLDecoder</li>
+<li><p>js默认编码是UTF-8，而服务端的中文有可能是GBK或者GB2312，解决办法是</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">encodeURIComponent(encodeURIComponent(str))</div></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ol>
+<h3 id="其他需要编码的地方"><a href="#其他需要编码的地方" class="headerlink" title="其他需要编码的地方"></a>其他需要编码的地方</h3><ul>
+<li>XML</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</div></pre></td></tr></table></figure>
+<ul>
+<li>Velocity模板设置编码格式如下</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">services.VelocityService.input.encoding=UTF-8</div></pre></td></tr></table></figure>
+<ul>
+<li>JSP</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;%@page contentType=&quot;text/html&quot;;charset=UTF-8 %&gt;</div></pre></td></tr></table></figure>
+<h2 id="常见问题分析"><a href="#常见问题分析" class="headerlink" title="常见问题分析"></a>常见问题分析</h2><h3 id="中文变成了看不懂的字符"><a href="#中文变成了看不懂的字符" class="headerlink" title="中文变成了看不懂的字符"></a>中文变成了看不懂的字符</h3><p>如果一个中文变成了两个乱码字符，这是编码字符集和解码字符集不一致导致的</p>
+<h3 id="一个汉字变成一个问号"><a href="#一个汉字变成一个问号" class="headerlink" title="一个汉字变成一个问号"></a>一个汉字变成一个问号</h3><p>不在码值范围内的字符会统一用3f表示，也就是常说的<strong><em>黑洞</em></strong></p>
+<h3 id="一个汉字变成了两个问号"><a href="#一个汉字变成了两个问号" class="headerlink" title="一个汉字变成了两个问号"></a>一个汉字变成了两个问号</h3><p>一般是中文经过多次编码</p>
+<h3 id="一种不正常的正确编码"><a href="#一种不正常的正确编码" class="headerlink" title="一种不正常的正确编码"></a>一种不正常的正确编码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">String value= String(request.getParameter(name).getBytes(&quot;ISO-8859-1&quot;),&quot;GBK&quot;);</div></pre></td></tr></table></figure>
+<blockquote>
+<p>ISO-8859-1字符集的编码范围是0000-00ff,正好和一个字节的范围相对应，这就使得刚开始用GBK编码的字符在用ISO-8859-1解码的时候，将两字节的中文拆分成两个欧文字符，再用ISO-8859-1编码，会还原原来字符的字节，所以再用GBK解码，就可以得到正确的汉字</p>
+</blockquote>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ol>
+<li>解决编码问题，首先要搞清楚哪些地方会引起从字符到字节的转换</li>
+<li>搞清楚操作这些数据的框架和系统是如何控制这些编码的</li>
+<li>正确设置编码格式，避免使用软件默认的或者操作系统平台默认的编码</li>
+</ol>
+<blockquote>
+<p>上文摘自深入分析JAVA WEB 技术内幕</p>
+<hr>
+<p><strong><em>做一个有文艺气息的码农 ^ _ ^</em></strong></p>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/08/设计模式/设计模式之简单工厂模式/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EtanWatson">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EWSUN">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/08/设计模式/设计模式之简单工厂模式/" itemprop="url">设计模式之简单工厂模式</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-08T22:11:45+08:00">
+                2018-04-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/设计模式/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="代码无错就是优？-简单工厂模式"><a href="#代码无错就是优？-简单工厂模式" class="headerlink" title="代码无错就是优？-简单工厂模式"></a>代码无错就是优？-简单工厂模式</h1><p>前些天，拜读完大作大话设计模式，里面的示例代码是用C#写的，为了让自己加深一下影响，决定用Java写一下，顺便学着画画UML图^~^<br>UML:<br><img src="/images/15231967270136.jpg" alt=""></p>
+<p>Operation</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">public abstract class Operation &#123;</div><div class="line">    private double numberA = 0;</div><div class="line">    private double numberB = 0;</div><div class="line">    private double result = 0;</div><div class="line"></div><div class="line">    public double getResult() &#123;</div><div class="line">        return result;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setResult(double result) &#123;</div><div class="line">        this.result = result;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public double getNumberA() &#123;</div><div class="line">        return numberA;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setNumberA(double numberA) &#123;</div><div class="line">        this.numberA = numberA;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public double getNumberB() &#123;</div><div class="line">        return numberB;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void setNumberB(double numberB) &#123;</div><div class="line">        this.numberB = numberB;</div><div class="line">    &#125;</div><div class="line">    public abstract double calculate();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>OperationFactory</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">public class OperationFactory &#123;</div><div class="line">    public static Operation createOperate(String operate)&#123;</div><div class="line">        Operation operation = null;</div><div class="line">        switch (operate)&#123;</div><div class="line">            case &quot;+&quot;:</div><div class="line">                operation = new OperationAdd();</div><div class="line">                break;</div><div class="line">            case &quot;-&quot;:</div><div class="line">                operation = new OperationSub();</div><div class="line">                break;</div><div class="line">            case &quot;*&quot;:</div><div class="line">                operation = new OperationMul();</div><div class="line">                break;</div><div class="line">            case &quot;/&quot;:</div><div class="line">                operation = new OperationDiv();</div><div class="line">        &#125;</div><div class="line">        return operation;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>OperationAdd</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">public class OperationAdd extends Operation &#123;</div><div class="line">    @Override</div><div class="line">    public double calculate() &#123;</div><div class="line">        setResult(getNumberA() + getNumberB());</div><div class="line">        return getResult();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>OperationDiv</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">public class OperationDiv extends Operation&#123;</div><div class="line">    @Override</div><div class="line">    public double calculate() &#123;</div><div class="line">        setResult(getNumberA() / getNumberB());</div><div class="line">        return getResult();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>OperationSub</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">public class OperationSub extends Operation&#123;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public double calculate() &#123;</div><div class="line">        setResult(getNumberA() - getNumberB());</div><div class="line">        return getResult();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>OperationMul</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">public class OperationMul extends Operation&#123;</div><div class="line">    @Override</div><div class="line">    public double calculate() &#123;</div><div class="line">        setResult(getNumberA() * getNumberB());</div><div class="line">        return getResult();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Client</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">public class Client &#123;</div><div class="line">    public static void main(String [] args)&#123;</div><div class="line">        Operation opera;</div><div class="line">        opera = OperationFactory.createOperate(&quot;+&quot;);</div><div class="line">        opera.setNumberA(1);</div><div class="line">        opera.setNumberB(2);</div><div class="line">        opera.calculate();</div><div class="line">        System.out.println(opera.getResult());</div><div class="line">        opera =OperationFactory.createOperate(&quot;-&quot;);</div><div class="line">        opera.setNumberA(1);</div><div class="line">        opera.setNumberB(2);</div><div class="line">        opera.calculate();</div><div class="line">        System.out.println(opera.getResult());</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p><strong><em>编程是一门技术，更是一门艺术</em></strong></p>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/08/设计模式/设计模式之策略模式/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EtanWatson">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EWSUN">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/08/设计模式/设计模式之策略模式/" itemprop="url">设计模式之策略模式</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-08T22:09:46+08:00">
+                2018-04-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/设计模式/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="商城促销-策略模式"><a href="#商城促销-策略模式" class="headerlink" title="商城促销-策略模式"></a>商城促销-策略模式</h1><blockquote>
+<p>它定义了算法家族，分别封装起来，让它们之间可以相互替换，此模式让算法的变换，不会影响到使用算法的客户</p>
+</blockquote>
+<p>二话不说，先上图<br><img src="/images/15231966222746.jpg" alt=""><br><img src="media/15229360961798/15230163731985.jpg" alt=""></p>
+<p>再上码<br>Strategy</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public abstract class Strategy &#123;</div><div class="line">    public abstract void AlgorithmInterface();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Context</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">public class Context &#123;</div><div class="line">    private Strategy strategy;</div><div class="line">    Context(Strategy strategy)&#123;</div><div class="line">        this.strategy = strategy;</div><div class="line">    &#125;</div><div class="line">    public void ContextInterface()&#123;</div><div class="line">        this.strategy.AlgorithmInterface();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>ConcreteStrategyA</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">public class ConcreteStrategyA extends Strategy&#123;</div><div class="line">    @Override</div><div class="line">    public void AlgorithmInterface() &#123;</div><div class="line">        System.out.println(&quot;这是策略A&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>ConcreteStrategyB</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">public class ConcreteStrategyB extends Strategy&#123;</div><div class="line">    @Override</div><div class="line">    public void AlgorithmInterface() &#123;</div><div class="line">        System.out.println(&quot;这是策略B&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>ConcreteStrategyC</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">public class ConcreteStrategyC extends Strategy&#123;</div><div class="line">    @Override</div><div class="line">    public void AlgorithmInterface() &#123;</div><div class="line">        System.out.println(&quot;这是策略C&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Client</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">public class Client &#123;</div><div class="line">    public static void main(String [] args)&#123;</div><div class="line">        Context context = new Context(new ConcreteStrategyA());</div><div class="line">        context.ContextInterface();</div><div class="line"></div><div class="line">        Context context1 = new Context(new ConcreteStrategyB());</div><div class="line">        context1.ContextInterface();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>只要在分析过程中听到需要在不同时间应用不同业务规则，就可以考虑用策略模式处理这种变化的可能性</p>
+<blockquote>
+<p><strong><em>做一个有文艺气息的码农 ^ _ ^</em></strong></p>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/08/JavaWeb/Javac编译原理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EtanWatson">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EWSUN">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/08/JavaWeb/Javac编译原理/" itemprop="url">深入class文件结构</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-08T22:09:09+08:00">
+                2018-04-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaWeb/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaWeb</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Javac编译原理"><a href="#Javac编译原理" class="headerlink" title="Javac编译原理"></a>Javac编译原理</h1><p>Javac的任务就是将Java语言规范转化成Java虚拟机语言规范</p>
+<h2 id="javac工作原理分析"><a href="#javac工作原理分析" class="headerlink" title="javac工作原理分析"></a>javac工作原理分析</h2><h3 id="词法分析器"><a href="#词法分析器" class="headerlink" title="词法分析器"></a>词法分析器</h3>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/08/JavaWeb/深入class文件结构/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EtanWatson">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EWSUN">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/08/JavaWeb/深入class文件结构/" itemprop="url">深入class文件结构</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-08T22:08:15+08:00">
+                2018-04-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaWeb/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaWeb</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="深入class文件结构"><a href="#深入class文件结构" class="headerlink" title="深入class文件结构"></a>深入class文件结构</h1><p>可以使用Oolong和jdk自带的javap生成class文件结构，现在我们用javap的方式生成</p>
+<h2 id="Javap生成的class文件结构"><a href="#Javap生成的class文件结构" class="headerlink" title="Javap生成的class文件结构"></a>Javap生成的class文件结构</h2><p>通过</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">javap -verbose ClassParse &gt; ClassParse.txt//该命令可以将ClassParse.class的结构信息输入到txt中</div></pre></td></tr></table></figure>
+<p>ClassParse.txt</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div></pre></td><td class="code"><pre><div class="line">Classfile XXX/XXX.class</div><div class="line">  Last modified Apr 6, 2018; size 574 bytes</div><div class="line">  MD5 checksum xxxxxxxx</div><div class="line">  Compiled from &quot;ClassParse.java&quot;</div><div class="line">public class </div><div class="line">xxx.xxx.xxx.ClassParse</div><div class="line">  minor version: 0</div><div class="line">  major version: 52</div><div class="line">  flags: ACC_PUBLIC, ACC_SUPER</div><div class="line">Constant pool:</div><div class="line">   #1 = Methodref          #6.#20         // java/lang/Object.&quot;&lt;init&gt;&quot;:()V</div><div class="line">   #2 = Fieldref           #21.#22        // java/lang/System.out:Ljava/io/PrintStream;</div><div class="line">   #3 = String             #23            // hello,YT</div><div class="line">   #4 = Methodref          #24.#25        // java/io/PrintStream.print:(Ljava/lang/String;)V</div><div class="line">   #5 = Class              #26            // com/XXX/java_web_test/ClassParse</div><div class="line">   #6 = Class              #27            // java/lang/Object</div><div class="line">   #7 = Utf8               &lt;init&gt;</div><div class="line">   #8 = Utf8               ()V</div><div class="line">   #9 = Utf8               Code</div><div class="line">  #10 = Utf8               LineNumberTable</div><div class="line">  #11 = Utf8               LocalVariableTable</div><div class="line">  #12 = Utf8               this</div><div class="line">  #13 = Utf8               Lcom/XXX/java_web_test/ClassParse;</div><div class="line">  #14 = Utf8               main</div><div class="line">  #15 = Utf8               ([Ljava/lang/String;)V</div><div class="line">  #16 = Utf8               args</div><div class="line">  #17 = Utf8               [Ljava/lang/String;</div><div class="line">  #18 = Utf8               SourceFile</div><div class="line">  #19 = Utf8               ClassParse.java</div><div class="line">  #20 = NameAndType        #7:#8          // &quot;&lt;init&gt;&quot;:()V</div><div class="line">  #21 = Class              #28            // java/lang/System</div><div class="line">  #22 = NameAndType        #29:#30        // out:Ljava/io/PrintStream;</div><div class="line">  #23 = Utf8               hello,YT</div><div class="line">  #24 = Class              #31            // java/io/PrintStream</div><div class="line">  #25 = NameAndType        #32:#33        // print:(Ljava/lang/String;)V</div><div class="line">  #26 = Utf8               com/XXX/java_web_test/ClassParse</div><div class="line">  #27 = Utf8               java/lang/Object</div><div class="line">  #28 = Utf8               java/lang/System</div><div class="line">  #29 = Utf8               out</div><div class="line">  #30 = Utf8               Ljava/io/PrintStream;</div><div class="line">  #31 = Utf8               java/io/PrintStream</div><div class="line">  #32 = Utf8               print</div><div class="line">  #33 = Utf8               (Ljava/lang/String;)V</div><div class="line">&#123;</div><div class="line">  public com.XXX.java_web_test.ClassParse();</div><div class="line">    descriptor: ()V</div><div class="line">    flags: ACC_PUBLIC</div><div class="line">    Code:</div><div class="line">      stack=1, locals=1, args_size=1</div><div class="line">         0: aload_0</div><div class="line">         1: invokespecial #1                  // Method java/lang/Object.&quot;&lt;init&gt;&quot;:()V</div><div class="line">         4: return</div><div class="line">      LineNumberTable:</div><div class="line">        line 7: 0</div><div class="line">      LocalVariableTable:</div><div class="line">        Start  Length  Slot  Name   Signature</div><div class="line">            0       5     0  this   Lcom/XXX/java_web_test/ClassParse;</div><div class="line"></div><div class="line">  public static void main(java.lang.String[]);</div><div class="line">    descriptor: ([Ljava/lang/String;)V</div><div class="line">    flags: ACC_PUBLIC, ACC_STATIC</div><div class="line">    Code:</div><div class="line">      stack=2, locals=1, args_size=1</div><div class="line">         0: getstatic     #2                  // Field java/lang/System.out:Ljava/io/PrintStream;</div><div class="line">         3: ldc           #3                  // String hello,YT</div><div class="line">         5: invokevirtual #4                  // Method java/io/PrintStream.print:(Ljava/lang/String;)V</div><div class="line">         8: return</div><div class="line">      LineNumberTable:</div><div class="line">        line 9: 0</div><div class="line">        line 10: 8</div><div class="line">      LocalVariableTable:</div><div class="line">        Start  Length  Slot  Name   Signature</div><div class="line">            0       9     0  args   [Ljava/lang/String;</div><div class="line">&#125;</div><div class="line">SourceFile: &quot;ClassParse.java&quot;</div></pre></td></tr></table></figure>
+<h3 id="LineNumberTable"><a href="#LineNumberTable" class="headerlink" title="LineNumberTable"></a>LineNumberTable</h3><p>在LinnumberTable下面包含多个line a:b<br>a:表示这个方法中的一行代码在类文件中的第几行<br>b:是指这行代码的第一条JVM指令的pc偏移量</p>
+<p>例如</p>
+<p><img src="/images/15234422979809.jpg" alt=""></p>
+<p>分别对应到</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">LineNumberTable:</div><div class="line">        line 9: 0</div><div class="line">        line 10: 8</div></pre></td></tr></table></figure>
+<p>冒号后面的0是这个代码的第一个JVM指令的偏移地址，一般一个方法的第一行代码对应的偏移地址都是0，这个方法的所有指令的偏移地址如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">public static void main(java.lang.String[]);</div><div class="line">    descriptor: ([Ljava/lang/String;)V</div><div class="line">    flags: ACC_PUBLIC, ACC_STATIC</div><div class="line">    Code:</div><div class="line">      stack=2, locals=1, args_size=1</div><div class="line">         0: getstatic     #2                  // Field java/lang/System.out:Ljava/io/PrintStream;</div><div class="line">         3: ldc           #3                  // String hello,YT</div><div class="line">         5: invokevirtual #4                  // Method java/io/PrintStream.print:(Ljava/lang/String;)V</div><div class="line">         8: return</div></pre></td></tr></table></figure>
+<p>从0~5都是System.out.print(“hello,YT”);一行代码对应的指令，而8行对应的指令就是return</p>
+<h3 id="LocalVariableTable"><a href="#LocalVariableTable" class="headerlink" title="LocalVariableTable"></a>LocalVariableTable</h3><ol>
+<li>Start： 该变量有效作用域的偏移地址</li>
+<li>Length： 该变量有效作用域的偏移地址（和Start一起）</li>
+<li>Slot： 该变量被赋值到某个Slot中的指令的下一条指令的偏移地址，一个变量的作用域就是[Start, Start+ Length]</li>
+<li>Name： Slot表示该变量占用的Slot编号和该变量的名称</li>
+<li>Signature：表示该变量的类型</li>
+</ol>
+<p>例如：<br><img src="/images/15234423246659.jpg" alt=""></p>
+<p>对应的字节码和LineNumber如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line">public void stack(java.lang.String[]);</div><div class="line">    descriptor: ([Ljava/lang/String;)V</div><div class="line">    flags: ACC_PUBLIC</div><div class="line">    Code:</div><div class="line">      stack=2, locals=6, args_size=2</div><div class="line">         0: ldc           #5                  // String YT</div><div class="line">         2: astore_2</div><div class="line">         3: aload_2</div><div class="line">         4: ldc           #5                  // String YT</div><div class="line">         6: invokevirtual #6                  // Method java/lang/String.equals:(Ljava/lang/Object;)Z</div><div class="line">         9: ifeq          30</div><div class="line">        12: iconst_3</div><div class="line">        13: istore_3</div><div class="line">        14: iload_3</div><div class="line">        15: ifle          27</div><div class="line">        18: lconst_1</div><div class="line">        19: lstore        4</div><div class="line">        21: iinc          3, -1</div><div class="line">        24: goto          14</div><div class="line">        27: goto          40</div><div class="line">        30: bipush        97</div><div class="line">        32: istore_3</div><div class="line">        33: getstatic     #2                  // Field java/lang/System.out:Ljava/io/PrintStream;</div><div class="line">        36: iload_3</div><div class="line">        37: invokevirtual #7                  // Method java/io/PrintStream.println:(C)V</div><div class="line">        40: return</div><div class="line">      LineNumberTable:</div><div class="line">        line 13: 0</div><div class="line">        line 14: 3</div><div class="line">        line 15: 12</div><div class="line">        line 16: 14</div><div class="line">        line 17: 18</div><div class="line">        line 18: 21</div><div class="line">        line 19: 24</div><div class="line">        line 20: 27</div><div class="line">        line 21: 30</div><div class="line">        line 22: 33</div><div class="line">        line 24: 40</div><div class="line">      LocalVariableTable:</div><div class="line">        Start  Length  Slot  Name   Signature</div><div class="line">           21       3     4     j   J</div><div class="line">           14      13     3     i   I</div><div class="line">           33       7     3     b   C</div><div class="line">            0      41     0  this   Lcom/XXX/java_web_test/ClassParse;</div><div class="line">            0      41     1   arg   [Ljava/lang/String;</div><div class="line">            3      38     2   str   Ljava/lang/String;</div></pre></td></tr></table></figure>
+<p>在这个方法中共有6个变量，共使用4个Slot，变量j在lstore 4这条指令中首次赋值，所以它的Start就从iinc 3,-1开始，指令的偏移量是21，而Length是3，说明这个变量的作用域是[21,24]<br>我们可以看到，i，b变量是用的同一个Slot3，变量i的作用域是[14,27],变量b的作用域是[33,40],不重合</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>方法长度限制和行数限制</p>
+<blockquote>
+<p>上文摘自深入分析JAVA WEB 技术内幕</p>
+<hr>
+<p><strong><em>做一个有文艺气息的码农 ^ _ ^</em></strong></p>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/08/JavaWeb/深入分析ClassLoader工作机制/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EtanWatson">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EWSUN">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/08/JavaWeb/深入分析ClassLoader工作机制/" itemprop="url">深入分析ClassLoader工作机制</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-08T22:05:35+08:00">
+                2018-04-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaWeb/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaWeb</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="深入分析ClassLoader工作机制"><a href="#深入分析ClassLoader工作机制" class="headerlink" title="深入分析ClassLoader工作机制"></a>深入分析ClassLoader工作机制</h1><p>ClassLoader有个作用（目的、任务）</p>
+<ol>
+<li>将Class加载到JVM中</li>
+<li>负责审查每个类应该由谁来加载（父优先等级加载机制）</li>
+<li>将Class字节码重新解析成JVM统一要求的对象格式</li>
+</ol>
+<h2 id="ClassLoader类结构分析"><a href="#ClassLoader类结构分析" class="headerlink" title="ClassLoader类结构分析"></a>ClassLoader类结构分析</h2><ol>
+<li>defineClass():将byte字节流解析成JVM能够识别的Class对象，通常和findClass()一起使用</li>
+<li>覆盖ClassLoader父类的findClass()来实现类的加载规则</li>
+<li>resolveClass():类被加载时就链接（Link）</li>
+</ol>
+<p>如果你不想重新定义类的加载规则，也没有复杂的逻辑处理，只想运行时加载一个自己指定的类</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">this.getClass().getClassLoader().loadClass(&apos;class&apos;)//这个loadClass()有重载方法，同样可以决定在什么时候解析这个类</div></pre></td></tr></table></figure>
+<p>ClassLoader是一个抽象类，如果我们想实现自己的ClassLoader的话，通常会继承URLClassLoader这个子类，因为这个类已经帮我们实现了大部分工作，我们只需要在适当的地方修改即可</p>
+<h2 id="ClassLoader的等级加载机制"><a href="#ClassLoader的等级加载机制" class="headerlink" title="ClassLoader的等级加载机制"></a>ClassLoader的等级加载机制</h2><p>上级委托机制</p>
+<blockquote>
+<p>整个JVM提供三层ClassLoader，这三层可以分为两种类型，可以理解为为接待室服务的接待室和为会员服务的接待室</p>
+<ol>
+<li>Bootstrap这个ClassLoader是接待室服务自身的，它主要加载JVM自身工作需要的类，这个ClassLoader完全有JVM自己控制的，需要加载哪个类，怎么加载都是由JVM自己控制，别人访问不到，没有父加载器，也没有子加载器</li>
+<li>ExtClassLoader 它是JVM自身的一部分，我们可以理解为这个类加载器是那些与这个大会合作单位的员工会员，既不是JVM内部的，也和普通的外部会员不同，它的服务的特定目标在System.getProperty(java.ext.dirs)目录</li>
+<li>AppClassLoader 父类是ExtClassLoader，所有在System.getProperty(“java.class.path”)目录下的类都可以由这个类加载器来加载，这个目录就是我们经常用到的classpath</li>
+</ol>
+</blockquote>
+<p>如果我们自己实现类加载器，getSystemClassLoader()作为父加载器获取到的都是AppClassLoader</p>
+<p>ClassLoader的类层次图</p>
+<p>JVM加载class文件有两种方式</p>
+<ol>
+<li>隐式加载：JVM自动加载需要的类到内存中，例如继承或引用某个类时，当这个类不在内存中的时候，jvm会自动将其加载到内存中</li>
+<li>显示加载：调用ClassLoader类加载一个类的方式</li>
+</ol>
+<h2 id="如何加载class文件"><a href="#如何加载class文件" class="headerlink" title="如何加载class文件"></a>如何加载class文件</h2><ol>
+<li>找到.class文件，并把这个文件包含的字节码加载到内存中</li>
+<li>第二阶段可以分为3步<ol>
+<li>字节码验证</li>
+<li>Class类数据结构分析以及相应的内存分配</li>
+<li>符号表的链接</li>
+</ol>
+</li>
+<li>类中静态属性和初始化的赋值，以及静态块的执行</li>
+</ol>
+<h3 id="加载字节码到内存"><a href="#加载字节码到内存" class="headerlink" title="加载字节码到内存"></a>加载字节码到内存</h3><p>以URLClassLoader为例：<br>在URLClassLoader的findClass()中：<br>URLClassPath：定义了去哪里找这个Class文件<br>如果找到这个class文件，在读取它的byte字节流，通过调用defineClass()方法创建类对象</p>
+<p>ClassLoader类型的参数形式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">Bootstrap ClassLoader：</div><div class="line">     -Xbootclasspath: //设置Bootstrap ClassLoader的搜索路径</div><div class="line">     -Xbootclasspath/a: //把路径添加到已存在Bootstrap ClassLoader搜索路径后面</div><div class="line">     -Xbootclasspath/p: // 同上 前面</div><div class="line">ExtClassLoader:</div><div class="line">     -Djava.ext.dirs //设置ExtClassLoader的搜索路径</div><div class="line">AppClassLoader</div><div class="line">     -Djava.class.path= -cp或-classpath // 设置AppClassLoader的搜索路径</div></pre></td></tr></table></figure>
+<h3 id="验证与解析"><a href="#验证与解析" class="headerlink" title="验证与解析"></a>验证与解析</h3><ol>
+<li>字节码验证：确保格式行为正确</li>
+<li>类准备：类中定义的字段、方法和实现接口所比需的数据结构</li>
+<li>装入类所引用的其他类，如超类、接口、字段、方法签名</li>
+</ol>
+<h3 id="初始化Class对象"><a href="#初始化Class对象" class="headerlink" title="初始化Class对象"></a>初始化Class对象</h3><p>类中包含的静态初始器都被执行，在这个阶段末尾，静态字段被初始化为默认值</p>
+<h2 id="常见加载类错误分析"><a href="#常见加载类错误分析" class="headerlink" title="常见加载类错误分析"></a>常见加载类错误分析</h2><h3 id="ClassNotFoundException"><a href="#ClassNotFoundException" class="headerlink" title="ClassNotFoundException"></a>ClassNotFoundException</h3><p>通常发生在显示加载类的时候</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">public class NotFountException&#123;</div><div class="line">    public static void main(String [] args)&#123;</div><div class="line">     try&#123;</div><div class="line">        Class.forName(&quot;notFoundClass&quot;);</div><div class="line">     &#125;catch(ClassNotFoundException)</div><div class="line">         e.printStackTrace();</div><div class="line">     &#125; </div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>显示加载一个类通常有如下方法</p>
+<ul>
+<li>通过类Class中的forName()方法</li>
+<li>通过类ClassLoader中的loadClass()方法</li>
+<li>通过类ClassLoader中的findSystemClass()方法</li>
+</ul>
+<p>可以通过如下命令获取claspath路径</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">this.getClass().getClassLoader().getResource(&quot;&quot;).toString();</div></pre></td></tr></table></figure>
+<h3 id="NoClassDefFoundError"><a href="#NoClassDefFoundError" class="headerlink" title="NoClassDefFoundError"></a>NoClassDefFoundError</h3><p>这个异常在第一次使用命令行执行Java类时，可能会碰到<br>例如</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">java -cp example.jar Example</div></pre></td></tr></table></figure>
+<p>这是因为你的命令行中没有加类的包名</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">java -cp example.jar net.xulingbo.Example</div><div class="line">``` </div><div class="line"></div><div class="line">解决这个方法就是确保每个类引用的类都在当前的classPath下面</div><div class="line"></div><div class="line">### UnsatisfiedLinkError</div><div class="line">如果不小心将在JVM中的某个lib删除了，就可能报这个错误了</div><div class="line"></div><div class="line">### ClassCastException</div><div class="line"></div><div class="line">* 对于普通对象，对象必须是目标类的实例或者其子类的实例，如果目标类是接口，那么会把它当做是实现了该接口的一个子类</div><div class="line">* 对于数组类型，目标类必须是数组类型或java.lang.Object、java.lang.Cloneable、java.io.Serializable</div><div class="line"></div><div class="line">避免的方式</div><div class="line"></div><div class="line">* 显示指明这个容器所包含的对象类型</div><div class="line">* 先同过instanceof检测是不是目标类型，然后再进行强制类型转换</div><div class="line"></div><div class="line">### ExceptionInInitializerError</div><div class="line"></div><div class="line">* 如果JVM在创建实例的时候因为Out-Of-Memory-Error而无法创建新实例，那么就抛出OutOfMemoryError对象作为代替</div><div class="line">* 如果初始化器抛出一些Exception，如果这个Exception不是Error或者是它的子类，则创建ExceptionInInitializerError类的一个新的实例，并用Exception作为参数，用这个实例代替Exception</div><div class="line"></div><div class="line">## 常用的ClassLoader分析</div></pre></td></tr></table></figure>
+<p>// todo<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">## 如何实现自己的ClassLoader</div><div class="line"></div><div class="line">### 加载自定义路径下的class文件</div><div class="line">1. 继承ClassLoader实现</div></pre></td></tr></table></figure></p>
+<p>public class PathClassLoader extends ClassLoader{<br>    private String classpath;<br>    private String packageName; // 包名</p>
+<pre><code>public PathClassLoader(String classpath){
+    this.classpath = classpath;
+}
+
+protected Class&lt;?&gt; findClass(String name) throws ClassNotFoundException{
+    if(packageName.startsWith(name)){
+        byte[] classData = getData(name);
+        if(classData == null){
+            throw new ClassNotFoundException();
+        }else {
+            return defineClass(name, classData, 0, classData.length);
+        }
+    }else {
+        return super.loadClass(name);
+    }
+}
+
+private byte[] getData(String className){
+    String path = classpath + File.separatorChar + className.replace(&apos;.&apos;, File.separatorChar)+&quot;.class&quot;;
+    try {
+        InputStream is = new FileInputStream(path);
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        byte[] buffer = new byte[2048];
+        int num = 0;
+        while ((num = is.read(buffer)) != -1){
+            stream.write(buffer, 0, num);
+        }
+        return stream.toByteArray();
+
+    }catch (IOException e){
+        e.printStackTrace();
+    }
+    return null;
+}
+</code></pre><p>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">其中，packageName就是你要自定义加载的包名，如果不是该包下的，还用父类加载器加载</div><div class="line"></div><div class="line">2. 继承URLClassLoader类，这个是常用方式</div></pre></td></tr></table></figure></p>
+<p>public class URLPathClassLoader extends URLClassLoader{</p>
+<pre><code>private String packageName = &quot;&quot;;
+
+// 该父类没有默认的构造方法
+public URLPathClassLoader(URL[] classPath, ClassLoader parent){
+    super(classPath, parent);
+}
+@Override
+protected Class&lt;?&gt; findClass(String name) throws ClassNotFoundException {
+    Class&lt;?&gt; aClass = findLoadedClass(name);
+    if(aClass != null){
+        return aClass;
+    }
+    if(!packageName.startsWith(name)){
+        return super.loadClass(name);
+    }else {
+        return findClass(name); //递归  不太明白?
+    }
+}
+</code></pre><p>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">我们将指定目录化成URL路径，然后作为参数创建URLPathClassLoader对象，就会在URL指定的目录下查找指定的类文件</div><div class="line"></div><div class="line">### 加载自定义格式的class文件（将class文件加密）</div></pre></td></tr></table></figure></p>
+<p>public class NetClassLoader extends ClassLoader {<br>    private String classpath;<br>    private String packageName; // 包名</p>
+<pre><code>public NetClassLoader(String classpath){
+    this.classpath = classpath;
+}
+
+protected Class&lt;?&gt; findClass(String name) throws ClassNotFoundException {
+    Class&lt;?&gt; aClass = findLoadedClass(name);
+    if(aClass != null){
+        return aClass;
+    }
+    if(!packageName.startsWith(name)){
+        byte[] classData = getData(name);
+        if(classData == null){
+            throw new ClassNotFoundException();
+        }else {
+            return defineClass(name, classData, 0, classData.length);
+        }
+    }else {
+        return super.loadClass(name);
+    }
+}
+
+private byte[] getData(String className){
+    String path = classpath + File.separatorChar + className.replace(&apos;.&apos;, File.separatorChar)+&quot;.class&quot;;
+    try {
+        InputStream is = new FileInputStream(path);
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        byte[] buffer = new byte[2048];
+        int num = 0;
+        while ((num = is.read(buffer)) != -1){
+            deCode(buffer); //将解码以后的buffer写到输出流中
+            stream.write(buffer, 0, num);
+        }
+        return stream.toByteArray();
+
+    }catch (IOException e){
+        e.printStackTrace();
+    }
+    return null;
+}
+
+private byte[] deCode(byte[] src){
+    byte[] decode = null;
+    // TODO: 解码业务逻辑
+    return decode;
+}
+</code></pre><p>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">### 实现类的热部署</div><div class="line"></div><div class="line">JVM 表示一个类是否是同一个类会有两个条件</div><div class="line"></div><div class="line">1. 类的完整类名是否一样</div><div class="line">2. 加载这个类的ClassLoader是否是一同一个</div></pre></td></tr></table></figure></p>
+<p>public class ClassReloader extends ClassLoader {<br>    private String classpath;<br>    private String className = “com.etan.list.Question1”; // 类名</p>
+<pre><code>public ClassReloader(String classpath) {
+    this.classpath = classpath;
+}
+
+protected Class&lt;?&gt; findClass(String name) throws ClassNotFoundException {
+    byte[] classData = getData(name);
+    if (classData == null) {
+        throw new ClassNotFoundException();
+    } else {
+        return defineClass(className, classData, 0, classData.length);
+    }
+
+}
+
+private byte[] getData(String className) {
+    String path = classpath + className;
+    try {
+        InputStream is = new FileInputStream(path);
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        byte[] buffer = new byte[2048];
+        int num = 0;
+        while ((num = is.read(buffer)) != -1) {
+            stream.write(buffer, 0, num);
+        }
+        return stream.toByteArray();
+
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+    return null;
+}
+
+public static void main(String[] args){
+    try{
+        String path = &quot;/Users/YT/develop/interview_questions/out/production/interview_questions/com/etan/list/&quot;;
+        ClassReloader reloader = new ClassReloader(path);
+        Class r = reloader.findClass(&quot;Question1.class&quot;);
+        System.out.println(r.newInstance());
+        ClassReloader reloader2 = new ClassReloader(path);
+        Class r2 = reloader2.findClass(&quot;Question1.class&quot;);
+        System.out.println(r2.newInstance());
+    }catch (Exception e){
+        e.printStackTrace();
+    }
+}
+</code></pre><p>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">刚开始写的时候，没有加e.printStackTrace(),将一个default（权限）的class放入加载器，之后在r.newInstance()以后，就无法执行了，也不抛异常（傻了不是），最后在debug中找到是IllegalAccessException异常</div><div class="line">这里配一张权限表</div><div class="line">![屏幕快照 2018-04-08 下午4.24.56](media/15229986044234/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-04-08%20%E4%B8%8B%E5%8D%884.24.56.png)</div><div class="line">由于我在不同的包下访问的，所以这里没有权限，后来使用public class，就可以了</div></pre></td></tr></table></figure></p>
+<p>com.XXX.list.Question1@60e53b93<br>com.XXX.list.Question1@266474c2<br>```<br>需要注意的是：</p>
+<blockquote>
+<p>被这个ClassLoader加载的类的字节码会保持在JVM的permGen区，这个数据一般只是在执行full GC时才会被回收，如果你的应用中有大量的动态类加载，Full GC又不是太频繁，需要注意PermGen区的大小</p>
+</blockquote>
+<h2 id="java应不应该动态加载对象"><a href="#java应不应该动态加载对象" class="headerlink" title="java应不应该动态加载对象"></a>java应不应该动态加载对象</h2><p>对象的引用关系只有对象的创建者持有和使用，JVM不可以干预对象的引用关系，因为JVM并不知道对象是子母被使用的</p>
+<blockquote>
+<p>不能动态的提供类对象的关键是，对象的状态被保存了，并且被其他对象引用了，一个简单的办法就是不保存对象的状态，对象被创建使用后就被释放掉，下次修改后，对象也是新的了</p>
+</blockquote>
+<hr>
+<blockquote>
+<p><strong><em>做一个有文艺气息的码农 ^ _ ^</em></strong></p>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/08/设计模式/单一职责原则/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -446,1548 +2278,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/08/设计模式/开放-封闭原则/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="EtanWatson">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/header.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="EWSUN">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/08/设计模式/开放-封闭原则/" itemprop="url">设计模式之开放封闭原则</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-08T22:03:11+08:00">
-                2018-04-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/设计模式/" itemprop="url" rel="index">
-                    <span itemprop="name">设计模式</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="考研求职两不误——–开放-封闭原则"><a href="#考研求职两不误——–开放-封闭原则" class="headerlink" title="考研求职两不误——–开放-封闭原则"></a>考研求职两不误——–开放-封闭原则</h1><blockquote>
-<p>软件实体（类、模块、函数等等）应该考研扩展，但是不可修改<br>对于扩展是开放的（Open for extension）<br>对于更改的封闭的（Closed for modification）</p>
-</blockquote>
-<p>怎样的设计才能面对需求的改变却可以保持相对的稳定，从而使得系统可以在第一个版本以后不断推出新的版本呢？<br>在我们最初编写代码时，假设变回不会发生。当变化发生时，我们就创建抽象来隔离以后发生的同类变化。面对需求，对程序的改动是通过增加新代码进行的，而不是更改现有的代码。<br>开闭原则是面向对象设计的核心所在，遵循这个原则可以是软件可维护、可扩展、可复用、灵活性好。仅对程序中呈现频繁变化的那部分做出抽象，<strong><em>拒绝不成熟的抽象和抽象本身一样重要</em></strong></p>
-<blockquote>
-<p><strong><em>做一个有文艺气息的码农 ^ _ ^</em></strong></p>
-</blockquote>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/08/设计模式/依赖倒置原则/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="EtanWatson">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/header.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="EWSUN">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/08/设计模式/依赖倒置原则/" itemprop="url">设计模式之依赖倒置原则</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-08T22:01:48+08:00">
-                2018-04-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/设计模式/" itemprop="url" rel="index">
-                    <span itemprop="name">设计模式</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="会修电脑不会修收音机—–依赖倒置原则"><a href="#会修电脑不会修收音机—–依赖倒置原则" class="headerlink" title="会修电脑不会修收音机—–依赖倒置原则"></a>会修电脑不会修收音机—–依赖倒置原则</h1><blockquote>
-<p>抽象不应该依赖细节，细节应该依赖于抽象，说白了，就是要针对接口编程，不要对实现编程<br>高层模块不应该依赖底层模块。两个都应该依赖抽象<br>抽象不应该依赖细节。细节应该依赖抽象</p>
-</blockquote>
-<p><img src="media/15230668039333/15230699979579.jpg" alt=""></p>
-<h2 id="里氏代换原则"><a href="#里氏代换原则" class="headerlink" title="里氏代换原则"></a>里氏代换原则</h2><blockquote>
-<p>一个软件实体如果使用的是一个父类的话，那么一定适用于其子类，而且它察觉不出父类对象和子类对象的区别。也就是说，在软件里面，把父类替换成它的子类，程序的行为没有变化，简单地说，子类型必须能够替换到它门的父类型<br>里氏代换原则：子类型必须能够替换掉它们的父类型</p>
-</blockquote>
-<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><blockquote>
-<p>依赖倒置其实可以说是面向对象的设计的标志，用哪种语言编写程序不重要，如果编写是考虑的都是如何针对抽象编程而不是针对细节编程，即程序中所有的依赖都是终止于抽象类或者接口，那就是面向对象的设计，反之，那就是过程化的程序设计了</p>
-</blockquote>
-<p>依赖倒置其实就是谁也不要依靠谁，除了约定的接口，大家都可以灵活自如</p>
-<blockquote>
-<p><strong><em>做一个有文艺气息的码农 ^ _ ^</em></strong></p>
-</blockquote>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/08/设计模式/设计模式之工厂方法模式/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="EtanWatson">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/header.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="EWSUN">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/08/设计模式/设计模式之工厂方法模式/" itemprop="url">设计模式之工厂方法模式</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-08T19:40:05+08:00">
-                2018-04-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/设计模式/" itemprop="url" rel="index">
-                    <span itemprop="name">设计模式</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="雷锋依然在人间——-工厂方法模式"><a href="#雷锋依然在人间——-工厂方法模式" class="headerlink" title="雷锋依然在人间——-工厂方法模式"></a>雷锋依然在人间——-工厂方法模式</h1><blockquote>
-<p>定义一个用于创建对象的接口，让子类决定实例化哪一个类。工厂方法使一个类的实例化延迟到其子类</p>
-</blockquote>
-<p>简单工厂模式的最大优点在于<strong>工厂类中包含了必要的逻辑判断</strong>，根据客户端的选择动态实例化相关类，对于客户端来说，去除了与具体产品的依赖<br><strong>工厂方法</strong>把简单工厂的内部逻辑判断移到了客户端代码来进行。你要想加功能，本来要改工厂类的，而现在是修改客户端</p>
-<p>先看抽象的类图<br><img src="/images/15231890008404.jpg" alt=""></p>
-<p>Product接口定义工厂方法所创建的对象接口，Creator声明工厂方法，该方法返回一个Product类型的对象</p>
-<p>接下来使用一个学雷锋做好事儿的例子实现一下工厂方法模式（来源大话设计模式）</p>
-<p>LeiFen</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">public class LeiFeng &#123;</div><div class="line">    public void Sweep()&#123;</div><div class="line">        System.out.println(&quot;扫地&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void Wash()&#123;</div><div class="line">        System.out.println(&quot;洗衣&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void BuyRice()&#123;</div><div class="line">        System.out.println(&quot;买米&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>ILeiFengFactory</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">public interface ILeiFengFactory &#123;</div><div class="line"></div><div class="line">    LeiFeng CreateLeiFeng();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>Undergraduate</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">public class Undergraduate extends LeiFeng&#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>UndergraduateFactory</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">public class UndergraduateFactory implements ILeiFengFactory&#123;</div><div class="line">    @Override</div><div class="line">    public LeiFeng CreateLeiFeng() &#123;</div><div class="line">        return new Undergraduate();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>Volunteer</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">public class Volunteer extends LeiFeng&#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>VolunteerFactory</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">public class VolunteerFactory implements ILeiFengFactory&#123;</div><div class="line">    @Override</div><div class="line">    public LeiFeng CreateLeiFeng() &#123;</div><div class="line">        return new Volunteer();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>Client</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">public class Client &#123;</div><div class="line"></div><div class="line">    public static void main(String [] args)&#123;</div><div class="line">        ILeiFengFactory factory = new UndergraduateFactory();</div><div class="line">        LeiFeng student = factory.CreateLeiFeng();</div><div class="line"></div><div class="line">        student.BuyRice();</div><div class="line">        student.Sweep();</div><div class="line">        student.Wash();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>由于客户端还要修改代码，所以还不够完美，所以需要使用反射技术来实现，抽象工厂模式</p>
-<blockquote>
-<p><strong><em>做一个有文艺气息的码农 ^ _ ^</em></strong></p>
-</blockquote>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/08/设计模式/设计模式之装饰模式/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="EtanWatson">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/header.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="EWSUN">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/08/设计模式/设计模式之装饰模式/" itemprop="url">设计模式之装饰模式</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-08T19:33:10+08:00">
-                2018-04-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/设计模式/" itemprop="url" rel="index">
-                    <span itemprop="name">设计模式</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="穿什么有这么重要———装饰模式"><a href="#穿什么有这么重要———装饰模式" class="headerlink" title="穿什么有这么重要———装饰模式"></a>穿什么有这么重要———装饰模式</h1><blockquote>
-<p>动态地给一个对象添加一些额外的职责，就增加功能来说，装饰模式比生成子类更为灵活</p>
-</blockquote>
-<p>先上图<br><img src="/images/15231875428520.jpg" alt=""></p>
-<p>在上码：<br>Component</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public abstract class Component &#123;</div><div class="line">    public abstract void Operation();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>ConcreteComponent</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">public class ConcreteComponent extends Component&#123;</div><div class="line">    @Override</div><div class="line">    public void Operation() &#123;</div><div class="line">        System.out.println(&quot;具体对象操作&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>Decorator</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">public abstract class Decorator extends Component&#123;</div><div class="line">    protected Component component;</div><div class="line">    public void setComponent(Component component)&#123;</div><div class="line">        this.component = component;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void Operation()&#123;</div><div class="line">        if(component != null)&#123;</div><div class="line">            component.Operation();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>ConcreteDecoratorA</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">public class ConcreteDecoratorA extends Decorator&#123;</div><div class="line">    private String addedState;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void Operation() &#123;</div><div class="line">        super.Operation();</div><div class="line">        addedState = &quot;New State&quot;;</div><div class="line">        System.out.println(&quot;具体装饰对象A的操作&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>ConcreteDecoratorB</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">public class ConcreteDecoratorB extends Decorator&#123;</div><div class="line">    @Override</div><div class="line">    public void Operation() &#123;</div><div class="line">        super.Operation();</div><div class="line">        addedBehavior();</div><div class="line">        System.out.println(&quot;具体装饰对象B的操作&quot;);</div><div class="line">    &#125;</div><div class="line">    public void addedBehavior()&#123;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>Component是定义一个对象接口，可以给这些对象动态的添加职责。ConcreComponent是定义了一个具体的对象，也可以给这个对象添加一些职责。Decorator，装饰抽象类，继承了Component，从外类扩展Component类的功能，但对于Component来说，是无需知道Decorator的存在的，至于ConcreteDecorator就是具体的装饰对象，起到给Component添加职责的功能</p>
-<blockquote>
-<p>装饰模式是利用SetComponent来对对象进行包装的。这样每个装饰对象的实现就和如何使用这个对象分离开了，每个装饰对象只关心自己的功能，不需要关心如何被添加到对象链当中</p>
-</blockquote>
-<p>如果只有一个ConcreteComponent类而没有抽象的Component类，那么Decorator类可以是ConcreteComponent的一个子类，同样道理，如果只有一个ConcreteDecorator类，那么就没有必要建立一个单独的Decorator类，而是把Decorator和ConcreteDecorator的责任合成一个类</p>
-<blockquote>
-<p>把类中的装饰功能从勒种搬移去除，这样可以化简原有的类，这样可以有效的把类的核心职责和装饰功能区分开。而且可以去除相关类中重复的装饰逻辑</p>
-</blockquote>
-<hr>
-<blockquote>
-<p><strong><em>做一个有文艺气息的码农 ^ _ ^</em></strong></p>
-</blockquote>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/08/设计模式/设计模式之代理模式/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="EtanWatson">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/header.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="EWSUN">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/08/设计模式/设计模式之代理模式/" itemprop="url">设计模式之代理模式</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-08T18:26:06+08:00">
-                2018-04-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/设计模式/" itemprop="url" rel="index">
-                    <span itemprop="name">设计模式</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="为别人做嫁衣———-代理模式"><a href="#为别人做嫁衣———-代理模式" class="headerlink" title="为别人做嫁衣———-代理模式"></a>为别人做嫁衣———-代理模式</h1><blockquote>
-<p>为其他对象提供一种代理以控制对这个对象的访问<br>先上图<br><img src="/images/15231832939163.jpg" alt=""></p>
-<p>注：该图画的是大话设计模式中的代理追女孩的图，这里Pursuit里面维护了一个SchoolGril，这个对象是通过Proxy传递过来的</p>
-</blockquote>
-<p>接下来上码：<br>GiveGift</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">public interface GiveGift &#123;</div><div class="line">    public void giveDolls();</div><div class="line">    public void giveFlowers();</div><div class="line">    public void giveChocolate();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>Pursuit</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">public class Pursuit implements GiveGift&#123;</div><div class="line"></div><div class="line">    private SchoolGirl mm;</div><div class="line"></div><div class="line">    public Pursuit(SchoolGirl mm)&#123;</div><div class="line">        this.mm = mm;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void giveDolls() &#123;</div><div class="line">        System.out.println(&quot;送洋娃娃!&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void giveFlowers() &#123;</div><div class="line">        System.out.println(&quot;送花&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void giveChocolate() &#123;</div><div class="line">        System.out.println(&quot;送巧克力&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>Proxy</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">public class Proxy implements GiveGift&#123;</div><div class="line"></div><div class="line">    private Pursuit gg;</div><div class="line"></div><div class="line">    public Proxy(SchoolGirl mm)&#123;</div><div class="line">        this.gg = new Pursuit(mm);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void giveDolls() &#123;</div><div class="line">        gg.giveDolls();</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void giveFlowers() &#123;</div><div class="line">        gg.giveFlowers();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void giveChocolate() &#123;</div><div class="line">        gg.giveChocolate();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>Clinet</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">public class Client &#123;</div><div class="line">    public static void main(String [] args)&#123;</div><div class="line">        SchoolGirl mm = new SchoolGirl();</div><div class="line">        Proxy proxy = new Proxy(mm);</div><div class="line">        proxy.giveChocolate();</div><div class="line">        proxy.giveDolls();</div><div class="line">        proxy.giveFlowers();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/15/Spring/我的Spring之路（五）-Spring Boot（2）/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="EtanWatson">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/header.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="EWSUN">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/15/Spring/我的Spring之路（五）-Spring Boot（2）/" itemprop="url">我的Spring之路（五）-Spring Boot （2）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-15T21:37:05+08:00">
-                2018-03-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Spring/" itemprop="url" rel="index">
-                    <span itemprop="name">Spring</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="基本配置"><a href="#基本配置" class="headerlink" title="基本配置"></a>基本配置</h2><h3 id="入口类和-SpringBootApplication"><a href="#入口类和-SpringBootApplication" class="headerlink" title="入口类和@SpringBootApplication"></a>入口类和@SpringBootApplication</h3><ul>
-<li>*Application为入口类，在main方法中使用SpringApplication.run,启动</li>
-<li><p>SpringBootApplication是Spring Boot的核心注解，他是一个组合注解，主要由<br>(1)@Configuration<br>(2)@EnableAutoConfiguration:让Spring Boot根据类路径中的jar包依赖为当前项目进行自动配置<br>(3)@ComponentScan<br><strong>Spring Boot 会自动扫描@SpringBootApplication所在类的同级包，建议入口类放置的位置在groupId+arctifactID组合的包名下</strong></p>
-<h3 id="关闭特定的自动配置"><a href="#关闭特定的自动配置" class="headerlink" title="关闭特定的自动配置"></a>关闭特定的自动配置</h3><p> @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})</p>
-<h3 id="定制Banner"><a href="#定制Banner" class="headerlink" title="定制Banner"></a>定制Banner</h3></li>
-<li><p>修改Banner<br>(1)在Spring BOot前东德时候会有默认的启动图案<br>(2)我们在src/main/resources下新建一个banner.txt<br>(3)通过<a href="http://patorjk.com/software/taag网站生成字符，复杂到banner.txt中" target="_blank" rel="external">http://patorjk.com/software/taag网站生成字符，复杂到banner.txt中</a><br>(4)启动之后，图案改变</p>
-</li>
-<li><p>关闭banner<br>(1) main里的内容修改为：<br> <code>SpringApplication app new SpringApplication(Ch522Application.calss);</code><br> app.setShowBanner(false);<br> app.run(args);<br>(2) 或使用fluent API修改为：</p>
-<p> new SpringApplicarionBuilder(Ch522Application.class).showBannere(false).run(args);</p>
-</li>
-</ul>
-<h3 id="Spring-Boot的配置文件"><a href="#Spring-Boot的配置文件" class="headerlink" title="Spring Boot的配置文件"></a>Spring Boot的配置文件</h3><p>使用全局配置文件<strong>application.properties</strong>或<strong>application.yml</strong>,放置在<strong>src/main/resources</strong>目录或者类路径的<strong>/config</strong>下</p>
-<h3 id="starter-pom"><a href="#starter-pom" class="headerlink" title="starter pom"></a>starter pom</h3><p>(1)官方 starter pom</p>
-<ul>
-<li>spring-boot-starter:核心starter，包含自动配置，日志，yml文件配置的支持</li>
-<li>spring-boot-starter-actuator：准生产特性，用来监控和管理应用</li>
-<li>spring-boot-starter-remote-shell</li>
-<li>spring-boot-starter-amqp</li>
-<li>spring-boot-starter-aop</li>
-<li>spring-boot-starter-batch</li>
-<li>spring-boot-starter-cache</li>
-<li><p>spring-boot-starter-cloud-connectors<br>(2) 第三方starter pom</p>
-<h3 id="使用xml配置"><a href="#使用xml配置" class="headerlink" title="使用xml配置"></a>使用xml配置</h3><p> @ImportResource({“classpath:some-context.xml”,”classpath:another-context.xml”})</p>
-</li>
-</ul>
-<h2 id="外部配置"><a href="#外部配置" class="headerlink" title="外部配置"></a>外部配置</h2><p>Spring Boot允许使用properties文件，yaml文件或者命令行参数作为外部配置</p>
-<h3 id="命令行参数配置"><a href="#命令行参数配置" class="headerlink" title="命令行参数配置"></a>命令行参数配置</h3><pre><code>java -jar xx.jar --server.port=9090
-</code></pre><h3 id="常规属性配置"><a href="#常规属性配置" class="headerlink" title="常规属性配置"></a>常规属性配置</h3><ol>
-<li><p>实战<br>(1) application.properties增加属性：<br><code>book.author=wangyunfei</code><br><code>book.name=spring boot</code><br>(2) 修改入口类：<br><code>@Value(&quot;$book.author&quot;)</code><br><code>private String bookAuthor;</code><br><code>@Value(&quot;$book.name&quot;)</code><br><code>private String bookName;</code></p>
-<h3 id="类型安全的配置（基于properties）"><a href="#类型安全的配置（基于properties）" class="headerlink" title="类型安全的配置（基于properties）"></a>类型安全的配置（基于properties）</h3><p>Spring Boot还提供基于类型安全的配置方式，通过<em>@ConfigurationProperties</em>将<em>properties</em>属性和一个Bean机器属性关联，从而实现类型安全的配置<br><strong>类型安全的Bean</strong></p>
-<p>import org.springframework.boot.context.properties.ConfigurationProperties<br>@Component<br>// 通过@ConfigurationProperties加载properties文件内的配置，通过prefix属性指定properties的配置的前缀，通过locations指定properties文件的位置<br>@ConfigurationProperties(prefix=”author”,locations={“classpath:config/author.properties”})<br>public class AuthorSettings{</p>
-<pre><code>private String name;
-private Long age;
-public String getName(){
-    return name;
-}
-public void setName(String name){
-    this.name = name;
-}
-public Long getAge(){
-    return age;
-}
-public void setAge(Long age){
-    this.age = age;
-}
-</code></pre><p>}</p>
-</li>
-</ol>
-<h2 id="日志配置"><a href="#日志配置" class="headerlink" title="日志配置"></a>日志配置</h2><p>配置日志级别：</p>
-<pre><code>logging.file=D:/mylog/log.log
-logging.level.org.springframework.web = DEBUG
-</code></pre><h2 id="Profile-配置"><a href="#Profile-配置" class="headerlink" title="Profile 配置"></a>Profile 配置</h2><p>生产环境 application-prod.properties：<code>server.prot=80</code><br>开发环境 application-dev.properties:<code>server.port=8888</code><br>在全局配置中application.properties：<code>spring.profiles.active=dev</code></p>
-<h2 id="Spring-Boot运行原理"><a href="#Spring-Boot运行原理" class="headerlink" title="Spring Boot运行原理"></a>Spring Boot运行原理</h2><p>Spring Boot关于自动配置的源码在spring-boot-autoconfigure-xxx.jar中<br>通过一下三中方式参看当前项目中启用和和未启用的的自动配置的报告</p>
-<ul>
-<li>运行jar时增加的–debug参数：<code>java -jar xx.jar --debug</code></li>
-<li>在application.properties中设置属性：<code>debug=true</code></li>
-<li>在STS中设置</li>
-</ul>
-<h3 id="运行原理"><a href="#运行原理" class="headerlink" title="运行原理"></a>运行原理</h3>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/13/Spring/我的Spring之路（四）-实战Spring Boot(1)/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="EtanWatson">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/header.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="EWSUN">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/13/Spring/我的Spring之路（四）-实战Spring Boot(1)/" itemprop="url">我的Spring之路（四）-实战Spring Boot(1)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-13T20:17:15+08:00">
-                2018-03-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Spring/" itemprop="url" rel="index">
-                    <span itemprop="name">Spring</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="Spring-Boot-概述"><a href="#Spring-Boot-概述" class="headerlink" title="Spring Boot 概述"></a>Spring Boot 概述</h2><p>『习惯优于配置』</p>
-<h3 id="Spring-Boot核心功能"><a href="#Spring-Boot核心功能" class="headerlink" title="Spring Boot核心功能"></a>Spring Boot核心功能</h3><ul>
-<li>可以以jar包的形式独立运行 java -jar xx.jar</li>
-<li>内嵌Servlet容器，无需以war包形式部署项目</li>
-<li>提供starter简化Maven配置</li>
-<li>自动配置Spring</li>
-<li>准生产的应用监控 Spring Boot提供基于http、ssh、telnet对运行是的项目进行监控</li>
-<li>无生成代码和xml配置：Spring Boot不需要任何xml配置即可实现Spring的所有配置</li>
-</ul>
-<h2 id="Spring-Boot的优缺点"><a href="#Spring-Boot的优缺点" class="headerlink" title="Spring Boot的优缺点"></a>Spring Boot的优缺点</h2><p>优点：</p>
-<ul>
-<li>快速构建项目</li>
-<li>对主流开发框架的无配置集成</li>
-<li>项目可独立运行，无需外部依赖Servlet容器</li>
-<li>提供运行是的应用监控</li>
-<li>极大的提高了开发、部署效率</li>
-<li>与云计算天然集成</li>
-</ul>
-<p>缺点：</p>
-<h2 id="Spring-Boot快速搭建"><a href="#Spring-Boot快速搭建" class="headerlink" title="Spring Boot快速搭建"></a>Spring Boot快速搭建</h2><h3 id="http-start-spring-io"><a href="#http-start-spring-io" class="headerlink" title="http://start.spring.io"></a><a href="http://start.spring.io" target="_blank" rel="external">http://start.spring.io</a></h3><h3 id="Spring-Tool-Suite"><a href="#Spring-Tool-Suite" class="headerlink" title="Spring Tool Suite"></a>Spring Tool Suite</h3><h3 id="IntelliJ-IDEA"><a href="#IntelliJ-IDEA" class="headerlink" title="IntelliJ IDEA"></a>IntelliJ IDEA</h3><h3 id="Spring-Boot-CLI-控制台命令工具"><a href="#Spring-Boot-CLI-控制台命令工具" class="headerlink" title="Spring Boot CLI(控制台命令工具)"></a>Spring Boot CLI(控制台命令工具)</h3>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/12/Spring/我的Spring之路（三）-点睛Spring MVC 4.x/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="EtanWatson">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/header.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="EWSUN">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/12/Spring/我的Spring之路（三）-点睛Spring MVC 4.x/" itemprop="url">我的Spring之路（三）-点睛SpringMVC 4.x</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-12T22:12:35+08:00">
-                2018-03-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Spring/" itemprop="url" rel="index">
-                    <span itemprop="name">Spring</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="Spring-MVC的常用注解"><a href="#Spring-MVC的常用注解" class="headerlink" title="Spring MVC的常用注解"></a>Spring MVC的常用注解</h2><h3 id="点睛"><a href="#点睛" class="headerlink" title="点睛"></a>点睛</h3><ul>
-<li>@Controller：表明这个类是Spring MVC里的COntroller，将其声明为Spring 的一个Bean，Dispatcher Servlet会自动扫描注解了此注解的类，并将Web请求映射到注解了@RequestMapping的方法上。在Spring MVC声明控制器Bean的时候，只能使用@Controller</li>
-<li>@RequestMapping：是用来映射Web请求（访问路径和参数）、处理类和方法的。@RequestMapping可注解在类或方法上。注解在方法上的@RequestMapping路径会继承注解在类上的路径，@RequestMapping支持Servlet的request和response作为参数，也支持对request和response的媒体类型进行配置</li>
-<li>@ResponseBody：支持将返回值放在reponse体内，而不是返回一个页面。我们在很多基于Ajax的程序的时候，可以以此注解返回数据，而不是页面；此注解可以放置在返回值前或者方法上</li>
-<li>@RequestBody：允许request的参数在request体中，而不是在直接链接在地址后面。此注解放置在参数前。</li>
-<li>@PathVariable：用来接收路径参数，如/news/001，可接收001作为参数，此注解放置在参数前</li>
-<li><p>@RestController：组合类@Controller和@ResponseBody</p>
-<h3 id="演示"><a href="#演示" class="headerlink" title="演示"></a>演示</h3><p> #1 演示实体类的构造函数，jackson对对象和json做转换时一定需要此空构造<br> public DemoObj(){</p>
-<pre><code>super();
-</code></pre><p> }<br> #2 演示控制器<br> @RequestMapping(produces = “text/plain;charset=UTF-8”)<br> public @ResponseBody String index(HttpServletRequest request){</p>
-<pre><code>return &quot;url:&quot; + request.getRequestURL() + &quot;can access&quot;;
-</code></pre><p> }</p>
-<p> // 可接受HttpServletRequest作为参数，结合@PathVariable使用，访问路径为 /anno/pathvar/xx<br> @RequestMapping(value = “/pathvar/{str}”)<br> public @ResponseBody String demoPathVar(@PathVariable String str, HttpServletRequest request){}</p>
-<p> // request常规获取参数的方式，访问路径为/anno/requestParam?id=1<br> @RequestMapping(value = “requestParam”)<br> public @ResponseBody String passRequestParam(Long id,HttpServletRequest request){}</p>
-<p> //解释参数到对象，访问路径为/anno/obj?id=1&amp;name=xx<br> @RequestMapping(value = “/obj”,produces = “application/json;charset=UTF-8”)<br> // @ReponseBody也可以用在方法上<br>  @ResponseBody<br> public String passRequestParam(DemoObj obj,HttpServletRequest request){}</p>
-<p> // 映射不同的路径到相同的方法<br>  @RequestMapping(value = “/name1”,”/name2”)<br> public @ResponseBody String remove(HttpServletRequest request){}<br> #3 @RestController演示<br> // 放回数据的媒体类型为json，直接返回对象，对象会自动转换成json，xml类似<br> @RequestMapping(value = “/getjson”,produces = “application/json;charset=UTF-8”)<br> public DemoObj getJson(DemoObj obj){</p>
-<pre><code>return new DemoObj(obj.getId()+1,obj.getName()+&quot;yy&quot;);
-</code></pre><p> }</p>
-</li>
-</ul>
-<h2 id="Spring-MVC的基本配置"><a href="#Spring-MVC的基本配置" class="headerlink" title="Spring MVC的基本配置"></a>Spring MVC的基本配置</h2><ul>
-<li>我们的配置类继承一个WebMvcConfigurerAdapter类</li>
-<li><p>并在此类使用@EnableWebMvc注解</p>
-<h3 id="静态资源映射"><a href="#静态资源映射" class="headerlink" title="静态资源映射"></a>静态资源映射</h3><p>静态资源文件需要直接访问在配置里重写addResourceHandlers方法来实现</p>
-<h4 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h4><p>（1）在src/main/resources 下建一个assets/js目录<br> //<br> @Override<br> public void addResourceHandlers(ResourceHandlerRegistry registry){<br> registry.addResourceHandler(“/assets/**”).addResourceLocations(“classpath:/assets/“)<br>}</p>
-<h3 id="拦截器配置"><a href="#拦截器配置" class="headerlink" title="拦截器配置"></a>拦截器配置</h3><p>拦截器实现对每一个请求处理前后进行相关的业务处理，类似于Servlet的Filter，可以让普通的Bean实现<strong>HandlerInterceptor接口</strong>或者继承<strong>HandlerInterceptorAdapter</strong>类来实现自定义拦截器<br>可以通过重写<strong>WebMvcConfigurerAdapter</strong>的<strong>addInterceptors</strong>方法来注册自定义的拦截器</p>
-<p> @Override<br> public boolean preHandle(HttpServletRequest request, HttpServletResponse response,Object handler) throws Exception{</p>
-<pre><code>long startTime = System.currentTimeMillis();
-request.setAttribute(&quot;startTime&quot;, startTime);
-return true;
-</code></pre><p> }</p>
-<p> @Override<br> public void postHandle(HttpServletRequest request,HttpServletResponse response, Object handler,ModelAndView modelAndView) throws Exception{</p>
-<pre><code>long startTime = (Long)request.getAttribute(startTime);
-request.removeAttribute(&quot;startTime&quot;);
-long endTime = System,currentTimeMillis();
-System.out.println(&quot;本次请求处理时间为：&quot; + new Long(endTime - startTime) + &quot;ms&quot;);
-request.setAttribute(&quot;handlingTime&quot;, endTime - startTime);
-</code></pre><p> }<br>(2) 配置</p>
-<p> @Bean<br> public DemoInterceptor demoInterceptor(){</p>
-<pre><code>return new DemoInterceptor();
-</code></pre><p> }</p>
-<p> @Override<br> public void addInterceptors(InterceptorRegistry registry){</p>
-<pre><code>registry.addInterceptor(demoInterceptor());
-</code></pre><p> }</p>
-<h3 id="ControllerAdvice"><a href="#ControllerAdvice" class="headerlink" title="@ControllerAdvice"></a>@ControllerAdvice</h3><p>@ControllerAdvice,注解了@Controller的类的方法可以使用以下方法</p>
-</li>
-<li>ExceptionHandler</li>
-<li>InitBinder</li>
-<li><p>ModelAttribute</p>
-<h3 id="其他配置"><a href="#其他配置" class="headerlink" title="其他配置"></a>其他配置</h3><h4 id="快捷的ViewController-在配置中重写addViewControllers来简化配置"><a href="#快捷的ViewController-在配置中重写addViewControllers来简化配置" class="headerlink" title="快捷的ViewController(在配置中重写addViewControllers来简化配置)"></a>快捷的ViewController(在配置中重写addViewControllers来简化配置)</h4><p> @Override<br> public void addViewControllers(ViewControllerRegistry registry){<br> registry.addViewController(“/index”).setViewName(“/index”);<br> }</p>
-<h3 id="路径匹配参数配置"><a href="#路径匹配参数配置" class="headerlink" title="路径匹配参数配置"></a>路径匹配参数配置</h3><p>@Override<br>public void configurePathMatch(PathMatchConfigurer configurer){<br> configurer.setUseSuffixPatternMatch(false);<br>}</p>
-<h3 id="更多配置"><a href="#更多配置" class="headerlink" title="更多配置"></a>更多配置</h3></li>
-<li><p>WebMvcConfigurerAdapter</p>
-</li>
-<li><p>WebMvcConfigurer</p>
-<h2 id="Spring-MVC的高级配置"><a href="#Spring-MVC的高级配置" class="headerlink" title="Spring MVC的高级配置"></a>Spring MVC的高级配置</h2><h3 id="文件上传配置"><a href="#文件上传配置" class="headerlink" title="文件上传配置"></a>文件上传配置</h3></li>
-<li><p>MultipartResolver 文件上传：在Spring的控制器中，通过MultipartFile file来接收文件，通过MultipartFile[] files介绍多个文件上传</p>
-</li>
-<li><p>示例<br>(1) 添加上传文件依赖<br>(2) 上传页面<br>(3) 添加转向到upload页面的ViewController<br>(4) MultipartResolver配置<br>(5)控制器：使用MultipartFile file 接受上传的文件、使用FileUtils.writeByteArrayToFile</p>
-<h3 id="自定义HttpMessageConverter"><a href="#自定义HttpMessageConverter" class="headerlink" title="自定义HttpMessageConverter"></a>自定义HttpMessageConverter</h3><p>HttpMessageConverter是用来处理request和response里的数据的</p>
-</li>
-<li><p>自定义HttpMessageConverter</p>
-</li>
-</ul>
-<p>   // 泛型为DemoObj<br>    public class MyMessageConverter extends AbstractHttpMessageConverter<demoobj>{<br>    // 新建一个我们自定义的媒体类型application/x-wisely<br>        public MyMessageConverter(){<br>            super(new MediaType(“applictation”,”x-wisely”,Charset.forName(“UTF-8”)));<br>        }<br>        @Override (重写方法)<br>    }</demoobj></p>
-<ul>
-<li><p>配置 在addViewControllers中添加viewController映射页面访问演示页面</p>
-<p> registry.addViewController(“/converter”).setViewName(“converter”);<br> // configureMessageConverters:会覆盖掉mvc多个HttpMessageConverter<br> // extendMessageConVerter：仅添加<br> @Override<br> public void extendMessageConverters(List&lt; HttpMessageConverter&lt; ? &gt; &gt; converters){</p>
-<pre><code>converters.add(converter());
-</code></pre><p> }<br> @Bean<br> public MyMessageConverter converter(){</p>
-<pre><code>return new MyMessageConverter();
-</code></pre><p> }</p>
-</li>
-<li><p>演示控制器</p>
-</li>
-<li>演示代码</li>
-</ul>
-<h3 id="服务端推送技术"><a href="#服务端推送技术" class="headerlink" title="服务端推送技术"></a>服务端推送技术</h3><p>本节的服务端推送技术方案都是基于：当客户端发送请求，服务端会抓住这个请求不放，等有数据更新的时候才返回给客户端<br>双向通信技术-WebSocket（以后演示）</p>
-<h4 id="SSE（Server-Send-Event-服务端发送事件）"><a href="#SSE（Server-Send-Event-服务端发送事件）" class="headerlink" title="SSE（Server Send Event 服务端发送事件）"></a>SSE（Server Send Event 服务端发送事件）</h4><ul>
-<li>Contoller中 @RequestMapping(value=”push”,produces=”text/event-stream”),这是服务器SSE的支持</li>
-<li>演示页面EventSource是SSE的客户端</li>
-<li>配置<h4 id="Servlet-3-0-异步方法处理"><a href="#Servlet-3-0-异步方法处理" class="headerlink" title="Servlet 3.0+异步方法处理"></a>Servlet 3.0+异步方法处理</h4></li>
-<li><p>开启异步方法支持</p>
-<p> Dynamic servlet = servletContext.addServlet(“dispatcher”,new DispatcherServlet(ctx));<br> servlet.addMapping(“/“);<br> servlet.setLoadOnStartup(1);<br> // 开启异步方法支持<br> servlet.setAsyncSupported(true);</p>
-</li>
-<li><p>演示控制器</p>
-</li>
-<li>定时任务</li>
-<li>演示页面</li>
-<li><p>配置：在MyMvcConfig上开始计划任务的支持，使用@EnableScheduling</p>
-<p> @Configuration<br> @EnableWebMvc<br> @EnableScheduling<br> @ComponentScan(“”)<br> public class MyMvcConfig extends WebMvcConfigurerAdapter{}<br> // 添加 viewController:<br> reqistry.addViewController(“/async”).setViewName(“/async”)</p>
-<h2 id="Spring-MVC的测试（本节主要涉及控制器的测试）"><a href="#Spring-MVC的测试（本节主要涉及控制器的测试）" class="headerlink" title="Spring MVC的测试（本节主要涉及控制器的测试）"></a>Spring MVC的测试（本节主要涉及控制器的测试）</h2><p>Servlet相关的模拟器对象：MockMVC，MockHttpServletRequest，MockHttpServletRequest，MockHttpSession</p>
-</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/10/Spring/我的Spring之路（二）/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="EtanWatson">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/header.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="EWSUN">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/10/Spring/我的Spring之路（二）/" itemprop="url">我的Spring之路（二）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-10T18:27:35+08:00">
-                2018-03-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Spring/" itemprop="url" rel="index">
-                    <span itemprop="name">Spring</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="Spring-Aware"><a href="#Spring-Aware" class="headerlink" title="Spring Aware"></a>Spring Aware</h2><p>Spring的依赖注入的最大的两点就是你所有的Bean对Spring容器的存在是没有意识的。即你可以将你的容器替换成别的容器。但是在实际项目中，你不可避免的要使用Spring容器本身的功能资源，这时你的Bean必须要意识到Spring容器的存在，才能调用Spring所提供的资源，这就是所谓的Spring Aware，你的Bean将会和Spring框架耦合，因为ApplicationContext接口集成了MessageSource接口，ApplicationEventPublisher接口和ResourceLoader接口，所以Bean继承ApplicationContextAware可以获得Spring容器的所有服务</p>
-<h2 id="多线程"><a href="#多线程" class="headerlink" title="多线程"></a>多线程</h2><p>Spring通过任务执行器（TaskExecutor）来实现多线程和并发编程，使用ThreadPoolTaskExecutor可实现一个基于线程池的TaskExecutor，通过@EnableAsync开启对异步任务的支持，并通过实际执行的Bean的方法中使用@Async注解来声明其是一个异步任务，通过@Async注解表明该方法是个异步方法，如果注解在类级别，则表明该类所有的方法都是异步的方法</p>
-<h2 id="任务计划"><a href="#任务计划" class="headerlink" title="任务计划"></a>任务计划</h2><p>首先通过在配置类注解@EnableScheduling来开启对计划任务的支持<br>然后在要执行计划任务的方法上注解@Scheduled，声明这是一个计划任务<br>包含的任务有</p>
-<ul>
-<li>cron</li>
-<li>fixDelay</li>
-<li>fixRate<h2 id="条件注解"><a href="#条件注解" class="headerlink" title="条件注解"></a>条件注解</h2>@Conditional<h2 id="组合注解与元注解"><a href="#组合注解与元注解" class="headerlink" title="组合注解与元注解"></a>组合注解与元注解</h2></li>
-<li>元注解：可以注解到别的注解上的注解</li>
-<li>组合注解：被注解的注解称之为组合注解，组合注解具备元注解的功能<h2 id="Enable-注解的工作原理"><a href="#Enable-注解的工作原理" class="headerlink" title="@Enable*注解的工作原理"></a>@Enable*注解的工作原理</h2></li>
-<li>第一类：直接导入配置类</li>
-<li>第二类：依据条件选择配置类</li>
-<li>第三类：动态注册Bean<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><h3 id="集成测试"><a href="#集成测试" class="headerlink" title="集成测试"></a>集成测试</h3>Spring通过Spring TestContext FrameWork对集成测试提供顶级支持，它不依赖于特定的测试框架<br>Spring提供了一个SpringJunit4ClassRunner类，它提供了SPring TestContext Framework的功能。通过@ContextConfiguration来配置Application Context，通过@ActiveProfile确定活动的profile</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -2036,7 +2331,7 @@ request.setAttribute(&quot;handlingTime&quot;, endTime - startTime);
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">67</span>
+                <span class="site-state-item-count">76</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

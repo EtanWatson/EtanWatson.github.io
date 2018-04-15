@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hadoop相关," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="EWSUN" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="shell编程shell 变量1. ./demo.sh # 让这个shell脚本在当前bash下运行 系统变量与命令1234567891011121314$HOME$PWD$SHELL$USER$PATH...# 可以使用set查看当前所有变量# =号两侧不能有空格# “”与&amp;apos;&amp;apos;的区别，&amp;apos;&amp;apos;里面的字符串都会脱义# unset 撤销# export 全局# r">
+<meta name="keywords" content="Hadoop相关">
+<meta property="og:type" content="article">
+<meta property="og:title" content="shell编程">
+<meta property="og:url" content="http://yoursite.com/2018/04/13/Hadoop相关/shell编程/index.html">
+<meta property="og:site_name" content="EWSUN">
+<meta property="og:description" content="shell编程shell 变量1. ./demo.sh # 让这个shell脚本在当前bash下运行 系统变量与命令1234567891011121314$HOME$PWD$SHELL$USER$PATH...# 可以使用set查看当前所有变量# =号两侧不能有空格# “”与&amp;apos;&amp;apos;的区别，&amp;apos;&amp;apos;里面的字符串都会脱义# unset 撤销# export 全局# r">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-04-13T11:38:45.247Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="shell编程">
+<meta name="twitter:description" content="shell编程shell 变量1. ./demo.sh # 让这个shell脚本在当前bash下运行 系统变量与命令1234567891011121314$HOME$PWD$SHELL$USER$PATH...# 可以使用set查看当前所有变量# =号两侧不能有空格# “”与&amp;apos;&amp;apos;的区别，&amp;apos;&amp;apos;里面的字符串都会脱义# unset 撤销# export 全局# r">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/04/13/Hadoop相关/shell编程/"/>
+
+
+
+
+
+  <title>shell编程 | EWSUN</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">EWSUN</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-schedule">
+          <a href="/schedule/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br />
+            
+            日程表
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/13/Hadoop相关/shell编程/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EtanWatson">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EWSUN">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">shell编程</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-13T15:40:20+08:00">
+                2018-04-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Hadoop相关/" itemprop="url" rel="index">
+                    <span itemprop="name">Hadoop相关</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="shell编程"><a href="#shell编程" class="headerlink" title="shell编程"></a>shell编程</h1><h2 id="shell-变量"><a href="#shell-变量" class="headerlink" title="shell 变量"></a>shell 变量</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">. ./demo.sh # 让这个shell脚本在当前bash下运行</div></pre></td></tr></table></figure>
+<h3 id="系统变量与命令"><a href="#系统变量与命令" class="headerlink" title="系统变量与命令"></a>系统变量与命令</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">$HOME</div><div class="line">$PWD</div><div class="line">$SHELL</div><div class="line">$USER</div><div class="line">$PATH</div><div class="line">...</div><div class="line"># 可以使用</div><div class="line">set查看当前所有变量</div><div class="line"># =号两侧不能有空格</div><div class="line"># “”与&apos;&apos;的区别，&apos;&apos;里面的字符串都会脱义</div><div class="line"># unset 撤销</div><div class="line"># export 全局</div><div class="line"># readonly </div><div class="line"># ``反引号 取一条命令的结果 等价 $()</div></pre></td></tr></table></figure>
+<h3 id="特殊变量"><a href="#特殊变量" class="headerlink" title="特殊变量"></a>特殊变量</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">$? #上一条命令退出的状态</div><div class="line">$$ 当前进程的编号</div><div class="line">$0 当前脚本的名称</div><div class="line">$n 表示n位置的输入参数 n&gt;=1</div><div class="line">$#</div><div class="line">$* 不拆分参数</div><div class="line">$@ 拆分参数</div></pre></td></tr></table></figure>
+<h3 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">s=`expr 2 + 3` 或</div><div class="line">$((2+3))</div></pre></td></tr></table></figure>
+<h3 id="流程控制"><a href="#流程控制" class="headerlink" title="流程控制"></a>流程控制</h3><h4 id="for循环"><a href="#for循环" class="headerlink" title="for循环"></a>for循环</h4><p>第一种方式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">for N in 1 2 3</div><div class="line">do</div><div class="line">    echo $N</div><div class="line">done</div><div class="line"># 或</div><div class="line">for N in 1 2 3; do echo $N; done</div><div class="line"># 或</div><div class="line">for N in &#123;1..3&#125;; do echo $N; done</div></pre></td></tr></table></figure>
+<p>第二种方式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">for ((i=0;i&lt;=5;i++))</div><div class="line">do echo $i</div><div class="line">done</div></pre></td></tr></table></figure>
+<h4 id="while"><a href="#while" class="headerlink" title="while"></a>while</h4><p>第一种方式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">while 表达式</div><div class="line">do</div><div class="line">    echo &quot;hello&quot;</div><div class="line">done</div></pre></td></tr></table></figure>
+<p>第二种</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">int=1</div><div class="line">while ((int&lt;=3))</div><div class="line">do</div><div class="line">    echo</div><div class="line">    let int++</div><div class="line">done</div></pre></td></tr></table></figure>
+<h4 id="case"><a href="#case" class="headerlink" title="case"></a>case</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">case $1 in</div><div class="line">start)</div><div class="line">    echo &quot;starting&quot;</div><div class="line">    ;;</div><div class="line">stop)</div><div class="line">    echo &quot;stoping&quot;</div><div class="line">    ;;</div><div class="line">*)</div><div class="line">    echo &quot;Usage: &#123;start|stop&#125;&quot; </div><div class="line">esac</div></pre></td></tr></table></figure>
+<h4 id="read命令"><a href="#read命令" class="headerlink" title="read命令"></a>read命令</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">read -p(提示信息) -t (超时) -S(隐藏方式读取) 变量</div></pre></td></tr></table></figure>
+<h4 id="if"><a href="#if" class="headerlink" title="if"></a>if</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">if [ condition ] #前后有空格</div><div class="line">then statements</div><div class="line">elif condition</div><div class="line">then statements</div><div class="line">else</div><div class="line">statements</div><div class="line">fi</div></pre></td></tr></table></figure>
+<p>类似于java中的三目表达式<br>[ condition ] &amp;&amp; echo ok || echo notok</p>
+<h4 id="自定义函数"><a href="#自定义函数" class="headerlink" title="自定义函数"></a>自定义函数</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[function] start[()]&#123;</div><div class="line">    action;</div><div class="line">    [return int]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="调试"><a href="#调试" class="headerlink" title="调试"></a>调试</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">sh -vx xxx.sh</div><div class="line">``` </div><div class="line"></div><div class="line">#### 高级命令行文本工具</div><div class="line">##### cut、sort、wc</div><div class="line">* sort</div><div class="line"></div><div class="line">    &gt; sort命令对File参数指定的文件中的*行*排序，并将结果写到标准输出。如果 File参数指定*多个文件*，那么 sort 命令将这些文件*连接*起来，并当作*一个*文件进行排序。</div><div class="line">    </div><div class="line">   语法：</div></pre></td></tr></table></figure>
+<p>   sort [-fbMnrtuk] [file or stdin]</p>
+<p>   #选项与参数：</p>
+<h1 id="f-：忽略大小写的差异，例如-A-与-a-视为编码相同；"><a href="#f-：忽略大小写的差异，例如-A-与-a-视为编码相同；" class="headerlink" title="-f  ：忽略大小写的差异，例如 A 与 a 视为编码相同；"></a>-f  ：忽略大小写的差异，例如 A 与 a 视为编码相同；</h1><h1 id="b-：忽略最前面的空格符部分；"><a href="#b-：忽略最前面的空格符部分；" class="headerlink" title="-b  ：忽略最前面的空格符部分；"></a>-b  ：忽略最前面的空格符部分；</h1><h1 id="M-：以月份的名字来排序，例如-JAN-DEC-等等的排序方法；"><a href="#M-：以月份的名字来排序，例如-JAN-DEC-等等的排序方法；" class="headerlink" title="-M  ：以月份的名字来排序，例如 JAN, DEC 等等的排序方法；"></a>-M  ：以月份的名字来排序，例如 JAN, DEC 等等的排序方法；</h1><h1 id="n-：使用『纯数字』进行排序-默认是以文字型态来排序的-；"><a href="#n-：使用『纯数字』进行排序-默认是以文字型态来排序的-；" class="headerlink" title="-n  ：使用『纯数字』进行排序(默认是以文字型态来排序的)；"></a>-n  ：使用『纯数字』进行排序(默认是以文字型态来排序的)；</h1><h1 id="r-：反向排序；"><a href="#r-：反向排序；" class="headerlink" title="-r  ：反向排序；"></a>-r  ：反向排序；</h1><h1 id="u-：就是-uniq-，相同的数据中，仅出现一行代表；"><a href="#u-：就是-uniq-，相同的数据中，仅出现一行代表；" class="headerlink" title="-u  ：就是 uniq ，相同的数据中，仅出现一行代表；"></a>-u  ：就是 uniq ，相同的数据中，仅出现一行代表；</h1><h1 id="t-：分隔符，默认是用-tab-键来分隔；"><a href="#t-：分隔符，默认是用-tab-键来分隔；" class="headerlink" title="-t  ：分隔符，默认是用 [tab] 键来分隔；"></a>-t  ：分隔符，默认是用 [tab] 键来分隔；</h1><p>   #-k  ：以那个区间 (field) 来进行排序的</p>
+<h1 id="例如"><a href="#例如" class="headerlink" title="例如"></a>例如</h1><p>   cat /etc/passwd | sort</p>
+<h1 id="再如，以第三栏排序，默认是以字符串排序的"><a href="#再如，以第三栏排序，默认是以字符串排序的" class="headerlink" title="再如，以第三栏排序，默认是以字符串排序的"></a>再如，以第三栏排序，默认是以字符串排序的</h1><p>   cat /etc/passwd | sort -t ‘:’ -k 3</p>
+<h1 id="这样就是以数字排序了"><a href="#这样就是以数字排序了" class="headerlink" title="这样就是以数字排序了"></a>这样就是以数字排序了</h1><p>   cat /etc/passwd | sort -t ‘:’ -k 3n</p>
+<h1 id="降序"><a href="#降序" class="headerlink" title="降序"></a>降序</h1><p>   cat /etc/passwd | sort -t ‘:’ -k 3nr</p>
+<h1 id="第六个域中的第二个字符到第四个字符，默认正向排序"><a href="#第六个域中的第二个字符到第四个字符，默认正向排序" class="headerlink" title="第六个域中的第二个字符到第四个字符，默认正向排序"></a>第六个域中的第二个字符到第四个字符，默认正向排序</h1><h1 id="第一个字符-反向排序"><a href="#第一个字符-反向排序" class="headerlink" title="第一个字符 反向排序"></a>第一个字符 反向排序</h1><p>   cat /etc/passwd |  sort -t’:’ -k 6.2,6.4 -k 1r </p>
+<h1 id="查看-etc-passwd有多少个shell，对第七个域排序，然后去重"><a href="#查看-etc-passwd有多少个shell，对第七个域排序，然后去重" class="headerlink" title="查看/etc.passwd有多少个shell，对第七个域排序，然后去重"></a>查看/etc.passwd有多少个shell，对第七个域排序，然后去重</h1><p>   cat /etc/passwd |  sort -t’:’ -k 7 -u # 为了使uniq起作用，所有的重复行必须是相邻的。<br>   <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">uniq语法</div></pre></td></tr></table></figure></p>
+<p>   uniq [-icu]<br>   选项与参数：</p>
+<h1 id="i-：忽略大小写字符的不同；"><a href="#i-：忽略大小写字符的不同；" class="headerlink" title="-i   ：忽略大小写字符的不同；"></a>-i   ：忽略大小写字符的不同；</h1><h1 id="c-：进行计数"><a href="#c-：进行计数" class="headerlink" title="-c  ：进行计数"></a>-c  ：进行计数</h1><h1 id="u-：只显示唯一的行"><a href="#u-：只显示唯一的行" class="headerlink" title="-u  ：只显示唯一的行"></a>-u  ：只显示唯一的行</h1><h1 id="仅显示重复行，并在行首显示该行的重复次数"><a href="#仅显示重复行，并在行首显示该行的重复次数" class="headerlink" title="仅显示重复行，并在行首显示该行的重复次数"></a>仅显示重复行，并在行首显示该行的重复次数</h1><p>   sort filename | uniq -dc</p>
+<h1 id="仅显示不重复的行"><a href="#仅显示不重复的行" class="headerlink" title="仅显示不重复的行"></a>仅显示不重复的行</h1><p>   sort filename | uniq -u<br>   <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">   </div><div class="line">* cut</div><div class="line"> </div><div class="line">  &gt; cut命令可以从一个文本文件或者文本流中提取文本列。</div><div class="line">  </div><div class="line">  cut语法</div></pre></td></tr></table></figure></p>
+<p>  cut -d’分隔字符’ -f fields # 用于有特定分隔字符<br>  cut -c 字符区间            # 用于排列整齐的信息<br>  选项与参数：</p>
+<h1 id="d-：后面接分隔字符。与-f-一起使用；"><a href="#d-：后面接分隔字符。与-f-一起使用；" class="headerlink" title="-d  ：后面接分隔字符。与 -f 一起使用；"></a>-d  ：后面接分隔字符。与 -f 一起使用；</h1><h1 id="f-：依据-d-的分隔字符将一段信息分割成为数段，用-f-取出第几段的意思；"><a href="#f-：依据-d-的分隔字符将一段信息分割成为数段，用-f-取出第几段的意思；" class="headerlink" title="-f  ：依据 -d 的分隔字符将一段信息分割成为数段，用 -f 取出第几段的意思；"></a>-f  ：依据 -d 的分隔字符将一段信息分割成为数段，用 -f 取出第几段的意思；</h1><h1 id="c-：以字符-characters-的单位取出固定字符区间；"><a href="#c-：以字符-characters-的单位取出固定字符区间；" class="headerlink" title="-c  ：以字符 (characters) 的单位取出固定字符区间；"></a>-c  ：以字符 (characters) 的单位取出固定字符区间；</h1><h1 id="以PATH路径为例，找出第五个路径"><a href="#以PATH路径为例，找出第五个路径" class="headerlink" title="以PATH路径为例，找出第五个路径"></a>以PATH路径为例，找出第五个路径</h1><p>  echo $PATH | cut -d ‘:’ -f 5</p>
+<h1 id="找出第三个和第五个"><a href="#找出第三个和第五个" class="headerlink" title="找出第三个和第五个"></a>找出第三个和第五个</h1><p>  echo $PATH | cut -d ‘:’ -f 3,5</p>
+<h1 id="找出第三个到最后一个路径"><a href="#找出第三个到最后一个路径" class="headerlink" title="找出第三个到最后一个路径"></a>找出第三个到最后一个路径</h1><p>  echo $PATH | cut -d ‘:’ -f 3-</p>
+<h1 id="找出一到三个路径"><a href="#找出一到三个路径" class="headerlink" title="找出一到三个路径"></a>找出一到三个路径</h1><p>  echo $PATH | cut -d ‘:’ -f 1-3</p>
+<h1 id="第一到第三，还有第五个路径"><a href="#第一到第三，还有第五个路径" class="headerlink" title="第一到第三，还有第五个路径"></a>第一到第三，还有第五个路径</h1><p>  echo $PATH | cut -d ‘:’ -f 1-3,5</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">  </div><div class="line">* wc</div><div class="line"></div><div class="line">  &gt; 统计文件里面有多少单词，多少行，多少字符。</div><div class="line">  </div><div class="line">  wc语法</div></pre></td></tr></table></figure>
+<p>  wc [-lwm]<br>  选项与参数：</p>
+<h1 id="l-：仅列出行；"><a href="#l-：仅列出行；" class="headerlink" title="-l  ：仅列出行；"></a>-l  ：仅列出行；</h1><h1 id="w-：仅列出多少字-英文单字-；"><a href="#w-：仅列出多少字-英文单字-；" class="headerlink" title="-w  ：仅列出多少字(英文单字)；"></a>-w  ：仅列出多少字(英文单字)；</h1><h1 id="m-：多少字符；"><a href="#m-：多少字符；" class="headerlink" title="-m  ：多少字符；"></a>-m  ：多少字符；</h1><h1 id="列出行数、单词数，字节数"><a href="#列出行数、单词数，字节数" class="headerlink" title="列出行数、单词数，字节数"></a>列出行数、单词数，字节数</h1><p>  wc /etc/passwd</p>
+<h1 id="统计单词出现的次数"><a href="#统计单词出现的次数" class="headerlink" title="统计单词出现的次数"></a>统计单词出现的次数</h1><p>  wc -w /etc/passwd</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div><div class="line">##### sed</div><div class="line">###### 简介</div><div class="line">&gt; sed 是一种在线编辑器，它一次处理一行内容。处理时，把当前处理的行存储在临时缓冲区中，称为“*模式空间*”（pattern space），接着用sed命令处理缓冲区中的内容，处理完成后，把缓冲区的内容送往屏幕。接着处理下一行，这样不断重复，直到文件末尾。*文件内容并没有改变*，除非你使用重定向存储输出。Sed主要用来*自动编辑一个或多个文件*；简化对文件的*反复*操作；编写*转换*程序等。以下介绍的是Gnu版本的Sed 4.2.1。</div><div class="line"></div><div class="line">###### 定址</div><div class="line">&gt;可以通过定址来定位你所希望编辑的行，该地址用数字构成，用逗号分隔的两个行数表示以这两行为起止的行的范围（包括行数表示的那两行）。如1，3表示1，2，3行，美元符号($)表示最后一行。范围可以通过数据，正则表达式或者二者结合的方式确定 。</div><div class="line"></div><div class="line">###### Sed命令</div><div class="line">* 调用sed命令的两种形式：</div><div class="line">    * sed [options] &apos;command&apos; file(s)</div><div class="line">    * sed [options] -f scriptfile file(s)</div><div class="line">* 实例</div></pre></td></tr></table></figure>
+<h2 id="删除命令"><a href="#删除命令" class="headerlink" title="删除命令"></a>删除命令</h2><h1 id="删除example文件的第二行"><a href="#删除example文件的第二行" class="headerlink" title="删除example文件的第二行"></a>删除example文件的第二行</h1><p>  $ sed ‘2d’ example</p>
+<h1 id="删除example文件的第二行到末尾所有行"><a href="#删除example文件的第二行到末尾所有行" class="headerlink" title="删除example文件的第二行到末尾所有行"></a>删除example文件的第二行到末尾所有行</h1><p>  $ sed ‘2,$d’ example</p>
+<h1 id="删除example文件的最后一行"><a href="#删除example文件的最后一行" class="headerlink" title="删除example文件的最后一行"></a>删除example文件的最后一行</h1><p>  $ sed ‘$d’ example</p>
+<h1 id="删除example文件所有包含test的行"><a href="#删除example文件所有包含test的行" class="headerlink" title="删除example文件所有包含test的行"></a>删除example文件所有包含test的行</h1><p>  sed ‘/test/‘d example</p>
+<h2 id="替换命令s"><a href="#替换命令s" class="headerlink" title="替换命令s"></a>替换命令s</h2><h1 id="在整行范围内把test替换为mytest。如果没有g标记，则只有每行第一个匹配的test被替换成mytest。"><a href="#在整行范围内把test替换为mytest。如果没有g标记，则只有每行第一个匹配的test被替换成mytest。" class="headerlink" title="在整行范围内把test替换为mytest。如果没有g标记，则只有每行第一个匹配的test被替换成mytest。"></a>在整行范围内把test替换为mytest。如果没有g标记，则只有每行第一个匹配的test被替换成mytest。</h1><p>  $ sed ‘s/test/mytest/g’ example </p>
+<h1 id="n-选项和p标志一起使用表示只打印那些发生替换的行。也就是说，如果某一行开头的test被替换成mytest，就打印它。"><a href="#n-选项和p标志一起使用表示只打印那些发生替换的行。也就是说，如果某一行开头的test被替换成mytest，就打印它。" class="headerlink" title="(-n)选项和p标志一起使用表示只打印那些发生替换的行。也就是说，如果某一行开头的test被替换成mytest，就打印它。"></a>(-n)选项和p标志一起使用表示只打印那些发生替换的行。也就是说，如果某一行开头的test被替换成mytest，就打印它。</h1><p>  $ sed -n ‘s/^test/mytest/p’ example</p>
+<h1 id="amp-符号表示替换为被替换和替换的字符串的-。所有以192-168-0-1开头的行都会被替换成它自已加-localhost，变成192-168-0-1localhost。"><a href="#amp-符号表示替换为被替换和替换的字符串的-。所有以192-168-0-1开头的行都会被替换成它自已加-localhost，变成192-168-0-1localhost。" class="headerlink" title="&amp;符号表示替换为被替换和替换的字符串的+。所有以192.168.0.1开头的行都会被替换成它自已加 localhost，变成192.168.0.1localhost。"></a>&amp;符号表示替换为被替换和替换的字符串的+。所有以192.168.0.1开头的行都会被替换成它自已加 localhost，变成192.168.0.1localhost。</h1><p>  $ sed ‘s/^192.168.0.1/&amp;localhost/‘ example</p>
+<h1 id="love被标记为1，所有loveable会被替换成lovers，而且替换的行会被打印出来。"><a href="#love被标记为1，所有loveable会被替换成lovers，而且替换的行会被打印出来。" class="headerlink" title="love被标记为1，所有loveable会被替换成lovers，而且替换的行会被打印出来。"></a>love被标记为1，所有loveable会被替换成lovers，而且替换的行会被打印出来。</h1><p> $ sed -n ‘s/(love)able/\1rs/p’ example</p>
+<h1 id="不论什么字符，紧跟着s命令的都被认为是新的分隔符，所以，“-”在这里是分隔符，代替了默认的“-”分隔符。表示把所有10替换成100"><a href="#不论什么字符，紧跟着s命令的都被认为是新的分隔符，所以，“-”在这里是分隔符，代替了默认的“-”分隔符。表示把所有10替换成100" class="headerlink" title="不论什么字符，紧跟着s命令的都被认为是新的分隔符，所以，“#”在这里是分隔符，代替了默认的“/”分隔符。表示把所有10替换成100"></a>不论什么字符，紧跟着s命令的都被认为是新的分隔符，所以，“#”在这里是分隔符，代替了默认的“/”分隔符。表示把所有10替换成100</h1><p>  $ sed ‘s#10#100#g’ example</p>
+<h2 id="选定行的范围-逗号"><a href="#选定行的范围-逗号" class="headerlink" title="选定行的范围:逗号"></a>选定行的范围:逗号</h2><h1 id="所有在模板test和check所确定的范围内的行都被打印"><a href="#所有在模板test和check所确定的范围内的行都被打印" class="headerlink" title="所有在模板test和check所确定的范围内的行都被打印"></a>所有在模板test和check所确定的范围内的行都被打印</h1><p>  $ sed -n ‘/test/,/check/p’ example</p>
+<h1 id="打印从第五行开始到第一个包含以test开始的行之间的所有行"><a href="#打印从第五行开始到第一个包含以test开始的行之间的所有行" class="headerlink" title="打印从第五行开始到第一个包含以test开始的行之间的所有行"></a>打印从第五行开始到第一个包含以test开始的行之间的所有行</h1><p>  $ sed -n ‘5,/^test/p’ example</p>
+<h1 id="对于模板test和west之间的行，每行的末尾用字符串sed-test替换"><a href="#对于模板test和west之间的行，每行的末尾用字符串sed-test替换" class="headerlink" title="对于模板test和west之间的行，每行的末尾用字符串sed test替换"></a>对于模板test和west之间的行，每行的末尾用字符串sed test替换</h1><p>  $ sed ‘/test/,/check/s/$/sed test/‘ example</p>
+<h2 id="多点编辑：e命令"><a href="#多点编辑：e命令" class="headerlink" title="多点编辑：e命令"></a>多点编辑：e命令</h2><h1 id="e-选项允许在同一行里执行多条命令。如例子所示，第一条命令删除1至5行，第二条命令用check替换test。命令的执行顺序对结果有影响。如果两个命令都是替换命令，那么第一个替换命令将影响第二个替换命令的结果。"><a href="#e-选项允许在同一行里执行多条命令。如例子所示，第一条命令删除1至5行，第二条命令用check替换test。命令的执行顺序对结果有影响。如果两个命令都是替换命令，那么第一个替换命令将影响第二个替换命令的结果。" class="headerlink" title="(-e)选项允许在同一行里执行多条命令。如例子所示，第一条命令删除1至5行，第二条命令用check替换test。命令的执行顺序对结果有影响。如果两个命令都是替换命令，那么第一个替换命令将影响第二个替换命令的结果。"></a>(-e)选项允许在同一行里执行多条命令。如例子所示，第一条命令删除1至5行，第二条命令用check替换test。命令的执行顺序对结果有影响。如果两个命令都是替换命令，那么第一个替换命令将影响第二个替换命令的结果。</h1><p>  sed -e ‘1,5d’ -e ‘s/test/check/‘ example</p>
+<h1 id="一个比-e更好的命令是–expression。它能给sed表达式赋值。"><a href="#一个比-e更好的命令是–expression。它能给sed表达式赋值。" class="headerlink" title="一个比-e更好的命令是–expression。它能给sed表达式赋值。"></a>一个比-e更好的命令是–expression。它能给sed表达式赋值。</h1><p>  sed –expression=’s/test/check/‘ –expression=’/love/d’ example</p>
+<h2 id="从文件中读入：r命令"><a href="#从文件中读入：r命令" class="headerlink" title="从文件中读入：r命令"></a>从文件中读入：r命令</h2><h1 id="file里的内容被读进来，显示在与test匹配的行后面，如果匹配多行，则file的内容将显示在所有匹配行的下面"><a href="#file里的内容被读进来，显示在与test匹配的行后面，如果匹配多行，则file的内容将显示在所有匹配行的下面" class="headerlink" title="file里的内容被读进来，显示在与test匹配的行后面，如果匹配多行，则file的内容将显示在所有匹配行的下面"></a>file里的内容被读进来，显示在与test匹配的行后面，如果匹配多行，则file的内容将显示在所有匹配行的下面</h1><h2 id="写入文件：w命令"><a href="#写入文件：w命令" class="headerlink" title="写入文件：w命令"></a>写入文件：w命令</h2><h1 id="在example中所有包含test的行都被写入file里"><a href="#在example中所有包含test的行都被写入file里" class="headerlink" title="在example中所有包含test的行都被写入file里"></a>在example中所有包含test的行都被写入file里</h1><p>  $ sed -n ‘/test/w file’ example</p>
+<h2 id="追加命令：-a命令"><a href="#追加命令：-a命令" class="headerlink" title="追加命令： a命令"></a>追加命令： a命令</h2><h1 id="‘—–-gt-this-is-a-example’被追加到以test开头的行后面，sed要求命令a后面有一个反斜杠"><a href="#‘—–-gt-this-is-a-example’被追加到以test开头的行后面，sed要求命令a后面有一个反斜杠" class="headerlink" title="‘—–&gt;this is a example’被追加到以test开头的行后面，sed要求命令a后面有一个反斜杠"></a>‘—–&gt;this is a example’被追加到以test开头的行后面，sed要求命令a后面有一个反斜杠</h1><p>  $ sed ‘/^test/a\—&gt;this is a example’ example</p>
+<h2 id="插入命令：-i命令"><a href="#插入命令：-i命令" class="headerlink" title="插入命令： i命令"></a>插入命令： i命令</h2><h1 id="如果test被匹配，则把反斜杠后面的文本插入到匹配行的前面"><a href="#如果test被匹配，则把反斜杠后面的文本插入到匹配行的前面" class="headerlink" title="如果test被匹配，则把反斜杠后面的文本插入到匹配行的前面"></a>如果test被匹配，则把反斜杠后面的文本插入到匹配行的前面</h1><p>  $ sed ‘/test/i\new line————————-‘ example</p>
+<h2 id="下一个：n命令"><a href="#下一个：n命令" class="headerlink" title="下一个：n命令"></a>下一个：n命令</h2><h1 id="如果test被匹配，则移动到匹配行的下一行，替换这一行的aa，变为bb，并打印该行，然后继续"><a href="#如果test被匹配，则移动到匹配行的下一行，替换这一行的aa，变为bb，并打印该行，然后继续" class="headerlink" title="如果test被匹配，则移动到匹配行的下一行，替换这一行的aa，变为bb，并打印该行，然后继续"></a>如果test被匹配，则移动到匹配行的下一行，替换这一行的aa，变为bb，并打印该行，然后继续</h1><p>  $ sed ‘/test/{ n; s/aa/bb/; }’ example</p>
+<h2 id="变形：y命令"><a href="#变形：y命令" class="headerlink" title="变形：y命令"></a>变形：y命令</h2><h1 id="把1–10行内所有abcde转变为大写，注意，正则表达式元字符不能使用这个命令"><a href="#把1–10行内所有abcde转变为大写，注意，正则表达式元字符不能使用这个命令" class="headerlink" title="把1–10行内所有abcde转变为大写，注意，正则表达式元字符不能使用这个命令"></a>把1–10行内所有abcde转变为大写，注意，正则表达式元字符不能使用这个命令</h1><p>  $ sed ‘1,10y/abcde/ABCDE/‘ example</p>
+<h2 id="退出：q命令"><a href="#退出：q命令" class="headerlink" title="退出：q命令"></a>退出：q命令</h2><h1 id="打印完第10行后，退出sed"><a href="#打印完第10行后，退出sed" class="headerlink" title="打印完第10行后，退出sed"></a>打印完第10行后，退出sed</h1><p>  $ sed ‘10q’ example</p>
+<p>  保持和获取：h命令和G命令</p>
+<h1 id="在sed处理文件的时候，每一行都被保存在一个叫模式空间的临时缓冲区中，除非行被删除或者输出被取消否则所有被处理的行都将打印在屏幕上。"><a href="#在sed处理文件的时候，每一行都被保存在一个叫模式空间的临时缓冲区中，除非行被删除或者输出被取消否则所有被处理的行都将打印在屏幕上。" class="headerlink" title="在sed处理文件的时候，每一行都被保存在一个叫模式空间的临时缓冲区中，除非行被删除或者输出被取消否则所有被处理的行都将打印在屏幕上。"></a>在sed处理文件的时候，每一行都被保存在一个叫模式空间的临时缓冲区中，除非行被删除或者输出被取消否则所有被处理的行都将打印在屏幕上。</h1><h1 id="接着模式空间被清空，并存入新的一行等待处理。在这个例子里，匹配test的行被找到后，将存入模式空间，h命令将其复制并存入一个称为保持缓存区的特殊缓冲区内。"><a href="#接着模式空间被清空，并存入新的一行等待处理。在这个例子里，匹配test的行被找到后，将存入模式空间，h命令将其复制并存入一个称为保持缓存区的特殊缓冲区内。" class="headerlink" title="接着模式空间被清空，并存入新的一行等待处理。在这个例子里，匹配test的行被找到后，将存入模式空间，h命令将其复制并存入一个称为保持缓存区的特殊缓冲区内。"></a>接着模式空间被清空，并存入新的一行等待处理。在这个例子里，匹配test的行被找到后，将存入模式空间，h命令将其复制并存入一个称为保持缓存区的特殊缓冲区内。</h1><h1 id="第二条语句的意思是，当到达最后一行后，G命令取出保持缓冲区的行，然后把它放回模式空间中，且追加到现在已经存在于模式空间中-的行的末尾。"><a href="#第二条语句的意思是，当到达最后一行后，G命令取出保持缓冲区的行，然后把它放回模式空间中，且追加到现在已经存在于模式空间中-的行的末尾。" class="headerlink" title="第二条语句的意思是，当到达最后一行后，G命令取出保持缓冲区的行，然后把它放回模式空间中，且追加到现在已经存在于模式空间中 的行的末尾。"></a>第二条语句的意思是，当到达最后一行后，G命令取出保持缓冲区的行，然后把它放回模式空间中，且追加到现在已经存在于模式空间中 的行的末尾。</h1><h1 id="在这个例子中就是追加到最后一行。简单来说，任何包含test的行都被复制并追加到该文件的末尾。"><a href="#在这个例子中就是追加到最后一行。简单来说，任何包含test的行都被复制并追加到该文件的末尾。" class="headerlink" title="在这个例子中就是追加到最后一行。简单来说，任何包含test的行都被复制并追加到该文件的末尾。"></a>在这个例子中就是追加到最后一行。简单来说，任何包含test的行都被复制并追加到该文件的末尾。</h1><p>  $ sed -e ‘/test/h’ -e ‘$G’ example</p>
+<h2 id="保持和互换：h命令和x命令"><a href="#保持和互换：h命令和x命令" class="headerlink" title="保持和互换：h命令和x命令"></a>保持和互换：h命令和x命令</h2><h1 id="互换模式空间和保持缓冲区的内容。也就是把包含test与check的行互换"><a href="#互换模式空间和保持缓冲区的内容。也就是把包含test与check的行互换" class="headerlink" title="互换模式空间和保持缓冲区的内容。也就是把包含test与check的行互换"></a>互换模式空间和保持缓冲区的内容。也就是把包含test与check的行互换</h1><p>  $ sed -e ‘/test/h’ -e ‘/check/x’ example</p>
+<h2 id="脚本"><a href="#脚本" class="headerlink" title="脚本"></a>脚本</h2><h1 id="Sed脚本是一个sed的命令清单，启动Sed时以-f选项引导脚本文件名。"><a href="#Sed脚本是一个sed的命令清单，启动Sed时以-f选项引导脚本文件名。" class="headerlink" title="Sed脚本是一个sed的命令清单，启动Sed时以-f选项引导脚本文件名。"></a>Sed脚本是一个sed的命令清单，启动Sed时以-f选项引导脚本文件名。</h1><h1 id="Sed对于脚本中输入的命令非常挑剔，在命令的末尾不能有任何空白或文本，如果在一行中有多个命令，要用分号分隔。"><a href="#Sed对于脚本中输入的命令非常挑剔，在命令的末尾不能有任何空白或文本，如果在一行中有多个命令，要用分号分隔。" class="headerlink" title="Sed对于脚本中输入的命令非常挑剔，在命令的末尾不能有任何空白或文本，如果在一行中有多个命令，要用分号分隔。"></a>Sed对于脚本中输入的命令非常挑剔，在命令的末尾不能有任何空白或文本，如果在一行中有多个命令，要用分号分隔。</h1><h1 id="以-开头的行为注释行，且不能跨行。"><a href="#以-开头的行为注释行，且不能跨行。" class="headerlink" title="以#开头的行为注释行，且不能跨行。"></a>以#开头的行为注释行，且不能跨行。</h1><p>  ```</p>
+<h5 id="awk"><a href="#awk" class="headerlink" title="awk"></a>awk</h5>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Hadoop相关/" rel="tag"># Hadoop相关</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/13/设计模式/2018-04-13/" rel="next" title="设计模式之模板方法模式">
+                <i class="fa fa-chevron-left"></i> 设计模式之模板方法模式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/13/Hadoop相关/Nginx和Keepalived的部署安装/" rel="prev" title="">
+                 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          
+            <img class="site-author-image" itemprop="image"
+              src="/images/header.png"
+              alt="EtanWatson" />
+          
+            <p class="site-author-name" itemprop="name">EtanWatson</p>
+            <p class="site-description motion-element" itemprop="description">有所舍，有所爱，做一个感性的码农</p>
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives/">
+            
+                <span class="site-state-item-count">76</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#shell编程"><span class="nav-number">1.</span> <span class="nav-text">shell编程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#shell-变量"><span class="nav-number">1.1.</span> <span class="nav-text">shell 变量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#系统变量与命令"><span class="nav-number">1.1.1.</span> <span class="nav-text">系统变量与命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特殊变量"><span class="nav-number">1.1.2.</span> <span class="nav-text">特殊变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运算符"><span class="nav-number">1.1.3.</span> <span class="nav-text">运算符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#流程控制"><span class="nav-number">1.1.4.</span> <span class="nav-text">流程控制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#for循环"><span class="nav-number">1.1.4.1.</span> <span class="nav-text">for循环</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#while"><span class="nav-number">1.1.4.2.</span> <span class="nav-text">while</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#case"><span class="nav-number">1.1.4.3.</span> <span class="nav-text">case</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#read命令"><span class="nav-number">1.1.4.4.</span> <span class="nav-text">read命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#if"><span class="nav-number">1.1.4.5.</span> <span class="nav-text">if</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#自定义函数"><span class="nav-number">1.1.4.6.</span> <span class="nav-text">自定义函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#调试"><span class="nav-number">1.1.4.7.</span> <span class="nav-text">调试</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#f-：忽略大小写的差异，例如-A-与-a-视为编码相同；"><span class="nav-number">2.</span> <span class="nav-text">-f  ：忽略大小写的差异，例如 A 与 a 视为编码相同；</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#b-：忽略最前面的空格符部分；"><span class="nav-number">3.</span> <span class="nav-text">-b  ：忽略最前面的空格符部分；</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#M-：以月份的名字来排序，例如-JAN-DEC-等等的排序方法；"><span class="nav-number">4.</span> <span class="nav-text">-M  ：以月份的名字来排序，例如 JAN, DEC 等等的排序方法；</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#n-：使用『纯数字』进行排序-默认是以文字型态来排序的-；"><span class="nav-number">5.</span> <span class="nav-text">-n  ：使用『纯数字』进行排序(默认是以文字型态来排序的)；</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#r-：反向排序；"><span class="nav-number">6.</span> <span class="nav-text">-r  ：反向排序；</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#u-：就是-uniq-，相同的数据中，仅出现一行代表；"><span class="nav-number">7.</span> <span class="nav-text">-u  ：就是 uniq ，相同的数据中，仅出现一行代表；</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#t-：分隔符，默认是用-tab-键来分隔；"><span class="nav-number">8.</span> <span class="nav-text">-t  ：分隔符，默认是用 [tab] 键来分隔；</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#例如"><span class="nav-number">9.</span> <span class="nav-text">例如</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#再如，以第三栏排序，默认是以字符串排序的"><span class="nav-number">10.</span> <span class="nav-text">再如，以第三栏排序，默认是以字符串排序的</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#这样就是以数字排序了"><span class="nav-number">11.</span> <span class="nav-text">这样就是以数字排序了</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#降序"><span class="nav-number">12.</span> <span class="nav-text">降序</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第六个域中的第二个字符到第四个字符，默认正向排序"><span class="nav-number">13.</span> <span class="nav-text">第六个域中的第二个字符到第四个字符，默认正向排序</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第一个字符-反向排序"><span class="nav-number">14.</span> <span class="nav-text">第一个字符 反向排序</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#查看-etc-passwd有多少个shell，对第七个域排序，然后去重"><span class="nav-number">15.</span> <span class="nav-text">查看/etc.passwd有多少个shell，对第七个域排序，然后去重</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#i-：忽略大小写字符的不同；"><span class="nav-number">16.</span> <span class="nav-text">-i   ：忽略大小写字符的不同；</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#c-：进行计数"><span class="nav-number">17.</span> <span class="nav-text">-c  ：进行计数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#u-：只显示唯一的行"><span class="nav-number">18.</span> <span class="nav-text">-u  ：只显示唯一的行</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#仅显示重复行，并在行首显示该行的重复次数"><span class="nav-number">19.</span> <span class="nav-text">仅显示重复行，并在行首显示该行的重复次数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#仅显示不重复的行"><span class="nav-number">20.</span> <span class="nav-text">仅显示不重复的行</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#d-：后面接分隔字符。与-f-一起使用；"><span class="nav-number">21.</span> <span class="nav-text">-d  ：后面接分隔字符。与 -f 一起使用；</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#f-：依据-d-的分隔字符将一段信息分割成为数段，用-f-取出第几段的意思；"><span class="nav-number">22.</span> <span class="nav-text">-f  ：依据 -d 的分隔字符将一段信息分割成为数段，用 -f 取出第几段的意思；</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#c-：以字符-characters-的单位取出固定字符区间；"><span class="nav-number">23.</span> <span class="nav-text">-c  ：以字符 (characters) 的单位取出固定字符区间；</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#以PATH路径为例，找出第五个路径"><span class="nav-number">24.</span> <span class="nav-text">以PATH路径为例，找出第五个路径</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#找出第三个和第五个"><span class="nav-number">25.</span> <span class="nav-text">找出第三个和第五个</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#找出第三个到最后一个路径"><span class="nav-number">26.</span> <span class="nav-text">找出第三个到最后一个路径</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#找出一到三个路径"><span class="nav-number">27.</span> <span class="nav-text">找出一到三个路径</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第一到第三，还有第五个路径"><span class="nav-number">28.</span> <span class="nav-text">第一到第三，还有第五个路径</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#l-：仅列出行；"><span class="nav-number">29.</span> <span class="nav-text">-l  ：仅列出行；</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#w-：仅列出多少字-英文单字-；"><span class="nav-number">30.</span> <span class="nav-text">-w  ：仅列出多少字(英文单字)；</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#m-：多少字符；"><span class="nav-number">31.</span> <span class="nav-text">-m  ：多少字符；</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#列出行数、单词数，字节数"><span class="nav-number">32.</span> <span class="nav-text">列出行数、单词数，字节数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#统计单词出现的次数"><span class="nav-number">33.</span> <span class="nav-text">统计单词出现的次数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#删除命令"><span class="nav-number">33.1.</span> <span class="nav-text">删除命令</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#删除example文件的第二行"><span class="nav-number">34.</span> <span class="nav-text">删除example文件的第二行</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#删除example文件的第二行到末尾所有行"><span class="nav-number">35.</span> <span class="nav-text">删除example文件的第二行到末尾所有行</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#删除example文件的最后一行"><span class="nav-number">36.</span> <span class="nav-text">删除example文件的最后一行</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#删除example文件所有包含test的行"><span class="nav-number">37.</span> <span class="nav-text">删除example文件所有包含test的行</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#替换命令s"><span class="nav-number">37.1.</span> <span class="nav-text">替换命令s</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#在整行范围内把test替换为mytest。如果没有g标记，则只有每行第一个匹配的test被替换成mytest。"><span class="nav-number">38.</span> <span class="nav-text">在整行范围内把test替换为mytest。如果没有g标记，则只有每行第一个匹配的test被替换成mytest。</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#n-选项和p标志一起使用表示只打印那些发生替换的行。也就是说，如果某一行开头的test被替换成mytest，就打印它。"><span class="nav-number">39.</span> <span class="nav-text">(-n)选项和p标志一起使用表示只打印那些发生替换的行。也就是说，如果某一行开头的test被替换成mytest，就打印它。</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#amp-符号表示替换为被替换和替换的字符串的-。所有以192-168-0-1开头的行都会被替换成它自已加-localhost，变成192-168-0-1localhost。"><span class="nav-number">40.</span> <span class="nav-text">&符号表示替换为被替换和替换的字符串的+。所有以192.168.0.1开头的行都会被替换成它自已加 localhost，变成192.168.0.1localhost。</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#love被标记为1，所有loveable会被替换成lovers，而且替换的行会被打印出来。"><span class="nav-number">41.</span> <span class="nav-text">love被标记为1，所有loveable会被替换成lovers，而且替换的行会被打印出来。</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#不论什么字符，紧跟着s命令的都被认为是新的分隔符，所以，“-”在这里是分隔符，代替了默认的“-”分隔符。表示把所有10替换成100"><span class="nav-number">42.</span> <span class="nav-text">不论什么字符，紧跟着s命令的都被认为是新的分隔符，所以，“#”在这里是分隔符，代替了默认的“/”分隔符。表示把所有10替换成100</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#选定行的范围-逗号"><span class="nav-number">42.1.</span> <span class="nav-text">选定行的范围:逗号</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#所有在模板test和check所确定的范围内的行都被打印"><span class="nav-number">43.</span> <span class="nav-text">所有在模板test和check所确定的范围内的行都被打印</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#打印从第五行开始到第一个包含以test开始的行之间的所有行"><span class="nav-number">44.</span> <span class="nav-text">打印从第五行开始到第一个包含以test开始的行之间的所有行</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#对于模板test和west之间的行，每行的末尾用字符串sed-test替换"><span class="nav-number">45.</span> <span class="nav-text">对于模板test和west之间的行，每行的末尾用字符串sed test替换</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#多点编辑：e命令"><span class="nav-number">45.1.</span> <span class="nav-text">多点编辑：e命令</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#e-选项允许在同一行里执行多条命令。如例子所示，第一条命令删除1至5行，第二条命令用check替换test。命令的执行顺序对结果有影响。如果两个命令都是替换命令，那么第一个替换命令将影响第二个替换命令的结果。"><span class="nav-number">46.</span> <span class="nav-text">(-e)选项允许在同一行里执行多条命令。如例子所示，第一条命令删除1至5行，第二条命令用check替换test。命令的执行顺序对结果有影响。如果两个命令都是替换命令，那么第一个替换命令将影响第二个替换命令的结果。</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一个比-e更好的命令是–expression。它能给sed表达式赋值。"><span class="nav-number">47.</span> <span class="nav-text">一个比-e更好的命令是–expression。它能给sed表达式赋值。</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#从文件中读入：r命令"><span class="nav-number">47.1.</span> <span class="nav-text">从文件中读入：r命令</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#file里的内容被读进来，显示在与test匹配的行后面，如果匹配多行，则file的内容将显示在所有匹配行的下面"><span class="nav-number">48.</span> <span class="nav-text">file里的内容被读进来，显示在与test匹配的行后面，如果匹配多行，则file的内容将显示在所有匹配行的下面</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#写入文件：w命令"><span class="nav-number">48.1.</span> <span class="nav-text">写入文件：w命令</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#在example中所有包含test的行都被写入file里"><span class="nav-number">49.</span> <span class="nav-text">在example中所有包含test的行都被写入file里</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#追加命令：-a命令"><span class="nav-number">49.1.</span> <span class="nav-text">追加命令： a命令</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#‘—–-gt-this-is-a-example’被追加到以test开头的行后面，sed要求命令a后面有一个反斜杠"><span class="nav-number">50.</span> <span class="nav-text">‘—–>this is a example’被追加到以test开头的行后面，sed要求命令a后面有一个反斜杠</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#插入命令：-i命令"><span class="nav-number">50.1.</span> <span class="nav-text">插入命令： i命令</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#如果test被匹配，则把反斜杠后面的文本插入到匹配行的前面"><span class="nav-number">51.</span> <span class="nav-text">如果test被匹配，则把反斜杠后面的文本插入到匹配行的前面</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#下一个：n命令"><span class="nav-number">51.1.</span> <span class="nav-text">下一个：n命令</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#如果test被匹配，则移动到匹配行的下一行，替换这一行的aa，变为bb，并打印该行，然后继续"><span class="nav-number">52.</span> <span class="nav-text">如果test被匹配，则移动到匹配行的下一行，替换这一行的aa，变为bb，并打印该行，然后继续</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#变形：y命令"><span class="nav-number">52.1.</span> <span class="nav-text">变形：y命令</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#把1–10行内所有abcde转变为大写，注意，正则表达式元字符不能使用这个命令"><span class="nav-number">53.</span> <span class="nav-text">把1–10行内所有abcde转变为大写，注意，正则表达式元字符不能使用这个命令</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#退出：q命令"><span class="nav-number">53.1.</span> <span class="nav-text">退出：q命令</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#打印完第10行后，退出sed"><span class="nav-number">54.</span> <span class="nav-text">打印完第10行后，退出sed</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#在sed处理文件的时候，每一行都被保存在一个叫模式空间的临时缓冲区中，除非行被删除或者输出被取消否则所有被处理的行都将打印在屏幕上。"><span class="nav-number">55.</span> <span class="nav-text">在sed处理文件的时候，每一行都被保存在一个叫模式空间的临时缓冲区中，除非行被删除或者输出被取消否则所有被处理的行都将打印在屏幕上。</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#接着模式空间被清空，并存入新的一行等待处理。在这个例子里，匹配test的行被找到后，将存入模式空间，h命令将其复制并存入一个称为保持缓存区的特殊缓冲区内。"><span class="nav-number">56.</span> <span class="nav-text">接着模式空间被清空，并存入新的一行等待处理。在这个例子里，匹配test的行被找到后，将存入模式空间，h命令将其复制并存入一个称为保持缓存区的特殊缓冲区内。</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第二条语句的意思是，当到达最后一行后，G命令取出保持缓冲区的行，然后把它放回模式空间中，且追加到现在已经存在于模式空间中-的行的末尾。"><span class="nav-number">57.</span> <span class="nav-text">第二条语句的意思是，当到达最后一行后，G命令取出保持缓冲区的行，然后把它放回模式空间中，且追加到现在已经存在于模式空间中 的行的末尾。</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#在这个例子中就是追加到最后一行。简单来说，任何包含test的行都被复制并追加到该文件的末尾。"><span class="nav-number">58.</span> <span class="nav-text">在这个例子中就是追加到最后一行。简单来说，任何包含test的行都被复制并追加到该文件的末尾。</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#保持和互换：h命令和x命令"><span class="nav-number">58.1.</span> <span class="nav-text">保持和互换：h命令和x命令</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#互换模式空间和保持缓冲区的内容。也就是把包含test与check的行互换"><span class="nav-number">59.</span> <span class="nav-text">互换模式空间和保持缓冲区的内容。也就是把包含test与check的行互换</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#脚本"><span class="nav-number">59.1.</span> <span class="nav-text">脚本</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Sed脚本是一个sed的命令清单，启动Sed时以-f选项引导脚本文件名。"><span class="nav-number">60.</span> <span class="nav-text">Sed脚本是一个sed的命令清单，启动Sed时以-f选项引导脚本文件名。</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Sed对于脚本中输入的命令非常挑剔，在命令的末尾不能有任何空白或文本，如果在一行中有多个命令，要用分号分隔。"><span class="nav-number">61.</span> <span class="nav-text">Sed对于脚本中输入的命令非常挑剔，在命令的末尾不能有任何空白或文本，如果在一行中有多个命令，要用分号分隔。</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#以-开头的行为注释行，且不能跨行。"><span class="nav-number">62.</span> <span class="nav-text">以#开头的行为注释行，且不能跨行。</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#awk"><span class="nav-number">62.0.0.0.1.</span> <span class="nav-text">awk</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">EtanWatson</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.2</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
