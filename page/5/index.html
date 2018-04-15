@@ -310,6 +310,166 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/13/python数据采集/python数据收集（用爬虫测试网站）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EtanWatson">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EWSUN">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/13/python数据采集/python数据收集（用爬虫测试网站）/" itemprop="url">python数据收集（用爬虫测试网站）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-13T10:52:24+08:00">
+                2017-10-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python数据收集/" itemprop="url" rel="index">
+                    <span itemprop="name">python数据收集</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="用爬虫测试网站"><a href="#用爬虫测试网站" class="headerlink" title="用爬虫测试网站"></a>用爬虫测试网站</h1><h2 id="Python单元测试"><a href="#Python单元测试" class="headerlink" title="Python单元测试"></a>Python单元测试</h2><p>Python的测试单元模块unittest，只要先导入模块然后继承unittest.TestCase类，就可以实现以下的功能：<br>• 为每个单元测试的开始和结束提供setUp和tearDown函数<br>• 提供不同类型的“断言”语句让测试成功或失败<br>• 把所有以test<em>开头的函数当作单元测试运行，忽略不带test</em>的函数</p>
+<h3 id="一个简单的例子"><a href="#一个简单的例子" class="headerlink" title="一个简单的例子"></a>一个简单的例子</h3><pre><code class="bash"><span class="string">""</span><span class="string">"一个简单的unit test"</span><span class="string">""</span>
+import unittest
+
+class TestAddition(unittest.TestCase):
+    def setUp(self):
+        <span class="built_in">print</span>(<span class="string">"Setting up the test"</span>)
+
+    def tearDown(self):
+        <span class="built_in">print</span>(<span class="string">"Tearing down the test"</span>)
+
+    def test_twoPlusTwo(self):
+        total = 2+2
+        self.assertEqual(4, total)
+
+<span class="keyword">if</span> __name__ == <span class="string">'__name__'</span>:
+    unittest.main()
+</code></pre>
+<p>虽然 setUp 和 tearDown 函数在这里并没有实现可用的功能，但是仍然达到了演示的目的。 需要注意的是，这两个函数在每个测试的开始和结束都会运行一次，而不是把类中所有测 试作为一个整体在开始或结束时各运行一次。</p>
+<h3 id="测试维基百科"><a href="#测试维基百科" class="headerlink" title="测试维基百科"></a>测试维基百科</h3>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/11/python数据采集/python数据收集-避开采集陷阱/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -411,6 +571,161 @@
 <h4 id="一个更加综合的例子"><a href="#一个更加综合的例子" class="headerlink" title="一个更加综合的例子"></a>一个更加综合的例子</h4><p>调用delete_cookie(),add_cookie()和delete_all_cookies()方法来处理cookie。另外，还可以保存cookie以备其他网络爬虫使用。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div></pre></td><td class="code"><pre><div class="line">from selenium import webdriver</div><div class="line"></div><div class="line">driver = webdriver.PhantomJS(executable_path=<span class="string">"/Users/YT/MachineLearning/phantomjs-2.1.1-macosx/bin/phantomjs"</span>)</div><div class="line">driver.get(<span class="string">"http://pythonscraping.com"</span>)</div><div class="line">driver.implicitly_wait(1)</div><div class="line"><span class="built_in">print</span>(driver.get_cookies())</div><div class="line"></div><div class="line">saveCookies = driver.get_cookies()</div><div class="line"></div><div class="line">driver2 = webdriver.PhantomJS(executable_path=<span class="string">"/Users/YT/MachineLearning/phantomjs-2.1.1-macosx/bin/phantomjs"</span>)</div><div class="line">driver2.get(<span class="string">"http://pythonscraping.com"</span>)</div><div class="line">driver2.delete_all_cookies()</div><div class="line"><span class="keyword">for</span> cookie <span class="keyword">in</span> saveCookies:</div><div class="line">    driver2.add_cookie(cookie)</div><div class="line"></div><div class="line">driver2.get(<span class="string">"http://pythonscraping.com"</span>)</div><div class="line">driver.implicitly_wait(1)</div><div class="line"><span class="built_in">print</span>(driver2.get_cookies())</div><div class="line">``` </div><div class="line">该示例中，先将cookie值保存在saveCookies中，在第二次访问的时候，将同一个网站下的cookie都删除掉（必须先加载网络，不然selenium不知道有cookie的域），然后将第一次的cookie填入到该网站下，这样从Google Analytics角度来看</div><div class="line">第二个webdriver现在和第一个webdriver完全一样（cookie的时间戳，源代码和其他信息都一样）</div><div class="line"></div><div class="line"><span class="comment">### 时间就是一切</span></div><div class="line">尽量保证一次加载页面加载且数据请求最小化</div><div class="line">如果条件允许，尽量为每个页面访问 增加一点儿时间间隔，即使你要增加一行代码:time.sleep(3)<span class="comment">## 常见的表单安全措施</span></div><div class="line"><span class="comment">### 隐含输入字段值（主要用于阻止爬虫自动提交表单）</span></div><div class="line">第一种是表单页面上的一个字段可以用服务器生成的随机变量表示。如果提交时这个值不在表单处理页面上，服务器就有理由认为这个提交不是从原始表单页面上提交的。绕开这个问题的最佳方法就是，首先采集表单实在页面上生成的随机变量，然后再提交到表单处理页面</div><div class="line">第二种是蜜罐圈套。如果表单里包含一个具有普通名称的隐含字段，比如用户名或者”邮箱地址”，服务器火把所有隐含字段的真实值（或者与表单提交页面的默认值不同的值）都忽略，而且填写隐含字段的访问用户也可能被网站封杀</div><div class="line">还有其他一些检查，用来保 证这些当前生成的表单变量只被使用一次或是最近生成的</div><div class="line"></div><div class="line"><span class="comment">### 避免蜜罐</span></div><div class="line">因为 Selenium 可以获取访问页面的内容，所以它可以区分页面上的可见元素与隐含元素。通过 is_displayed() 可以判断元素在页面上是否可见。</div><div class="line">``` bash </div><div class="line"><span class="string">""</span><span class="string">"下面实例代码，用来查找隐含字段"</span><span class="string">""</span></div><div class="line">from selenium import  webdriver</div><div class="line">from selenium.webdriver.remote.webelement import WebElement</div><div class="line"></div><div class="line">driver = webdriver.PhantomJS(executable_path=<span class="string">"/Users/YT"</span></div><div class="line">                                             <span class="string">"/MachineLearning/phantomjs-2.1.1-macosx/bin/phantomjs"</span>)</div><div class="line">driver.get(<span class="string">"http://pythonscraping.com/pages/itsatrap.html"</span>)</div><div class="line">links = driver.find_elements_by_tag_name(<span class="string">"a"</span>)</div><div class="line"></div><div class="line"><span class="keyword">for</span> link <span class="keyword">in</span> links:</div><div class="line">    <span class="keyword">if</span> not link.is_displayed():</div><div class="line">        <span class="built_in">print</span>(<span class="string">"The link "</span> + link.get_attribute(<span class="string">'href'</span>))</div><div class="line"></div><div class="line">fields = driver.find_elements_by_tag_name(<span class="string">"input"</span>)</div><div class="line"><span class="keyword">for</span> field <span class="keyword">in</span> fields:</div><div class="line">    <span class="keyword">if</span> not field.is_displayed():</div><div class="line">        <span class="built_in">print</span>(<span class="string">"Do not change value of "</span>+field.get_attribute(<span class="string">"name"</span>))</div></pre></td></tr></table></figure></p>
 <p>虽然你不太可能会去访问你找到的那些隐含链接，但是在提交前，记得确认一下那些已经 在表单中、准备提交的隐含字段的值(或者让 Selenium 为你自动提交)。</p>
 <h2 id="问题检查表"><a href="#问题检查表" class="headerlink" title="问题检查表"></a>问题检查表</h2><p>• 首先，如果你从网络服务器收到的页面是空白的，缺少信息，或其遇到他不符合你预期 的情况(或者不是你在浏览器上看到的   内容)，有可能是因为网站创建页面的 JavaScript 执行有问题。可以看看第 10 章内容。<br>• 如果你准备向网站提交表单或发出POST请求，记得检查一下页面的内容，看看你想提 交的每个字段是不是都已经填好，而且格式也正确。用 Chrome 浏览器的网络面板(快 捷键 F12 打开开发者控制台，然后点击“Network”即可看到)查看发送到网站的 POST 命令，确认你的每个参数都是正确的。<br>• 如果你已经登录网站却不能保持登录状态，或者网站上出现了其他的“登录状态”异常， 请检查你的 cookie。确认在加载每个页面时 cookie 都被正确调用，而且你的 cookie 在 每次发起请求时都发送到了网站上。<br>• 如果你在客户端遇到了HTTP错误，尤其是403禁止访问错误，这可能说明网站已经把 你的 IP 当作机器人了，不再接受你的任何请求。你要么等待你的 IP 地址从网站黑名单 里移除，要么就换个 IP 地址(可以去星巴克上网，或者看看第 14 章的内容)。如果你 确定自己并没有被封杀，那么再检查下面的内容。<br>♦ 确认你的爬虫在网站上的速度不是特别快。快速采集是一种恶习，会对网管的服务 器造成沉重的负担，还会让你陷入违法境地，也是 IP 被网站列入黑名单的首要原因。给你的爬虫增加延迟，让它们在夜深人静的时候运行。切记:匆匆忙忙写程序或收<br> 集数据都是拙劣项目管理的表现;应该提前做好计划，避免临阵慌乱。<br>♦ 还有一件必须做的事情:修改你的请求头!有些网站会封杀任何声称自己是爬虫的访问者。如果你不确定请求头的值怎样才算合适，就用你自己浏览器的请求头吧。<br>♦ 确认你没有点击或访问任何人类用户通常不能点击或接入的信息(更多信息请查阅12.3.2 节)。<br>♦ 如果你用了一大堆复杂的手段才接入网站，考虑联系一下网管吧，告诉他们你的目的。试试发邮件到 webmaster@&lt; 域名 &gt; 或 admin@&lt; 域名 &gt;，请求网管允许你使用爬虫采 集数据。管理员也是人嘛!</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/09/algorithm/递归/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EtanWatson">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EWSUN">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/09/algorithm/递归/" itemprop="url">递归</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-09T15:08:10+08:00">
+                2017-10-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/algorithm/" itemprop="url" rel="index">
+                    <span itemprop="name">algorithm</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h1><p>恨它的，爱它的以及恨了几年有爱上它的（比较经典，记下了）</p>
+<h2 id="while与递归的对比"><a href="#while与递归的对比" class="headerlink" title="while与递归的对比"></a>while与递归的对比</h2><p>伪代码实现<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#while 实现</span></div><div class="line">def look_for_key(main_box):</div><div class="line">	pile = main_box.make_a_pile_to_look_through()</div><div class="line">	<span class="keyword">while</span> pile is not empty:</div><div class="line">		box = pile.grab_a_box()</div><div class="line">		<span class="keyword">for</span> item <span class="keyword">in</span> box:</div><div class="line">			<span class="keyword">if</span> item.is_a_box():</div><div class="line">				pile.append(item)</div><div class="line">			<span class="keyword">elif</span> item.is_a_key():</div><div class="line">				<span class="built_in">print</span>(“found the key!”)</div><div class="line"><span class="comment">#递归实现</span></div><div class="line">def look_for_key(box):</div><div class="line">	<span class="keyword">for</span> item <span class="keyword">in</span> box:</div><div class="line">		<span class="keyword">if</span> item.is_a_box():</div><div class="line">			look_for_key(item)</div><div class="line">		<span class="keyword">elif</span> item.is_a_key():</div><div class="line">			<span class="built_in">print</span>(“found the key!”)</div></pre></td></tr></table></figure></p>
+<p>#这两种方法的作用相同，第二种方法更清晰。递归只是让解决方案更清晰 ，并没有性能上的优势，实际上，在有些情况下，使用循环的性能更好。<br>再引入一句大神说的话：Loops may achieve a performance gain for your program. Recursion may achieve a performance gain for your programmer. Choose which is more important in your situation!</p>
+<h2 id="基线条件和递归条件"><a href="#基线条件和递归条件" class="headerlink" title="基线条件和递归条件"></a>基线条件和递归条件</h2><p>每个递归函数都有两个部分：基线条件和递归条件<br>递归条件指的是函数调用自己，而基线条件则指的是函数不在调用自己，从而避免形成无线循环<br>ex：<br>def countdown(i):<br>    print i<br>    countdown(i-1)<br>上述代码，会导致死循环<br>我们来给countdown添加基线条件<br>def countdown(i):<br>    print i</p>
+<pre><code>#基线条件
+if i &lt;= 0:
+return
+else:  #递归条件
+countdown(i-1)
+</code></pre><h2 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h2><h3 id="调用栈"><a href="#调用栈" class="headerlink" title="调用栈"></a>调用栈</h3><p>def greet(name):<br>    print (“hello, “ + name + “i”)<br>    greet2(name)<br>    print (getting ready to say bye…)<br>    bye()</p>
+<p>#这个函数问候用户，在调用另外两个函数。这两个函数的代码如下。<br>def greet2(name):<br>    print (”how are you, ” + name + ‘?’)<br>    def bye():<br>        print(“ok bye!”)</p>
+<h3 id="递归调用栈"><a href="#递归调用栈" class="headerlink" title="递归调用栈"></a>递归调用栈</h3><h4 id="计算阶乘的"><a href="#计算阶乘的" class="headerlink" title="计算阶乘的"></a>计算阶乘的</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">def fact(x):</div><div class="line">	<span class="keyword">if</span> x == 1:</div><div class="line">		<span class="built_in">return</span> 1</div><div class="line">	<span class="keyword">else</span>:</div><div class="line">	   <span class="built_in">return</span> x*fact(x-1)</div></pre></td></tr></table></figure>
+<p>使用栈虽然很方便，但是也要付出代价:存储详尽的信息可能占用大量的内存。每个函数调 用都要占用一定的内存，如果栈很高，就意味着计算机存储了大量函数调用的信息。在这种情况 下，你有两种选择。<br> 重新编写代码，转而使用循环。<br> 使用尾递归。这是一个高级递归主题，不在本书的讨论范围内。另外，并非所有的语言<br>都支持尾递归。</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p> 递归指的是调用自己的函数。<br> 每个递归函数都有两个条件:基线条件和递归条件。  栈有两种操作:压入和弹出。<br> 所有函数调用都进入调用栈。<br> 调用栈可能很长，这将占用大量的内存。</p>
 
           
         
@@ -570,161 +885,6 @@
 <h4 id="TXT记录"><a href="#TXT记录" class="headerlink" title="TXT记录"></a>TXT记录</h4><p>为某个主机或域名设置说明</p>
 <h2 id="CDN（内容分布式网络）-工作原理"><a href="#CDN（内容分布式网络）-工作原理" class="headerlink" title="CDN（内容分布式网络） 工作原理"></a>CDN（内容分布式网络） 工作原理</h2><p>将网站的内容发布到最接近用户网络的边缘<br>CDN=Mirror+Cache+GSLB(整体负载均衡)</p>
 <h3 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h3><h4 id="链路负载均衡"><a href="#链路负载均衡" class="headerlink" title="链路负载均衡"></a>链路负载均衡</h4><h4 id="集群负载均衡"><a href="#集群负载均衡" class="headerlink" title="集群负载均衡"></a>集群负载均衡</h4><h4 id="操作系统负载均衡"><a href="#操作系统负载均衡" class="headerlink" title="操作系统负载均衡"></a>操作系统负载均衡</h4><h3 id="CDN动态加速"><a href="#CDN动态加速" class="headerlink" title="CDN动态加速"></a>CDN动态加速</h3>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/09/algorithm/递归/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="EtanWatson">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/header.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="EWSUN">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/10/09/algorithm/递归/" itemprop="url">递归</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-09T15:08:10+08:00">
-                2017-10-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/algorithm/" itemprop="url" rel="index">
-                    <span itemprop="name">algorithm</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h1><p>恨它的，爱它的以及恨了几年有爱上它的（比较经典，记下了）</p>
-<h2 id="while与递归的对比"><a href="#while与递归的对比" class="headerlink" title="while与递归的对比"></a>while与递归的对比</h2><p>伪代码实现<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#while 实现</span></div><div class="line">def look_for_key(main_box):</div><div class="line">	pile = main_box.make_a_pile_to_look_through()</div><div class="line">	<span class="keyword">while</span> pile is not empty:</div><div class="line">		box = pile.grab_a_box()</div><div class="line">		<span class="keyword">for</span> item <span class="keyword">in</span> box:</div><div class="line">			<span class="keyword">if</span> item.is_a_box():</div><div class="line">				pile.append(item)</div><div class="line">			<span class="keyword">elif</span> item.is_a_key():</div><div class="line">				<span class="built_in">print</span>(“found the key!”)</div><div class="line"><span class="comment">#递归实现</span></div><div class="line">def look_for_key(box):</div><div class="line">	<span class="keyword">for</span> item <span class="keyword">in</span> box:</div><div class="line">		<span class="keyword">if</span> item.is_a_box():</div><div class="line">			look_for_key(item)</div><div class="line">		<span class="keyword">elif</span> item.is_a_key():</div><div class="line">			<span class="built_in">print</span>(“found the key!”)</div></pre></td></tr></table></figure></p>
-<p>#这两种方法的作用相同，第二种方法更清晰。递归只是让解决方案更清晰 ，并没有性能上的优势，实际上，在有些情况下，使用循环的性能更好。<br>再引入一句大神说的话：Loops may achieve a performance gain for your program. Recursion may achieve a performance gain for your programmer. Choose which is more important in your situation!</p>
-<h2 id="基线条件和递归条件"><a href="#基线条件和递归条件" class="headerlink" title="基线条件和递归条件"></a>基线条件和递归条件</h2><p>每个递归函数都有两个部分：基线条件和递归条件<br>递归条件指的是函数调用自己，而基线条件则指的是函数不在调用自己，从而避免形成无线循环<br>ex：<br>def countdown(i):<br>    print i<br>    countdown(i-1)<br>上述代码，会导致死循环<br>我们来给countdown添加基线条件<br>def countdown(i):<br>    print i</p>
-<pre><code>#基线条件
-if i &lt;= 0:
-return
-else:  #递归条件
-countdown(i-1)
-</code></pre><h2 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h2><h3 id="调用栈"><a href="#调用栈" class="headerlink" title="调用栈"></a>调用栈</h3><p>def greet(name):<br>    print (“hello, “ + name + “i”)<br>    greet2(name)<br>    print (getting ready to say bye…)<br>    bye()</p>
-<p>#这个函数问候用户，在调用另外两个函数。这两个函数的代码如下。<br>def greet2(name):<br>    print (”how are you, ” + name + ‘?’)<br>    def bye():<br>        print(“ok bye!”)</p>
-<h3 id="递归调用栈"><a href="#递归调用栈" class="headerlink" title="递归调用栈"></a>递归调用栈</h3><h4 id="计算阶乘的"><a href="#计算阶乘的" class="headerlink" title="计算阶乘的"></a>计算阶乘的</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">def fact(x):</div><div class="line">	<span class="keyword">if</span> x == 1:</div><div class="line">		<span class="built_in">return</span> 1</div><div class="line">	<span class="keyword">else</span>:</div><div class="line">	   <span class="built_in">return</span> x*fact(x-1)</div></pre></td></tr></table></figure>
-<p>使用栈虽然很方便，但是也要付出代价:存储详尽的信息可能占用大量的内存。每个函数调 用都要占用一定的内存，如果栈很高，就意味着计算机存储了大量函数调用的信息。在这种情况 下，你有两种选择。<br> 重新编写代码，转而使用循环。<br> 使用尾递归。这是一个高级递归主题，不在本书的讨论范围内。另外，并非所有的语言<br>都支持尾递归。</p>
-<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p> 递归指的是调用自己的函数。<br> 每个递归函数都有两个条件:基线条件和递归条件。  栈有两种操作:压入和弹出。<br> 所有函数调用都进入调用栈。<br> 调用栈可能很长，这将占用大量的内存。</p>
-
           
         
       
@@ -1892,125 +2052,6 @@ captchResponse = f.read().replace(<span class="string">" "</span>,<span class="s
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/04/python数据采集/自然语言处理/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="EtanWatson">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/header.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="EWSUN">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/10/04/python数据采集/自然语言处理/" itemprop="url">自然语言处理</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-04T11:07:53+08:00">
-                2017-10-04
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2064,7 +2105,7 @@ captchResponse = f.read().replace(<span class="string">" "</span>,<span class="s
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">76</span>
+                <span class="site-state-item-count">77</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

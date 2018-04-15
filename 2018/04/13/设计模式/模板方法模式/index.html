@@ -97,18 +97,20 @@
 
 
 
-<meta name="description" content="考题抄错会做也白搭-模板方法模式">
+<meta name="description" content="考题抄错会做也白搭-模板方法模式 定义一个操作中的算法的骨架，而将一些步骤延迟到子类中。模板方法使得子类可以不改变一个算法的结构，即可重新定义该算法的某些特定步骤  结构图： 以抄试卷为例TestPaper.java 12345678910111213public abstract class TestPaper &amp;#123;    public void question1()&amp;#123;">
 <meta name="keywords" content="设计模式">
 <meta property="og:type" content="article">
 <meta property="og:title" content="设计模式之模板方法模式">
 <meta property="og:url" content="http://yoursite.com/2018/04/13/设计模式/模板方法模式/index.html">
 <meta property="og:site_name" content="EWSUN">
-<meta property="og:description" content="考题抄错会做也白搭-模板方法模式">
+<meta property="og:description" content="考题抄错会做也白搭-模板方法模式 定义一个操作中的算法的骨架，而将一些步骤延迟到子类中。模板方法使得子类可以不改变一个算法的结构，即可重新定义该算法的某些特定步骤  结构图： 以抄试卷为例TestPaper.java 12345678910111213public abstract class TestPaper &amp;#123;    public void question1()&amp;#123;">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-15T07:34:05.574Z">
+<meta property="og:image" content="http://yoursite.com/images/15237789441991.jpg">
+<meta property="og:updated_time" content="2018-04-15T08:18:39.531Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="设计模式之模板方法模式">
-<meta name="twitter:description" content="考题抄错会做也白搭-模板方法模式">
+<meta name="twitter:description" content="考题抄错会做也白搭-模板方法模式 定义一个操作中的算法的骨架，而将一些步骤延迟到子类中。模板方法使得子类可以不改变一个算法的结构，即可重新定义该算法的某些特定步骤  结构图： 以抄试卷为例TestPaper.java 12345678910111213public abstract class TestPaper &amp;#123;    public void question1()&amp;#123;">
+<meta name="twitter:image" content="http://yoursite.com/images/15237789441991.jpg">
 
 
 
@@ -400,7 +402,22 @@
       
 
       
-        <h1 id="考题抄错会做也白搭-模板方法模式"><a href="#考题抄错会做也白搭-模板方法模式" class="headerlink" title="考题抄错会做也白搭-模板方法模式"></a>考题抄错会做也白搭-模板方法模式</h1>
+        <h1 id="考题抄错会做也白搭-模板方法模式"><a href="#考题抄错会做也白搭-模板方法模式" class="headerlink" title="考题抄错会做也白搭-模板方法模式"></a>考题抄错会做也白搭-模板方法模式</h1><blockquote>
+<p>定义一个操作中的算法的骨架，而将一些步骤延迟到子类中。模板方法使得子类可以不改变一个算法的结构，即可重新定义该算法的某些特定步骤</p>
+</blockquote>
+<h2 id="结构图："><a href="#结构图：" class="headerlink" title="结构图："></a>结构图：</h2><p><img src="/images/15237789441991.jpg" alt=""></p>
+<h2 id="以抄试卷为例"><a href="#以抄试卷为例" class="headerlink" title="以抄试卷为例"></a>以抄试卷为例</h2><p>TestPaper.java</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">public abstract class TestPaper &#123;</div><div class="line"></div><div class="line">    public void question1()&#123;</div><div class="line">        System.out.println(&quot;2+3= &quot;+ answer1());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void question2()&#123;</div><div class="line">        System.out.println(&quot;日本是:&quot;+ answer2());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public abstract String answer1();</div><div class="line">    public abstract String answer2();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>StudentA.java</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">public class StudentA extends TestPaper &#123;</div><div class="line">    @Override</div><div class="line">    public String answer1() &#123;</div><div class="line">        return &quot;3&quot;;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public String answer2() &#123;</div><div class="line">        return &quot;我们的!!&quot;;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>StudentB.java</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">public class StudentB extends TestPaper&#123;</div><div class="line">    @Override</div><div class="line">    public String answer1() &#123;</div><div class="line">        return &quot;5&quot;;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public String answer2() &#123;</div><div class="line">        return &quot;中国不可分割的一部分&quot;;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Client.java</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">public class Client &#123;</div><div class="line"></div><div class="line">    public static void main(String [] args)&#123;</div><div class="line">        TestPaper studentA = new StudentA();</div><div class="line">        studentA.question1();</div><div class="line">        studentA.question2();</div><div class="line"></div><div class="line">        TestPaper studentB = new StudentB();</div><div class="line">        studentB.question1();</div><div class="line">        studentB.question2();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>当不变的和可变的行为在方法的子类实现中混合在一起的时候，不变的行为就会在子类中重复出现。我们通过模板方法模式把这些行为搬移到单一的地方，这样就帮助子类拜托重复的不变的行为的纠缠</p>
+</blockquote>
+
       
     </div>
     
@@ -522,7 +539,7 @@
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">76</span>
+                <span class="site-state-item-count">77</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -586,7 +603,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#考题抄错会做也白搭-模板方法模式"><span class="nav-number">1.</span> <span class="nav-text">考题抄错会做也白搭-模板方法模式</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#考题抄错会做也白搭-模板方法模式"><span class="nav-number">1.</span> <span class="nav-text">考题抄错会做也白搭-模板方法模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#结构图："><span class="nav-number">1.1.</span> <span class="nav-text">结构图：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#以抄试卷为例"><span class="nav-number">1.2.</span> <span class="nav-text">以抄试卷为例</span></a></li></ol></li></ol></div>
             
 
           </div>

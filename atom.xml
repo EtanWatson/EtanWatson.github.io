@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-04-15T07:31:19.785Z</updated>
+  <updated>2018-04-15T12:09:02.323Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>设计模式之外观模式</title>
+    <link href="http://yoursite.com/2018/04/15/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E4%B9%8B%E5%A4%96%E8%A7%82%E6%A8%A1%E5%BC%8F/"/>
+    <id>http://yoursite.com/2018/04/15/设计模式/设计模式之外观模式/</id>
+    <published>2018-04-15T08:19:27.369Z</published>
+    <updated>2018-04-15T12:09:02.323Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="牛市股票还会亏钱-外观模式"><a href="#牛市股票还会亏钱-外观模式" class="headerlink" title="牛市股票还会亏钱-外观模式"></a>牛市股票还会亏钱-外观模式</h1><h2 id="迪米特法则"><a href="#迪米特法则" class="headerlink" title="迪米特法则"></a>迪米特法则</h2><blockquote><p>如果两个类不必彼此直接通信，那么这两个类就不应当发生直接的相互作用。如果其中一个类需要调用另一个类的某一个方法的话，可以通过第三者转发这个调用</p></blockquote><h2 id="外观模式"><a href="#外观模式" class="headerlink" title="外观模式"></a>外观模式</h2><blockquote><p>为子系统中的一组接口提供一个一致的界面，此模式定义了一个高层接口，这个接口使得这一子系统更加容易使用</p></blockquote><h2 id="结构图"><a href="#结构图" class="headerlink" title="结构图"></a>结构图</h2><p><img src="/images/15237928962811.jpg" alt=""></p><blockquote><p>注：外观类知道有哪些子系统类负责处理请求，将客户端的请求代理给适当的子系统对象<br>子系统类集合实现子系统的功能，处理Facade对象指派的任务。注意子类中没有Facade的任何信息，即没有对Facade对象的引用</p></blockquote><h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><ul><li><p>SubSystemOne</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">  public class SubSystemOne &#123;</div><div class="line">        public void methodOne()&#123;</div><div class="line">            System.out.println(&quot;this is SubSystemOne!&quot;);</div><div class="line">        &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></li><li><p>SubSystemTwo</p></li></ul>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">  public class SubSystemTwo &#123;</div><div class="line">        public void methodTwo()&#123;</div><div class="line">            System.out.println(&quot;this is SubSystemTwo!&quot;);</div><div class="line">        &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure><ul><li>SubSystemThree</li></ul>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">  public class SubSystemThree &#123;</div><div class="line">        public void methodThree()&#123;</div><div class="line">            System.out.println(&quot;this is SubSystemThree!&quot;);</div><div class="line">        &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure><ul><li><p>Facade</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">  public class Facade &#123;</div><div class="line"></div><div class="line">    SubSystemOne subSystemOne;</div><div class="line">    SubSystemTwo subSystemTwo;</div><div class="line">    SubSystemThree subSystemThree;</div><div class="line">    public Facade()&#123;</div><div class="line">        subSystemOne = new SubSystemOne();</div><div class="line">        subSystemTwo = new SubSystemTwo();</div><div class="line">        subSystemThree = new SubSystemThree();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void methodA()&#123;</div><div class="line">        //可以调用不同的方法</div><div class="line">        subSystemOne.methodOne();</div><div class="line">        subSystemTwo.methodTwo();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void methodB()&#123;</div><div class="line">        subSystemThree.methodThree();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></li></ul><ul><li><p>Client</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">  public class Client &#123;</div><div class="line">    public static void main(String [] args)&#123;</div><div class="line">        Facade facade = new Facade();</div><div class="line">        facade.methodA();</div><div class="line">        facade.methodB();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;牛市股票还会亏钱-外观模式&quot;&gt;&lt;a href=&quot;#牛市股票还会亏钱-外观模式&quot; class=&quot;headerlink&quot; title=&quot;牛市股票还会亏钱-外观模式&quot;&gt;&lt;/a&gt;牛市股票还会亏钱-外观模式&lt;/h1&gt;&lt;h2 id=&quot;迪米特法则&quot;&gt;&lt;a href=&quot;#迪米特法
+      
+    
+    </summary>
+    
+      <category term="设计模式" scheme="http://yoursite.com/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+    
+      <category term="设计模式" scheme="http://yoursite.com/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
+    
+  </entry>
   
   <entry>
     <title>zookeeper的集群搭建</title>
@@ -173,15 +198,16 @@
     <link href="http://yoursite.com/2018/04/13/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E6%A8%A1%E6%9D%BF%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F/"/>
     <id>http://yoursite.com/2018/04/13/设计模式/模板方法模式/</id>
     <published>2018-04-13T06:21:20.546Z</published>
-    <updated>2018-04-15T07:34:05.574Z</updated>
+    <updated>2018-04-15T08:18:39.531Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="考题抄错会做也白搭-模板方法模式"><a href="#考题抄错会做也白搭-模板方法模式" class="headerlink" title="考题抄错会做也白搭-模板方法模式"></a>考题抄错会做也白搭-模板方法模式</h1>]]></content>
+    <content type="html"><![CDATA[<h1 id="考题抄错会做也白搭-模板方法模式"><a href="#考题抄错会做也白搭-模板方法模式" class="headerlink" title="考题抄错会做也白搭-模板方法模式"></a>考题抄错会做也白搭-模板方法模式</h1><blockquote><p>定义一个操作中的算法的骨架，而将一些步骤延迟到子类中。模板方法使得子类可以不改变一个算法的结构，即可重新定义该算法的某些特定步骤</p></blockquote><h2 id="结构图："><a href="#结构图：" class="headerlink" title="结构图："></a>结构图：</h2><p><img src="/images/15237789441991.jpg" alt=""></p><h2 id="以抄试卷为例"><a href="#以抄试卷为例" class="headerlink" title="以抄试卷为例"></a>以抄试卷为例</h2><p>TestPaper.java</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">public abstract class TestPaper &#123;</div><div class="line"></div><div class="line">    public void question1()&#123;</div><div class="line">        System.out.println(&quot;2+3= &quot;+ answer1());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void question2()&#123;</div><div class="line">        System.out.println(&quot;日本是:&quot;+ answer2());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public abstract String answer1();</div><div class="line">    public abstract String answer2();</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>StudentA.java</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">public class StudentA extends TestPaper &#123;</div><div class="line">    @Override</div><div class="line">    public String answer1() &#123;</div><div class="line">        return &quot;3&quot;;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public String answer2() &#123;</div><div class="line">        return &quot;我们的!!&quot;;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure><p>StudentB.java</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">public class StudentB extends TestPaper&#123;</div><div class="line">    @Override</div><div class="line">    public String answer1() &#123;</div><div class="line">        return &quot;5&quot;;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public String answer2() &#123;</div><div class="line">        return &quot;中国不可分割的一部分&quot;;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure><p>Client.java</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">public class Client &#123;</div><div class="line"></div><div class="line">    public static void main(String [] args)&#123;</div><div class="line">        TestPaper studentA = new StudentA();</div><div class="line">        studentA.question1();</div><div class="line">        studentA.question2();</div><div class="line"></div><div class="line">        TestPaper studentB = new StudentB();</div><div class="line">        studentB.question1();</div><div class="line">        studentB.question2();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure><blockquote><p>当不变的和可变的行为在方法的子类实现中混合在一起的时候，不变的行为就会在子类中重复出现。我们通过模板方法模式把这些行为搬移到单一的地方，这样就帮助子类拜托重复的不变的行为的纠缠</p></blockquote>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;h1 id=&quot;考题抄错会做也白搭-模板方法模式&quot;&gt;&lt;a href=&quot;#考题抄错会做也白搭-模板方法模式&quot; class=&quot;headerlink&quot; title=&quot;考题抄错会做也白搭-模板方法模式&quot;&gt;&lt;/a&gt;考题抄错会做也白搭-模板方法模式&lt;/h1&gt;
+        &lt;h1 id=&quot;考题抄错会做也白搭-模板方法模式&quot;&gt;&lt;a href=&quot;#考题抄错会做也白搭-模板方法模式&quot; class=&quot;headerlink&quot; title=&quot;考题抄错会做也白搭-模板方法模式&quot;&gt;&lt;/a&gt;考题抄错会做也白搭-模板方法模式&lt;/h1&gt;&lt;blockquote&gt;
+&lt;p&gt;定
       
     
     </summary>
@@ -493,32 +519,6 @@
     
     
       <category term="JavaWeb" scheme="http://yoursite.com/tags/JavaWeb/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>设计模式之单一职责原则</title>
-    <link href="http://yoursite.com/2018/04/08/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/%E5%8D%95%E4%B8%80%E8%81%8C%E8%B4%A3%E5%8E%9F%E5%88%99/"/>
-    <id>http://yoursite.com/2018/04/08/设计模式/单一职责原则/</id>
-    <published>2018-04-08T14:04:16.763Z</published>
-    <updated>2018-04-08T14:05:07.415Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="拍摄UFO-单一职责原则"><a href="#拍摄UFO-单一职责原则" class="headerlink" title="拍摄UFO-单一职责原则"></a>拍摄UFO-单一职责原则</h1><blockquote><p>就一个类而言，应该仅有一个引起它变化的原因</p></blockquote><p>如果一个类承担的职责过多，就等于把这些职责耦合在一起，一个职责的变化可能会削弱或者抑制这个类完成其他职责的能力。这种耦合会导致脆弱的设计，当变化发生时，设计会遭到意想不到的破坏</p><p>软件设计正在要做的许多内容，就是发现职责并把这些职责相互分离，<strong><em>如果你能想到多于一个的动机会改变这个类，那么这个类就具有多于一个的职责</em></strong></p><blockquote><p><strong><em>做一个有文艺气息的码农 ^ _ ^</em></strong></p></blockquote>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h1 id=&quot;拍摄UFO-单一职责原则&quot;&gt;&lt;a href=&quot;#拍摄UFO-单一职责原则&quot; class=&quot;headerlink&quot; title=&quot;拍摄UFO-单一职责原则&quot;&gt;&lt;/a&gt;拍摄UFO-单一职责原则&lt;/h1&gt;&lt;blockquote&gt;
-&lt;p&gt;就一个类而言，应该仅有一个引起它变
-      
-    
-    </summary>
-    
-      <category term="设计模式" scheme="http://yoursite.com/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
-    
-    
-      <category term="设计模式" scheme="http://yoursite.com/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/"/>
     
   </entry>
   
