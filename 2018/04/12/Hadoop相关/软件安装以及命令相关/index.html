@@ -106,7 +106,7 @@
 <meta property="og:description" content="软件安装以及命令相关部署遇到的一些问题 SecureCRT Session Option中文乱码问题将character encoding改为UTF-8 虚拟机clone机器的ip地址问题 直接修改  /etc/sysconfig/network-scripts/ifcfg-eth0 删掉UUID  HWADDR 配置静态地址 rm -rf 　/etc/udev/rules.d/70-persis">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/images/15235157887927.jpg">
-<meta property="og:updated_time" content="2018-04-13T07:41:06.372Z">
+<meta property="og:updated_time" content="2018-04-25T14:26:18.694Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="软件安装以及命令相关">
 <meta name="twitter:description" content="软件安装以及命令相关部署遇到的一些问题 SecureCRT Session Option中文乱码问题将character encoding改为UTF-8 虚拟机clone机器的ip地址问题 直接修改  /etc/sysconfig/network-scripts/ifcfg-eth0 删掉UUID  HWADDR 配置静态地址 rm -rf 　/etc/udev/rules.d/70-persis">
@@ -539,9 +539,8 @@
 </code></pre></li>
 <li><p>然后重新加载环境变量</p>
 </li>
-<li><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">    source /etc/profile</div><div class="line">  ``` </div><div class="line">#### 安装rpm包软件，如mysql</div><div class="line">* 上传rpm软件包</div></pre></td></tr></table></figure>
-</li>
 </ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">    source /etc/profile</div><div class="line">  ``` </div><div class="line">#### 安装rpm包软件，如mysql</div><div class="line"></div><div class="line">* 上传rpm软件包</div></pre></td></tr></table></figure>
 <p>MySQL-client-5.5.45-1.linux2.6.x86_64.rpm<br>MySQL-server-5.5.45-1.linux2.6.x86_64.rpm<br>MySQL-devel-5.5.45-1.linux2.6.x86_64.rpm</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"> </div><div class="line">* 删除自带的RPM软件包</div></pre></td></tr></table></figure>
 <p> rpm -qa | grep mysql<br> rpm -e –nodeps mysql-libs-5.1.71-1.el6.x86_64 # CentOS 6.5自带</p>
@@ -734,7 +733,7 @@ service mysql restart
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">77</span>
+                <span class="site-state-item-count">80</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

@@ -310,6 +310,699 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/13/设计模式/模板方法模式/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EtanWatson">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EWSUN">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/13/设计模式/模板方法模式/" itemprop="url">设计模式之模板方法模式</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-13T14:21:20+08:00">
+                2018-04-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/设计模式/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="考题抄错会做也白搭-模板方法模式"><a href="#考题抄错会做也白搭-模板方法模式" class="headerlink" title="考题抄错会做也白搭-模板方法模式"></a>考题抄错会做也白搭-模板方法模式</h1><blockquote>
+<p>定义一个操作中的算法的骨架，而将一些步骤延迟到子类中。模板方法使得子类可以不改变一个算法的结构，即可重新定义该算法的某些特定步骤</p>
+</blockquote>
+<h2 id="结构图："><a href="#结构图：" class="headerlink" title="结构图："></a>结构图：</h2><p><img src="/images/15237789441991.jpg" alt=""></p>
+<h2 id="以抄试卷为例"><a href="#以抄试卷为例" class="headerlink" title="以抄试卷为例"></a>以抄试卷为例</h2><p>TestPaper.java</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">public abstract class TestPaper &#123;</div><div class="line"></div><div class="line">    public void question1()&#123;</div><div class="line">        System.out.println(&quot;2+3= &quot;+ answer1());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void question2()&#123;</div><div class="line">        System.out.println(&quot;日本是:&quot;+ answer2());</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public abstract String answer1();</div><div class="line">    public abstract String answer2();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>StudentA.java</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">public class StudentA extends TestPaper &#123;</div><div class="line">    @Override</div><div class="line">    public String answer1() &#123;</div><div class="line">        return &quot;3&quot;;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public String answer2() &#123;</div><div class="line">        return &quot;我们的!!&quot;;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>StudentB.java</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">public class StudentB extends TestPaper&#123;</div><div class="line">    @Override</div><div class="line">    public String answer1() &#123;</div><div class="line">        return &quot;5&quot;;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public String answer2() &#123;</div><div class="line">        return &quot;中国不可分割的一部分&quot;;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Client.java</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">public class Client &#123;</div><div class="line"></div><div class="line">    public static void main(String [] args)&#123;</div><div class="line">        TestPaper studentA = new StudentA();</div><div class="line">        studentA.question1();</div><div class="line">        studentA.question2();</div><div class="line"></div><div class="line">        TestPaper studentB = new StudentB();</div><div class="line">        studentB.question1();</div><div class="line">        studentB.question2();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>当不变的和可变的行为在方法的子类实现中混合在一起的时候，不变的行为就会在子类中重复出现。我们通过模板方法模式把这些行为搬移到单一的地方，这样就帮助子类拜托重复的不变的行为的纠缠</p>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/12/Hadoop相关/软件安装以及命令相关/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EtanWatson">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EWSUN">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/12/Hadoop相关/软件安装以及命令相关/" itemprop="url">软件安装以及命令相关</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-12T14:39:54+08:00">
+                2018-04-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Hadoop相关/" itemprop="url" rel="index">
+                    <span itemprop="name">Hadoop相关</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="软件安装以及命令相关"><a href="#软件安装以及命令相关" class="headerlink" title="软件安装以及命令相关"></a>软件安装以及命令相关</h1><h2 id="部署遇到的一些问题"><a href="#部署遇到的一些问题" class="headerlink" title="部署遇到的一些问题"></a>部署遇到的一些问题</h2><ol>
+<li>SecureCRT Session Option中文乱码问题<br><img src="/images/15235157887927.jpg" alt=""><br>将character encoding改为UTF-8</li>
+<li>虚拟机clone机器的ip地址问题<ul>
+<li>直接修改  /etc/sysconfig/network-scripts/ifcfg-eth0</li>
+<li>删掉UUID  HWADDR 配置静态地址</li>
+<li>rm -rf 　/etc/udev/rules.d/70-persistent-net.rules<br><em>或者修改这个文件，将其中的eth1的物理地址复制给eth0，然后删掉eth1的配置，然后 reboot</em></li>
+</ul>
+</li>
+</ol>
+<h2 id="补充命令"><a href="#补充命令" class="headerlink" title="补充命令"></a>补充命令</h2><h3 id="文件操作"><a href="#文件操作" class="headerlink" title="文件操作"></a>文件操作</h3><ul>
+<li>cat    somefile    一次性将文件内容全部输出（控制台）</li>
+<li>more   somefile     可以翻页查看, 下翻一页(空格)    上翻一页（b）   退出（q）</li>
+<li>less   somefile      可以翻页查看,下翻一页(空格)    上翻一页（b），上翻一行(↑)  下翻一行（↓）  可以搜索关键字（/keyword）</li>
+<li>tail -10  install.log   查看文件尾部的10行</li>
+<li>tail -f install.log    小f跟踪文件的唯一inode号，就算文件改名后，还是跟踪原来这个inode表示的文件，可以实时打印当前文件</li>
+<li>tail -F install.log    大F按照文件名来跟踪</li>
+<li>head -10  install.log   查看文件头部的10行</li>
+</ul>
+<h3 id="管理"><a href="#管理" class="headerlink" title="管理"></a>管理</h3><ul>
+<li>查看主机名：hostname</li>
+<li>修改主机名(重启后无效)：hostname hadoop</li>
+<li>修改主机名(重启后永久生效)： vi /ect/sysconfig/network</li>
+<li>修改IP(重启后无效)： ifconfig eth0 192.168.12.22</li>
+<li>修改IP(重启后永久生效)：vi /etc/sysconfig/network-scripts/ifcfg-eth0</li>
+<li><p>mount   挂载外部存储设备到文件系统中</p>
+<ul>
+<li>mkdir   /mnt/cdrom      创建一个目录，用来挂载</li>
+<li>mount -t iso9660 -o ro /dev/cdrom /mnt/cdrom/     将设备/dev/cdrom挂载到 挂载点 ：  /mnt/cdrom中</li>
+</ul>
+</li>
+<li><p>umount: umount /mnt/cdrom</p>
+</li>
+<li>统计文件或文件夹的大小<ul>
+<li>du -sh  /mnt/cdrom/Packages</li>
+<li>df -h    查看磁盘的空间</li>
+</ul>
+</li>
+<li>关机: halt</li>
+<li>重启: reboot</li>
+<li>后台服务管理<ul>
+<li>service network status   查看指定服务的状态</li>
+<li>service network stop     停止指定服务</li>
+<li>service network start    启动指定服务</li>
+<li>service network restart  重启指定服务</li>
+<li>service –status-all  查看系统中所有的后台服务</li>
+</ul>
+</li>
+<li>设置后台服务的自启配置<ul>
+<li>chkconfig   查看所有服务器自启配置</li>
+<li>chkconfig iptables off   关掉指定服务的自动启动</li>
+<li>chkconfig iptables on   开启指定服务的自动启动</li>
+</ul>
+</li>
+<li><p>系统启动级别管理</p>
+<ul>
+<li><p>vi  /etc/inittab</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">            # Default runlevel. The runlevels used are:</div><div class="line">            #   0 - halt (Do NOT set initdefault to this)</div><div class="line">            #   1 - Single user mode</div><div class="line">            #   2 - Multiuser, without NFS (The same as 3, if you do not have networking)</div><div class="line">            #   3 - Full multiuser mode</div><div class="line">            #   4 - unused</div><div class="line">            #   5 - X11</div><div class="line">            #   6 - reboot (Do NOT set initdefault to this)</div><div class="line">#</div><div class="line">        id:3:initdefault:</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="软件安装"><a href="#软件安装" class="headerlink" title="软件安装"></a>软件安装</h3><h4 id="如何上传软件包到服务器"><a href="#如何上传软件包到服务器" class="headerlink" title="如何上传软件包到服务器"></a>如何上传软件包到服务器</h4><ul>
+<li>可以使用图形化工具，如： filezilla</li>
+<li>可以使用sftp工具：  shift+command+p(macox) 调出后，用put命令上传</li>
+<li>上传（如果不cd指定目录，则上传到当前用户的主目录）：</li>
+<li>sftp&gt; cd /home/   </li>
+<li>sftp&gt; put </li>
+<li>下载（lcd指定下载到本地的目标路径）</li>
+<li>sftp&gt; lcd / ()                        </li>
+<li>sftp&gt; get /home/jdk.tar.gz</li>
+<li>lrzsz在linux里可代替ftp上传和下载</li>
+</ul>
+<h4 id="安装jdk"><a href="#安装jdk" class="headerlink" title="安装jdk"></a>安装jdk</h4><ul>
+<li>压缩解压缩的相关命令</li>
+<li>压缩解压缩<ul>
+<li>root@mini1 ~]# gzip access.log </li>
+<li>[root@mini1 ~]# ll</li>
+</ul>
+</li>
+<li>解压gz文件：  gzip -d access.log.gz</li>
+<li><p>打包</p>
+<ul>
+<li>[root@mini1 ~]# tar -cvf myfirsttarball.tar aaa/<ul>
+<li>aaa/</li>
+<li>aaa/2.txt</li>
+<li>aaa/3.txt</li>
+<li>aaa/1.txt</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>解包：</p>
+<ul>
+<li>[root@mini1 ~]# tar -xvf myfirsttarball.tar <ul>
+<li>aaa/</li>
+<li>aaa/2.txt</li>
+<li>aaa/3.txt</li>
+<li>aaa/1.txt</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>一次性完成打包&amp;&amp;压缩的操作</p>
+<ul>
+<li><p>产生压缩包：</p>
+<ul>
+<li>[root@mini1 ~]# tar -zcvf my.tar.gz aaa/<ul>
+<li>aaa/</li>
+<li>aaa/2.txt</li>
+<li>aaa/3.txt</li>
+<li>aaa/1.txt</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>解压缩包：</p>
+<ul>
+<li>[root@mini1 ~]# tar -zxvf my.tar.gz <ul>
+<li>aaa/</li>
+<li>aaa/2.txt</li>
+<li>aaa/3.txt</li>
+<li>aaa/1.txt</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>安装jdk的过程：</p>
+<ul>
+<li>解压安装包<pre><code>tar -zxvf jdk-7u45-linux-x64.tar.gz -C(目标地址) apps/
+</code></pre></li>
+<li><p>修改环境变量</p>
+<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">echo $PATH可以输出环境变量的值</div><div class="line">pwd命令以绝对路径的方式显示用户当前工作目录。</div><div class="line">vi /etc/profile</div><div class="line">在文件最后添加</div><div class="line">export JAVA_HOME=/root/apps/jdk1.7.0_45</div><div class="line">export PATH=$PATH:$JAVA_HOME/bin</div><div class="line">保存退出</div></pre></td></tr></table></figure>
+</code></pre></li>
+<li><p>然后重新加载环境变量</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">    source /etc/profile</div><div class="line">  ``` </div><div class="line">#### 安装rpm包软件，如mysql</div><div class="line"></div><div class="line">* 上传rpm软件包</div></pre></td></tr></table></figure>
+<p>MySQL-client-5.5.45-1.linux2.6.x86_64.rpm<br>MySQL-server-5.5.45-1.linux2.6.x86_64.rpm<br>MySQL-devel-5.5.45-1.linux2.6.x86_64.rpm</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"> </div><div class="line">* 删除自带的RPM软件包</div></pre></td></tr></table></figure>
+<p> rpm -qa | grep mysql<br> rpm -e –nodeps mysql-libs-5.1.71-1.el6.x86_64 # CentOS 6.5自带</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">  </div><div class="line">* 安装libaio</div></pre></td></tr></table></figure>
+<p> yum install libaio</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">  </div><div class="line">* 安装server、client、devel</div></pre></td></tr></table></figure>
+<p>rpm -ivh MySQL-server-5.5.45-1.linux2.6.x86_64.rpm –force –nodeps # 忽略依赖，强制安装<br>rpm -ivh MySQL-client-5.5.45-1.linux2.6.x86_64.rpm  –force –nodeps<br>rpm -ivh MySQL-devel-5.5.45-1.linux2.6.x86_64.rpm</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">* 启动服务</div></pre></td></tr></table></figure>
+<p> service mysql start </p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">  </div><div class="line">* 修改root密码</div></pre></td></tr></table></figure>
+<p> /usr/bin/mysqladmin -u root password ‘root’</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">* 登录验证</div></pre></td></tr></table></figure>
+<p>   mysql -uroot -proot</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">* 修改数据库和服务的编码</div></pre></td></tr></table></figure>
+<p> show variables like ‘character%’</p>
+<p> set character_set_database = utf8;<br> set character_set_server = utf8</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">   </div><div class="line">* 允许远程登录</div><div class="line">    * 所有主机</div></pre></td></tr></table></figure>
+<pre><code>grant all privileges on *.* to root@&quot;%&quot; identified by&quot;root&quot;with grant option;
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">    </div><div class="line">* 指定主机</div></pre></td></tr></table></figure>
+
+grant all privileges on *.* to root@&quot;192.168.x.x&quot; identified by&quot;root&quot;with grant option; flush privileges;
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">* 重启服务</div></pre></td></tr></table></figure>
+
+service mysql restart 
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">* 防火墙开发端口3306</div><div class="line">    * 开放3306端口</div></pre></td></tr></table></figure>
+
+/sbin/iptables -I INPUT -p tcp --dport 3306 -j ACCEPT
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">* 保存</div></pre></td></tr></table></figure>
+
+/etc/rc.d/init.d/iptables save
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">  </div><div class="line">* 重启防火墙</div></pre></td></tr></table></figure>
+
+/etc/init.d/iptables restart
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">      </div><div class="line">* 使用宿主机dataGrip连接</div><div class="line"> ![](/images/15235388787065.jpg)</div><div class="line"></div><div class="line">   </div><div class="line">  </div><div class="line">#### 制作本地yum源</div><div class="line">* 加入依赖包到私有的yum的repository</div></pre></td></tr></table></figure>
+</code></pre><p>进入到repo目录<br>执行命令：createrepo</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">  </div><div class="line">* 将iso文件挂载到指定目录</div></pre></td></tr></table></figure>
+<h1 id="任选一种方式"><a href="#任选一种方式" class="headerlink" title="任选一种方式"></a>任选一种方式</h1><p>mount /dev/cdrom /mnt/cdrom<br>mount -o loop /dev/cdrom /mnt/cdrom </p>
+<h1 id="如果让你指定挂载的类型，有可能你的虚拟机上没有挂载光盘"><a href="#如果让你指定挂载的类型，有可能你的虚拟机上没有挂载光盘" class="headerlink" title="如果让你指定挂载的类型，有可能你的虚拟机上没有挂载光盘"></a>如果让你指定挂载的类型，有可能你的虚拟机上没有挂载光盘</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">  </div><div class="line">* 拷贝并制作</div></pre></td></tr></table></figure>
+<p>mkdir /yum_pack<br>cp -r /mnt/Packages /yum_pack<br>cd /yum_pack<br>createrepo ./</p>
+<h1 id="如果createrepo命令no-found"><a href="#如果createrepo命令no-found" class="headerlink" title="如果createrepo命令no found"></a>如果createrepo命令no found</h1><p>yum -y install createrepo</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">  </div><div class="line">* 备份本地默认配置</div></pre></td></tr></table></figure>
+<p>cd /etc/yum.repos.d/<br>mkdir bak<br>mv * bak # 这里会提示你无法将bak移动到它的子目录,无所谓，反正是备份一下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">* 创建本地yum源配置文件</div></pre></td></tr></table></figure>
+<p>vi /etc/yum.repos.d/Centos-Local.repo</p>
+<p>[local]<br>name=CentOS-$releasever - Local<br>baseurl=file:///yum_pack # 这里可以配置http或ftp<br>gpgcheck=1  # 本地的可以不检查签名，设置为0<br>enabled=1   # 这里为0的话，是不开启的<br>gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-6</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">  </div><div class="line">* 测试</div><div class="line">  </div><div class="line">  ``` </div><div class="line">  yum clean all # 清空yum缓存</div><div class="line">  yum repolist</div><div class="line">  yum install gcc</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="安装tomcat"><a href="#安装tomcat" class="headerlink" title="安装tomcat"></a>安装tomcat</h4><h5 id="安装jdk-1"><a href="#安装jdk-1" class="headerlink" title="安装jdk"></a>安装jdk</h5><p>在安装tomcat之前，先安装jdk</p>
+<ul>
+<li>上传压缩包到 /usr/local/</li>
+<li>解压缩 tar -zxvf jdk-8u161-linux-x64.tar.gz</li>
+<li><p>配置环境变量</p>
+<ul>
+<li><p>为所有的用户配置 修改/etc/profile文件</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"># 在profile文件末尾追加</div><div class="line">export JAVA_HOME=/usr/share/jdk1.8.0_161</div><div class="line">export PATH=$JAVA_HOME/bin:$PATH</div><div class="line">export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar</div><div class="line"></div><div class="line"># 测试</div><div class="line">source /etc/profile</div></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="安装tomcat-1"><a href="#安装tomcat-1" class="headerlink" title="安装tomcat"></a>安装tomcat</h5><ul>
+<li>解压缩 tar -zxvf apache-tomcat-8.5.30.tar.gz</li>
+<li>进入到 bin目录启动 </li>
+<li>在宿主机中访问 </li>
+</ul>
+<h4 id="iptables"><a href="#iptables" class="headerlink" title="iptables"></a>iptables</h4><ul>
+<li><p>相关命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">service iptables status # 发现一个问题，在虚拟机中防火墙未开放8080端口，但是在宿主机中可以访问，原因待查</div><div class="line">service iptables start</div><div class="line">service iptables stop</div></pre></td></tr></table></figure>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/12/JavaWeb/JVM内存管理机制（二）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EtanWatson">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EWSUN">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/12/JavaWeb/JVM内存管理机制（二）/" itemprop="url">JVM内存管理机制（二）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-12T08:50:15+08:00">
+                2018-04-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaWeb/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaWeb</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="JVM内存管理机制（二）"><a href="#JVM内存管理机制（二）" class="headerlink" title="JVM内存管理机制（二）"></a>JVM内存管理机制（二）</h1><h2 id="JVM-内存回收策略"><a href="#JVM-内存回收策略" class="headerlink" title="JVM 内存回收策略"></a>JVM 内存回收策略</h2><p>通常显示的内存申请有两种：一种是静态内存分配，另外一种是动态内存分配</p>
+<h3 id="静态内存分配和回收"><a href="#静态内存分配和回收" class="headerlink" title="静态内存分配和回收"></a>静态内存分配和回收</h3><blockquote>
+<p>Java被编译时就已经能够确定需要的内存空间，当程序被加载时，系统把内存一次性分配给它，这些内存不会再程序执行时发生变化，直到程序执行结束时内存才被回收</p>
+</blockquote>
+<p>在java类和方法中的局部变量包括原生数据类型、和对象引用，都是静态分配内存的<br>例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">public void staticData(int arg)&#123;</div><div class="line">    String s = &quot;YT&quot;;</div><div class="line">    long l = 1;</div><div class="line">    Long lg = 2L;</div><div class="line">    Object o = new Object();</div><div class="line">    Integer i = 0;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>int、String、long、Long、Object、Integer的静态内存空间是<strong>4+4+8+4+4+4</strong></p>
+<h3 id="动态内存分配和回收"><a href="#动态内存分配和回收" class="headerlink" title="动态内存分配和回收"></a>动态内存分配和回收</h3><p>对象的空间是动态分配的，内存分配是在对象创建时发生的，而内存的回收是以对象不再引用为前提</p>
+<h3 id="如何检测垃圾"><a href="#如何检测垃圾" class="headerlink" title="如何检测垃圾"></a>如何检测垃圾</h3><p>垃圾收集器必须能够完成两件事情：</p>
+<ol>
+<li>能够正确地检测出垃圾对象</li>
+<li>能够释放垃圾对象占用的内存空间</li>
+</ol>
+<p>根对象集合（根对象集合达到）</p>
+<ol>
+<li>在方法中局部变量去的对象的引用（如上面的lg，o，i）</li>
+<li>java操作栈中的对象引用</li>
+<li>在常量池中的对象引用</li>
+<li>在本地方法中持有的对象引用</li>
+<li>类的Class对象</li>
+</ol>
+<h3 id="基于分代的垃圾回收算法"><a href="#基于分代的垃圾回收算法" class="headerlink" title="基于分代的垃圾回收算法"></a>基于分代的垃圾回收算法</h3><blockquote>
+<p>把对象安装寿命的长短来分组，分为年轻代和老年代，新创建的对象被分在年轻代，如果对象经过几次回收后仍然存活，那么再把对象划分到老年代，老年代的收集频度不像年轻代那么频繁，从而减少每次垃圾收集是所要扫描到的对象的数量，从而提高了垃圾回收效率</p>
+</blockquote>
+<p>Young区：</p>
+<ol>
+<li>Edan区：新创建的对象，当Eden区满后会触发minor GC将Eden区仍然存活的对象复制到其中一个Survivor区，另外一个Survivor区中存活的对象也将复制到这个Survivor区中，<strong><em>要保证有一个Survivor是空的</em></strong></li>
+<li>Survivor（两个）</li>
+</ol>
+<p>Old区：</p>
+<ol>
+<li>Young区的Survivor满后触发的minor GC后仍然存活的对象</li>
+<li>Edan区满后，如果Survivor放不下Edan中存活的兑现，则直接放到Old区</li>
+<li>如果Survivor区中的对象足够老，则也将放到Old区</li>
+<li>如果Old区也满了，将会触发Full GC，回收整个堆内存</li>
+</ol>
+<p>Perm区：主要存放类的Class对象，如果一个类被频繁的加载，也可能导致Perm区满，Perm区的垃圾回收也是有Full GC触发的</p>
+<h4 id="三种垃圾回收算法"><a href="#三种垃圾回收算法" class="headerlink" title="三种垃圾回收算法"></a>三种垃圾回收算法</h4><h5 id="Serial-Collector"><a href="#Serial-Collector" class="headerlink" title="Serial Collector"></a>Serial Collector</h5><blockquote>
+<p>Client模式下的默认GC方式(jvm.cfg),64位只支持Server模式<br>可以通过JVM配置参数-XX:+UserSerialGC来指定GC使用该收集算法</p>
+</blockquote>
+<p>这里说一下XX参数的语法<br>对于boolean类型的参数 -XX:+<name>用于激活<name>选项 -XX:-<name>用于注销选项<br>对于非boolean参数 -XX:<name>=<value>是给<name>赋值<value></value></name></value></name></name></name></name></p>
+<p>Serial Collector的工作原理：</p>
+<ol>
+<li>当Edan区空间不足时就触发了minor GC，触发MinorGC是首先会检查之前每次MinorGC晋升到Old区的<strong><em>平均对象大小</em></strong>是否大于Old区的剩余空间，如果大于，则触发Full GC，如果小于，到第二步</li>
+<li>HandlePromotionFailure参数（-XX:-HandlePromotionFailure）的值，如果为true，仅触发MinorGC，否则，再触发Full GC</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/11/设计模式/设计模式之原型模式/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1611,686 +2304,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/08/JavaWeb/Javac编译原理/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="EtanWatson">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/header.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="EWSUN">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/08/JavaWeb/Javac编译原理/" itemprop="url">深入class文件结构</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-08T22:09:09+08:00">
-                2018-04-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JavaWeb/" itemprop="url" rel="index">
-                    <span itemprop="name">JavaWeb</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Javac编译原理"><a href="#Javac编译原理" class="headerlink" title="Javac编译原理"></a>Javac编译原理</h1><p>Javac的任务就是将Java语言规范转化成Java虚拟机语言规范</p>
-<h2 id="javac工作原理分析"><a href="#javac工作原理分析" class="headerlink" title="javac工作原理分析"></a>javac工作原理分析</h2><h3 id="词法分析器"><a href="#词法分析器" class="headerlink" title="词法分析器"></a>词法分析器</h3>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/08/JavaWeb/深入class文件结构/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="EtanWatson">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/header.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="EWSUN">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/08/JavaWeb/深入class文件结构/" itemprop="url">深入class文件结构</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-08T22:08:15+08:00">
-                2018-04-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JavaWeb/" itemprop="url" rel="index">
-                    <span itemprop="name">JavaWeb</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="深入class文件结构"><a href="#深入class文件结构" class="headerlink" title="深入class文件结构"></a>深入class文件结构</h1><p>可以使用Oolong和jdk自带的javap生成class文件结构，现在我们用javap的方式生成</p>
-<h2 id="Javap生成的class文件结构"><a href="#Javap生成的class文件结构" class="headerlink" title="Javap生成的class文件结构"></a>Javap生成的class文件结构</h2><p>通过</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">javap -verbose ClassParse &gt; ClassParse.txt//该命令可以将ClassParse.class的结构信息输入到txt中</div></pre></td></tr></table></figure>
-<p>ClassParse.txt</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div></pre></td><td class="code"><pre><div class="line">Classfile XXX/XXX.class</div><div class="line">  Last modified Apr 6, 2018; size 574 bytes</div><div class="line">  MD5 checksum xxxxxxxx</div><div class="line">  Compiled from &quot;ClassParse.java&quot;</div><div class="line">public class </div><div class="line">xxx.xxx.xxx.ClassParse</div><div class="line">  minor version: 0</div><div class="line">  major version: 52</div><div class="line">  flags: ACC_PUBLIC, ACC_SUPER</div><div class="line">Constant pool:</div><div class="line">   #1 = Methodref          #6.#20         // java/lang/Object.&quot;&lt;init&gt;&quot;:()V</div><div class="line">   #2 = Fieldref           #21.#22        // java/lang/System.out:Ljava/io/PrintStream;</div><div class="line">   #3 = String             #23            // hello,YT</div><div class="line">   #4 = Methodref          #24.#25        // java/io/PrintStream.print:(Ljava/lang/String;)V</div><div class="line">   #5 = Class              #26            // com/XXX/java_web_test/ClassParse</div><div class="line">   #6 = Class              #27            // java/lang/Object</div><div class="line">   #7 = Utf8               &lt;init&gt;</div><div class="line">   #8 = Utf8               ()V</div><div class="line">   #9 = Utf8               Code</div><div class="line">  #10 = Utf8               LineNumberTable</div><div class="line">  #11 = Utf8               LocalVariableTable</div><div class="line">  #12 = Utf8               this</div><div class="line">  #13 = Utf8               Lcom/XXX/java_web_test/ClassParse;</div><div class="line">  #14 = Utf8               main</div><div class="line">  #15 = Utf8               ([Ljava/lang/String;)V</div><div class="line">  #16 = Utf8               args</div><div class="line">  #17 = Utf8               [Ljava/lang/String;</div><div class="line">  #18 = Utf8               SourceFile</div><div class="line">  #19 = Utf8               ClassParse.java</div><div class="line">  #20 = NameAndType        #7:#8          // &quot;&lt;init&gt;&quot;:()V</div><div class="line">  #21 = Class              #28            // java/lang/System</div><div class="line">  #22 = NameAndType        #29:#30        // out:Ljava/io/PrintStream;</div><div class="line">  #23 = Utf8               hello,YT</div><div class="line">  #24 = Class              #31            // java/io/PrintStream</div><div class="line">  #25 = NameAndType        #32:#33        // print:(Ljava/lang/String;)V</div><div class="line">  #26 = Utf8               com/XXX/java_web_test/ClassParse</div><div class="line">  #27 = Utf8               java/lang/Object</div><div class="line">  #28 = Utf8               java/lang/System</div><div class="line">  #29 = Utf8               out</div><div class="line">  #30 = Utf8               Ljava/io/PrintStream;</div><div class="line">  #31 = Utf8               java/io/PrintStream</div><div class="line">  #32 = Utf8               print</div><div class="line">  #33 = Utf8               (Ljava/lang/String;)V</div><div class="line">&#123;</div><div class="line">  public com.XXX.java_web_test.ClassParse();</div><div class="line">    descriptor: ()V</div><div class="line">    flags: ACC_PUBLIC</div><div class="line">    Code:</div><div class="line">      stack=1, locals=1, args_size=1</div><div class="line">         0: aload_0</div><div class="line">         1: invokespecial #1                  // Method java/lang/Object.&quot;&lt;init&gt;&quot;:()V</div><div class="line">         4: return</div><div class="line">      LineNumberTable:</div><div class="line">        line 7: 0</div><div class="line">      LocalVariableTable:</div><div class="line">        Start  Length  Slot  Name   Signature</div><div class="line">            0       5     0  this   Lcom/XXX/java_web_test/ClassParse;</div><div class="line"></div><div class="line">  public static void main(java.lang.String[]);</div><div class="line">    descriptor: ([Ljava/lang/String;)V</div><div class="line">    flags: ACC_PUBLIC, ACC_STATIC</div><div class="line">    Code:</div><div class="line">      stack=2, locals=1, args_size=1</div><div class="line">         0: getstatic     #2                  // Field java/lang/System.out:Ljava/io/PrintStream;</div><div class="line">         3: ldc           #3                  // String hello,YT</div><div class="line">         5: invokevirtual #4                  // Method java/io/PrintStream.print:(Ljava/lang/String;)V</div><div class="line">         8: return</div><div class="line">      LineNumberTable:</div><div class="line">        line 9: 0</div><div class="line">        line 10: 8</div><div class="line">      LocalVariableTable:</div><div class="line">        Start  Length  Slot  Name   Signature</div><div class="line">            0       9     0  args   [Ljava/lang/String;</div><div class="line">&#125;</div><div class="line">SourceFile: &quot;ClassParse.java&quot;</div></pre></td></tr></table></figure>
-<h3 id="LineNumberTable"><a href="#LineNumberTable" class="headerlink" title="LineNumberTable"></a>LineNumberTable</h3><p>在LinnumberTable下面包含多个line a:b<br>a:表示这个方法中的一行代码在类文件中的第几行<br>b:是指这行代码的第一条JVM指令的pc偏移量</p>
-<p>例如</p>
-<p><img src="/images/15234422979809.jpg" alt=""></p>
-<p>分别对应到</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">LineNumberTable:</div><div class="line">        line 9: 0</div><div class="line">        line 10: 8</div></pre></td></tr></table></figure>
-<p>冒号后面的0是这个代码的第一个JVM指令的偏移地址，一般一个方法的第一行代码对应的偏移地址都是0，这个方法的所有指令的偏移地址如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">public static void main(java.lang.String[]);</div><div class="line">    descriptor: ([Ljava/lang/String;)V</div><div class="line">    flags: ACC_PUBLIC, ACC_STATIC</div><div class="line">    Code:</div><div class="line">      stack=2, locals=1, args_size=1</div><div class="line">         0: getstatic     #2                  // Field java/lang/System.out:Ljava/io/PrintStream;</div><div class="line">         3: ldc           #3                  // String hello,YT</div><div class="line">         5: invokevirtual #4                  // Method java/io/PrintStream.print:(Ljava/lang/String;)V</div><div class="line">         8: return</div></pre></td></tr></table></figure>
-<p>从0~5都是System.out.print(“hello,YT”);一行代码对应的指令，而8行对应的指令就是return</p>
-<h3 id="LocalVariableTable"><a href="#LocalVariableTable" class="headerlink" title="LocalVariableTable"></a>LocalVariableTable</h3><ol>
-<li>Start： 该变量有效作用域的偏移地址</li>
-<li>Length： 该变量有效作用域的偏移地址（和Start一起）</li>
-<li>Slot： 该变量被赋值到某个Slot中的指令的下一条指令的偏移地址，一个变量的作用域就是[Start, Start+ Length]</li>
-<li>Name： Slot表示该变量占用的Slot编号和该变量的名称</li>
-<li>Signature：表示该变量的类型</li>
-</ol>
-<p>例如：<br><img src="/images/15234423246659.jpg" alt=""></p>
-<p>对应的字节码和LineNumber如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line">public void stack(java.lang.String[]);</div><div class="line">    descriptor: ([Ljava/lang/String;)V</div><div class="line">    flags: ACC_PUBLIC</div><div class="line">    Code:</div><div class="line">      stack=2, locals=6, args_size=2</div><div class="line">         0: ldc           #5                  // String YT</div><div class="line">         2: astore_2</div><div class="line">         3: aload_2</div><div class="line">         4: ldc           #5                  // String YT</div><div class="line">         6: invokevirtual #6                  // Method java/lang/String.equals:(Ljava/lang/Object;)Z</div><div class="line">         9: ifeq          30</div><div class="line">        12: iconst_3</div><div class="line">        13: istore_3</div><div class="line">        14: iload_3</div><div class="line">        15: ifle          27</div><div class="line">        18: lconst_1</div><div class="line">        19: lstore        4</div><div class="line">        21: iinc          3, -1</div><div class="line">        24: goto          14</div><div class="line">        27: goto          40</div><div class="line">        30: bipush        97</div><div class="line">        32: istore_3</div><div class="line">        33: getstatic     #2                  // Field java/lang/System.out:Ljava/io/PrintStream;</div><div class="line">        36: iload_3</div><div class="line">        37: invokevirtual #7                  // Method java/io/PrintStream.println:(C)V</div><div class="line">        40: return</div><div class="line">      LineNumberTable:</div><div class="line">        line 13: 0</div><div class="line">        line 14: 3</div><div class="line">        line 15: 12</div><div class="line">        line 16: 14</div><div class="line">        line 17: 18</div><div class="line">        line 18: 21</div><div class="line">        line 19: 24</div><div class="line">        line 20: 27</div><div class="line">        line 21: 30</div><div class="line">        line 22: 33</div><div class="line">        line 24: 40</div><div class="line">      LocalVariableTable:</div><div class="line">        Start  Length  Slot  Name   Signature</div><div class="line">           21       3     4     j   J</div><div class="line">           14      13     3     i   I</div><div class="line">           33       7     3     b   C</div><div class="line">            0      41     0  this   Lcom/XXX/java_web_test/ClassParse;</div><div class="line">            0      41     1   arg   [Ljava/lang/String;</div><div class="line">            3      38     2   str   Ljava/lang/String;</div></pre></td></tr></table></figure>
-<p>在这个方法中共有6个变量，共使用4个Slot，变量j在lstore 4这条指令中首次赋值，所以它的Start就从iinc 3,-1开始，指令的偏移量是21，而Length是3，说明这个变量的作用域是[21,24]<br>我们可以看到，i，b变量是用的同一个Slot3，变量i的作用域是[14,27],变量b的作用域是[33,40],不重合</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>方法长度限制和行数限制</p>
-<blockquote>
-<p>上文摘自深入分析JAVA WEB 技术内幕</p>
-<hr>
-<p><strong><em>做一个有文艺气息的码农 ^ _ ^</em></strong></p>
-</blockquote>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/08/JavaWeb/深入分析ClassLoader工作机制/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="EtanWatson">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/header.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="EWSUN">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/08/JavaWeb/深入分析ClassLoader工作机制/" itemprop="url">深入分析ClassLoader工作机制</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-08T22:05:35+08:00">
-                2018-04-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JavaWeb/" itemprop="url" rel="index">
-                    <span itemprop="name">JavaWeb</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="深入分析ClassLoader工作机制"><a href="#深入分析ClassLoader工作机制" class="headerlink" title="深入分析ClassLoader工作机制"></a>深入分析ClassLoader工作机制</h1><p>ClassLoader有个作用（目的、任务）</p>
-<ol>
-<li>将Class加载到JVM中</li>
-<li>负责审查每个类应该由谁来加载（父优先等级加载机制）</li>
-<li>将Class字节码重新解析成JVM统一要求的对象格式</li>
-</ol>
-<h2 id="ClassLoader类结构分析"><a href="#ClassLoader类结构分析" class="headerlink" title="ClassLoader类结构分析"></a>ClassLoader类结构分析</h2><ol>
-<li>defineClass():将byte字节流解析成JVM能够识别的Class对象，通常和findClass()一起使用</li>
-<li>覆盖ClassLoader父类的findClass()来实现类的加载规则</li>
-<li>resolveClass():类被加载时就链接（Link）</li>
-</ol>
-<p>如果你不想重新定义类的加载规则，也没有复杂的逻辑处理，只想运行时加载一个自己指定的类</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">this.getClass().getClassLoader().loadClass(&apos;class&apos;)//这个loadClass()有重载方法，同样可以决定在什么时候解析这个类</div></pre></td></tr></table></figure>
-<p>ClassLoader是一个抽象类，如果我们想实现自己的ClassLoader的话，通常会继承URLClassLoader这个子类，因为这个类已经帮我们实现了大部分工作，我们只需要在适当的地方修改即可</p>
-<h2 id="ClassLoader的等级加载机制"><a href="#ClassLoader的等级加载机制" class="headerlink" title="ClassLoader的等级加载机制"></a>ClassLoader的等级加载机制</h2><p>上级委托机制</p>
-<blockquote>
-<p>整个JVM提供三层ClassLoader，这三层可以分为两种类型，可以理解为为接待室服务的接待室和为会员服务的接待室</p>
-<ol>
-<li>Bootstrap这个ClassLoader是接待室服务自身的，它主要加载JVM自身工作需要的类，这个ClassLoader完全有JVM自己控制的，需要加载哪个类，怎么加载都是由JVM自己控制，别人访问不到，没有父加载器，也没有子加载器</li>
-<li>ExtClassLoader 它是JVM自身的一部分，我们可以理解为这个类加载器是那些与这个大会合作单位的员工会员，既不是JVM内部的，也和普通的外部会员不同，它的服务的特定目标在System.getProperty(java.ext.dirs)目录</li>
-<li>AppClassLoader 父类是ExtClassLoader，所有在System.getProperty(“java.class.path”)目录下的类都可以由这个类加载器来加载，这个目录就是我们经常用到的classpath</li>
-</ol>
-</blockquote>
-<p>如果我们自己实现类加载器，getSystemClassLoader()作为父加载器获取到的都是AppClassLoader</p>
-<p>ClassLoader的类层次图</p>
-<p>JVM加载class文件有两种方式</p>
-<ol>
-<li>隐式加载：JVM自动加载需要的类到内存中，例如继承或引用某个类时，当这个类不在内存中的时候，jvm会自动将其加载到内存中</li>
-<li>显示加载：调用ClassLoader类加载一个类的方式</li>
-</ol>
-<h2 id="如何加载class文件"><a href="#如何加载class文件" class="headerlink" title="如何加载class文件"></a>如何加载class文件</h2><ol>
-<li>找到.class文件，并把这个文件包含的字节码加载到内存中</li>
-<li>第二阶段可以分为3步<ol>
-<li>字节码验证</li>
-<li>Class类数据结构分析以及相应的内存分配</li>
-<li>符号表的链接</li>
-</ol>
-</li>
-<li>类中静态属性和初始化的赋值，以及静态块的执行</li>
-</ol>
-<h3 id="加载字节码到内存"><a href="#加载字节码到内存" class="headerlink" title="加载字节码到内存"></a>加载字节码到内存</h3><p>以URLClassLoader为例：<br>在URLClassLoader的findClass()中：<br>URLClassPath：定义了去哪里找这个Class文件<br>如果找到这个class文件，在读取它的byte字节流，通过调用defineClass()方法创建类对象</p>
-<p>ClassLoader类型的参数形式</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">Bootstrap ClassLoader：</div><div class="line">     -Xbootclasspath: //设置Bootstrap ClassLoader的搜索路径</div><div class="line">     -Xbootclasspath/a: //把路径添加到已存在Bootstrap ClassLoader搜索路径后面</div><div class="line">     -Xbootclasspath/p: // 同上 前面</div><div class="line">ExtClassLoader:</div><div class="line">     -Djava.ext.dirs //设置ExtClassLoader的搜索路径</div><div class="line">AppClassLoader</div><div class="line">     -Djava.class.path= -cp或-classpath // 设置AppClassLoader的搜索路径</div></pre></td></tr></table></figure>
-<h3 id="验证与解析"><a href="#验证与解析" class="headerlink" title="验证与解析"></a>验证与解析</h3><ol>
-<li>字节码验证：确保格式行为正确</li>
-<li>类准备：类中定义的字段、方法和实现接口所比需的数据结构</li>
-<li>装入类所引用的其他类，如超类、接口、字段、方法签名</li>
-</ol>
-<h3 id="初始化Class对象"><a href="#初始化Class对象" class="headerlink" title="初始化Class对象"></a>初始化Class对象</h3><p>类中包含的静态初始器都被执行，在这个阶段末尾，静态字段被初始化为默认值</p>
-<h2 id="常见加载类错误分析"><a href="#常见加载类错误分析" class="headerlink" title="常见加载类错误分析"></a>常见加载类错误分析</h2><h3 id="ClassNotFoundException"><a href="#ClassNotFoundException" class="headerlink" title="ClassNotFoundException"></a>ClassNotFoundException</h3><p>通常发生在显示加载类的时候</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">public class NotFountException&#123;</div><div class="line">    public static void main(String [] args)&#123;</div><div class="line">     try&#123;</div><div class="line">        Class.forName(&quot;notFoundClass&quot;);</div><div class="line">     &#125;catch(ClassNotFoundException)</div><div class="line">         e.printStackTrace();</div><div class="line">     &#125; </div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>显示加载一个类通常有如下方法</p>
-<ul>
-<li>通过类Class中的forName()方法</li>
-<li>通过类ClassLoader中的loadClass()方法</li>
-<li>通过类ClassLoader中的findSystemClass()方法</li>
-</ul>
-<p>可以通过如下命令获取claspath路径</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">this.getClass().getClassLoader().getResource(&quot;&quot;).toString();</div></pre></td></tr></table></figure>
-<h3 id="NoClassDefFoundError"><a href="#NoClassDefFoundError" class="headerlink" title="NoClassDefFoundError"></a>NoClassDefFoundError</h3><p>这个异常在第一次使用命令行执行Java类时，可能会碰到<br>例如</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">java -cp example.jar Example</div></pre></td></tr></table></figure>
-<p>这是因为你的命令行中没有加类的包名</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">java -cp example.jar net.xulingbo.Example</div><div class="line">``` </div><div class="line"></div><div class="line">解决这个方法就是确保每个类引用的类都在当前的classPath下面</div><div class="line"></div><div class="line">### UnsatisfiedLinkError</div><div class="line">如果不小心将在JVM中的某个lib删除了，就可能报这个错误了</div><div class="line"></div><div class="line">### ClassCastException</div><div class="line"></div><div class="line">* 对于普通对象，对象必须是目标类的实例或者其子类的实例，如果目标类是接口，那么会把它当做是实现了该接口的一个子类</div><div class="line">* 对于数组类型，目标类必须是数组类型或java.lang.Object、java.lang.Cloneable、java.io.Serializable</div><div class="line"></div><div class="line">避免的方式</div><div class="line"></div><div class="line">* 显示指明这个容器所包含的对象类型</div><div class="line">* 先同过instanceof检测是不是目标类型，然后再进行强制类型转换</div><div class="line"></div><div class="line">### ExceptionInInitializerError</div><div class="line"></div><div class="line">* 如果JVM在创建实例的时候因为Out-Of-Memory-Error而无法创建新实例，那么就抛出OutOfMemoryError对象作为代替</div><div class="line">* 如果初始化器抛出一些Exception，如果这个Exception不是Error或者是它的子类，则创建ExceptionInInitializerError类的一个新的实例，并用Exception作为参数，用这个实例代替Exception</div><div class="line"></div><div class="line">## 常用的ClassLoader分析</div></pre></td></tr></table></figure>
-<p>// todo<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">## 如何实现自己的ClassLoader</div><div class="line"></div><div class="line">### 加载自定义路径下的class文件</div><div class="line">1. 继承ClassLoader实现</div></pre></td></tr></table></figure></p>
-<p>public class PathClassLoader extends ClassLoader{<br>    private String classpath;<br>    private String packageName; // 包名</p>
-<pre><code>public PathClassLoader(String classpath){
-    this.classpath = classpath;
-}
-
-protected Class&lt;?&gt; findClass(String name) throws ClassNotFoundException{
-    if(packageName.startsWith(name)){
-        byte[] classData = getData(name);
-        if(classData == null){
-            throw new ClassNotFoundException();
-        }else {
-            return defineClass(name, classData, 0, classData.length);
-        }
-    }else {
-        return super.loadClass(name);
-    }
-}
-
-private byte[] getData(String className){
-    String path = classpath + File.separatorChar + className.replace(&apos;.&apos;, File.separatorChar)+&quot;.class&quot;;
-    try {
-        InputStream is = new FileInputStream(path);
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        byte[] buffer = new byte[2048];
-        int num = 0;
-        while ((num = is.read(buffer)) != -1){
-            stream.write(buffer, 0, num);
-        }
-        return stream.toByteArray();
-
-    }catch (IOException e){
-        e.printStackTrace();
-    }
-    return null;
-}
-</code></pre><p>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">其中，packageName就是你要自定义加载的包名，如果不是该包下的，还用父类加载器加载</div><div class="line"></div><div class="line">2. 继承URLClassLoader类，这个是常用方式</div></pre></td></tr></table></figure></p>
-<p>public class URLPathClassLoader extends URLClassLoader{</p>
-<pre><code>private String packageName = &quot;&quot;;
-
-// 该父类没有默认的构造方法
-public URLPathClassLoader(URL[] classPath, ClassLoader parent){
-    super(classPath, parent);
-}
-@Override
-protected Class&lt;?&gt; findClass(String name) throws ClassNotFoundException {
-    Class&lt;?&gt; aClass = findLoadedClass(name);
-    if(aClass != null){
-        return aClass;
-    }
-    if(!packageName.startsWith(name)){
-        return super.loadClass(name);
-    }else {
-        return findClass(name); //递归  不太明白?
-    }
-}
-</code></pre><p>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">我们将指定目录化成URL路径，然后作为参数创建URLPathClassLoader对象，就会在URL指定的目录下查找指定的类文件</div><div class="line"></div><div class="line">### 加载自定义格式的class文件（将class文件加密）</div></pre></td></tr></table></figure></p>
-<p>public class NetClassLoader extends ClassLoader {<br>    private String classpath;<br>    private String packageName; // 包名</p>
-<pre><code>public NetClassLoader(String classpath){
-    this.classpath = classpath;
-}
-
-protected Class&lt;?&gt; findClass(String name) throws ClassNotFoundException {
-    Class&lt;?&gt; aClass = findLoadedClass(name);
-    if(aClass != null){
-        return aClass;
-    }
-    if(!packageName.startsWith(name)){
-        byte[] classData = getData(name);
-        if(classData == null){
-            throw new ClassNotFoundException();
-        }else {
-            return defineClass(name, classData, 0, classData.length);
-        }
-    }else {
-        return super.loadClass(name);
-    }
-}
-
-private byte[] getData(String className){
-    String path = classpath + File.separatorChar + className.replace(&apos;.&apos;, File.separatorChar)+&quot;.class&quot;;
-    try {
-        InputStream is = new FileInputStream(path);
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        byte[] buffer = new byte[2048];
-        int num = 0;
-        while ((num = is.read(buffer)) != -1){
-            deCode(buffer); //将解码以后的buffer写到输出流中
-            stream.write(buffer, 0, num);
-        }
-        return stream.toByteArray();
-
-    }catch (IOException e){
-        e.printStackTrace();
-    }
-    return null;
-}
-
-private byte[] deCode(byte[] src){
-    byte[] decode = null;
-    // TODO: 解码业务逻辑
-    return decode;
-}
-</code></pre><p>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">### 实现类的热部署</div><div class="line"></div><div class="line">JVM 表示一个类是否是同一个类会有两个条件</div><div class="line"></div><div class="line">1. 类的完整类名是否一样</div><div class="line">2. 加载这个类的ClassLoader是否是一同一个</div></pre></td></tr></table></figure></p>
-<p>public class ClassReloader extends ClassLoader {<br>    private String classpath;<br>    private String className = “com.etan.list.Question1”; // 类名</p>
-<pre><code>public ClassReloader(String classpath) {
-    this.classpath = classpath;
-}
-
-protected Class&lt;?&gt; findClass(String name) throws ClassNotFoundException {
-    byte[] classData = getData(name);
-    if (classData == null) {
-        throw new ClassNotFoundException();
-    } else {
-        return defineClass(className, classData, 0, classData.length);
-    }
-
-}
-
-private byte[] getData(String className) {
-    String path = classpath + className;
-    try {
-        InputStream is = new FileInputStream(path);
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        byte[] buffer = new byte[2048];
-        int num = 0;
-        while ((num = is.read(buffer)) != -1) {
-            stream.write(buffer, 0, num);
-        }
-        return stream.toByteArray();
-
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
-    return null;
-}
-
-public static void main(String[] args){
-    try{
-        String path = &quot;/Users/YT/develop/interview_questions/out/production/interview_questions/com/etan/list/&quot;;
-        ClassReloader reloader = new ClassReloader(path);
-        Class r = reloader.findClass(&quot;Question1.class&quot;);
-        System.out.println(r.newInstance());
-        ClassReloader reloader2 = new ClassReloader(path);
-        Class r2 = reloader2.findClass(&quot;Question1.class&quot;);
-        System.out.println(r2.newInstance());
-    }catch (Exception e){
-        e.printStackTrace();
-    }
-}
-</code></pre><p>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">刚开始写的时候，没有加e.printStackTrace(),将一个default（权限）的class放入加载器，之后在r.newInstance()以后，就无法执行了，也不抛异常（傻了不是），最后在debug中找到是IllegalAccessException异常</div><div class="line">这里配一张权限表</div><div class="line">![屏幕快照 2018-04-08 下午4.24.56](media/15229986044234/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202018-04-08%20%E4%B8%8B%E5%8D%884.24.56.png)</div><div class="line">由于我在不同的包下访问的，所以这里没有权限，后来使用public class，就可以了</div></pre></td></tr></table></figure></p>
-<p>com.XXX.list.Question1@60e53b93<br>com.XXX.list.Question1@266474c2<br>```<br>需要注意的是：</p>
-<blockquote>
-<p>被这个ClassLoader加载的类的字节码会保持在JVM的permGen区，这个数据一般只是在执行full GC时才会被回收，如果你的应用中有大量的动态类加载，Full GC又不是太频繁，需要注意PermGen区的大小</p>
-</blockquote>
-<h2 id="java应不应该动态加载对象"><a href="#java应不应该动态加载对象" class="headerlink" title="java应不应该动态加载对象"></a>java应不应该动态加载对象</h2><p>对象的引用关系只有对象的创建者持有和使用，JVM不可以干预对象的引用关系，因为JVM并不知道对象是子母被使用的</p>
-<blockquote>
-<p>不能动态的提供类对象的关键是，对象的状态被保存了，并且被其他对象引用了，一个简单的办法就是不保存对象的状态，对象被创建使用后就被释放掉，下次修改后，对象也是新的了</p>
-</blockquote>
-<hr>
-<blockquote>
-<p><strong><em>做一个有文艺气息的码农 ^ _ ^</em></strong></p>
-</blockquote>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2344,7 +2357,7 @@ public static void main(String[] args){
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">77</span>
+                <span class="site-state-item-count">80</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
