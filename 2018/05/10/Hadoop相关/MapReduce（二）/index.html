@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hadoop相关," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="EWSUN" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="MapReduce（二）流量统计相关需求 自定义javaBean用来在mapreduce中充当value，注意 javaBean要实现Writable接口，实现两个方法write 和 readFields 统计流量且按照流量大小倒序排序：需要两个mapreduce-job,第一个负责流量统计，第二个读入第一个job的输出，然后做排序，flowBean要实现接口WritableComparable">
+<meta name="keywords" content="Hadoop相关">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MapReduce（二）">
+<meta property="og:url" content="http://yoursite.com/2018/05/10/Hadoop相关/MapReduce（二）/index.html">
+<meta property="og:site_name" content="EWSUN">
+<meta property="og:description" content="MapReduce（二）流量统计相关需求 自定义javaBean用来在mapreduce中充当value，注意 javaBean要实现Writable接口，实现两个方法write 和 readFields 统计流量且按照流量大小倒序排序：需要两个mapreduce-job,第一个负责流量统计，第二个读入第一个job的输出，然后做排序，flowBean要实现接口WritableComparable">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-05-10T12:45:24.225Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MapReduce（二）">
+<meta name="twitter:description" content="MapReduce（二）流量统计相关需求 自定义javaBean用来在mapreduce中充当value，注意 javaBean要实现Writable接口，实现两个方法write 和 readFields 统计流量且按照流量大小倒序排序：需要两个mapreduce-job,第一个负责流量统计，第二个读入第一个job的输出，然后做排序，flowBean要实现接口WritableComparable">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/05/10/Hadoop相关/MapReduce（二）/"/>
+
+
+
+
+
+  <title>MapReduce（二） | EWSUN</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">EWSUN</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-schedule">
+          <a href="/schedule/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br />
+            
+            日程表
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/10/Hadoop相关/MapReduce（二）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EtanWatson">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EWSUN">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">MapReduce（二）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-10T16:15:02+08:00">
+                2018-05-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Hadoop相关/" itemprop="url" rel="index">
+                    <span itemprop="name">Hadoop相关</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="MapReduce（二）"><a href="#MapReduce（二）" class="headerlink" title="MapReduce（二）"></a>MapReduce（二）</h1><h2 id="流量统计相关需求"><a href="#流量统计相关需求" class="headerlink" title="流量统计相关需求"></a>流量统计相关需求</h2><ul>
+<li>自定义javaBean用来在mapreduce中充当value，注意 javaBean要实现Writable接口，实现两个方法<strong>write</strong> 和 <strong>readFields</strong></li>
+<li>统计流量且按照流量大小倒序排序：需要两个mapreduce-job,第一个负责流量统计，第二个读入第一个job的输出，然后做排序，flowBean要实现接口WritableComparable</li>
+<li>统计流量按照手机号码的归属地，将结果数据输出到不同省分文件中：自定义Partitioner</li>
+</ul>
+<h2 id="社交分数数据分析"><a href="#社交分数数据分析" class="headerlink" title="社交分数数据分析"></a>社交分数数据分析</h2><ul>
+<li>求出哪些人两两之间有共同好友，及他俩的共同好友都有谁？</li>
+<li>求互粉的人</li>
+</ul>
+<h2 id="倒排索引的建立"><a href="#倒排索引的建立" class="headerlink" title="倒排索引的建立"></a>倒排索引的建立</h2><blockquote>
+<p>需求：有大量的文本（文档，网页），需要建立搜索索引</p>
+</blockquote>
+<h3 id="小文件的优化"><a href="#小文件的优化" class="headerlink" title="小文件的优化"></a>小文件的优化</h3><ul>
+<li>在数据采集的时候，就将小文件或小批数据合成大文件再上传HDFS</li>
+<li>在业务处理之前，在HDFS上使用mapreduce程序对小文件进行合并</li>
+<li>在mapreduce处理时，可以采用combineInputFormat提高效率</li>
+</ul>
+<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><ul>
+<li>自定义一个InputFormat，改写RecordReader，实现一次读取一个完整文件封装为KV，在输出时使用SequenceFileOutPutFormat输出合并文件</li>
+<li>自定义outputFormat，改写其中的RecordWriter，改写具体输出数据的方法write(),在mapreduce中访问外部资源</li>
+</ul>
+<h2 id="自定义GroupingComparator"><a href="#自定义GroupingComparator" class="headerlink" title="自定义GroupingComparator"></a>自定义GroupingComparator</h2><blockquote>
+<p>需求 求每个订单中成交金额最大的一笔交易</p>
+</blockquote>
+<h3 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h3><ul>
+<li>利用”订单id和成交金额”作为key，可以将map阶段读取到的所有订单数据按照id分区，按照金额排序，发送到reduce</li>
+<li>在reduce端利用groupingcomparator将订单id相同的kv聚合成组，然后取第一个即是最大值</li>
+</ul>
+<h3 id="实现-1"><a href="#实现-1" class="headerlink" title="实现"></a>实现</h3><ul>
+<li><p>自定义groupingComparator</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">public class ItemidGroupingComparator extends WritableComparator&#123;&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>定义订单信息bean</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">public class OrderBean implements WritableComparable&lt;OrderBean&gt;&#123;&#125;</div></pre></td></tr></table></figure>
+<h2 id="Mapreduce中的DistributedCache应用"><a href="#Mapreduce中的DistributedCache应用" class="headerlink" title="Mapreduce中的DistributedCache应用"></a>Mapreduce中的DistributedCache应用</h2><blockquote>
+<p>需求：实现两个“表”的join操作，其中一个表数据量小，一个表数据量很大</p>
+</blockquote>
+<h3 id="分析-1"><a href="#分析-1" class="headerlink" title="分析"></a>分析</h3><ul>
+<li>可以将小表分发到私有的map节点，从而每个maptask节点可以从本地加载到小表的数据，进而在本地即可实现join</li>
+</ul>
+<h3 id="实现-2"><a href="#实现-2" class="headerlink" title="实现"></a>实现</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">public class TestDistributedCache&#123;</div><div class="line"> static class TestDistributedCacheMapper extends Mapper&lt;LongWritable, Text, Text, Text&gt;&#123;</div><div class="line"> &#125;    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="Mapreduce-的其他补充"><a href="#Mapreduce-的其他补充" class="headerlink" title="Mapreduce 的其他补充"></a>Mapreduce 的其他补充</h2><h3 id="计数器应用"><a href="#计数器应用" class="headerlink" title="计数器应用"></a>计数器应用</h3><blockquote>
+<p>如果将不合规数据进行全局计数，类似这种需求可以借助mapreduce框架中提供的全局计数器来实现</p>
+</blockquote>
+<h4 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">public class MultiOutputs &#123;</div><div class="line">  //通过枚举形式定义自定义计数器</div><div class="line">  enum MyCounter&#123;MALFORORMED,NORMAL&#125;</div><div class="line"></div><div class="line">  static class CommaMapper extends Mapper&lt;LongWritable, Text, Text, LongWritable&gt; &#123;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException &#123;</div><div class="line"></div><div class="line">      String[] words = value.toString().split(&quot;,&quot;);</div><div class="line"></div><div class="line">      for (String word : words) &#123;</div><div class="line">        context.write(new Text(word), new LongWritable(1));</div><div class="line">      &#125;</div><div class="line">      //对枚举定义的自定义计数器加1</div><div class="line">      context.getCounter(MyCounter.MALFORORMED).increment(1);</div><div class="line">      //通过动态设置自定义计数器加1</div><div class="line">      context.getCounter(&quot;counterGroupa&quot;, &quot;countera&quot;).increment(1);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<h3 id="多job串联"><a href="#多job串联" class="headerlink" title="多job串联"></a>多job串联</h3><blockquote>
+<p>当处理逻辑需要多个mapreduce程序串联处理，多job的串联可以借助mapreduce框架的jobControl实现</p>
+</blockquote>
+<h4 id="代码实现-1"><a href="#代码实现-1" class="headerlink" title="代码实现"></a>代码实现</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">ControlledJob cJob1 = new ControlledJob(job1.getConfiguration());</div><div class="line">ControlledJob cJob2 = new ControlledJob(job2.getConfiguration());</div><div class="line">ControlledJob cJob3 = new ControlledJob(job3.getConfiguration());</div><div class="line"></div><div class="line">// 设置作业依赖关系</div><div class="line">cJob2.addDependingJob(cJob1);</div><div class="line">cJob3.addDependingJob(cJob2);</div><div class="line"></div><div class="line">JobControl jobControl = new JobControl(&quot;RecommendationJob&quot;);</div><div class="line">jobControl.addJob(cJob1);</div><div class="line">jobControl.addJob(cJob2);</div><div class="line">jobControl.addJob(cJob3);</div><div class="line"></div><div class="line">cJob1.setJob(job1);</div><div class="line">cJob2.setJob(job2);</div><div class="line">cJob3.setJob(job3);</div><div class="line"></div><div class="line">// 新建一个线程来运行已加入JobControl中的作业，开始进程并等待结束</div><div class="line">Thread jobControlThread = new Thread(jobControl);</div><div class="line">jobControlThread.start();</div><div class="line">while (!jobControl.allFinished()) &#123;</div><div class="line">    Thread.sleep(500);</div><div class="line">&#125;</div><div class="line">jobControl.stop();</div><div class="line"></div><div class="line">return 0;</div></pre></td></tr></table></figure>
+<h2 id="mapreduce参数优化"><a href="#mapreduce参数优化" class="headerlink" title="mapreduce参数优化"></a>mapreduce参数优化</h2><h3 id="资源相关参数"><a href="#资源相关参数" class="headerlink" title="资源相关参数"></a>资源相关参数</h3><ul>
+<li>mapreduce.map.memory.mb: 一个Map Task可使用的资源上限（单位:MB），默认为1024。如果Map Task实际使用的资源量超过该值，则会被强制杀死。</li>
+<li>mapreduce.reduce.memory.mb: 一个Reduce Task可使用的资源上限（单位:MB），默认为1024。如果Reduce Task实际使用的资源量超过该值，则会被强制杀死。</li>
+<li>mapreduce.map.java.opts: Map Task的JVM参数，你可以在此配置默认的java heap size等参数, e.g. “-Xmx1024m -verbose:gc -Xloggc:/tmp/@taskid@.gc” （@taskid@会被Hadoop框架自动换为相应的taskid）, 默认值: “”</li>
+<li>mapreduce.reduce.java.opts: Reduce Task的JVM参数，你可以在此配置默认的java heap size等参数, e.g.”-Xmx1024m -verbose:gc -Xloggc:/tmp/@taskid@.gc”, 默认值: “”</li>
+<li>mapreduce.map.cpu.vcores: 每个Map task可使用的最多cpu core数目, 默认值: 1</li>
+<li>mapreduce.map.cpu.vcores: 每个Reduce task可使用的最多cpu core数目, 默认值: 1</li>
+</ul>
+<h3 id="容错相关参数"><a href="#容错相关参数" class="headerlink" title="容错相关参数"></a>容错相关参数</h3><ul>
+<li>mapreduce.map.maxattempts: 每个Map Task最大重试次数，一旦重试参数超过该值，则认为Map Task运行失败，默认值：4。</li>
+<li>mapreduce.reduce.maxattempts: 每个Reduce Task最大重试次数，一旦重试参数超过该值，则认为Map Task运行失败，默认值：4。</li>
+<li>mapreduce.map.failures.maxpercent: 当失败的Map Task失败比例超过该值为，整个作业则失败，默认值为0. 如果你的应用程序允许丢弃部分输入数据，则该该值设为一个大于0的值，比如5，表示如果有低于5%的Map Task失败（如果一个Map Task重试次数超过mapreduce.map.maxattempts，则认为这个Map Task失败，其对应的输入数据将不会产生任何结果），整个作业扔认为成功。</li>
+<li>mapreduce.reduce.failures.maxpercent: 当失败的Reduce Task失败比例超过该值为，整个作业则失败，默认值为0.</li>
+<li>mapreduce.task.timeout: Task超时时间，经常需要设置的一个参数，该参数表达的意思为：如果一个task在一定时间内没有任何进入，即不会读取新的数据，也没有输出数据，则认为该task处于block状态，可能是卡住了，也许永远会卡主，为了防止因为用户程序永远block住不退出，则强制设置了一个该超时时间（单位毫秒），默认是300000。如果你的程序对每条输入数据的处理时间过长（比如会访问数据库，通过网络拉取数据等），建议将该参数调大，该参数过小常出现的错误提示是”AttemptID:attempt_14267829456721_123456_m_000224_0 Timed out after 300 secsContainer killed by the ApplicationMaster.”。</li>
+</ul>
+<h3 id="本地运行mapreduce作业"><a href="#本地运行mapreduce作业" class="headerlink" title="本地运行mapreduce作业"></a>本地运行mapreduce作业</h3><ul>
+<li>mapreduce.framework.name=local</li>
+<li>mapreduce.jobtracker.address=local</li>
+<li>fs.defaultFS=local</li>
+</ul>
+<h3 id="效率和稳定性相关参数"><a href="#效率和稳定性相关参数" class="headerlink" title="效率和稳定性相关参数"></a>效率和稳定性相关参数</h3><ul>
+<li>mapreduce.map.speculative: 是否为Map Task打开推测执行机制，默认为false</li>
+<li>mapreduce.reduce.speculative: 是否为Reduce Task打开推测执行机制，默认为false</li>
+<li>mapreduce.job.user.classpath.first &amp; mapreduce.task.classpath.user.precedence：当同一个class同时出现在用户jar包和hadoop jar中时，优先使用哪个jar包中的class，默认为false，表示优先使用hadoop jar中的class。</li>
+<li>mapreduce.input.fileinputformat.split.minsize: 每个Map Task处理的数据量（仅针对基于文件的Inputformat有效，比如TextInputFormat，SequenceFileInputFormat），默认为一个block大小，即 134217728。</li>
+</ul>
+<h3 id="job-提交形成的资源文件"><a href="#job-提交形成的资源文件" class="headerlink" title="job 提交形成的资源文件"></a>job 提交形成的资源文件</h3><ul>
+<li>job.split</li>
+<li>job.splittemtainfo</li>
+<li>job.xml</li>
+</ul>
+<h3 id="mapreduce程序开发的一些总结"><a href="#mapreduce程序开发的一些总结" class="headerlink" title="mapreduce程序开发的一些总结"></a>mapreduce程序开发的一些总结</h3><h4 id="输入数据接口"><a href="#输入数据接口" class="headerlink" title="输入数据接口"></a>输入数据接口</h4><ul>
+<li>InputFormat</li>
+<li>FileInputFormat（文件类型数据读取的通用抽象类）</li>
+<li>DBInputFormat（数据库读取的通用抽象类）</li>
+<li>默认实现类是：TextInputFormat: job.setInputFormatClass(TextInputFormat.class) TextInputFormat的功能逻辑是：一次读一行文本，然后将改行的起始偏移量作为key，行内容作为value返回</li>
+</ul>
+<h4 id="逻辑处理接口：Mapper"><a href="#逻辑处理接口：Mapper" class="headerlink" title="逻辑处理接口：Mapper"></a>逻辑处理接口：Mapper</h4><p>完全需要用户自己去实现其中 map() setup() clean()</p>
+<h4 id="Map输出的结果在shuffle阶段"><a href="#Map输出的结果在shuffle阶段" class="headerlink" title="Map输出的结果在shuffle阶段"></a>Map输出的结果在shuffle阶段</h4><ul>
+<li>Partitioner 有默认实现HashPartitioner。逻辑是根据key和numReduces返回一个分区号：key.hashCode()&amp;Integer.MAXVALUE % numReduces 通常情况下，用默认的这个HashPartitioner就可以，如果业务上有特别的需求，可以自定义.</li>
+<li>Comparable 当我们用自定义的对象作为key来输出时，就必须要实现WritableComparable接口，override其中的compareTo()方法</li>
+</ul>
+<h4 id="reduce端的数据分组比较接口：Groupingcomparator"><a href="#reduce端的数据分组比较接口：Groupingcomparator" class="headerlink" title="reduce端的数据分组比较接口：Groupingcomparator"></a>reduce端的数据分组比较接口：Groupingcomparator</h4><ul>
+<li><p>reduceTask拿到输入数据（一个partition的所有数据）后，首先需要对数据进行分组，其分组的默认原则是key相同，然后对每一组kv数据调用一次reduce()方法，并且将这一组kv中的第一个kv的key作为参数传给reduce的key，将这一组数据的value的迭代器传给reduce()的values参数</p>
+</li>
+<li><p>利用上述这个机制，我们可以实现一个高效的分组取最大值的逻辑：自定义一个bean对象用来封装我们的数据，然后改写其compareTo方法产生倒序排序的效果，然后自定义一个Groupingcomparator，将bean对象的分组逻辑改成按照我们的业务分组id来分组（比如订单号）这样，我们要取的最大值就是reduce()方法中传进来key</p>
+</li>
+</ul>
+<h4 id="逻辑处理接口：Reducer"><a href="#逻辑处理接口：Reducer" class="headerlink" title="逻辑处理接口：Reducer"></a>逻辑处理接口：Reducer</h4><ul>
+<li>完全需要用户自己去实现其中  reduce()   setup()   clean() </li>
+</ul>
+<h4 id="输出数据接口："><a href="#输出数据接口：" class="headerlink" title="输出数据接口："></a>输出数据接口：</h4><ul>
+<li>OutputFormat  —&gt; 有一系列子类  FileOutputformat  DBoutputFormat  …..</li>
+<li>默认实现类是TextOutputFormat，功能逻辑是：  将每一个KV对向目标文本文件中输出为一行</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Hadoop相关/" rel="tag"># Hadoop相关</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/10/Hadoop相关/MapReduce（一）/" rel="next" title="MapReduce（一）">
+                <i class="fa fa-chevron-left"></i> MapReduce（一）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/10/Hadoop相关/hadoop高可用 /" rel="prev" title="hadoop高可用">
+                hadoop高可用 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          
+            <img class="site-author-image" itemprop="image"
+              src="/images/header.png"
+              alt="EtanWatson" />
+          
+            <p class="site-author-name" itemprop="name">EtanWatson</p>
+            <p class="site-description motion-element" itemprop="description">有所舍，有所爱，做一个感性的码农</p>
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives/">
+            
+                <span class="site-state-item-count">93</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#MapReduce（二）"><span class="nav-number">1.</span> <span class="nav-text">MapReduce（二）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#流量统计相关需求"><span class="nav-number">1.1.</span> <span class="nav-text">流量统计相关需求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#社交分数数据分析"><span class="nav-number">1.2.</span> <span class="nav-text">社交分数数据分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#倒排索引的建立"><span class="nav-number">1.3.</span> <span class="nav-text">倒排索引的建立</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#小文件的优化"><span class="nav-number">1.3.1.</span> <span class="nav-text">小文件的优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现"><span class="nav-number">1.3.2.</span> <span class="nav-text">实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义GroupingComparator"><span class="nav-number">1.4.</span> <span class="nav-text">自定义GroupingComparator</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#分析"><span class="nav-number">1.4.1.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现-1"><span class="nav-number">1.4.2.</span> <span class="nav-text">实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mapreduce中的DistributedCache应用"><span class="nav-number">1.5.</span> <span class="nav-text">Mapreduce中的DistributedCache应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#分析-1"><span class="nav-number">1.5.1.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现-2"><span class="nav-number">1.5.2.</span> <span class="nav-text">实现</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mapreduce-的其他补充"><span class="nav-number">1.6.</span> <span class="nav-text">Mapreduce 的其他补充</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#计数器应用"><span class="nav-number">1.6.1.</span> <span class="nav-text">计数器应用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#代码实现"><span class="nav-number">1.6.1.1.</span> <span class="nav-text">代码实现</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多job串联"><span class="nav-number">1.6.2.</span> <span class="nav-text">多job串联</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#代码实现-1"><span class="nav-number">1.6.2.1.</span> <span class="nav-text">代码实现</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mapreduce参数优化"><span class="nav-number">1.7.</span> <span class="nav-text">mapreduce参数优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#资源相关参数"><span class="nav-number">1.7.1.</span> <span class="nav-text">资源相关参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#容错相关参数"><span class="nav-number">1.7.2.</span> <span class="nav-text">容错相关参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#本地运行mapreduce作业"><span class="nav-number">1.7.3.</span> <span class="nav-text">本地运行mapreduce作业</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#效率和稳定性相关参数"><span class="nav-number">1.7.4.</span> <span class="nav-text">效率和稳定性相关参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#job-提交形成的资源文件"><span class="nav-number">1.7.5.</span> <span class="nav-text">job 提交形成的资源文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mapreduce程序开发的一些总结"><span class="nav-number">1.7.6.</span> <span class="nav-text">mapreduce程序开发的一些总结</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#输入数据接口"><span class="nav-number">1.7.6.1.</span> <span class="nav-text">输入数据接口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#逻辑处理接口：Mapper"><span class="nav-number">1.7.6.2.</span> <span class="nav-text">逻辑处理接口：Mapper</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Map输出的结果在shuffle阶段"><span class="nav-number">1.7.6.3.</span> <span class="nav-text">Map输出的结果在shuffle阶段</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#reduce端的数据分组比较接口：Groupingcomparator"><span class="nav-number">1.7.6.4.</span> <span class="nav-text">reduce端的数据分组比较接口：Groupingcomparator</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#逻辑处理接口：Reducer"><span class="nav-number">1.7.6.5.</span> <span class="nav-text">逻辑处理接口：Reducer</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#输出数据接口："><span class="nav-number">1.7.6.6.</span> <span class="nav-text">输出数据接口：</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">EtanWatson</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.2</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hadoop相关," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="EWSUN" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="辅助系统FlumeFlume架构图简单结构图 复杂结构图 Flume的安装部署 解压 修改conf下的flume-env.sh 在里面配置JAVA_HOME 根据采集需求配置采集方案 指定采集方案配置文件  一个简单的例子 先在flume的conf目录下新建一个文件 netcat-logger.conf  123456789101112131415161718192021# 定义这个agent中各">
+<meta name="keywords" content="Hadoop相关">
+<meta property="og:type" content="article">
+<meta property="og:title" content="辅助系统">
+<meta property="og:url" content="http://yoursite.com/2018/05/14/Hadoop相关/辅助系统/index.html">
+<meta property="og:site_name" content="EWSUN">
+<meta property="og:description" content="辅助系统FlumeFlume架构图简单结构图 复杂结构图 Flume的安装部署 解压 修改conf下的flume-env.sh 在里面配置JAVA_HOME 根据采集需求配置采集方案 指定采集方案配置文件  一个简单的例子 先在flume的conf目录下新建一个文件 netcat-logger.conf  123456789101112131415161718192021# 定义这个agent中各">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/images/15263004642892.jpg">
+<meta property="og:image" content="http://yoursite.com/images/15263005855548.jpg">
+<meta property="og:updated_time" content="2018-05-18T07:23:47.674Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="辅助系统">
+<meta name="twitter:description" content="辅助系统FlumeFlume架构图简单结构图 复杂结构图 Flume的安装部署 解压 修改conf下的flume-env.sh 在里面配置JAVA_HOME 根据采集需求配置采集方案 指定采集方案配置文件  一个简单的例子 先在flume的conf目录下新建一个文件 netcat-logger.conf  123456789101112131415161718192021# 定义这个agent中各">
+<meta name="twitter:image" content="http://yoursite.com/images/15263004642892.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/05/14/Hadoop相关/辅助系统/"/>
+
+
+
+
+
+  <title>辅助系统 | EWSUN</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">EWSUN</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-schedule">
+          <a href="/schedule/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br />
+            
+            日程表
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/14/Hadoop相关/辅助系统/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EtanWatson">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EWSUN">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">辅助系统</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-14T20:06:41+08:00">
+                2018-05-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Hadoop相关/" itemprop="url" rel="index">
+                    <span itemprop="name">Hadoop相关</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="辅助系统"><a href="#辅助系统" class="headerlink" title="辅助系统"></a>辅助系统</h1><h2 id="Flume"><a href="#Flume" class="headerlink" title="Flume"></a>Flume</h2><h3 id="Flume架构图"><a href="#Flume架构图" class="headerlink" title="Flume架构图"></a>Flume架构图</h3><h4 id="简单结构图"><a href="#简单结构图" class="headerlink" title="简单结构图"></a>简单结构图</h4><p><img src="/images/15263004642892.jpg" alt=""></p>
+<h4 id="复杂结构图"><a href="#复杂结构图" class="headerlink" title="复杂结构图"></a>复杂结构图</h4><p><img src="/images/15263005855548.jpg" alt=""></p>
+<h3 id="Flume的安装部署"><a href="#Flume的安装部署" class="headerlink" title="Flume的安装部署"></a>Flume的安装部署</h3><ul>
+<li>解压</li>
+<li>修改conf下的flume-env.sh 在里面配置JAVA_HOME</li>
+<li>根据采集需求配置采集方案</li>
+<li>指定采集方案配置文件</li>
+</ul>
+<h4 id="一个简单的例子"><a href="#一个简单的例子" class="headerlink" title="一个简单的例子"></a>一个简单的例子</h4><ul>
+<li>先在flume的conf目录下新建一个文件 netcat-logger.conf</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"># 定义这个agent中各组件的名字</div><div class="line">a1.sources=r1</div><div class="line">a1.sinks=k1</div><div class="line">a1.channels=c1</div><div class="line"></div><div class="line"># 描述和配置source组件：r1</div><div class="line">a1.sources.r1.type = netcat</div><div class="line">a1.sources.r1.bind = localhost</div><div class="line">a1.sources.r1.port = 44444</div><div class="line"></div><div class="line"># 描述和配置sink组件:k1</div><div class="line">a1.sinks.k1.type = logger</div><div class="line"></div><div class="line"># 描述和配置channel组件，此次使用时内存缓存的方式</div><div class="line">a1.channels.c1.type = memory</div><div class="line">a1.channels.c1.capacity = 1000</div><div class="line">a1.channels.c1.transactionCapacity = 100</div><div class="line"></div><div class="line"># 描述和配置source channel sink之间的连接关系</div><div class="line">a1.sources.r1.channels = c1</div><div class="line">a1.sinks.k1.channel = c1</div></pre></td></tr></table></figure>
+<ul>
+<li>启动agent去采集数集</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">bin/flume-ng agent -c conf -f conf/netcat-logger.conf -n a1 -Dflume.root.logger=INFO,console</div><div class="line"></div><div class="line"># -c conf 指定flume 自身的配置文件所在目录</div><div class="line"># -f conf/netcat-logger.con 指定我们所描述的采集方案</div><div class="line"># -n a1 指定我们这个agent的名字</div></pre></td></tr></table></figure>
+<h3 id="采集目录到HDFS"><a href="#采集目录到HDFS" class="headerlink" title="采集目录到HDFS"></a>采集目录到HDFS</h3><ul>
+<li>采集源 ： spooldir</li>
+<li>下沉目标，即sink ： hdfs sink</li>
+<li>channel，可用file channel 也可以用内存channel</li>
+</ul>
+<h2 id="工作流调度器azkaban"><a href="#工作流调度器azkaban" class="headerlink" title="工作流调度器azkaban"></a>工作流调度器azkaban</h2><h3 id="Azkaban安装部署"><a href="#Azkaban安装部署" class="headerlink" title="Azkaban安装部署"></a>Azkaban安装部署</h3><h4 id="azkaban-web服务器安装"><a href="#azkaban-web服务器安装" class="headerlink" title="azkaban web服务器安装"></a>azkaban web服务器安装</h4><ul>
+<li>解压</li>
+<li>mv azkaban-web-server-2.5.0  server<h4 id="azkaban-执行服务器安装"><a href="#azkaban-执行服务器安装" class="headerlink" title="azkaban 执行服务器安装"></a>azkaban 执行服务器安装</h4></li>
+<li>解压</li>
+<li>mv azkaban-executor-server-2.5.0  executor</li>
+</ul>
+<h4 id="azkaban脚本导入"><a href="#azkaban脚本导入" class="headerlink" title="azkaban脚本导入"></a>azkaban脚本导入</h4><ul>
+<li>解压</li>
+<li><p>将解压后的mysql脚本，导入到mysql中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">mysql&gt;create database azkaban;</div><div class="line">mysql&gt;use azkaban;</div><div class="line">mysql&gt;source XXX/create-all-sql-2.5.0.sql</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="创建SSL配置"><a href="#创建SSL配置" class="headerlink" title="创建SSL配置"></a>创建SSL配置</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">keytool -keystore keystore -alias jetty -genkey -keyalg RSA</div><div class="line"># 填写相关信息</div><div class="line"># 将生成keystore证书文件copy到azkaban web服务器根目录中</div><div class="line">cp keystore XXX/webserver</div></pre></td></tr></table></figure>
+<h4 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h4><ul>
+<li><p>配置服务器结点上的时区 <figure class="highlight plain"><figcaption><span>```  或者copy时区文件覆盖本地时去配置 ```cp</span><a href="/usr/share/zoneinfo/Asia/Shanghai">/etc/localtime```</a></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">##### azkban web 服务器的配置</div><div class="line">* 进入web服务器安装目录conf目录</div><div class="line">* 修改azkaban.properties</div></pre></td></tr></table></figure></p>
+<p>#Azkaban Personalization Settings<br>azkaban.name=Test                           #服务器UI名称,用于服务器上方显示的名字<br>azkaban.label=My Local Azkaban                               #描述<br>azkaban.color=#FF3601                                                 #UI颜色<br>azkaban.default.servlet.path=/index<br>web.resource.dir=web/                                       #默认根web目录<br>default.timezone.id=Asia/Shanghai                           #默认时区,已改为亚洲/上海 默认为美国</p>
+<p>#Azkaban UserManager class<br>user.manager.class=azkaban.user.XmlUserManager   #用户权限管理默认类<br>user.manager.xml.file=conf/azkaban-users.xml              #用户配置,具体配置参加下文</p>
+<p>#Loader for projects<br>executor.global.properties=conf/global.properties    # global配置文件所在位置<br>azkaban.project.dir=projects                                                #<br>database.type=mysql                                                              #数据库类型<br>mysql.port=3306                                                                       #端口号<br>mysql.host=hadoop03                                                      #数据库连接IP<br>mysql.database=azkaban                                                       #数据库实例名<br>mysql.user=root                                                                 #数据库用户名<br>mysql.password=root                                                          #数据库密码<br>mysql.numconnections=100                                                  #最大连接数</p>
+<p>#Velocity dev mode<br>velocity.dev.mode=false<br>#Jetty服务器属性.<br>jetty.maxThreads=25                                                               #最大线程数<br>jetty.ssl.port=8443                                                                   #Jetty SSL端口<br>jetty.port=8081                                                                         #Jetty端口<br>jetty.keystore=keystore                                                          #SSL文件名<br>jetty.password=123456                                                             #SSL文件密码<br>jetty.keypassword=123456                                                      #Jetty主密码 与 keystore文件相同<br>jetty.truststore=keystore                                                                #SSL文件名<br>jetty.trustpassword=123456                                                   # SSL文件密码</p>
+<p>#执行服务器属性<br>executor.port=12321                                                               #执行服务器端口</p>
+<p>#邮件设置<br>mail.sender=xxxxxxxx@163.com                                       #发送邮箱<br>mail.host=smtp.163.com                                                       #发送邮箱smtp地址<br>mail.user=xxxxxxxx                                       #发送邮件时显示的名称<br>mail.password=<strong><strong>**</strong></strong>                                                 #邮箱密码<br>job.failure.email=xxxxxxxx@163.com                              #任务失败时发送邮件的地址<br>job.success.email=xxxxxxxx@163.com                            #任务成功时发送邮件的地址<br>lockdown.create.projects=false                                           #<br>cache.directory=cache                                                            #缓存目录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">  </div><div class="line">  </div><div class="line">##### azkban 执行服务器的配置  </div><div class="line"></div><div class="line">* 修改azkaban.properties</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>#Azkaban<br>default.timezone.id=Asia/Shanghai                                              #时区</p>
+<h1 id="Azkaban-JobTypes-插件配置"><a href="#Azkaban-JobTypes-插件配置" class="headerlink" title="Azkaban JobTypes 插件配置"></a>Azkaban JobTypes 插件配置</h1><p>azkaban.jobtype.plugin.dir=plugins/jobtypes                   #jobtype 插件所在位置</p>
+<p>#Loader for projects<br>executor.global.properties=conf/global.properties<br>azkaban.project.dir=projects</p>
+<p>#数据库设置<br>database.type=mysql                                                                       #数据库类型(目前只支持mysql)<br>mysql.port=3306                                                                                #数据库端口号<br>mysql.host=192.168.20.200                                                           #数据库IP地址<br>mysql.database=azkaban                                                                #数据库实例名<br>mysql.user=azkaban                                                                         #数据库用户名<br>mysql.password=oracle                                                                   #数据库密码<br>mysql.numconnections=100                                                           #最大连接数</p>
+<h1 id="执行服务器配置"><a href="#执行服务器配置" class="headerlink" title="执行服务器配置"></a>执行服务器配置</h1><p>executor.maxThreads=50                                                                #最大线程数<br>executor.port=12321                                                               #端口号(如修改,请与web服务中一致)<br>executor.flow.threads=30                                                                #线程数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">##### 用户配置</div><div class="line">修改azkaban-users.xml</div></pre></td></tr></table></figure>
+<p><azkaban-users><br>        <user username="azkaban" password="azkaban" roles="admin" groups="azkaban"><br>        <user username="metrics" password="metrics" roles="metrics"><br>        <user username="admin" password="admin" roles="admin,metrics"><br>        <role name="admin" permissions="ADMIN"><br>        <role name="metrics" permissions="METRICS"><br></role></role></user></user></user></azkaban-users></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">#### 启动</div><div class="line">##### web服务器</div></pre></td></tr></table></figure>
+<p>bin/azkaban-web-stat.sh</p>
+<h1 id="无法加载主类，未解决"><a href="#无法加载主类，未解决" class="headerlink" title="无法加载主类，未解决"></a>无法加载主类，未解决</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">##### 启动执行器</div></pre></td></tr></table></figure>
+<p>bin/azkaban-executor-start.sh</p>
+<h1 id="无法加载主类，为解决"><a href="#无法加载主类，为解决" class="headerlink" title="无法加载主类，为解决"></a>无法加载主类，为解决</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div><div class="line">## Sqoop的数据迁移</div><div class="line">### 配置安装</div><div class="line">* 下载解压</div><div class="line">* 修改配置文件</div></pre></td></tr></table></figure>
+<p>  $ cd $SQOOP_HOME/conf<br>  $ mv sqoop-env-template.sh sqoop-env.sh</p>
+<p>  #打开sqoop-env.sh并编辑下面几行：<br>  export HADOOP_COMMON_HOME=/home/hadoop/apps/hadoop-2.6.1/<br>  export HADOOP_MAPRED_HOME=/home/hadoop/apps/hadoop-2.6.1/<br>  export HIVE_HOME=/home/hadoop/apps/hive-1.2.1<br>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">  </div><div class="line">* 加入mysql的jdbc驱动包</div></pre></td></tr></table></figure></p>
+<p> cp  $HIVE_HOME/lib/mysql-connector-java-5.1.28.jar   $SQOOP_HOME/lib/<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"> </div><div class="line">* 验证</div></pre></td></tr></table></figure></p>
+<pre><code>$ cd $SQOOP_HOME/bin
+$ sqoop-version
+</code></pre>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">  </div><div class="line">  </div><div class="line">### 数据的导入</div><div class="line">#### 导入到HDFS</div></pre></td></tr></table></figure>
+<p>#语法<br>$ sqoop import (generic-args) (import-args)</p>
+<p>#示例<br>$bin/sqoop import \<br>–connect jdbc:mysql://xxxx:3306/testsqoop \<br>–username root \<br>–password root \<br>–table emp –m 1<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">#### 导入到HIVE</div></pre></td></tr></table></figure></p>
+<p>bin/sqoop import –connect jdbc:mysql://192.168.2.2:3306/testsqoop –username root –password root –table emp –hive-import –m 1</p>
+<h1 id="未解决"><a href="#未解决" class="headerlink" title="未解决"></a>未解决</h1><h1 id="ERROR-hive-HiveConfig-Could-not-load-org-apache-hadoop-hive-conf-HiveConf-Make-sure-HIVE-CONF-DIR-is-set-correctly"><a href="#ERROR-hive-HiveConfig-Could-not-load-org-apache-hadoop-hive-conf-HiveConf-Make-sure-HIVE-CONF-DIR-is-set-correctly" class="headerlink" title="ERROR hive.HiveConfig: Could not load org.apache.hadoop.hive.conf.HiveConf. Make sure HIVE_CONF_DIR is set correctly."></a>ERROR hive.HiveConfig: Could not load org.apache.hadoop.hive.conf.HiveConf. Make sure HIVE_CONF_DIR is set correctly.</h1><h1 id="ERROR-tool-ImportTool-Import-failed-java-io-IOException-java-lang-ClassNotFoundException-org-apache-hadoop-hive-conf-HiveConf"><a href="#ERROR-tool-ImportTool-Import-failed-java-io-IOException-java-lang-ClassNotFoundException-org-apache-hadoop-hive-conf-HiveConf" class="headerlink" title="ERROR tool.ImportTool: Import failed: java.io.IOException: java.lang.ClassNotFoundException: org.apache.hadoop.hive.conf.HiveConf"></a>ERROR tool.ImportTool: Import failed: java.io.IOException: java.lang.ClassNotFoundException: org.apache.hadoop.hive.conf.HiveConf</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">#### 导入到HDFS指定目录</div></pre></td></tr></table></figure>
+<p>```</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Hadoop相关/" rel="tag"># Hadoop相关</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/13/设计模式/2018-05-13/" rel="next" title="委托">
+                <i class="fa fa-chevron-left"></i> 委托
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/18/Hadoop相关/hbase/" rel="prev" title="">
+                 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          
+            <img class="site-author-image" itemprop="image"
+              src="/images/header.png"
+              alt="EtanWatson" />
+          
+            <p class="site-author-name" itemprop="name">EtanWatson</p>
+            <p class="site-description motion-element" itemprop="description">有所舍，有所爱，做一个感性的码农</p>
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives/">
+            
+                <span class="site-state-item-count">93</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#辅助系统"><span class="nav-number">1.</span> <span class="nav-text">辅助系统</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Flume"><span class="nav-number">1.1.</span> <span class="nav-text">Flume</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Flume架构图"><span class="nav-number">1.1.1.</span> <span class="nav-text">Flume架构图</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#简单结构图"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">简单结构图</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#复杂结构图"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">复杂结构图</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Flume的安装部署"><span class="nav-number">1.1.2.</span> <span class="nav-text">Flume的安装部署</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#一个简单的例子"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">一个简单的例子</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#采集目录到HDFS"><span class="nav-number">1.1.3.</span> <span class="nav-text">采集目录到HDFS</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#工作流调度器azkaban"><span class="nav-number">1.2.</span> <span class="nav-text">工作流调度器azkaban</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Azkaban安装部署"><span class="nav-number">1.2.1.</span> <span class="nav-text">Azkaban安装部署</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#azkaban-web服务器安装"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">azkaban web服务器安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#azkaban-执行服务器安装"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">azkaban 执行服务器安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#azkaban脚本导入"><span class="nav-number">1.2.1.3.</span> <span class="nav-text">azkaban脚本导入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建SSL配置"><span class="nav-number">1.2.1.4.</span> <span class="nav-text">创建SSL配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置文件"><span class="nav-number">1.2.1.5.</span> <span class="nav-text">配置文件</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Azkaban-JobTypes-插件配置"><span class="nav-number">2.</span> <span class="nav-text">Azkaban JobTypes 插件配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#执行服务器配置"><span class="nav-number">3.</span> <span class="nav-text">执行服务器配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#无法加载主类，未解决"><span class="nav-number">4.</span> <span class="nav-text">无法加载主类，未解决</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#无法加载主类，为解决"><span class="nav-number">5.</span> <span class="nav-text">无法加载主类，为解决</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#未解决"><span class="nav-number">6.</span> <span class="nav-text">未解决</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ERROR-hive-HiveConfig-Could-not-load-org-apache-hadoop-hive-conf-HiveConf-Make-sure-HIVE-CONF-DIR-is-set-correctly"><span class="nav-number">7.</span> <span class="nav-text">ERROR hive.HiveConfig: Could not load org.apache.hadoop.hive.conf.HiveConf. Make sure HIVE_CONF_DIR is set correctly.</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ERROR-tool-ImportTool-Import-failed-java-io-IOException-java-lang-ClassNotFoundException-org-apache-hadoop-hive-conf-HiveConf"><span class="nav-number">8.</span> <span class="nav-text">ERROR tool.ImportTool: Import failed: java.io.IOException: java.lang.ClassNotFoundException: org.apache.hadoop.hive.conf.HiveConf</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">EtanWatson</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.2</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

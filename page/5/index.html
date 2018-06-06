@@ -310,7 +310,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/23/mysql/mysql-safe-update-mode-下出现的错误/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/08/设计模式/设计模式之装饰模式/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="EtanWatson">
@@ -329,7 +329,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/10/23/mysql/mysql-safe-update-mode-下出现的错误/" itemprop="url">mysql safe update mode 下出现的错误</a></h1>
+                <a class="post-title-link" href="/2018/04/08/设计模式/设计模式之装饰模式/" itemprop="url">设计模式之装饰模式</a></h1>
         
 
         <div class="post-meta">
@@ -341,8 +341,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-23T09:22:10+08:00">
-                2017-10-23
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-08T19:33:10+08:00">
+                2018-04-08
               </time>
             
 
@@ -364,8 +364,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/mysql/" itemprop="url" rel="index">
-                    <span itemprop="name">mysql</span>
+                  <a href="/categories/设计模式/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式</span>
                   </a>
                 </span>
 
@@ -403,1524 +403,1569 @@
       
         
           
-            <h1 id="mysql-safe-update-mode-下出现的错误"><a href="#mysql-safe-update-mode-下出现的错误" class="headerlink" title="mysql safe update mode 下出现的错误"></a>mysql safe update mode 下出现的错误</h1><p>今天在中，发现一个简单sql语句执行不了，看了半天没有找到错误，后来在WorkBench中执行也没有通过，控制台报错误Error Code: 1175. You are using safe update mode and you tried to update a table without a WHERE that uses a KEY column To disable safe mode, toggle the option in Preferences -&gt; SQL Editor and reconnect.查阅资料，这是因为MySql运行在safe-updates模式下，该模式会导致非主键条件下无法执行update或者delete命令。</p>
-<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">show variables like <span class="string">'SQL_SAFE_UPDATES’;#查看开关状态。你在这里可能看到value为no</span></div><div class="line"><span class="string">SET SQL_SAFE_UPDATES = 0;#修改下数据库模式</span></div></pre></td></tr></table></figure>
-<p>更多详情，请参见官方文档：<a href="https://dev.mysql.com/doc/refman/5.7/en/mysql-tips.html下的4.5.1.6.4" target="_blank" rel="external">https://dev.mysql.com/doc/refman/5.7/en/mysql-tips.html下的4.5.1.6.4</a> Using the –safe-updates Option</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/14/埋坑记/关于mac环境变量的埋坑记/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="EtanWatson">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/header.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="EWSUN">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/10/14/埋坑记/关于mac环境变量的埋坑记/" itemprop="url">关于mac环境变量的埋坑记</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-14T19:55:11+08:00">
-                2017-10-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/埋坑记/" itemprop="url" rel="index">
-                    <span itemprop="name">埋坑记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>在配置googledriver环境变量的时候，配置好了，然后就source .bash_profile，哈哈，大功告成，怎么配置的呢？<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">export</span> PATH=**/**/**/chromedriver</div></pre></td></tr></table></figure></p>
-<p>我去，我的命令咋都不好使了？，尝试了很多，好像就cd好使，其他的都失灵了。估摸着是环境变量出来问题。</p>
-<h2 id="高潮"><a href="#高潮" class="headerlink" title="高潮"></a>高潮</h2><p>网络怎么便利的今天，怎么会难倒我，google一下，你就知道<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">export</span> PATH=/usr/bin:/usr/sbin:/bin:/sbin:/usr/X11R6/bin</div><div class="line"></div><div class="line"><span class="comment"># 清空.bash_profile,加入一下配置</span></div><div class="line"><span class="built_in">export</span> JAVA_HOME=`/usr/libexec/java_home`</div><div class="line"></div><div class="line"><span class="built_in">export</span> PATH=<span class="variable">$&#123;PATH&#125;</span>:<span class="variable">$&#123;JAVA_HOME&#125;</span>:<span class="variable">$&#123;ANDROID_SDK_ROOT&#125;</span>:<span class="variable">$&#123;ANDROID_SDK_ROOT&#125;</span>/platform-tools:<span class="variable">$&#123;ANDROID_SDK_ROOT&#125;</span>/tools:<span class="variable">$&#123;JAVA_HOME&#125;</span>:<span class="variable">$&#123;JAVA_HOME&#125;</span>/bin</div><div class="line"><span class="built_in">export</span> PATH=<span class="string">"/usr/local/bin:/usr/local/sbin:~/bin:<span class="variable">$PATH</span>"</span></div></pre></td></tr></table></figure></p>
-<p>ok 果断好使了<br>再把自己的加进去，又崩了，反复折腾了好几次，无果</p>
-<h2 id="结果：眼瞎"><a href="#结果：眼瞎" class="headerlink" title="结果：眼瞎"></a>结果：眼瞎</h2><pre><code class="bash"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:**/**/**/chromedriver
-好像这样也可以
-PATH=“**/**/**/chromedriver<span class="variable">${PATH}</span>”
-<span class="built_in">export</span> PATH 
-<span class="comment">#没有尝试，原谅我是小白</span>
-</code></pre>
-<p>(完，然而一个小时过去了)</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/13/python数据采集/python数据收集（远程采集）/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="EtanWatson">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/header.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="EWSUN">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/10/13/python数据采集/python数据收集（远程采集）/" itemprop="url">python数据收集（远程采集）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-13T11:14:35+08:00">
-                2017-10-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/python数据收集/" itemprop="url" rel="index">
-                    <span itemprop="name">python数据收集</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="远程采集"><a href="#远程采集" class="headerlink" title="远程采集"></a>远程采集</h1><p>“If you love something, set it free.”</p>
-<h2 id="为什么要用远程服务器"><a href="#为什么要用远程服务器" class="headerlink" title="为什么要用远程服务器"></a>为什么要用远程服务器</h2><p>启用远程平台的人通常 有两个目的:对更大计算能力和灵活性的需求，以及对可变 IP 地址的需求。</p>
-<h3 id="避免IP地址被封杀"><a href="#避免IP地址被封杀" class="headerlink" title="避免IP地址被封杀"></a>避免IP地址被封杀</h3><h2 id="Tor代理服务器（一种IP地址匿名手段）"><a href="#Tor代理服务器（一种IP地址匿名手段）" class="headerlink" title="Tor代理服务器（一种IP地址匿名手段）"></a>Tor代理服务器（一种IP地址匿名手段）</h2><p>洋葱路由(The Onion Router)网络</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/13/python数据采集/python数据收集（用爬虫测试网站）/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="EtanWatson">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/header.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="EWSUN">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/10/13/python数据采集/python数据收集（用爬虫测试网站）/" itemprop="url">python数据收集（用爬虫测试网站）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-13T10:52:24+08:00">
-                2017-10-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/python数据收集/" itemprop="url" rel="index">
-                    <span itemprop="name">python数据收集</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="用爬虫测试网站"><a href="#用爬虫测试网站" class="headerlink" title="用爬虫测试网站"></a>用爬虫测试网站</h1><h2 id="Python单元测试"><a href="#Python单元测试" class="headerlink" title="Python单元测试"></a>Python单元测试</h2><p>Python的测试单元模块unittest，只要先导入模块然后继承unittest.TestCase类，就可以实现以下的功能：<br>• 为每个单元测试的开始和结束提供setUp和tearDown函数<br>• 提供不同类型的“断言”语句让测试成功或失败<br>• 把所有以test<em>开头的函数当作单元测试运行，忽略不带test</em>的函数</p>
-<h3 id="一个简单的例子"><a href="#一个简单的例子" class="headerlink" title="一个简单的例子"></a>一个简单的例子</h3><pre><code class="bash"><span class="string">""</span><span class="string">"一个简单的unit test"</span><span class="string">""</span>
-import unittest
-
-class TestAddition(unittest.TestCase):
-    def setUp(self):
-        <span class="built_in">print</span>(<span class="string">"Setting up the test"</span>)
-
-    def tearDown(self):
-        <span class="built_in">print</span>(<span class="string">"Tearing down the test"</span>)
-
-    def test_twoPlusTwo(self):
-        total = 2+2
-        self.assertEqual(4, total)
-
-<span class="keyword">if</span> __name__ == <span class="string">'__name__'</span>:
-    unittest.main()
-</code></pre>
-<p>虽然 setUp 和 tearDown 函数在这里并没有实现可用的功能，但是仍然达到了演示的目的。 需要注意的是，这两个函数在每个测试的开始和结束都会运行一次，而不是把类中所有测 试作为一个整体在开始或结束时各运行一次。</p>
-<h3 id="测试维基百科"><a href="#测试维基百科" class="headerlink" title="测试维基百科"></a>测试维基百科</h3>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/11/python数据采集/python数据收集-避开采集陷阱/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="EtanWatson">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/header.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="EWSUN">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/10/11/python数据采集/python数据收集-避开采集陷阱/" itemprop="url">python数据收集(避开采集陷阱)</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-11T18:46:00+08:00">
-                2017-10-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/python数据收集/" itemprop="url" rel="index">
-                    <span itemprop="name">python数据收集</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="避开采集陷阱"><a href="#避开采集陷阱" class="headerlink" title="避开采集陷阱"></a>避开采集陷阱</h1><h2 id="道德规范"><a href="#道德规范" class="headerlink" title="道德规范"></a>道德规范</h2><h2 id="让网络-机器人看起来更像人类用户"><a href="#让网络-机器人看起来更像人类用户" class="headerlink" title="让网络 机器人看起来更像人类用户"></a>让网络 机器人看起来更像人类用户</h2><h3 id="修改请求头"><a href="#修改请求头" class="headerlink" title="修改请求头"></a>修改请求头</h3><p>只有下面的七个字段被大多数浏览器用来初始化所有网络请求<br>Host          <a href="https://www.google.com/" target="_blank" rel="external">https://www.google.com/</a><br>Connection    keep-alive<br>Accept    text/html，application/xhtml+xml，application/xml;q=0.9，image/webp，<em>/</em>;q=0.8<br>User-Agent Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_5) AppleWebKit/537.36 (KHTML, like        Gecko) Chrome/39.0.2171.95 Safari/537.36<br>Referrer   <a href="https://www.google.com/" target="_blank" rel="external">https://www.google.com/</a><br>Accept-Encoding  gzip，deflate，sdch<br>Accept-Language  en-US,en;q=0.8</p>
-<p>经典的Python爬虫在使用urllib标准库时，都会发送如下请求<br>Accept-Encoding identity<br>User-Agent     Python-urllib/3.4</p>
-<h4 id="示例代码"><a href="#示例代码" class="headerlink" title="示例代码"></a>示例代码</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">import requests</div><div class="line">from bs4 import BeautifulSoup</div><div class="line">session = requests.Session()</div><div class="line">headers = &#123;<span class="string">"User-Agent"</span>:<span class="string">"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) "</span></div><div class="line">                        <span class="string">"AppleWebKit/537.36 (KHTML, like Gecko) "</span></div><div class="line">                        <span class="string">"Chrome/61.0.3163.100 Safari/537.36"</span>,</div><div class="line">           <span class="string">"Accept"</span>:<span class="string">"text/html,application/xhtml+xml,application/xml;"</span></div><div class="line">                    <span class="string">"q = 0.9, image / webp, * / *;q = 0.8"</span></div><div class="line"></div><div class="line">           &#125;</div><div class="line">url = <span class="string">"https://www.whatismybrowser.com/developers/what-http-headers-is-my-browser-sending"</span></div><div class="line">req = session.get(url, headers = headers)</div><div class="line">bsObj = BeautifulSoup(req.text, <span class="string">"html.parser"</span>)</div><div class="line"><span class="built_in">print</span>(bsObj.find(<span class="string">"table"</span>,&#123;<span class="string">"class"</span>:<span class="string">"table-striped"</span>&#125;).get_text)</div></pre></td></tr></table></figure>
-<h3 id="处理cookie"><a href="#处理cookie" class="headerlink" title="处理cookie"></a>处理cookie</h3><p>网站会用cookie跟踪你的访问过程，发现爬虫异常行为就会中断你的访问，比如：特别快速的填写表单，或者浏览大量页面。虽然这些行为可以通过关闭或重新连接或者改变IP地址来伪装，但是如果cookie暴露了你的身份，再多努力也是白费<br>在采集一个或者几个目标网站，检查这些网站生成的 cookie，然后想想 哪一个 cookie 是爬虫需要处理的。<br>显示访问网站和离开网站时 cookie 是如何设置的插件。EditThisCookie(<a href="http://www.editthiscookie.com/)Chrome" target="_blank" rel="external">http://www.editthiscookie.com/)Chrome</a> 浏览器插件之一。<br>Google Analytics：只有当客户端脚本执行后才设置cookie（或者基于网页事件生成cookie，比如点击按钮）。为了处理这些动作，你需要用Selenium 和 PhantomJS包</p>
-<h4 id="调用webdriver的get-cookie"><a href="#调用webdriver的get-cookie" class="headerlink" title="调用webdriver的get_cookie()"></a>调用webdriver的get_cookie()</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">from selenium import webdriver</div><div class="line">driver = webdriver.PhantomJS(executable_path=<span class="string">"/Users/YT/MachineLearning/phantomjs-2.1.1-macosx/bin/phantomjs"</span>)</div><div class="line">driver.get(<span class="string">"http://pythonscraping.com"</span>)</div><div class="line">driver.implicitly_wait(1)</div><div class="line"><span class="built_in">print</span>(driver.get_cookies())</div></pre></td></tr></table></figure>
-<h4 id="一个更加综合的例子"><a href="#一个更加综合的例子" class="headerlink" title="一个更加综合的例子"></a>一个更加综合的例子</h4><p>调用delete_cookie(),add_cookie()和delete_all_cookies()方法来处理cookie。另外，还可以保存cookie以备其他网络爬虫使用。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div></pre></td><td class="code"><pre><div class="line">from selenium import webdriver</div><div class="line"></div><div class="line">driver = webdriver.PhantomJS(executable_path=<span class="string">"/Users/YT/MachineLearning/phantomjs-2.1.1-macosx/bin/phantomjs"</span>)</div><div class="line">driver.get(<span class="string">"http://pythonscraping.com"</span>)</div><div class="line">driver.implicitly_wait(1)</div><div class="line"><span class="built_in">print</span>(driver.get_cookies())</div><div class="line"></div><div class="line">saveCookies = driver.get_cookies()</div><div class="line"></div><div class="line">driver2 = webdriver.PhantomJS(executable_path=<span class="string">"/Users/YT/MachineLearning/phantomjs-2.1.1-macosx/bin/phantomjs"</span>)</div><div class="line">driver2.get(<span class="string">"http://pythonscraping.com"</span>)</div><div class="line">driver2.delete_all_cookies()</div><div class="line"><span class="keyword">for</span> cookie <span class="keyword">in</span> saveCookies:</div><div class="line">    driver2.add_cookie(cookie)</div><div class="line"></div><div class="line">driver2.get(<span class="string">"http://pythonscraping.com"</span>)</div><div class="line">driver.implicitly_wait(1)</div><div class="line"><span class="built_in">print</span>(driver2.get_cookies())</div><div class="line">``` </div><div class="line">该示例中，先将cookie值保存在saveCookies中，在第二次访问的时候，将同一个网站下的cookie都删除掉（必须先加载网络，不然selenium不知道有cookie的域），然后将第一次的cookie填入到该网站下，这样从Google Analytics角度来看</div><div class="line">第二个webdriver现在和第一个webdriver完全一样（cookie的时间戳，源代码和其他信息都一样）</div><div class="line"></div><div class="line"><span class="comment">### 时间就是一切</span></div><div class="line">尽量保证一次加载页面加载且数据请求最小化</div><div class="line">如果条件允许，尽量为每个页面访问 增加一点儿时间间隔，即使你要增加一行代码:time.sleep(3)<span class="comment">## 常见的表单安全措施</span></div><div class="line"><span class="comment">### 隐含输入字段值（主要用于阻止爬虫自动提交表单）</span></div><div class="line">第一种是表单页面上的一个字段可以用服务器生成的随机变量表示。如果提交时这个值不在表单处理页面上，服务器就有理由认为这个提交不是从原始表单页面上提交的。绕开这个问题的最佳方法就是，首先采集表单实在页面上生成的随机变量，然后再提交到表单处理页面</div><div class="line">第二种是蜜罐圈套。如果表单里包含一个具有普通名称的隐含字段，比如用户名或者”邮箱地址”，服务器火把所有隐含字段的真实值（或者与表单提交页面的默认值不同的值）都忽略，而且填写隐含字段的访问用户也可能被网站封杀</div><div class="line">还有其他一些检查，用来保 证这些当前生成的表单变量只被使用一次或是最近生成的</div><div class="line"></div><div class="line"><span class="comment">### 避免蜜罐</span></div><div class="line">因为 Selenium 可以获取访问页面的内容，所以它可以区分页面上的可见元素与隐含元素。通过 is_displayed() 可以判断元素在页面上是否可见。</div><div class="line">``` bash </div><div class="line"><span class="string">""</span><span class="string">"下面实例代码，用来查找隐含字段"</span><span class="string">""</span></div><div class="line">from selenium import  webdriver</div><div class="line">from selenium.webdriver.remote.webelement import WebElement</div><div class="line"></div><div class="line">driver = webdriver.PhantomJS(executable_path=<span class="string">"/Users/YT"</span></div><div class="line">                                             <span class="string">"/MachineLearning/phantomjs-2.1.1-macosx/bin/phantomjs"</span>)</div><div class="line">driver.get(<span class="string">"http://pythonscraping.com/pages/itsatrap.html"</span>)</div><div class="line">links = driver.find_elements_by_tag_name(<span class="string">"a"</span>)</div><div class="line"></div><div class="line"><span class="keyword">for</span> link <span class="keyword">in</span> links:</div><div class="line">    <span class="keyword">if</span> not link.is_displayed():</div><div class="line">        <span class="built_in">print</span>(<span class="string">"The link "</span> + link.get_attribute(<span class="string">'href'</span>))</div><div class="line"></div><div class="line">fields = driver.find_elements_by_tag_name(<span class="string">"input"</span>)</div><div class="line"><span class="keyword">for</span> field <span class="keyword">in</span> fields:</div><div class="line">    <span class="keyword">if</span> not field.is_displayed():</div><div class="line">        <span class="built_in">print</span>(<span class="string">"Do not change value of "</span>+field.get_attribute(<span class="string">"name"</span>))</div></pre></td></tr></table></figure></p>
-<p>虽然你不太可能会去访问你找到的那些隐含链接，但是在提交前，记得确认一下那些已经 在表单中、准备提交的隐含字段的值(或者让 Selenium 为你自动提交)。</p>
-<h2 id="问题检查表"><a href="#问题检查表" class="headerlink" title="问题检查表"></a>问题检查表</h2><p>• 首先，如果你从网络服务器收到的页面是空白的，缺少信息，或其遇到他不符合你预期 的情况(或者不是你在浏览器上看到的   内容)，有可能是因为网站创建页面的 JavaScript 执行有问题。可以看看第 10 章内容。<br>• 如果你准备向网站提交表单或发出POST请求，记得检查一下页面的内容，看看你想提 交的每个字段是不是都已经填好，而且格式也正确。用 Chrome 浏览器的网络面板(快 捷键 F12 打开开发者控制台，然后点击“Network”即可看到)查看发送到网站的 POST 命令，确认你的每个参数都是正确的。<br>• 如果你已经登录网站却不能保持登录状态，或者网站上出现了其他的“登录状态”异常， 请检查你的 cookie。确认在加载每个页面时 cookie 都被正确调用，而且你的 cookie 在 每次发起请求时都发送到了网站上。<br>• 如果你在客户端遇到了HTTP错误，尤其是403禁止访问错误，这可能说明网站已经把 你的 IP 当作机器人了，不再接受你的任何请求。你要么等待你的 IP 地址从网站黑名单 里移除，要么就换个 IP 地址(可以去星巴克上网，或者看看第 14 章的内容)。如果你 确定自己并没有被封杀，那么再检查下面的内容。<br>♦ 确认你的爬虫在网站上的速度不是特别快。快速采集是一种恶习，会对网管的服务 器造成沉重的负担，还会让你陷入违法境地，也是 IP 被网站列入黑名单的首要原因。给你的爬虫增加延迟，让它们在夜深人静的时候运行。切记:匆匆忙忙写程序或收<br> 集数据都是拙劣项目管理的表现;应该提前做好计划，避免临阵慌乱。<br>♦ 还有一件必须做的事情:修改你的请求头!有些网站会封杀任何声称自己是爬虫的访问者。如果你不确定请求头的值怎样才算合适，就用你自己浏览器的请求头吧。<br>♦ 确认你没有点击或访问任何人类用户通常不能点击或接入的信息(更多信息请查阅12.3.2 节)。<br>♦ 如果你用了一大堆复杂的手段才接入网站，考虑联系一下网管吧，告诉他们你的目的。试试发邮件到 webmaster@&lt; 域名 &gt; 或 admin@&lt; 域名 &gt;，请求网管允许你使用爬虫采 集数据。管理员也是人嘛!</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/09/algorithm/递归/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="EtanWatson">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/header.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="EWSUN">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/10/09/algorithm/递归/" itemprop="url">递归</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-09T15:08:10+08:00">
-                2017-10-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/algorithm/" itemprop="url" rel="index">
-                    <span itemprop="name">algorithm</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h1><p>恨它的，爱它的以及恨了几年有爱上它的（比较经典，记下了）</p>
-<h2 id="while与递归的对比"><a href="#while与递归的对比" class="headerlink" title="while与递归的对比"></a>while与递归的对比</h2><p>伪代码实现<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#while 实现</span></div><div class="line">def look_for_key(main_box):</div><div class="line">	pile = main_box.make_a_pile_to_look_through()</div><div class="line">	<span class="keyword">while</span> pile is not empty:</div><div class="line">		box = pile.grab_a_box()</div><div class="line">		<span class="keyword">for</span> item <span class="keyword">in</span> box:</div><div class="line">			<span class="keyword">if</span> item.is_a_box():</div><div class="line">				pile.append(item)</div><div class="line">			<span class="keyword">elif</span> item.is_a_key():</div><div class="line">				<span class="built_in">print</span>(“found the key!”)</div><div class="line"><span class="comment">#递归实现</span></div><div class="line">def look_for_key(box):</div><div class="line">	<span class="keyword">for</span> item <span class="keyword">in</span> box:</div><div class="line">		<span class="keyword">if</span> item.is_a_box():</div><div class="line">			look_for_key(item)</div><div class="line">		<span class="keyword">elif</span> item.is_a_key():</div><div class="line">			<span class="built_in">print</span>(“found the key!”)</div></pre></td></tr></table></figure></p>
-<p>#这两种方法的作用相同，第二种方法更清晰。递归只是让解决方案更清晰 ，并没有性能上的优势，实际上，在有些情况下，使用循环的性能更好。<br>再引入一句大神说的话：Loops may achieve a performance gain for your program. Recursion may achieve a performance gain for your programmer. Choose which is more important in your situation!</p>
-<h2 id="基线条件和递归条件"><a href="#基线条件和递归条件" class="headerlink" title="基线条件和递归条件"></a>基线条件和递归条件</h2><p>每个递归函数都有两个部分：基线条件和递归条件<br>递归条件指的是函数调用自己，而基线条件则指的是函数不在调用自己，从而避免形成无线循环<br>ex：<br>def countdown(i):<br>    print i<br>    countdown(i-1)<br>上述代码，会导致死循环<br>我们来给countdown添加基线条件<br>def countdown(i):<br>    print i</p>
-<pre><code>#基线条件
-if i &lt;= 0:
-return
-else:  #递归条件
-countdown(i-1)
-</code></pre><h2 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h2><h3 id="调用栈"><a href="#调用栈" class="headerlink" title="调用栈"></a>调用栈</h3><p>def greet(name):<br>    print (“hello, “ + name + “i”)<br>    greet2(name)<br>    print (getting ready to say bye…)<br>    bye()</p>
-<p>#这个函数问候用户，在调用另外两个函数。这两个函数的代码如下。<br>def greet2(name):<br>    print (”how are you, ” + name + ‘?’)<br>    def bye():<br>        print(“ok bye!”)</p>
-<h3 id="递归调用栈"><a href="#递归调用栈" class="headerlink" title="递归调用栈"></a>递归调用栈</h3><h4 id="计算阶乘的"><a href="#计算阶乘的" class="headerlink" title="计算阶乘的"></a>计算阶乘的</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">def fact(x):</div><div class="line">	<span class="keyword">if</span> x == 1:</div><div class="line">		<span class="built_in">return</span> 1</div><div class="line">	<span class="keyword">else</span>:</div><div class="line">	   <span class="built_in">return</span> x*fact(x-1)</div></pre></td></tr></table></figure>
-<p>使用栈虽然很方便，但是也要付出代价:存储详尽的信息可能占用大量的内存。每个函数调 用都要占用一定的内存，如果栈很高，就意味着计算机存储了大量函数调用的信息。在这种情况 下，你有两种选择。<br> 重新编写代码，转而使用循环。<br> 使用尾递归。这是一个高级递归主题，不在本书的讨论范围内。另外，并非所有的语言<br>都支持尾递归。</p>
-<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p> 递归指的是调用自己的函数。<br> 每个递归函数都有两个条件:基线条件和递归条件。  栈有两种操作:压入和弹出。<br> 所有函数调用都进入调用栈。<br> 调用栈可能很长，这将占用大量的内存。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/09/JavaWeb/深入Web请求过程/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="EtanWatson">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/header.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="EWSUN">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/10/09/JavaWeb/深入Web请求过程/" itemprop="url">深入Web请求过程</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-09T15:08:10+08:00">
-                2017-10-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JavaWeb/" itemprop="url" rel="index">
-                    <span itemprop="name">JavaWeb</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="深入Web请求过程"><a href="#深入Web请求过程" class="headerlink" title="深入Web请求过程"></a>深入Web请求过程</h1><p>curl https:baidu.com<br>返回的是302重定向<br>是否是缺少cookie信息造成的？（添加cookie仍无法访问）</p>
-<h2 id="浏览器的缓存机制Cache-Control-Pragma"><a href="#浏览器的缓存机制Cache-Control-Pragma" class="headerlink" title="浏览器的缓存机制Cache-Control/Pragma"></a>浏览器的缓存机制Cache-Control/Pragma</h2><p>火狐浏览器（mac）下按shift+command+r重新访问<br>Expires:Mon, 02 Apr 2018 00:40:17 </p>
-<h2 id="域名解析过程"><a href="#域名解析过程" class="headerlink" title="域名解析过程"></a>域名解析过程</h2><h3 id="浏览器会检查缓存中有没有这个域名对应的解析过的ip地址"><a href="#浏览器会检查缓存中有没有这个域名对应的解析过的ip地址" class="headerlink" title="浏览器会检查缓存中有没有这个域名对应的解析过的ip地址"></a>浏览器会检查缓存中有没有这个域名对应的解析过的ip地址</h3><h3 id="操作系统缓存中是否有这个域名对应的的DNS解析结果"><a href="#操作系统缓存中是否有这个域名对应的的DNS解析结果" class="headerlink" title="操作系统缓存中是否有这个域名对应的的DNS解析结果"></a>操作系统缓存中是否有这个域名对应的的DNS解析结果</h3><h3 id="LDNS"><a href="#LDNS" class="headerlink" title="LDNS"></a>LDNS</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cat /etc/resolv.confg</div></pre></td></tr></table></figure>
-<p>在mac下，会有这样一段提示<br>This file is not consulted for DNS hostname resolution, address resolution, or the DNS query routing mechanism used by most processes on this system.<br>To view the DNS configuration used by this system, use:<br> scutil –dns</p>
-<p> SEE ALSO<br>   dns-sd(1), scutil(8)</p>
-<h3 id="Root-Server域名服务器请求解析"><a href="#Root-Server域名服务器请求解析" class="headerlink" title="Root Server域名服务器请求解析"></a>Root Server域名服务器请求解析</h3><h3 id="返回一个所查询域的主域名服务器"><a href="#返回一个所查询域的主域名服务器" class="headerlink" title="返回一个所查询域的主域名服务器"></a>返回一个所查询域的主域名服务器</h3><h3 id="LDNS向gTLD发送请求"><a href="#LDNS向gTLD发送请求" class="headerlink" title="LDNS向gTLD发送请求"></a>LDNS向gTLD发送请求</h3><h3 id="gTLD查找并返回此域名对应的Name-Server域名服务器的地址"><a href="#gTLD查找并返回此域名对应的Name-Server域名服务器的地址" class="headerlink" title="gTLD查找并返回此域名对应的Name Server域名服务器的地址"></a>gTLD查找并返回此域名对应的Name Server域名服务器的地址</h3><h3 id="Name-Server域名服务器会查询存储的域名和IP的映射关系表，会根据域名得到目标IP记录，连同一个TTL值返回给DNS-Server域名服务器"><a href="#Name-Server域名服务器会查询存储的域名和IP的映射关系表，会根据域名得到目标IP记录，连同一个TTL值返回给DNS-Server域名服务器" class="headerlink" title="Name Server域名服务器会查询存储的域名和IP的映射关系表，会根据域名得到目标IP记录，连同一个TTL值返回给DNS Server域名服务器"></a>Name Server域名服务器会查询存储的域名和IP的映射关系表，会根据域名得到目标IP记录，连同一个TTL值返回给DNS Server域名服务器</h3><h3 id="LDNS会缓存这个域名和IP的对应关系，缓存的时间有TTL值控制"><a href="#LDNS会缓存这个域名和IP的对应关系，缓存的时间有TTL值控制" class="headerlink" title="LDNS会缓存这个域名和IP的对应关系，缓存的时间有TTL值控制"></a>LDNS会缓存这个域名和IP的对应关系，缓存的时间有TTL值控制</h3><h3 id="把解析的结果返回给用户，用户根据TTL值缓存在本地系统缓存中，域名解析过程结束"><a href="#把解析的结果返回给用户，用户根据TTL值缓存在本地系统缓存中，域名解析过程结束" class="headerlink" title="把解析的结果返回给用户，用户根据TTL值缓存在本地系统缓存中，域名解析过程结束"></a>把解析的结果返回给用户，用户根据TTL值缓存在本地系统缓存中，域名解析过程结束</h3><h2 id="跟踪域名解析过程-nslookup-dig"><a href="#跟踪域名解析过程-nslookup-dig" class="headerlink" title="跟踪域名解析过程 nslookup/dig"></a>跟踪域名解析过程 nslookup/dig</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">nslookup www.baidu.com</div></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">dig www.baidu.com +trace <span class="comment"># 在mac下一直是timeout</span></div></pre></td></tr></table></figure>
-<h2 id="清除域名缓存"><a href="#清除域名缓存" class="headerlink" title="清除域名缓存"></a>清除域名缓存</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/etc/init.d/nscd restart <span class="comment"># linux下 重启</span></div></pre></td></tr></table></figure>
-<h3 id="JVM缓存DNS解析结果"><a href="#JVM缓存DNS解析结果" class="headerlink" title="JVM缓存DNS解析结果"></a>JVM缓存DNS解析结果</h3><p>这个缓存是在InetAddress类中完成<br>缓存时间有两种策略<br>在%JAVA_HOME%\lib\security\java.serurity文件中配置</p>
-<h4 id="正确解析缓存结果"><a href="#正确解析缓存结果" class="headerlink" title="正确解析缓存结果"></a>正确解析缓存结果</h4><p>networkaddress.cache.ttl 默认时间(-1)永不失效</p>
-<h4 id="失败的解析缓存结果"><a href="#失败的解析缓存结果" class="headerlink" title="失败的解析缓存结果"></a>失败的解析缓存结果</h4><p>networkaddress.cache.negative.ttl 默认时间(10秒)<br>如果要使用InetAddress类解析域名，必须是单例模式，如果每次都创建InetAddress实例，则每次都要进行一次完整的域名解析，非常耗时</p>
-<h3 id="域名解析的几种方式"><a href="#域名解析的几种方式" class="headerlink" title="域名解析的几种方式"></a>域名解析的几种方式</h3><h4 id="A记录（Address）"><a href="#A记录（Address）" class="headerlink" title="A记录（Address）"></a>A记录（Address）</h4><p>用来指定域名对应的IP地址，可以将多个域名解析到一个IP地址，但是不能将一个域名解析到多个IP地址</p>
-<h4 id="MX记录（Mail-Exchange）"><a href="#MX记录（Mail-Exchange）" class="headerlink" title="MX记录（Mail Exchange）"></a>MX记录（Mail Exchange）</h4><p>就是可以将某个域名下的邮件服务器指向自己的Mail Server</p>
-<h4 id="CNAME记录（Canonical-Name）别名解析"><a href="#CNAME记录（Canonical-Name）别名解析" class="headerlink" title="CNAME记录（Canonical Name）别名解析"></a>CNAME记录（Canonical Name）别名解析</h4><p>所谓别名解析，就是可以为一个域名设置一个或多个别名</p>
-<h4 id="NS记录"><a href="#NS记录" class="headerlink" title="NS记录"></a>NS记录</h4><p>这个域名有指定的IP地址的DNS服务器去解析</p>
-<h4 id="TXT记录"><a href="#TXT记录" class="headerlink" title="TXT记录"></a>TXT记录</h4><p>为某个主机或域名设置说明</p>
-<h2 id="CDN（内容分布式网络）-工作原理"><a href="#CDN（内容分布式网络）-工作原理" class="headerlink" title="CDN（内容分布式网络） 工作原理"></a>CDN（内容分布式网络） 工作原理</h2><p>将网站的内容发布到最接近用户网络的边缘<br>CDN=Mirror+Cache+GSLB(整体负载均衡)</p>
-<h3 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h3><h4 id="链路负载均衡"><a href="#链路负载均衡" class="headerlink" title="链路负载均衡"></a>链路负载均衡</h4><h4 id="集群负载均衡"><a href="#集群负载均衡" class="headerlink" title="集群负载均衡"></a>集群负载均衡</h4><h4 id="操作系统负载均衡"><a href="#操作系统负载均衡" class="headerlink" title="操作系统负载均衡"></a>操作系统负载均衡</h4><h3 id="CDN动态加速"><a href="#CDN动态加速" class="headerlink" title="CDN动态加速"></a>CDN动态加速</h3>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/09/algorithm/选择排序/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="EtanWatson">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/header.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="EWSUN">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/10/09/algorithm/选择排序/" itemprop="url">选择排序</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-09T09:39:40+08:00">
-                2017-10-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/algorithm/" itemprop="url" rel="index">
-                    <span itemprop="name">algorithm</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h1><h2 id="链表和数组"><a href="#链表和数组" class="headerlink" title="链表和数组"></a>链表和数组</h2><h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><p>优点：读取的时间复杂度为O(1) 常量时间<br>缺点：插入的时间复杂度为O(n) 线性时间</p>
-<h3 id="链表"><a href="#链表" class="headerlink" title="链表"></a>链表</h3><p>中间插入，删除</p>
-<h2 id="选择排序-1"><a href="#选择排序-1" class="headerlink" title="选择排序"></a>选择排序</h2><h3 id="需要检查的元素越来越少"><a href="#需要检查的元素越来越少" class="headerlink" title="需要检查的元素越来越少"></a>需要检查的元素越来越少</h3><p>第一次需要检查n个元素，但随后检查的元素 数依次为n  1, n – 2, …, 2和1。平均每次检查的元素数为1/2 × n，因此运行时间为O(n × 1/2 × n)。</p>
-<h3 id="示例代码"><a href="#示例代码" class="headerlink" title="示例代码"></a>示例代码</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">def findSmallest(arr):</div><div class="line">	<span class="comment"># 存储最小的值</span></div><div class="line">	smallest = arr[0]</div><div class="line">	<span class="comment"># 存储最小元素的索引</span></div><div class="line">	smallest_index = 0</div><div class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> reange(1, len(arr)):</div><div class="line">		<span class="keyword">if</span> arr[i] &lt; smallest:</div><div class="line">			smallest = arr[i]</div><div class="line">			smallest_index = i</div><div class="line">	<span class="built_in">return</span> smallest_index</div><div class="line"></div><div class="line"><span class="comment">#现在可以使用这个函数来编写选择排序算法了</span></div><div class="line">def selectionSort(arr):</div><div class="line">	newArr = []</div><div class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> range(len(arr)):</div><div class="line">		smallest = findSmallest(arr)    <span class="comment">#找出数组中最小的元素，</span></div><div class="line">						<span class="comment">#并将其加入到新数组中</span></div><div class="line">		newArr.append(arr.pop(smallest))</div><div class="line">	<span class="built_in">return</span> newArr</div></pre></td></tr></table></figure>
-<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p> 计算机内存犹如一大堆抽屉。<br> 需要存储多个元素时，可使用数组或链表。<br> 数组的元素都在一起。<br> 链表的元素是分开的，其中每个元素都存储了下一个元素的地址。<br> 数组的读取速度很快。<br> 链表的插入和删除速度很快。<br> 在同一个数组中，所有元素的类型都必须相同(都为int、double等)。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/09/algorithm/二分查找/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="EtanWatson">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/header.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="EWSUN">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/10/09/algorithm/二分查找/" itemprop="url">二分查找</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-09T08:27:35+08:00">
-                2017-10-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/algorithm/" itemprop="url" rel="index">
-                    <span itemprop="name">algorithm</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="二分查找"><a href="#二分查找" class="headerlink" title="二分查找"></a>二分查找</h1><h2 id="二分查找的工作原理"><a href="#二分查找的工作原理" class="headerlink" title="二分查找的工作原理"></a>二分查找的工作原理</h2><p>你的目标是以最少的次数猜到这个数字。你每次猜测后，我会说小了、大了或对了。 假设你从1开始依次往上猜，猜测过程会是这样。（一种糟糕的猜数法）<br>一种好的猜数法，从50开始。如果小了，接下来猜75……,不管是什么数，在第七次一定能猜到<br>一般而言，对于包含n个元素的列表，用二分查找最多需要log2n步，而简单查找最多需要n步。<br>注：仅当列表有序的时候，二分查找才管用</p>
-<h3 id="代码实现（python-2-7）"><a href="#代码实现（python-2-7）" class="headerlink" title="代码实现（python 2.7）"></a>代码实现（python 2.7）</h3><pre><code class="bash"><span class="comment">#范围</span>
-low = 0
-heigh = len(list) - 1
-<span class="comment">#每次检查的中间的元素</span>
-mid = (low + heigh) / 2
-guess = list[mid]
-<span class="comment">#如果数猜小了，就相应的修改low</span>
-<span class="keyword">if</span> guess &lt; item:
-    low = mid + 1
-<span class="comment">#如果数猜大了，就修改heigh</span>
-<span class="comment">#完整代码如下</span>
-def binary_search(list, item)
-    low = 0
-    heigh = len(list) - 1
-
-    <span class="keyword">while</span> low &lt;= heigh:
-        mid = (low + heigh)
-        guess = list[mid]
-        <span class="keyword">if</span> guess == item:     <span class="comment">#放在第一个判断可以减少下面的操作</span>
-            <span class="built_in">return</span> mid
-        <span class="keyword">if</span> guess &lt; item:
-            low = mid + 1
-        <span class="keyword">else</span>:
-            heigh = mid - 1
-    <span class="built_in">return</span> None
-</code></pre>
-<h2 id="运行时间"><a href="#运行时间" class="headerlink" title="运行时间"></a>运行时间</h2><p>最多需要猜测的次数与列表长度相同，这被称为线性 时间(linear time)。<br>二分查找的运行时间为对数时间(或log时间)</p>
-<h2 id="大O表示法"><a href="#大O表示法" class="headerlink" title="大O表示法"></a>大O表示法</h2><h3 id="运算时间以不同的速度增加"><a href="#运算时间以不同的速度增加" class="headerlink" title="运算时间以不同的速度增加"></a>运算时间以不同的速度增加</h3><pre><code>简单查找          二分查找
-</code></pre><p>100个元素                100毫秒          7毫秒<br>10000个元素            10秒        14毫秒<br>1000000000个元素        11天        32毫秒<br>注：以上表示的是至多查找时间<br>有鉴于此，仅知道算法 需要多长时间才能运行完毕还不够，还需知道运行时间如何随列表增长 而增加。这正是大O表示法的用武之地。</p>
-<h3 id="理解不同的大O运行时间"><a href="#理解不同的大O运行时间" class="headerlink" title="理解不同的大O运行时间"></a>理解不同的大O运行时间</h3><p>O(n) 与 O（log n）  注：非特殊说明，均以2为底</p>
-<h3 id="大O表示法指出了最糟糕情况下的运行时间"><a href="#大O表示法指出了最糟糕情况下的运行时间" class="headerlink" title="大O表示法指出了最糟糕情况下的运行时间"></a>大O表示法指出了最糟糕情况下的运行时间</h3><h3 id="一些常见的大O运行时间"><a href="#一些常见的大O运行时间" class="headerlink" title="一些常见的大O运行时间"></a>一些常见的大O运行时间</h3><p>O(log n)，也叫对数时间，这样的算法包括二分查找。<br>O(n)，也叫线性时间，这样的算法包括简单查找。<br>O(n*log n)，这样的算法包括第4章将介绍的快速排序——一种速度较快的排序算法<br>O(n^2)，这样的算法包括第2章将介绍的选择排序——一种速度较慢的排序算法。<br>O(n!)，这样的算法包括接下来将介绍的旅行商问题的解决方案——一种非常慢的算法。</p>
-<p>主要启示：<br>算法的速度并非时间，二十操作数的增速<br>谈论算法的速度时，我们说的是随着输入增加，其运行时间将以什么样的速度增加。<br>算法的运行时间用大O表示法表示<br>O(logn)比O(n)快，当需要搜索的元素越多时，前者比后者快的越多</p>
-<h3 id="旅行商问题"><a href="#旅行商问题" class="headerlink" title="旅行商问题"></a>旅行商问题</h3><p>有一位旅行商。 他需要前往5个城市。<br>这位旅行商(姑且称之为Opus吧)要前往这5个城市，同时要确保旅程最短。为此，可考虑 前往这些城市的各种可能顺序。<br>对于每种顺序，他都计算总旅程，再挑选出旅程最短的路线。5个城市有120种不同的排列方 式。因此，在涉及5个城市时，解决这个问题需要执行120次操作。涉及6个城市时，需要执行720 次操作(有720种不同的排列方式)。涉及7个城市时，需要执行5040次操作!故，可以推出，涉及n个城市时，需要执行n!(n的阶乘)次操作才能计算出结果。如果涉及的城市 数超过100，根本就不能在合理的时间内计算出结果——等你计算出结果，太阳都没了。O(n!),由于目前还没有更巧妙的算法，所以我们能做的只是去找出近似答案。</p>
-<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>二分查找的速度比简单查找快得多。<br>O(log n)比O(n)快。需要搜索的元素越多，前者比后者就快得越多。  算法运行时间并不以秒为单位。<br>算法运行时间是从其增速的角度度量的。<br>算法运行时间用大O表示法表示。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/08/python数据采集/python收集（图像识别与文字处理）/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="EtanWatson">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/header.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="EWSUN">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/10/08/python数据采集/python收集（图像识别与文字处理）/" itemprop="url">python收集（图像识别与文字处理）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-08T21:29:13+08:00">
-                2017-10-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/python数据收集/" itemprop="url" rel="index">
-                    <span itemprop="name">python数据收集</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="图像识别与文字处理"><a href="#图像识别与文字处理" class="headerlink" title="图像识别与文字处理"></a>图像识别与文字处理</h1><p>将图像翻译成文字一般被称为光学文字识别（Optical Character Recognition，OCR）</p>
-<h2 id="OCR库概述"><a href="#OCR库概述" class="headerlink" title="OCR库概述"></a>OCR库概述</h2><p>重点介绍两个库：Pillow(<a href="http://pillow.readthedocs.org/installation.html" target="_blank" rel="external">http://pillow.readthedocs.org/installation.html</a> )<br>        Tesseract(<a href="https://pypi.python.org/pypi/pytesseract" target="_blank" rel="external">https://pypi.python.org/pypi/pytesseract</a>)<br>或者使用pip进行安装<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&gt;&gt; pip3 install pillow</div><div class="line">&gt;&gt; pip3 install pytesseract</div></pre></td></tr></table></figure></p>
-<h3 id="Pillow"><a href="#Pillow" class="headerlink" title="Pillow"></a>Pillow</h3><p>Pillow也可以轻松的地导入代码，并通过大量的过滤，修饰甚至像素级的变换操作处理图片<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">from  PIL import Image, ImageFilter</div><div class="line"></div><div class="line">kitten = Image.open(<span class="string">"header.png"</span>)</div><div class="line">blurryKitten = kitten.filter(ImageFilter.GaussianBlur)</div><div class="line">blurryKitten.save(<span class="string">'header_blurred.png'</span>)</div><div class="line">blurryKitten.show()</div></pre></td></tr></table></figure></p>
-<p>经过处理的图片会变的非常模糊<br>Pillow 还可以完成许多复杂的图像处理工作。更多的信息，请查看 Pillow 文档 (<a href="http://pillow.readthedocs.org/)。" target="_blank" rel="external">http://pillow.readthedocs.org/)。</a></p>
-<h3 id="Tesseract"><a href="#Tesseract" class="headerlink" title="Tesseract"></a>Tesseract</h3><p>Tesseract 是目前公认最优秀、最精确的开源 OCR 系统。(由Google赞助)<br>高灵活性：通过训练，可以识别除任何字体<br>Tesseract是一个python的命令行工具（不是通过import语句）<br>安装Tesseract（安装以后，要用tesseract命令在Python的外面运行）<br>Mac OS X系统下：<br>如果没有安装Homebrew，先安装Homebrew</p>
-<blockquote>
-<p>$ruby -e “$(curl -fsSL <a href="https://raw.githubusercontent.com/Homebrew/" target="_blank" rel="external">https://raw.githubusercontent.com/Homebrew/</a> \ install/master/install)”<br>$brew install tesseract<br>为了能让Tesseract知道训练的数据文件存储在哪里，我们需要配置环境变量<br>$export TESSDATA_PREFIX=/usr/local/share/</p>
+            <h1 id="穿什么有这么重要———装饰模式"><a href="#穿什么有这么重要———装饰模式" class="headerlink" title="穿什么有这么重要———装饰模式"></a>穿什么有这么重要———装饰模式</h1><blockquote>
+<p>动态地给一个对象添加一些额外的职责，就增加功能来说，装饰模式比生成子类更为灵活</p>
 </blockquote>
-<h3 id="NumPy-训练字符和字体时候，会用到它"><a href="#NumPy-训练字符和字体时候，会用到它" class="headerlink" title="NumPy(训练字符和字体时候，会用到它)"></a>NumPy(训练字符和字体时候，会用到它)</h3><p>在机器学习实战的文章里面有用到</p>
+<p>先上图<br><img src="/images/15231875428520.jpg" alt=""></p>
+<p>在上码：<br>Component</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public abstract class Component &#123;</div><div class="line">    public abstract void Operation();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>ConcreteComponent</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">public class ConcreteComponent extends Component&#123;</div><div class="line">    @Override</div><div class="line">    public void Operation() &#123;</div><div class="line">        System.out.println(&quot;具体对象操作&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Decorator</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">public abstract class Decorator extends Component&#123;</div><div class="line">    protected Component component;</div><div class="line">    public void setComponent(Component component)&#123;</div><div class="line">        this.component = component;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void Operation()&#123;</div><div class="line">        if(component != null)&#123;</div><div class="line">            component.Operation();</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>ConcreteDecoratorA</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">public class ConcreteDecoratorA extends Decorator&#123;</div><div class="line">    private String addedState;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void Operation() &#123;</div><div class="line">        super.Operation();</div><div class="line">        addedState = &quot;New State&quot;;</div><div class="line">        System.out.println(&quot;具体装饰对象A的操作&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>ConcreteDecoratorB</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">public class ConcreteDecoratorB extends Decorator&#123;</div><div class="line">    @Override</div><div class="line">    public void Operation() &#123;</div><div class="line">        super.Operation();</div><div class="line">        addedBehavior();</div><div class="line">        System.out.println(&quot;具体装饰对象B的操作&quot;);</div><div class="line">    &#125;</div><div class="line">    public void addedBehavior()&#123;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Component是定义一个对象接口，可以给这些对象动态的添加职责。ConcreComponent是定义了一个具体的对象，也可以给这个对象添加一些职责。Decorator，装饰抽象类，继承了Component，从外类扩展Component类的功能，但对于Component来说，是无需知道Decorator的存在的，至于ConcreteDecorator就是具体的装饰对象，起到给Component添加职责的功能</p>
 <blockquote>
-<p>pip install numpy</p>
+<p>装饰模式是利用SetComponent来对对象进行包装的。这样每个装饰对象的实现就和如何使用这个对象分离开了，每个装饰对象只关心自己的功能，不需要关心如何被添加到对象链当中</p>
 </blockquote>
-<h2 id="处理格式规范的文字"><a href="#处理格式规范的文字" class="headerlink" title="处理格式规范的文字"></a>处理格式规范的文字</h2><p>通常规范文字的特点<br>• 使用一个标准字体(不包含手写体、草书，或者十分“花哨的”字体) • 虽然被复印或拍照，字体还是很清晰，没有多余的痕迹或污点<br>• 排列整齐，没有歪歪斜斜的字<br>• 没有超出图片范围，也没有残缺不全，或紧紧贴在图片的边缘</p>
+<p>如果只有一个ConcreteComponent类而没有抽象的Component类，那么Decorator类可以是ConcreteComponent的一个子类，同样道理，如果只有一个ConcreteDecorator类，那么就没有必要建立一个单独的Decorator类，而是把Decorator和ConcreteDecorator的责任合成一个类</p>
 <blockquote>
-<p>$ tesseract text.png textoutput | cat textoutput.txt<br>Warning in pixReadMemPng: work-around: writing to a temp file</p>
+<p>把类中的装饰功能从勒种搬移去除，这样可以化简原有的类，这样可以有效的把类的核心职责和装饰功能区分开。而且可以去除相关类中重复的装饰逻辑</p>
 </blockquote>
-<h3 id="对于背景渐变以及文字模糊的，可以使用Pillow库预处理，让图片更加清晰"><a href="#对于背景渐变以及文字模糊的，可以使用Pillow库预处理，让图片更加清晰" class="headerlink" title="对于背景渐变以及文字模糊的，可以使用Pillow库预处理，让图片更加清晰"></a>对于背景渐变以及文字模糊的，可以使用Pillow库预处理，让图片更加清晰</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">from PIL import Image</div><div class="line">import subprocess</div><div class="line"></div><div class="line">def cleanFile(filePath, newFilePath):</div><div class="line">    image = Image.open(filePath)</div><div class="line"></div><div class="line">    <span class="comment"># 对图片进行阀值过滤，然后保存</span></div><div class="line">    image = image.point(lambda x: 0 <span class="keyword">if</span> x&lt;143 <span class="keyword">else</span> 255)</div><div class="line">    image.save(newFilePath)</div><div class="line"></div><div class="line">    <span class="comment"># 调用系统的tesseract</span></div><div class="line">    subprocess.call([<span class="string">"tesseract"</span>, newFilePath, <span class="string">"output"</span>])</div><div class="line"></div><div class="line">    <span class="comment"># 打开文件读取结果</span></div><div class="line">    outputFile = open(<span class="string">"output.txt"</span>, <span class="string">'r'</span>)</div><div class="line">    <span class="built_in">print</span>((outputFile.read()))</div><div class="line">    outputFile.close()</div><div class="line">cleanFile(<span class="string">"text_2.jpg"</span>,<span class="string">"text_2_clean.png"</span>)</div></pre></td></tr></table></figure>
-<h3 id="从网站图片中抓取文字"><a href="#从网站图片中抓取文字" class="headerlink" title="从网站图片中抓取文字"></a>从网站图片中抓取文字</h3><pre><code class="bash">import time 
-from urllib.request import urlretrieve
-import subprocess
-from selenium import webdriver
+<hr>
+<blockquote>
+<p><strong><em>做一个有文艺气息的码农 ^ _ ^</em></strong></p>
+</blockquote>
 
-<span class="comment">## 读取验证码与训练Tesseract</span>
-PHP内容管理系统Drupal有一个著名的验证码模块，https://www.drupal.org/project/captcha,可以生成不同难度
-的验证码。
-<span class="variable">$tesseract</span> captchaExample.png captcha | cat captcha.txt
-&gt;&gt; 4MMCJ
+          
+        
+      
+    </div>
+    
+    
+    
 
-<span class="comment">### 训练Tesseract</span>
-矩形定位文件（box file），一个验证码图片生成一个矩形定位文件，一个图片的矩形定位文件如下所示：
-    ··4 15 26 33 55 0
-      M 38 13 67 45 0
-      m 79 15 101 26 0
-      C 111 33 136 60 0
-      3 147 17 176 45 0
-第一列符号是图片中的每个字符，后面的 4 个数字分别是包围这个字符的最小矩形的坐标 (图片左下角是原点 (0,0)，4 个数字分别对应每个字符的左下角 x 坐标、左下角 y 坐标、右上角 x 坐标和右上角 y 坐标)，最后一个数字“0”表示图片样本的编号。
-在线工具Tesseract OCR Chopper(http://pp19dd.com/tesseract-ocr-chopper/)
-矩形定位文件必须保存在一个.box后缀的文本文件中。和图片文件一样，文本文件也是用验证码的世纪结果命名（例如，4MmC3.box）
-https://github.com/REMitchell/tesseract-trainer(OReilly.Web.Scraping.with.Python.2015.6的书的作者写的一个同时包图片和.box文件) 
+    
 
-def main(self):
-    languageName = “eng”
-    fontName = “captchaFont”
-    directory = “”
+    
 
-def runAll(self):
-    self.createFontFile()
-    self.cleanImages()
-    self.renameFiles()
-    self.extractUnicode()
-    self.runShapeClustering() 
-    self.runMfTraining() 
-    self.runCnTraining() 
-    self.createTessData()
+    
 
-* language 
-Tesseract 用三个字母的语言缩写代码表示识别的语言种类。可能大多数情况下，你都会 用“eng”表示英语(English)。
-* fontName 
-表示你选择的字体名称，可以是任意名称，但必须是一个不包含空格的单词。
-* directory
-表示包含所有图片和 .box 文件的目录。建议你使用文件夹的绝对路径，但是如果你使 用相对路径，可能需要以 Python 代码运行的目录位置为原点。如果你使用绝对路径， 就可以在电脑的任意位置运行代码了。
+    <footer class="post-footer">
+      
 
-* runAll里每个函数的用法
-1.createFontFile 创建了一个 font_properties 文件，让 Tesseract 知道我们要创建的新字体:
-captchaFont 0 0 0 0 0（这个文件包括字体的名称，后面跟着若干 1 和 0，分别表示应该使用斜体、加粗或其他版 本的字体）
-2.cleanImages 首先创建所有样本图片的高对比度版本，然后转换成灰度图，并进行一些清 理，让 Tesseract 更容易读取图片文件。如果你要处理的验证码图片上面有一些很容易过滤 掉的噪点，那么你可以在这里增加一些步骤来处理它们。
-3.renameFiles 把所有的图片文件和 .box 文件的文件名改变成 Tesseract 需要的形式 (fileNumber 是文件序号，用来区别每个文件):
-• &lt;languageName&gt;.&lt;fontName&gt;.exp&lt;fileNumber&gt;.box • &lt;languageName&gt;.&lt;fontName&gt;.exp&lt;fileNumber&gt;.tiff
-4.extractUnicode 函数会检查所有已创建的 .box 文件，确定要训练的字符集范围。抽取出的 Unicode 会告诉你一共找到了多少个不重复的字符，这也是一个查询字符的好方法，如果 你漏了字符可以用这个结果快速排查。
-5.之后的三个函数，runShapeClustering、runMfTraining 和 runCtTraining 分别用来创建 文件 shapetable、pfftable 和 normproto。它们会生成每个字符的几何和形状信息，也为 Tesseract 提供计算字符若干可能结果的概率统计信息。
-6.最后，Tesseract 会用之前设置的语言名称对数据文件夹编译出的每个文件进行重命名(例 如，shapetable 被重命名为 eng.shapetable)，然后把所有的文件编译到最终的训练文件 eng. traineddata 中。
-你需要做的，就是用下面的Linux和Mac命令行把刚刚创建的eng.traineddata文件复制到tessdata文件夹里
-<span class="variable">$cp</span> /path/to/data/eng.traineddata <span class="variable">$TESSDATA_PREFIX</span>/tessdata(输入自己的路径)
+      
 
-上面只是对Tesseract库强大的字体训练和识别能力的一个简略的概述。详细阅读Tesseract 的文档
-(https://github.com/tesseract-ocr/tesseract/wiki)。
-<span class="comment">## 获取验证码提交答案</span>
-大多数网站生成的验证码图片都具有以下属性
-• 它们是服务器端的程序动态生成的图片。验证码图片的src属性可能和普通图片不太一 样，比如&lt;img src=<span class="string">"WebForm.aspx?id=8AP85CQKE9TJ"</span>&gt;，但是可以和其他图片一样进行 下载和处理。
-• 图片的答案存储在服务器端的数据库里。
-• 很多验证码都有时间限制，如果你太长时间没解决就会失效。虽然这对网络机器人来说
- 不是什么问题，但是如果你想保留验证码的答案一会儿再使用，或者想通过一些方法延
- 长验证码的有效时限，可能很难成功。
-常用的办法就是，首先把验证码图片下载到硬盘里，清理干净，然后用Tesseract处理图片，最后返回符合网站要求的识别结果
-<span class="comment">### 演示如何用网络机器人破解验证码</span>
-``` bash 
-from urllib.request import urlretrieve
-from urllib.request import urlopen
-from bs4 import BeautifulSoup
-import subprocess
-import requests
-from PIL import Image
-from PIL import ImageOps
+      
 
-def cleanImage(imagePath):
-    image = Image.open(imagePath)
-    image = Image.point(lambda x: 0 <span class="keyword">if</span> x &lt; 143 <span class="keyword">else</span> 255)
-    borderImage = ImageOps.expand(image, border=20, fill=<span class="string">'white'</span>)
-    borderImage.save(imagePath)
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
 
-html = urlopen(<span class="string">"http://www.pythonscraping.com/humans-only"</span>)
-bsObj = BeautifulSoup(html)
-<span class="comment"># 收集需要处理的表单数据（包括验证码和输入字段）</span>
-imageLocation = bsObj.find(<span class="string">"img"</span>,{<span class="string">"title"</span>: <span class="string">"Image CAPTCHA"</span>})[<span class="string">"src"</span>]
-fromBuildId = bsObj.find(<span class="string">"input"</span>,{<span class="string">"name"</span>: <span class="string">"from_build_id"</span>})[<span class="string">"value"</span>]
-captchaSid = bsObj.find(<span class="string">"input"</span>, {<span class="string">"name"</span>: <span class="string">"captcha_sid"</span>})[<span class="string">"value"</span>]
-captchaToken = bsObj.find(<span class="string">"input"</span>, {<span class="string">"name"</span>: <span class="string">"captcha_token"</span>})[<span class="string">"value"</span>]
 
-captchaUrl = <span class="string">"http://pythonscraping.com"</span>+imageLocation
-urlretrieve(captchaUrl,<span class="string">'captcha.jpg'</span>)
-cleanImage(<span class="string">"captcha,jpg"</span>)
-p = subprocess.Popen([<span class="string">"tesseract"</span>, <span class="string">"captcha.jpg"</span>, <span class="string">"captcha"</span>],stdout=
-                     subprocess.PIPE,stderr=subprocess.PIPE)
-p.wait()
-f = open(<span class="string">"captcha.txt"</span>, <span class="string">'r'</span>)
+    
+      
 
-<span class="comment"># 清理识别结果中的空格和换行符</span>
-captchResponse = f.read().replace(<span class="string">" "</span>,<span class="string">""</span>).replace(<span class="string">"\n"</span>,<span class="string">""</span>)
-<span class="built_in">print</span>(<span class="string">"Capcha solution attempt: "</span> + captchResponse)
+  
 
-<span class="keyword">if</span> len(captchResponse) == 5:
-    params = {<span class="string">"captcha_token"</span>:captchaToken, <span class="string">"captcha_sid"</span>:fromBuildId,
-                <span class="string">"captcha_response"</span>:captchResponse, <span class="string">"name"</span>:<span class="string">"Ryan Mitchell"</span>,
-                <span class="string">"subject"</span>: <span class="string">"I come to seek the Grail"</span>,
-                <span class="string">"comment_body[und][0][value]"</span>:<span class="string">"...and I am definitely not a bot"</span>
-              }
-    r = requests.post(<span class="string">"http://www.pythonscraping.com/comment/reply/10"</span> ,data=params)
-    responseObj = BeautifulSoup(<span class="string">'r.text'</span>)
-    <span class="keyword">if</span> responseObj.find(<span class="string">"div"</span>,{<span class="string">"class"</span>:<span class="string">"messages"</span>}) is not None:
-        <span class="built_in">print</span>(responseObj.find(<span class="string">"div"</span>, {<span class="string">"class"</span>:<span class="string">"messages"</span>}).get_text())
-    <span class="keyword">else</span>:
-        <span class="built_in">print</span>(<span class="string">"There was a problem reading the CAPTCHA correctly"</span>)
-</code></pre>
+  
+  
+  
 
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/08/设计模式/设计模式之代理模式/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EtanWatson">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EWSUN">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/08/设计模式/设计模式之代理模式/" itemprop="url">设计模式之代理模式</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-08T18:26:06+08:00">
+                2018-04-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/设计模式/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="为别人做嫁衣———-代理模式"><a href="#为别人做嫁衣———-代理模式" class="headerlink" title="为别人做嫁衣———-代理模式"></a>为别人做嫁衣———-代理模式</h1><blockquote>
+<p>为其他对象提供一种代理以控制对这个对象的访问<br>先上图<br><img src="/images/15231832939163.jpg" alt=""></p>
+<p>注：该图画的是大话设计模式中的代理追女孩的图，这里Pursuit里面维护了一个SchoolGril，这个对象是通过Proxy传递过来的</p>
+</blockquote>
+<p>接下来上码：<br>GiveGift</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">public interface GiveGift &#123;</div><div class="line">    public void giveDolls();</div><div class="line">    public void giveFlowers();</div><div class="line">    public void giveChocolate();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Pursuit</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">public class Pursuit implements GiveGift&#123;</div><div class="line"></div><div class="line">    private SchoolGirl mm;</div><div class="line"></div><div class="line">    public Pursuit(SchoolGirl mm)&#123;</div><div class="line">        this.mm = mm;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void giveDolls() &#123;</div><div class="line">        System.out.println(&quot;送洋娃娃!&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void giveFlowers() &#123;</div><div class="line">        System.out.println(&quot;送花&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void giveChocolate() &#123;</div><div class="line">        System.out.println(&quot;送巧克力&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Proxy</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">public class Proxy implements GiveGift&#123;</div><div class="line"></div><div class="line">    private Pursuit gg;</div><div class="line"></div><div class="line">    public Proxy(SchoolGirl mm)&#123;</div><div class="line">        this.gg = new Pursuit(mm);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void giveDolls() &#123;</div><div class="line">        gg.giveDolls();</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void giveFlowers() &#123;</div><div class="line">        gg.giveFlowers();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void giveChocolate() &#123;</div><div class="line">        gg.giveChocolate();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Clinet</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">public class Client &#123;</div><div class="line">    public static void main(String [] args)&#123;</div><div class="line">        SchoolGirl mm = new SchoolGirl();</div><div class="line">        Proxy proxy = new Proxy(mm);</div><div class="line">        proxy.giveChocolate();</div><div class="line">        proxy.giveDolls();</div><div class="line">        proxy.giveFlowers();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/15/Spring/我的Spring之路（五）-Spring Boot（2）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EtanWatson">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EWSUN">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/15/Spring/我的Spring之路（五）-Spring Boot（2）/" itemprop="url">我的Spring之路（五）-Spring Boot （2）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-15T21:37:05+08:00">
+                2018-03-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="基本配置"><a href="#基本配置" class="headerlink" title="基本配置"></a>基本配置</h2><h3 id="入口类和-SpringBootApplication"><a href="#入口类和-SpringBootApplication" class="headerlink" title="入口类和@SpringBootApplication"></a>入口类和@SpringBootApplication</h3><ul>
+<li>*Application为入口类，在main方法中使用SpringApplication.run,启动</li>
+<li><p>SpringBootApplication是Spring Boot的核心注解，他是一个组合注解，主要由<br>(1)@Configuration<br>(2)@EnableAutoConfiguration:让Spring Boot根据类路径中的jar包依赖为当前项目进行自动配置<br>(3)@ComponentScan<br><strong>Spring Boot 会自动扫描@SpringBootApplication所在类的同级包，建议入口类放置的位置在groupId+arctifactID组合的包名下</strong></p>
+<h3 id="关闭特定的自动配置"><a href="#关闭特定的自动配置" class="headerlink" title="关闭特定的自动配置"></a>关闭特定的自动配置</h3><p> @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})</p>
+<h3 id="定制Banner"><a href="#定制Banner" class="headerlink" title="定制Banner"></a>定制Banner</h3></li>
+<li><p>修改Banner<br>(1)在Spring BOot前东德时候会有默认的启动图案<br>(2)我们在src/main/resources下新建一个banner.txt<br>(3)通过<a href="http://patorjk.com/software/taag网站生成字符，复杂到banner.txt中" target="_blank" rel="external">http://patorjk.com/software/taag网站生成字符，复杂到banner.txt中</a><br>(4)启动之后，图案改变</p>
+</li>
+<li><p>关闭banner<br>(1) main里的内容修改为：<br> <code>SpringApplication app new SpringApplication(Ch522Application.calss);</code><br> app.setShowBanner(false);<br> app.run(args);<br>(2) 或使用fluent API修改为：</p>
+<p> new SpringApplicarionBuilder(Ch522Application.class).showBannere(false).run(args);</p>
+</li>
+</ul>
+<h3 id="Spring-Boot的配置文件"><a href="#Spring-Boot的配置文件" class="headerlink" title="Spring Boot的配置文件"></a>Spring Boot的配置文件</h3><p>使用全局配置文件<strong>application.properties</strong>或<strong>application.yml</strong>,放置在<strong>src/main/resources</strong>目录或者类路径的<strong>/config</strong>下</p>
+<h3 id="starter-pom"><a href="#starter-pom" class="headerlink" title="starter pom"></a>starter pom</h3><p>(1)官方 starter pom</p>
+<ul>
+<li>spring-boot-starter:核心starter，包含自动配置，日志，yml文件配置的支持</li>
+<li>spring-boot-starter-actuator：准生产特性，用来监控和管理应用</li>
+<li>spring-boot-starter-remote-shell</li>
+<li>spring-boot-starter-amqp</li>
+<li>spring-boot-starter-aop</li>
+<li>spring-boot-starter-batch</li>
+<li>spring-boot-starter-cache</li>
+<li><p>spring-boot-starter-cloud-connectors<br>(2) 第三方starter pom</p>
+<h3 id="使用xml配置"><a href="#使用xml配置" class="headerlink" title="使用xml配置"></a>使用xml配置</h3><p> @ImportResource({“classpath:some-context.xml”,”classpath:another-context.xml”})</p>
+</li>
+</ul>
+<h2 id="外部配置"><a href="#外部配置" class="headerlink" title="外部配置"></a>外部配置</h2><p>Spring Boot允许使用properties文件，yaml文件或者命令行参数作为外部配置</p>
+<h3 id="命令行参数配置"><a href="#命令行参数配置" class="headerlink" title="命令行参数配置"></a>命令行参数配置</h3><pre><code>java -jar xx.jar --server.port=9090
+</code></pre><h3 id="常规属性配置"><a href="#常规属性配置" class="headerlink" title="常规属性配置"></a>常规属性配置</h3><ol>
+<li><p>实战<br>(1) application.properties增加属性：<br><code>book.author=wangyunfei</code><br><code>book.name=spring boot</code><br>(2) 修改入口类：<br><code>@Value(&quot;$book.author&quot;)</code><br><code>private String bookAuthor;</code><br><code>@Value(&quot;$book.name&quot;)</code><br><code>private String bookName;</code></p>
+<h3 id="类型安全的配置（基于properties）"><a href="#类型安全的配置（基于properties）" class="headerlink" title="类型安全的配置（基于properties）"></a>类型安全的配置（基于properties）</h3><p>Spring Boot还提供基于类型安全的配置方式，通过<em>@ConfigurationProperties</em>将<em>properties</em>属性和一个Bean机器属性关联，从而实现类型安全的配置<br><strong>类型安全的Bean</strong></p>
+<p>import org.springframework.boot.context.properties.ConfigurationProperties<br>@Component<br>// 通过@ConfigurationProperties加载properties文件内的配置，通过prefix属性指定properties的配置的前缀，通过locations指定properties文件的位置<br>@ConfigurationProperties(prefix=”author”,locations={“classpath:config/author.properties”})<br>public class AuthorSettings{</p>
+<pre><code>private String name;
+private Long age;
+public String getName(){
+    return name;
+}
+public void setName(String name){
+    this.name = name;
+}
+public Long getAge(){
+    return age;
+}
+public void setAge(Long age){
+    this.age = age;
+}
+</code></pre><p>}</p>
+</li>
+</ol>
+<h2 id="日志配置"><a href="#日志配置" class="headerlink" title="日志配置"></a>日志配置</h2><p>配置日志级别：</p>
+<pre><code>logging.file=D:/mylog/log.log
+logging.level.org.springframework.web = DEBUG
+</code></pre><h2 id="Profile-配置"><a href="#Profile-配置" class="headerlink" title="Profile 配置"></a>Profile 配置</h2><p>生产环境 application-prod.properties：<code>server.prot=80</code><br>开发环境 application-dev.properties:<code>server.port=8888</code><br>在全局配置中application.properties：<code>spring.profiles.active=dev</code></p>
+<h2 id="Spring-Boot运行原理"><a href="#Spring-Boot运行原理" class="headerlink" title="Spring Boot运行原理"></a>Spring Boot运行原理</h2><p>Spring Boot关于自动配置的源码在spring-boot-autoconfigure-xxx.jar中<br>通过一下三中方式参看当前项目中启用和和未启用的的自动配置的报告</p>
+<ul>
+<li>运行jar时增加的–debug参数：<code>java -jar xx.jar --debug</code></li>
+<li>在application.properties中设置属性：<code>debug=true</code></li>
+<li>在STS中设置</li>
+</ul>
+<h3 id="运行原理"><a href="#运行原理" class="headerlink" title="运行原理"></a>运行原理</h3>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/13/Spring/我的Spring之路（四）-实战Spring Boot(1)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EtanWatson">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EWSUN">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/13/Spring/我的Spring之路（四）-实战Spring Boot(1)/" itemprop="url">我的Spring之路（四）-实战Spring Boot(1)</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-13T20:17:15+08:00">
+                2018-03-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Spring-Boot-概述"><a href="#Spring-Boot-概述" class="headerlink" title="Spring Boot 概述"></a>Spring Boot 概述</h2><p>『习惯优于配置』</p>
+<h3 id="Spring-Boot核心功能"><a href="#Spring-Boot核心功能" class="headerlink" title="Spring Boot核心功能"></a>Spring Boot核心功能</h3><ul>
+<li>可以以jar包的形式独立运行 java -jar xx.jar</li>
+<li>内嵌Servlet容器，无需以war包形式部署项目</li>
+<li>提供starter简化Maven配置</li>
+<li>自动配置Spring</li>
+<li>准生产的应用监控 Spring Boot提供基于http、ssh、telnet对运行是的项目进行监控</li>
+<li>无生成代码和xml配置：Spring Boot不需要任何xml配置即可实现Spring的所有配置</li>
+</ul>
+<h2 id="Spring-Boot的优缺点"><a href="#Spring-Boot的优缺点" class="headerlink" title="Spring Boot的优缺点"></a>Spring Boot的优缺点</h2><p>优点：</p>
+<ul>
+<li>快速构建项目</li>
+<li>对主流开发框架的无配置集成</li>
+<li>项目可独立运行，无需外部依赖Servlet容器</li>
+<li>提供运行是的应用监控</li>
+<li>极大的提高了开发、部署效率</li>
+<li>与云计算天然集成</li>
+</ul>
+<p>缺点：</p>
+<h2 id="Spring-Boot快速搭建"><a href="#Spring-Boot快速搭建" class="headerlink" title="Spring Boot快速搭建"></a>Spring Boot快速搭建</h2><h3 id="http-start-spring-io"><a href="#http-start-spring-io" class="headerlink" title="http://start.spring.io"></a><a href="http://start.spring.io" target="_blank" rel="external">http://start.spring.io</a></h3><h3 id="Spring-Tool-Suite"><a href="#Spring-Tool-Suite" class="headerlink" title="Spring Tool Suite"></a>Spring Tool Suite</h3><h3 id="IntelliJ-IDEA"><a href="#IntelliJ-IDEA" class="headerlink" title="IntelliJ IDEA"></a>IntelliJ IDEA</h3><h3 id="Spring-Boot-CLI-控制台命令工具"><a href="#Spring-Boot-CLI-控制台命令工具" class="headerlink" title="Spring Boot CLI(控制台命令工具)"></a>Spring Boot CLI(控制台命令工具)</h3>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/12/Spring/我的Spring之路（三）-点睛Spring MVC 4.x/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EtanWatson">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EWSUN">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/12/Spring/我的Spring之路（三）-点睛Spring MVC 4.x/" itemprop="url">我的Spring之路（三）-点睛SpringMVC 4.x</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-12T22:12:35+08:00">
+                2018-03-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Spring-MVC的常用注解"><a href="#Spring-MVC的常用注解" class="headerlink" title="Spring MVC的常用注解"></a>Spring MVC的常用注解</h2><h3 id="点睛"><a href="#点睛" class="headerlink" title="点睛"></a>点睛</h3><ul>
+<li>@Controller：表明这个类是Spring MVC里的COntroller，将其声明为Spring 的一个Bean，Dispatcher Servlet会自动扫描注解了此注解的类，并将Web请求映射到注解了@RequestMapping的方法上。在Spring MVC声明控制器Bean的时候，只能使用@Controller</li>
+<li>@RequestMapping：是用来映射Web请求（访问路径和参数）、处理类和方法的。@RequestMapping可注解在类或方法上。注解在方法上的@RequestMapping路径会继承注解在类上的路径，@RequestMapping支持Servlet的request和response作为参数，也支持对request和response的媒体类型进行配置</li>
+<li>@ResponseBody：支持将返回值放在reponse体内，而不是返回一个页面。我们在很多基于Ajax的程序的时候，可以以此注解返回数据，而不是页面；此注解可以放置在返回值前或者方法上</li>
+<li>@RequestBody：允许request的参数在request体中，而不是在直接链接在地址后面。此注解放置在参数前。</li>
+<li>@PathVariable：用来接收路径参数，如/news/001，可接收001作为参数，此注解放置在参数前</li>
+<li><p>@RestController：组合类@Controller和@ResponseBody</p>
+<h3 id="演示"><a href="#演示" class="headerlink" title="演示"></a>演示</h3><p> #1 演示实体类的构造函数，jackson对对象和json做转换时一定需要此空构造<br> public DemoObj(){</p>
+<pre><code>super();
+</code></pre><p> }<br> #2 演示控制器<br> @RequestMapping(produces = “text/plain;charset=UTF-8”)<br> public @ResponseBody String index(HttpServletRequest request){</p>
+<pre><code>return &quot;url:&quot; + request.getRequestURL() + &quot;can access&quot;;
+</code></pre><p> }</p>
+<p> // 可接受HttpServletRequest作为参数，结合@PathVariable使用，访问路径为 /anno/pathvar/xx<br> @RequestMapping(value = “/pathvar/{str}”)<br> public @ResponseBody String demoPathVar(@PathVariable String str, HttpServletRequest request){}</p>
+<p> // request常规获取参数的方式，访问路径为/anno/requestParam?id=1<br> @RequestMapping(value = “requestParam”)<br> public @ResponseBody String passRequestParam(Long id,HttpServletRequest request){}</p>
+<p> //解释参数到对象，访问路径为/anno/obj?id=1&amp;name=xx<br> @RequestMapping(value = “/obj”,produces = “application/json;charset=UTF-8”)<br> // @ReponseBody也可以用在方法上<br>  @ResponseBody<br> public String passRequestParam(DemoObj obj,HttpServletRequest request){}</p>
+<p> // 映射不同的路径到相同的方法<br>  @RequestMapping(value = “/name1”,”/name2”)<br> public @ResponseBody String remove(HttpServletRequest request){}<br> #3 @RestController演示<br> // 放回数据的媒体类型为json，直接返回对象，对象会自动转换成json，xml类似<br> @RequestMapping(value = “/getjson”,produces = “application/json;charset=UTF-8”)<br> public DemoObj getJson(DemoObj obj){</p>
+<pre><code>return new DemoObj(obj.getId()+1,obj.getName()+&quot;yy&quot;);
+</code></pre><p> }</p>
+</li>
+</ul>
+<h2 id="Spring-MVC的基本配置"><a href="#Spring-MVC的基本配置" class="headerlink" title="Spring MVC的基本配置"></a>Spring MVC的基本配置</h2><ul>
+<li>我们的配置类继承一个WebMvcConfigurerAdapter类</li>
+<li><p>并在此类使用@EnableWebMvc注解</p>
+<h3 id="静态资源映射"><a href="#静态资源映射" class="headerlink" title="静态资源映射"></a>静态资源映射</h3><p>静态资源文件需要直接访问在配置里重写addResourceHandlers方法来实现</p>
+<h4 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h4><p>（1）在src/main/resources 下建一个assets/js目录<br> //<br> @Override<br> public void addResourceHandlers(ResourceHandlerRegistry registry){<br> registry.addResourceHandler(“/assets/**”).addResourceLocations(“classpath:/assets/“)<br>}</p>
+<h3 id="拦截器配置"><a href="#拦截器配置" class="headerlink" title="拦截器配置"></a>拦截器配置</h3><p>拦截器实现对每一个请求处理前后进行相关的业务处理，类似于Servlet的Filter，可以让普通的Bean实现<strong>HandlerInterceptor接口</strong>或者继承<strong>HandlerInterceptorAdapter</strong>类来实现自定义拦截器<br>可以通过重写<strong>WebMvcConfigurerAdapter</strong>的<strong>addInterceptors</strong>方法来注册自定义的拦截器</p>
+<p> @Override<br> public boolean preHandle(HttpServletRequest request, HttpServletResponse response,Object handler) throws Exception{</p>
+<pre><code>long startTime = System.currentTimeMillis();
+request.setAttribute(&quot;startTime&quot;, startTime);
+return true;
+</code></pre><p> }</p>
+<p> @Override<br> public void postHandle(HttpServletRequest request,HttpServletResponse response, Object handler,ModelAndView modelAndView) throws Exception{</p>
+<pre><code>long startTime = (Long)request.getAttribute(startTime);
+request.removeAttribute(&quot;startTime&quot;);
+long endTime = System,currentTimeMillis();
+System.out.println(&quot;本次请求处理时间为：&quot; + new Long(endTime - startTime) + &quot;ms&quot;);
+request.setAttribute(&quot;handlingTime&quot;, endTime - startTime);
+</code></pre><p> }<br>(2) 配置</p>
+<p> @Bean<br> public DemoInterceptor demoInterceptor(){</p>
+<pre><code>return new DemoInterceptor();
+</code></pre><p> }</p>
+<p> @Override<br> public void addInterceptors(InterceptorRegistry registry){</p>
+<pre><code>registry.addInterceptor(demoInterceptor());
+</code></pre><p> }</p>
+<h3 id="ControllerAdvice"><a href="#ControllerAdvice" class="headerlink" title="@ControllerAdvice"></a>@ControllerAdvice</h3><p>@ControllerAdvice,注解了@Controller的类的方法可以使用以下方法</p>
+</li>
+<li>ExceptionHandler</li>
+<li>InitBinder</li>
+<li><p>ModelAttribute</p>
+<h3 id="其他配置"><a href="#其他配置" class="headerlink" title="其他配置"></a>其他配置</h3><h4 id="快捷的ViewController-在配置中重写addViewControllers来简化配置"><a href="#快捷的ViewController-在配置中重写addViewControllers来简化配置" class="headerlink" title="快捷的ViewController(在配置中重写addViewControllers来简化配置)"></a>快捷的ViewController(在配置中重写addViewControllers来简化配置)</h4><p> @Override<br> public void addViewControllers(ViewControllerRegistry registry){<br> registry.addViewController(“/index”).setViewName(“/index”);<br> }</p>
+<h3 id="路径匹配参数配置"><a href="#路径匹配参数配置" class="headerlink" title="路径匹配参数配置"></a>路径匹配参数配置</h3><p>@Override<br>public void configurePathMatch(PathMatchConfigurer configurer){<br> configurer.setUseSuffixPatternMatch(false);<br>}</p>
+<h3 id="更多配置"><a href="#更多配置" class="headerlink" title="更多配置"></a>更多配置</h3></li>
+<li><p>WebMvcConfigurerAdapter</p>
+</li>
+<li><p>WebMvcConfigurer</p>
+<h2 id="Spring-MVC的高级配置"><a href="#Spring-MVC的高级配置" class="headerlink" title="Spring MVC的高级配置"></a>Spring MVC的高级配置</h2><h3 id="文件上传配置"><a href="#文件上传配置" class="headerlink" title="文件上传配置"></a>文件上传配置</h3></li>
+<li><p>MultipartResolver 文件上传：在Spring的控制器中，通过MultipartFile file来接收文件，通过MultipartFile[] files介绍多个文件上传</p>
+</li>
+<li><p>示例<br>(1) 添加上传文件依赖<br>(2) 上传页面<br>(3) 添加转向到upload页面的ViewController<br>(4) MultipartResolver配置<br>(5)控制器：使用MultipartFile file 接受上传的文件、使用FileUtils.writeByteArrayToFile</p>
+<h3 id="自定义HttpMessageConverter"><a href="#自定义HttpMessageConverter" class="headerlink" title="自定义HttpMessageConverter"></a>自定义HttpMessageConverter</h3><p>HttpMessageConverter是用来处理request和response里的数据的</p>
+</li>
+<li><p>自定义HttpMessageConverter</p>
+</li>
+</ul>
+<p>   // 泛型为DemoObj<br>    public class MyMessageConverter extends AbstractHttpMessageConverter<demoobj>{<br>    // 新建一个我们自定义的媒体类型application/x-wisely<br>        public MyMessageConverter(){<br>            super(new MediaType(“applictation”,”x-wisely”,Charset.forName(“UTF-8”)));<br>        }<br>        @Override (重写方法)<br>    }</demoobj></p>
+<ul>
+<li><p>配置 在addViewControllers中添加viewController映射页面访问演示页面</p>
+<p> registry.addViewController(“/converter”).setViewName(“converter”);<br> // configureMessageConverters:会覆盖掉mvc多个HttpMessageConverter<br> // extendMessageConVerter：仅添加<br> @Override<br> public void extendMessageConverters(List&lt; HttpMessageConverter&lt; ? &gt; &gt; converters){</p>
+<pre><code>converters.add(converter());
+</code></pre><p> }<br> @Bean<br> public MyMessageConverter converter(){</p>
+<pre><code>return new MyMessageConverter();
+</code></pre><p> }</p>
+</li>
+<li><p>演示控制器</p>
+</li>
+<li>演示代码</li>
+</ul>
+<h3 id="服务端推送技术"><a href="#服务端推送技术" class="headerlink" title="服务端推送技术"></a>服务端推送技术</h3><p>本节的服务端推送技术方案都是基于：当客户端发送请求，服务端会抓住这个请求不放，等有数据更新的时候才返回给客户端<br>双向通信技术-WebSocket（以后演示）</p>
+<h4 id="SSE（Server-Send-Event-服务端发送事件）"><a href="#SSE（Server-Send-Event-服务端发送事件）" class="headerlink" title="SSE（Server Send Event 服务端发送事件）"></a>SSE（Server Send Event 服务端发送事件）</h4><ul>
+<li>Contoller中 @RequestMapping(value=”push”,produces=”text/event-stream”),这是服务器SSE的支持</li>
+<li>演示页面EventSource是SSE的客户端</li>
+<li>配置<h4 id="Servlet-3-0-异步方法处理"><a href="#Servlet-3-0-异步方法处理" class="headerlink" title="Servlet 3.0+异步方法处理"></a>Servlet 3.0+异步方法处理</h4></li>
+<li><p>开启异步方法支持</p>
+<p> Dynamic servlet = servletContext.addServlet(“dispatcher”,new DispatcherServlet(ctx));<br> servlet.addMapping(“/“);<br> servlet.setLoadOnStartup(1);<br> // 开启异步方法支持<br> servlet.setAsyncSupported(true);</p>
+</li>
+<li><p>演示控制器</p>
+</li>
+<li>定时任务</li>
+<li>演示页面</li>
+<li><p>配置：在MyMvcConfig上开始计划任务的支持，使用@EnableScheduling</p>
+<p> @Configuration<br> @EnableWebMvc<br> @EnableScheduling<br> @ComponentScan(“”)<br> public class MyMvcConfig extends WebMvcConfigurerAdapter{}<br> // 添加 viewController:<br> reqistry.addViewController(“/async”).setViewName(“/async”)</p>
+<h2 id="Spring-MVC的测试（本节主要涉及控制器的测试）"><a href="#Spring-MVC的测试（本节主要涉及控制器的测试）" class="headerlink" title="Spring MVC的测试（本节主要涉及控制器的测试）"></a>Spring MVC的测试（本节主要涉及控制器的测试）</h2><p>Servlet相关的模拟器对象：MockMVC，MockHttpServletRequest，MockHttpServletRequest，MockHttpSession</p>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/10/Spring/我的Spring之路（二）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EtanWatson">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EWSUN">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/10/Spring/我的Spring之路（二）/" itemprop="url">我的Spring之路（二）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-10T18:27:35+08:00">
+                2018-03-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Spring-Aware"><a href="#Spring-Aware" class="headerlink" title="Spring Aware"></a>Spring Aware</h2><p>Spring的依赖注入的最大的两点就是你所有的Bean对Spring容器的存在是没有意识的。即你可以将你的容器替换成别的容器。但是在实际项目中，你不可避免的要使用Spring容器本身的功能资源，这时你的Bean必须要意识到Spring容器的存在，才能调用Spring所提供的资源，这就是所谓的Spring Aware，你的Bean将会和Spring框架耦合，因为ApplicationContext接口集成了MessageSource接口，ApplicationEventPublisher接口和ResourceLoader接口，所以Bean继承ApplicationContextAware可以获得Spring容器的所有服务</p>
+<h2 id="多线程"><a href="#多线程" class="headerlink" title="多线程"></a>多线程</h2><p>Spring通过任务执行器（TaskExecutor）来实现多线程和并发编程，使用ThreadPoolTaskExecutor可实现一个基于线程池的TaskExecutor，通过@EnableAsync开启对异步任务的支持，并通过实际执行的Bean的方法中使用@Async注解来声明其是一个异步任务，通过@Async注解表明该方法是个异步方法，如果注解在类级别，则表明该类所有的方法都是异步的方法</p>
+<h2 id="任务计划"><a href="#任务计划" class="headerlink" title="任务计划"></a>任务计划</h2><p>首先通过在配置类注解@EnableScheduling来开启对计划任务的支持<br>然后在要执行计划任务的方法上注解@Scheduled，声明这是一个计划任务<br>包含的任务有</p>
+<ul>
+<li>cron</li>
+<li>fixDelay</li>
+<li>fixRate<h2 id="条件注解"><a href="#条件注解" class="headerlink" title="条件注解"></a>条件注解</h2>@Conditional<h2 id="组合注解与元注解"><a href="#组合注解与元注解" class="headerlink" title="组合注解与元注解"></a>组合注解与元注解</h2></li>
+<li>元注解：可以注解到别的注解上的注解</li>
+<li>组合注解：被注解的注解称之为组合注解，组合注解具备元注解的功能<h2 id="Enable-注解的工作原理"><a href="#Enable-注解的工作原理" class="headerlink" title="@Enable*注解的工作原理"></a>@Enable*注解的工作原理</h2></li>
+<li>第一类：直接导入配置类</li>
+<li>第二类：依据条件选择配置类</li>
+<li>第三类：动态注册Bean<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><h3 id="集成测试"><a href="#集成测试" class="headerlink" title="集成测试"></a>集成测试</h3>Spring通过Spring TestContext FrameWork对集成测试提供顶级支持，它不依赖于特定的测试框架<br>Spring提供了一个SpringJunit4ClassRunner类，它提供了SPring TestContext Framework的功能。通过@ContextConfiguration来配置Application Context，通过@ActiveProfile确定活动的profile</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/01/Spring/我的Spring之路（一）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EtanWatson">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EWSUN">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/01/Spring/我的Spring之路（一）/" itemprop="url">我的Spring之路（一）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-01T08:27:35+08:00">
+                2018-03-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Spring/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>之前有学习过一些Spring，但是总得来说就是太肤浅，只要有你不知道的错误，解决起来还是特别棘手，现在趁着自己想学习一下Spring-boot，在熟悉一下Spring4.x</p>
+<h2 id="整理一些以前没有了解到的知识"><a href="#整理一些以前没有了解到的知识" class="headerlink" title="整理一些以前没有了解到的知识"></a>整理一些以前没有了解到的知识</h2><h3 id="maven中心库中没有jar的处理方式（如oracle）"><a href="#maven中心库中没有jar的处理方式（如oracle）" class="headerlink" title="maven中心库中没有jar的处理方式（如oracle）"></a>maven中心库中没有jar的处理方式（如oracle）</h3><pre><code>你需要通过以下方式将
+</code></pre><h3 id="全局配置使用java配置（如数据库相关配置，MVC相关配置），业务Bean的配置使用注解配置（-Service、-Component、-Repository、-Controller）"><a href="#全局配置使用java配置（如数据库相关配置，MVC相关配置），业务Bean的配置使用注解配置（-Service、-Component、-Repository、-Controller）" class="headerlink" title="全局配置使用java配置（如数据库相关配置，MVC相关配置），业务Bean的配置使用注解配置（@Service、@Component、@Repository、@Controller）"></a>全局配置使用java配置（如数据库相关配置，MVC相关配置），业务Bean的配置使用注解配置（@Service、@Component、@Repository、@Controller）</h3><h2 id="AOP面向切面编程"><a href="#AOP面向切面编程" class="headerlink" title="AOP面向切面编程"></a>AOP面向切面编程</h2><ul>
+<li>使用@Aspect声明一个切面</li>
+<li>使用@After、Before、Around定义建言（advice），可直接将拦截规则（切点）作为参数。</li>
+<li>@PointCut：用来专门定义拦截规则，然后在上面参数中调用</li>
+<li>JoinPoint（连接点）<h2 id="Bean的Scope"><a href="#Bean的Scope" class="headerlink" title="Bean的Scope"></a>Bean的Scope</h2><h3 id="Scope描述的是Spring容器如何新建Bean的实例的，Spring的Scope有以下几种，通过-Scope注解来实现"><a href="#Scope描述的是Spring容器如何新建Bean的实例的，Spring的Scope有以下几种，通过-Scope注解来实现" class="headerlink" title="Scope描述的是Spring容器如何新建Bean的实例的，Spring的Scope有以下几种，通过@Scope注解来实现"></a>Scope描述的是Spring容器如何新建Bean的实例的，Spring的Scope有以下几种，通过@Scope注解来实现</h3></li>
+<li>Singleton：全容器共享一个实例</li>
+<li>Prototype：每次调用新建一个Bean的实例</li>
+<li>Request：Web项目中，给每个http request新建一个Bean实例</li>
+<li>Session：Web项目中，给每个http session新建一个Bean实例</li>
+<li>GlobalSession：只在portal应用中有用<h2 id="Spring-EL和资源调用"><a href="#Spring-EL和资源调用" class="headerlink" title="Spring EL和资源调用"></a>Spring EL和资源调用</h2><h3 id="Spring主要在注解-Value的参数中使用表达式"><a href="#Spring主要在注解-Value的参数中使用表达式" class="headerlink" title="Spring主要在注解@Value的参数中使用表达式"></a>Spring主要在注解@Value的参数中使用表达式</h3></li>
+<li>注入普通字符串</li>
+<li>注入操作系统属性</li>
+<li>注入表达式运算结果</li>
+<li>注入其他Bean的属性</li>
+<li>注入文件内容</li>
+<li>注入网址内容</li>
+<li>注入属性文件<h2 id="Bean的初始化和销毁"><a href="#Bean的初始化和销毁" class="headerlink" title="Bean的初始化和销毁"></a>Bean的初始化和销毁</h2><h3 id="经常会遇到在Bean在使用之前或者之后做一些必要的操作，使用方式"><a href="#经常会遇到在Bean在使用之前或者之后做一些必要的操作，使用方式" class="headerlink" title="经常会遇到在Bean在使用之前或者之后做一些必要的操作，使用方式"></a>经常会遇到在Bean在使用之前或者之后做一些必要的操作，使用方式</h3></li>
+<li>java配置方式 @Bean的initMethod和destroyMethod</li>
+<li>注解方式 利用JSR-250 @PostConstruct 和 @PreDestroy<h2 id="Profile"><a href="#Profile" class="headerlink" title="Profile"></a>Profile</h2><h3 id="在不同环境下使用不同的配置提供了支持"><a href="#在不同环境下使用不同的配置提供了支持" class="headerlink" title="在不同环境下使用不同的配置提供了支持"></a>在不同环境下使用不同的配置提供了支持</h3></li>
+<li>通过设定Environment的ActiveProfiles来设定当前context需要使用的配置环境，在开发中使用@Profile注解类或者方法，达到在不同情况下选择实例化不同的Bean</li>
+<li>通过设定JVM的spring.profiles.avtive参数来配置</li>
+<li>Web项目设置在Servlet的context parameter中<h2 id="事件"><a href="#事件" class="headerlink" title="事件"></a>事件</h2><h3 id="为Bean与Bean组件的消息通信提供了支持，流程如下："><a href="#为Bean与Bean组件的消息通信提供了支持，流程如下：" class="headerlink" title="为Bean与Bean组件的消息通信提供了支持，流程如下："></a>为Bean与Bean组件的消息通信提供了支持，流程如下：</h3></li>
+<li>自定义事件，集成ApplicationEvent</li>
+<li>定义事件监听器，实现ApplicationListener</li>
+<li>使用容器发布事件</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/09/JVM性能相关/java性能优化-操作系统性能监控（一）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EtanWatson">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EWSUN">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/02/09/JVM性能相关/java性能优化-操作系统性能监控（一）/" itemprop="url">java性能优化-操作系统性能监控（一）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-09T18:22:13+08:00">
+                2018-02-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JVM性能相关/" itemprop="url" rel="index">
+                    <span itemprop="name">JVM性能相关</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="java性能优化-操作系统性能监控（一）"><a href="#java性能优化-操作系统性能监控（一）" class="headerlink" title="java性能优化-操作系统性能监控（一）"></a>java性能优化-操作系统性能监控（一）</h1><h2 id="改善性能的3种活动"><a href="#改善性能的3种活动" class="headerlink" title="改善性能的3种活动"></a>改善性能的3种活动</h2><ul>
+<li>性能监控（非侵入式）</li>
+<li>性能分析（侵入式）</li>
+<li>性能调优：为改善应用响应性或吞吐量而更改参数（Tune-able）、源代码或者属性配置的活动。<h2 id="CPU使用率"><a href="#CPU使用率" class="headerlink" title="CPU使用率"></a>CPU使用率</h2></li>
+<li>尽可能降低系统态CPU使用率</li>
+<li>减少停滞或者改善CPu告诉缓存使用率，从而减少CPU在等待内存数据时浪费的时钟周期<h2 id="监控CPU使用率：Linux"><a href="#监控CPU使用率：Linux" class="headerlink" title="监控CPU使用率：Linux"></a>监控CPU使用率：Linux</h2><h3 id="GNOME-System-Monitor"><a href="#GNOME-System-Monitor" class="headerlink" title="GNOME System Monitor"></a>GNOME System Monitor</h3><h3 id="xosview"><a href="#xosview" class="headerlink" title="xosview"></a>xosview</h3><h2 id="命令行监控CPU使用率：Linux和Solaris"><a href="#命令行监控CPU使用率：Linux和Solaris" class="headerlink" title="命令行监控CPU使用率：Linux和Solaris"></a>命令行监控CPU使用率：Linux和Solaris</h2></li>
+<li>vmstat</li>
+<li>mpstat</li>
+<li>top<h2 id="CPU调度程序运行队列"><a href="#CPU调度程序运行队列" class="headerlink" title="CPU调度程序运行队列"></a>CPU调度程序运行队列</h2><em>一般性指导原则：如果在很长一段时间里，运行队列的长度一直都超过虚拟处理器的个数的1倍，就需要关注了，如果很长一段时间里，运行队列的长度达到虚拟处理器个数的3~4倍或更高，则需要立刻引起注意或采取行动</em><h3 id="监控CPU调度程序运行队列：Linux"><a href="#监控CPU调度程序运行队列：Linux" class="headerlink" title="监控CPU调度程序运行队列：Linux"></a>监控CPU调度程序运行队列：Linux</h3></li>
+</ul>
+<ul>
+<li>vmstat 第一列（运行队列长度）<h2 id="内存使用率"><a href="#内存使用率" class="headerlink" title="内存使用率"></a>内存使用率</h2></li>
+</ul>
+<ul>
+<li><strong>系统在进行页面交换或使用虚拟内存时，java应用或JVM会表现出明显的性能问题</strong></li>
+<li><strong>JVM垃圾收集器在系统页面交换时的性能也很差</strong><h3 id="监控内存使用率：Linux（vmstat）"><a href="#监控内存使用率：Linux（vmstat）" class="headerlink" title="监控内存使用率：Linux（vmstat）"></a>监控内存使用率：Linux（vmstat）</h3></li>
+<li>free列监控页面交换</li>
+<li>si、so内存页面换入和换出量<h2 id="监控锁竞争Linux（sysstat包中的pidstat命令监控竞争锁）"><a href="#监控锁竞争Linux（sysstat包中的pidstat命令监控竞争锁）" class="headerlink" title="监控锁竞争Linux（sysstat包中的pidstat命令监控竞争锁）"></a>监控锁竞争Linux（sysstat包中的pidstat命令监控竞争锁）</h2></li>
+<li>pidstat -w 中的cswch/s(不包含所有的上下文切换)，浪费掉的时钟周期，可以有pidstat -w的让步式切换数除以虚拟处理器的数目而得</li>
+<li><code>pidstat -w -I -p 9391 5</code> 每五秒监控进程id为9391的JAVA应用程序</li>
+<li>(cswch/s) / 2(cpu内核数) * 8000 / 3.0G(cpu主频)<h3 id="隔离竞争锁-Oracle-Solaris-Studio-Performance-Analyzer工具"><a href="#隔离竞争锁-Oracle-Solaris-Studio-Performance-Analyzer工具" class="headerlink" title="隔离竞争锁 Oracle Solaris Studio Performance Analyzer工具"></a>隔离竞争锁 Oracle Solaris Studio Performance Analyzer工具</h3><h3 id="监控抢占式上下文-pidstat-w（icsw）"><a href="#监控抢占式上下文-pidstat-w（icsw）" class="headerlink" title="监控抢占式上下文 pidstat -w（icsw）"></a>监控抢占式上下文 pidstat -w（icsw）</h3><h3 id="监控线程迁移"><a href="#监控线程迁移" class="headerlink" title="监控线程迁移"></a>监控线程迁移</h3><h2 id="网络I-O使用率（netstat）"><a href="#网络I-O使用率（netstat）" class="headerlink" title="网络I/O使用率（netstat）"></a>网络I/O使用率（netstat）</h2><h3 id="nicstat工具"><a href="#nicstat工具" class="headerlink" title="nicstat工具"></a>nicstat工具</h3><h3 id="应用性改进的考虑"><a href="#应用性改进的考虑" class="headerlink" title="应用性改进的考虑"></a>应用性改进的考虑</h3></li>
+<li><strong>单次读写数据量小而网络读写量大的应用会消耗大量的系统态CPU</strong></li>
+<li><strong>使用非阻塞的JAVA NIO而不是阻塞的java.net.Socket</strong><h2 id="磁盘I-O使用率（iostat-xm-5）"><a href="#磁盘I-O使用率（iostat-xm-5）" class="headerlink" title="磁盘I/O使用率（iostat -xm 5）"></a>磁盘I/O使用率（iostat -xm 5）</h2></li>
+<li>使用缓冲数据结构 BufferedInputStream BufferedOutputStream<h2 id="其他命令行工具（sar）"><a href="#其他命令行工具（sar）" class="headerlink" title="其他命令行工具（sar）"></a>其他命令行工具（sar）</h2></li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/09/JVM性能相关/java性能优化-JVM概述（一）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EtanWatson">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EWSUN">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/02/09/JVM性能相关/java性能优化-JVM概述（一）/" itemprop="url">java性能优化-JVM概述（一）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-09T18:22:13+08:00">
+                2018-02-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JVM性能相关/" itemprop="url" rel="index">
+                    <span itemprop="name">JVM性能相关</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="HotSpot-VM的基本架构"><a href="#HotSpot-VM的基本架构" class="headerlink" title="HotSpot VM的基本架构"></a>HotSpot VM的基本架构</h2><p>垃圾收集器和JIT是可插拔的，HotSpot VM运行时系统为HotSpot JIT编译器和垃圾收集器提供服务和通用API</p>
+<h2 id="HotSpot-VM运行时"><a href="#HotSpot-VM运行时" class="headerlink" title="HotSpot VM运行时"></a>HotSpot VM运行时</h2><h3 id="命令行选项"><a href="#命令行选项" class="headerlink" title="命令行选项"></a>命令行选项</h3><ul>
+<li>标准选项</li>
+<li>非标准选项（-X:+(-)）</li>
+<li>非稳定选项（-XX:+(-)）<h3 id="VM生命周期"><a href="#VM生命周期" class="headerlink" title="VM生命周期"></a>VM生命周期</h3><strong>启动</strong></li>
+<li>解析命令行选项</li>
+<li>设置堆的大小和JIT编译器（默认自动优化）</li>
+<li>设定环境变量如LD_LIBRARY_PATH和CLASSPATH</li>
+<li>如果命令行有-jar选项，启动器则从指定JAR的manifest中查找Main—Class，否则从命令行读取Main—Class</li>
+<li>使用标准Java本地接口</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/05/JVM性能相关/java性能调优-策略、方法和方法论（一）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EtanWatson">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EWSUN">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/02/05/JVM性能相关/java性能调优-策略、方法和方法论（一）/" itemprop="url">java性能调优-策略、方法和方法论（一）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-05T22:30:13+08:00">
+                2018-02-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JVM性能相关/" itemprop="url" rel="index">
+                    <span itemprop="name">JVM性能相关</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <ul>
+<li>花似雾中看（I don’t know what I don’t know）</li>
+<li>悠然见南山（I know what I don’t know）</li>
+<li>一览众山小（I already konw what I need to know）<h2 id="性能分析的两种方法：自顶向下和自底向上"><a href="#性能分析的两种方法：自顶向下和自底向上" class="headerlink" title="性能分析的两种方法：自顶向下和自底向上"></a>性能分析的两种方法：自顶向下和自底向上</h2><h3 id="自顶向下"><a href="#自顶向下" class="headerlink" title="自顶向下"></a>自顶向下</h3><h3 id="自底向上"><a href="#自底向上" class="headerlink" title="自底向上"></a>自底向上</h3></li>
+</ul>
+<hr>
+<p>cpu指令数和高速缓存未命中率</p>
+<h2 id="选择正确的平台并评估系统性能"><a href="#选择正确的平台并评估系统性能" class="headerlink" title="选择正确的平台并评估系统性能"></a>选择正确的平台并评估系统性能</h2>
           
         
       
@@ -1959,7 +2004,7 @@ captchResponse = f.read().replace(<span class="string">" "</span>,<span class="s
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -2008,7 +2053,7 @@ captchResponse = f.read().replace(<span class="string">" "</span>,<span class="s
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">80</span>
+                <span class="site-state-item-count">93</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

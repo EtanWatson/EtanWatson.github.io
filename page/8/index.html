@@ -310,7 +310,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/19/python数据采集/python-初体验（六）/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/02/python数据采集/python数据收集（四）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="EtanWatson">
@@ -329,7 +329,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/09/19/python数据采集/python-初体验（六）/" itemprop="url">python 初体验（六）</a></h1>
+                <a class="post-title-link" href="/2017/10/02/python数据采集/python数据收集（四）/" itemprop="url">python数据收集（四）</a></h1>
         
 
         <div class="post-meta">
@@ -341,8 +341,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-19T18:53:10+08:00">
-                2017-09-19
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-02T11:03:10+08:00">
+                2017-10-02
               </time>
             
 
@@ -364,8 +364,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/python/" itemprop="url" rel="index">
-                    <span itemprop="name">python</span>
+                  <a href="/categories/python数据收集/" itemprop="url" rel="index">
+                    <span itemprop="name">python数据收集</span>
                   </a>
                 </span>
 
@@ -403,616 +403,62 @@
       
         
           
-            <p>现在学习类中的一个重要特性：继承，</p>
-<h1 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h1><h2 id="一个简单的继承的例子"><a href="#一个简单的继承的例子" class="headerlink" title="一个简单的继承的例子"></a>一个简单的继承的例子</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#在初体验五中，我们建立了一个Car类，在这里我们将他设置为父类</span></div><div class="line"> class ElectricCar(Car):</div><div class="line">	def __init__(self,make,model,year):</div><div class="line">		super().__init__(make,model,year)</div><div class="line">		self.battery_size = 70  <span class="comment"># 添加子类的属性</span></div><div class="line">	def describe_battery(self):</div><div class="line">		<span class="built_in">print</span>(“打印电瓶车的信息”)</div><div class="line"> my_electric_car = ElectricCar(<span class="string">'tesla'</span>,<span class="string">'model'</span>,2016)</div><div class="line"> <span class="built_in">print</span>(my_electric_car.get_descriptive_name())</div></pre></td></tr></table></figure>
-<h2 id="子类方法重写"><a href="#子类方法重写" class="headerlink" title="子类方法重写"></a>子类方法重写</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">class ElectricCar(Car):</div><div class="line">def fill_gas_tank:</div><div class="line">	<span class="built_in">print</span>(“如果调用子类的fill_gas_tank()方法,将会忽略父类的fill_gas_tank()”)</div></pre></td></tr></table></figure>
-<h2 id="将实例用作属性"><a href="#将实例用作属性" class="headerlink" title="将实例用作属性"></a>将实例用作属性</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">class Battery():</div><div class="line">def __init__(self,battery_size = 70):</div><div class="line">	self.battery_size = battery_size</div><div class="line"><span class="comment">#在ElectricCar 类中的属性中加入：self.battery = Battery()</span></div></pre></td></tr></table></figure>
-<h1 id="导入类"><a href="#导入类" class="headerlink" title="导入类"></a>导入类</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">from car import Car <span class="comment"># 导入类的基本语法</span></div><div class="line"><span class="comment">#一个模块中有多个类，需要指定类名</span></div><div class="line">from car import ElectricCar</div><div class="line"><span class="comment"># 从一个模块中导入多个类</span></div><div class="line">from car import Car,ElectricCar</div><div class="line"><span class="comment"># 导入整个模块</span></div><div class="line">import car</div><div class="line"><span class="comment"># 导入模块中的所有类</span></div><div class="line">from car import *</div><div class="line"><span class="comment"># 在一个模块中导入另外一个模块 例如在ElectricCar中：</span></div><div class="line">from car import Car</div></pre></td></tr></table></figure>
-<h1 id="Python标准库"><a href="#Python标准库" class="headerlink" title="Python标准库"></a>Python标准库</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">collections - &gt; OrderedDict <span class="comment"># 有顺序的字典</span></div></pre></td></tr></table></figure>
-<h1 id="类的编码风格"><a href="#类的编码风格" class="headerlink" title="类的编码风格"></a>类的编码风格</h1><p> 1.驼峰命名法<br> 2.类定义后面包含一个文档字符串<br> 3.可以使用空格来组织代码，但是不要滥用空格<br> 4.需要同时导入标准库的模块和自己编写的模块的时候，将标准库的放在上面，中间用空格隔开</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/19/python数据采集/python-初体验（五）/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="EtanWatson">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/header.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="EWSUN">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/19/python数据采集/python-初体验（五）/" itemprop="url">python 初体验（五）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-19T16:44:41+08:00">
-                2017-09-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/python/" itemprop="url" rel="index">
-                    <span itemprop="name">python</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>今天来学习python中的类，之前有在C++和JAVA中接触到类，不知道python中会有什么不同的地方呢</p>
-<h1 id="类"><a href="#类" class="headerlink" title="类"></a>类</h1><h2 id="创建类"><a href="#创建类" class="headerlink" title="创建类"></a>创建类</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"> class Dog():</div><div class="line">	def __init__(self,name,age) <span class="comment">#特别要注意，这里前后各有两个下划线</span></div><div class="line">		self.name = name</div><div class="line">		self.age = age</div><div class="line">	def sit(self):</div><div class="line">		<span class="built_in">print</span>(self.name.title() + <span class="string">"is now sitting"</span>)</div><div class="line">	def roll_over(self):</div><div class="line">		<span class="built_in">print</span>(self.name.title() + <span class="string">" roll over !"</span>)</div><div class="line"> <span class="comment">#创建一个实例</span></div><div class="line"> my_dog = Dog(‘willie’,6)</div><div class="line"> <span class="comment">#调用属性</span></div><div class="line"> my_dog.name.title()</div><div class="line"> <span class="comment">#调用属性</span></div><div class="line"> my_dog.sit() </div><div class="line"> 	</div><div class="line">``` </div><div class="line"><span class="comment">## 属性操作</span></div><div class="line"><span class="comment">### 给属性设定默认值</span></div><div class="line">``` bash </div><div class="line"> def __init__(self,make,model,year):</div><div class="line">		self.make = make</div><div class="line">		self.model = model</div><div class="line">		self.year = year</div><div class="line">		self.odometer_reading = 0	 <span class="comment">#默认值</span></div></pre></td></tr></table></figure>
-<h3 id="修改属性的值"><a href="#修改属性的值" class="headerlink" title="修改属性的值"></a>修改属性的值</h3><h4 id="直接修改属性值"><a href="#直接修改属性值" class="headerlink" title="直接修改属性值"></a>直接修改属性值</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"> my_new_car.odometer_reading = 23</div><div class="line">``` </div><div class="line"><span class="comment">#### 通过方法修改属性值</span></div><div class="line">``` bash </div><div class="line"> def update_odometer(self,mileage):</div><div class="line">	<span class="keyword">if</span> mileage &gt;= self.odometer_reading:</div><div class="line">		self.odometer_reading = mileage</div><div class="line">        <span class="keyword">else</span></div><div class="line">		<span class="built_in">print</span>(“can`t roll back”)</div><div class="line">  def update_odometer(self,miles):</div><div class="line">	self.odometer_reading += miles</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/19/python数据采集/python-初体验（四）/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="EtanWatson">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/header.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="EWSUN">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/19/python数据采集/python-初体验（四）/" itemprop="url">python 初体验（四）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-19T15:24:45+08:00">
-                2017-09-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/python/" itemprop="url" rel="index">
-                    <span itemprop="name">python</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="while-循环"><a href="#while-循环" class="headerlink" title="while 循环"></a>while 循环</h1><h2 id="while-基本语法"><a href="#while-基本语法" class="headerlink" title="while 基本语法"></a>while 基本语法</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">while</span> True:</div><div class="line">    	city = input(prompt)</div><div class="line"><span class="keyword">if</span>(city) == ‘quit’:</div><div class="line">	<span class="built_in">break</span></div><div class="line"><span class="keyword">else</span>:</div><div class="line">	<span class="built_in">print</span>(“I`d love to go ” + city.title())</div></pre></td></tr></table></figure>
-<h2 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h2><h3 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a>基本语法</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"> def print_models(unprinted_designs,completed_models):</div><div class="line">		<span class="keyword">while</span> unprinted_designs:</div><div class="line">			current_design = unprinted_designs.pop()</div><div class="line">			<span class="built_in">print</span>(<span class="string">"Printing model: "</span> + current_design)</div><div class="line">			completed_models.append(current_design)	</div><div class="line"> def show_completed_model(completed_models):</div><div class="line">		<span class="built_in">print</span>(<span class="string">"\nThe following models have been printed:"</span>)</div><div class="line">		<span class="keyword">for</span> completed_models <span class="keyword">in</span> completed_models:</div><div class="line">			<span class="built_in">print</span>(completed_models)						</div><div class="line"> unprinted_designs = [<span class="string">'iphone case'</span>,<span class="string">'robot pendant'</span>,<span class="string">'dodecahedron'</span>]</div><div class="line"> completed_models = []</div><div class="line"></div><div class="line"> print_models(unprinted_designs[:],completed_models)</div><div class="line"> show_completed_model(completed_models)	 </div><div class="line">``` </div><div class="line">该方式使用列表的切片的方式传递实参，因此不改变原列表的值，除非有必要，否则会给系统带来不必要的时间开销和内存开销</div><div class="line"><span class="comment">### 传递任意数量的实参</span></div><div class="line">``` bash </div><div class="line"> def make_pizza(*toppings):</div><div class="line">	<span class="built_in">print</span>(<span class="string">"\n make a pizza whith the following toppings:"</span>)</div><div class="line">	<span class="keyword">for</span> topping <span class="keyword">in</span> toppings:</div><div class="line">		<span class="built_in">print</span>(<span class="string">"- "</span> + topping)</div><div class="line"> make_pizza(<span class="string">'pepperoni'</span>)</div><div class="line"> make_pizza(<span class="string">'mushrooms'</span>,<span class="string">'green peppers'</span>,<span class="string">'extra cheese'</span>)</div></pre></td></tr></table></figure>
-<p>如果要让函数接收不同类型的实参，必须在函数定义中将接纳任意数量的实参的形参放在最后<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">def make_pizza(size,*toppings):</div><div class="line"><span class="built_in">print</span>(<span class="string">"\n make a pizza whith the following toppings:"</span>)</div><div class="line"><span class="keyword">for</span> topping <span class="keyword">in</span> toppings:</div><div class="line">	<span class="built_in">print</span>(<span class="string">"- "</span> + topping)</div><div class="line">make_pizza(12,’pepperoni<span class="string">')</span></div><div class="line"><span class="string">make_pizza(16,’mushrooms'</span>,<span class="string">'green peppers'</span>,<span class="string">'extra cheese'</span>)</div></pre></td></tr></table></figure></p>
-<h3 id="使用任意数量的关键字实参"><a href="#使用任意数量的关键字实参" class="headerlink" title="使用任意数量的关键字实参"></a>使用任意数量的关键字实参</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">def bulid_profile(frist,last,**user_info):</div><div class="line">profile = &#123;&#125;</div><div class="line">profile[<span class="string">'frist_name'</span>] = frist</div><div class="line">profile[<span class="string">'last_name'</span>] = last</div><div class="line"><span class="keyword">for</span> key,value <span class="keyword">in</span> user_info.items():</div><div class="line">	profile[key] = value</div><div class="line"><span class="built_in">return</span> profile</div><div class="line">user_profile = bulid_profile(<span class="string">'albert'</span>,<span class="string">'einstein'</span>,location = <span class="string">'princeton'</span>,field = <span class="string">'physics'</span>)</div><div class="line"><span class="built_in">print</span>(user_profile )</div></pre></td></tr></table></figure>
-<h3 id="将函数存储在模块中"><a href="#将函数存储在模块中" class="headerlink" title="将函数存储在模块中"></a>将函数存储在模块中</h3><h4 id="导入整个模块"><a href="#导入整个模块" class="headerlink" title="导入整个模块"></a>导入整个模块</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#pizza_import.py </span></div><div class="line"> def make_pizza(size,*toppings):</div><div class="line">	<span class="built_in">print</span>(<span class="string">"\nMaking a "</span> + str(size) + <span class="string">"-inch pizza with the following toppings:"</span>)</div><div class="line">	<span class="keyword">for</span> topping <span class="keyword">in</span> toppings:</div><div class="line">		<span class="built_in">print</span>(<span class="string">"-"</span> + topping)</div></pre></td></tr></table></figure>
-<p>下面是主程序<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">import pizza_import</div><div class="line">pizza_import.make_pizza(16,<span class="string">'pepperoni'</span>)</div><div class="line">pizza_import.make_pizza(12,<span class="string">'mushrooms'</span>,<span class="string">'green peppers'</span>,<span class="string">'extra cheese'</span>)</div></pre></td></tr></table></figure></p>
-<h4 id="导入特定函数"><a href="#导入特定函数" class="headerlink" title="导入特定函数"></a>导入特定函数</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">from pizza import make_pizza</div></pre></td></tr></table></figure>
-<h4 id="使用as给模块和函数指定别名"><a href="#使用as给模块和函数指定别名" class="headerlink" title="使用as给模块和函数指定别名"></a>使用as给模块和函数指定别名</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">from pizza import as p  <span class="comment"># 模块</span></div><div class="line">from pizza import make_pizza as map <span class="comment"># 函数</span></div></pre></td></tr></table></figure>
-<h4 id="导入模块中的所有函数"><a href="#导入模块中的所有函数" class="headerlink" title="导入模块中的所有函数"></a>导入模块中的所有函数</h4><pre><code class="bash">from pizza import * <span class="comment"># 这样导入，函数在该模块中可以直接使用</span>
-</code></pre>
-<h4 id="函数编写指南"><a href="#函数编写指南" class="headerlink" title="函数编写指南"></a>函数编写指南</h4><pre><code>1.描述性函数名，只使用小写和下划线
-2.简明的阐述其函数概念的注释，给形参指定默认值的时候等于号两边不要有空格
-</code></pre>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/18/数据挖掘/数据挖掘初体验（一）/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="EtanWatson">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/header.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="EWSUN">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/18/数据挖掘/数据挖掘初体验（一）/" itemprop="url">数据挖掘初体验（一）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-18T20:51:31+08:00">
-                2017-09-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/数据挖掘/" itemprop="url" rel="index">
-                    <span itemprop="name">数据挖掘</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="What？什么是数据挖掘"><a href="#What？什么是数据挖掘" class="headerlink" title="What？什么是数据挖掘"></a>What？什么是数据挖掘</h1><p>简单的来说，数据挖掘，就是数据中知识的发现。他也可以定义为一个过程，包括：数据清理，数据集成，数据选择，数据变换，数据挖掘，模式评估，知识表示<br>1.可以挖掘什么类型的模式：<br>    1.1 特征化与区分<br>    1.2 频繁（序列）模式，关联和相关性挖掘<br>    1.3 分类与回归<br>    1.4 聚类分析<br>    1.5 离群点分析<br>1.1 特征化与区分<br>     方式: &lt;1 数据特征化 一般的汇总所有研究类（目标类）的数据<br>         &lt;2 数据区分  将目标类与一个或多个可比较类（对比类）进行比较<br>         &lt;3 数据特征化和区分<br>1.2 频繁（序列）模式，关联和相关性挖掘<br>    方式: &lt;1 单维关联规则<br>         &lt;2 多维关联规则<br>1.3 用于预测分析的分类与回归<br>    分类：导出模型形式：<br>        分类规则（IF-THEN）<br>        决策树             </p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/18/python数据采集/python-初体验（三）/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="EtanWatson">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/header.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="EWSUN">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/18/python数据采集/python-初体验（三）/" itemprop="url">python 初体验（三）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-18T09:36:41+08:00">
-                2017-09-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/python/" itemprop="url" rel="index">
-                    <span itemprop="name">python</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>书上的好多练习没做，等有时间专门把书上的习题整理做一下</p>
-<h1 id="字典"><a href="#字典" class="headerlink" title="字典"></a>字典</h1><h2 id="一个简单的字典的例子"><a href="#一个简单的字典的例子" class="headerlink" title="一个简单的字典的例子"></a>一个简单的字典的例子</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">alien_0 = &#123;‘color’:’green’,’points’:5&#125;</div><div class="line"><span class="built_in">print</span>(alien_0[‘color’])</div><div class="line"><span class="built_in">print</span>(alien_0[‘points’]</div></pre></td></tr></table></figure>
-<h2 id="字典操作"><a href="#字典操作" class="headerlink" title="字典操作"></a>字典操作</h2><h3 id="添加健-值对-键值对的排序顺序与添加顺序不同"><a href="#添加健-值对-键值对的排序顺序与添加顺序不同" class="headerlink" title="添加健-值对(键值对的排序顺序与添加顺序不同)"></a>添加健-值对(键值对的排序顺序与添加顺序不同)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">alien_0[‘x_position’] = 0</div><div class="line">alien_0[‘y_position’] = 25</div></pre></td></tr></table></figure>
-<h3 id="修改字典中的值"><a href="#修改字典中的值" class="headerlink" title="修改字典中的值"></a>修改字典中的值</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">alien_0[‘color’] = ‘yellow’</div></pre></td></tr></table></figure>
-<h3 id="删除键值对-删除以后，表面该键值对永久消失了"><a href="#删除键值对-删除以后，表面该键值对永久消失了" class="headerlink" title="删除键值对(删除以后，表面该键值对永久消失了)"></a>删除键值对(删除以后，表面该键值对永久消失了)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">del alien_0[‘points’]</div></pre></td></tr></table></figure>
-<h3 id="由类似对象组成的字典"><a href="#由类似对象组成的字典" class="headerlink" title="由类似对象组成的字典"></a>由类似对象组成的字典</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"> favorite_languages =&#123;</div><div class="line">‘jen’ : ‘python’,</div><div class="line">‘sarch’ : ‘c’,</div><div class="line">‘edward’: ‘ruby’,</div><div class="line">‘phil’ : ‘C++’</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
-<h2 id="遍历字典"><a href="#遍历字典" class="headerlink" title="遍历字典"></a>遍历字典</h2><h3 id="遍历所有键值对"><a href="#遍历所有键值对" class="headerlink" title="遍历所有键值对"></a>遍历所有键值对</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"> <span class="keyword">for</span> key ,value <span class="keyword">in</span> user_0.items():</div><div class="line"><span class="built_in">print</span>(“\nKey:” + key)</div><div class="line"><span class="built_in">print</span>(“Value:” + value)</div></pre></td></tr></table></figure>
-<h3 id="遍历字典中的所有键"><a href="#遍历字典中的所有键" class="headerlink" title="遍历字典中的所有键"></a>遍历字典中的所有键</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">  <span class="keyword">for</span> name <span class="keyword">in</span> favorite_languages.keys():</div><div class="line">	<span class="built_in">print</span>(name.title())</div><div class="line"><span class="comment">#其中keys()的结果调用了函数sorted(),所以在遍历前对这个列表进行排序</span></div></pre></td></tr></table></figure>
-<h3 id="遍历字典中的所有值"><a href="#遍历字典中的所有值" class="headerlink" title="遍历字典中的所有值"></a>遍历字典中的所有值</h3><pre><code class="bash"><span class="keyword">for</span> value <span class="keyword">in</span> favorite_languages.values():
-  <span class="built_in">print</span>(value.title())
-</code></pre>
-<h2 id="嵌套"><a href="#嵌套" class="headerlink" title="嵌套"></a>嵌套</h2><h3 id="字典列表"><a href="#字典列表" class="headerlink" title="字典列表"></a>字典列表</h3><pre><code class="bash">  alien_0 = {};
-  alien_1 = {};
-  alien_2 = {};
-  aliens = [alien_0,alien_1,alien_2]
-<span class="comment">#或者是自动生成</span>
- aliens = []
- <span class="keyword">for</span> aliens_number <span class="keyword">in</span> range(30):
-    new_alien = {<span class="string">'color'</span>:<span class="string">'green'</span>,<span class="string">'ponits'</span>:<span class="string">'5'</span>,<span class="string">'speed'</span>:<span class="string">'slow'</span>}
-    aliens.append(new_alien)
- <span class="keyword">for</span> alien <span class="keyword">in</span> aliens[:5]:
-    <span class="built_in">print</span>(alien)
-<span class="comment">#或者是类似于下面这个例子的：</span>
+            <h1 id="使用API"><a href="#使用API" class="headerlink" title="使用API"></a>使用API</h1><h2 id="API与普通网站的区别"><a href="#API与普通网站的区别" class="headerlink" title="API与普通网站的区别"></a>API与普通网站的区别</h2><p>1.API请求使用非常严谨的语法 2.其次API用JSON或XML格式表示数据，而不是HTML</p>
+<h2 id="API的通用规则"><a href="#API的通用规则" class="headerlink" title="API的通用规则"></a>API的通用规则</h2><p>第一次使用API的时候，建议阅读文档</p>
+<h3 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h3><p>利用HTTP从网络服务获取信息的四种方式：<br>1.GET<br>2.POST<br>3.PUT<br>4.DELETE</p>
+<h3 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h3><h3 id="服务器响应"><a href="#服务器响应" class="headerlink" title="服务器响应"></a>服务器响应</h3><p>XML/JSON -&gt; json更小，在js框架中更好处理<br>API调用</p>
+<h3 id="Echo-Nest"><a href="#Echo-Nest" class="headerlink" title="Echo Nest"></a>Echo Nest</h3><h3 id="解析JSON数据"><a href="#解析JSON数据" class="headerlink" title="解析JSON数据"></a>解析JSON数据</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">import json</div><div class="line">from urllib.request import urlopen</div><div class="line"></div><div class="line">def getCountry(ipAddress):</div><div class="line">    response = urlopen(<span class="string">"http://freegeoip.net/json/"</span>+ipAddress).<span class="built_in">read</span>().decode(<span class="string">'utf-8'</span>)</div><div class="line">    responseJson = json.loads(response)</div><div class="line">    <span class="built_in">return</span> responseJson.get(<span class="string">'country_code'</span>)</div><div class="line"><span class="built_in">print</span>(getCountry(<span class="string">"50.78.253.58"</span>))</div><div class="line">下面的例子将json字符串处理成python可以处理的json对象</div><div class="line">import json</div><div class="line">jsonString = <span class="string">'&#123;"arrayOfNums":[&#123;"number":0&#125;,&#123;"number":1&#125;,&#123;"number":2&#125;],'</span> \</div><div class="line">             <span class="string">'"arrayOfFruits":[&#123;"fruit":"apple"&#125;,&#123;"fruit":"banana"&#125;,&#123;"fruit":"pear"&#125;]&#125;'</span></div><div class="line">jsonObj = json.loads(jsonString)</div><div class="line"><span class="built_in">print</span>(jsonObj.get(<span class="string">"arrayOfNums"</span>))</div><div class="line"><span class="built_in">print</span>(jsonObj.get(<span class="string">"arrayOfNums"</span>)[1])</div><div class="line"><span class="built_in">print</span>(jsonObj.get(<span class="string">"arrayOfNums"</span>)[1].get(<span class="string">"number"</span>)+</div><div class="line">jsonObj.get(<span class="string">"arrayOfNums"</span>)[2].get(<span class="string">"number"</span>))</div><div class="line"><span class="built_in">print</span>(jsonObj.get(<span class="string">"arrayOfFruits"</span>)[2].get(<span class="string">"fruit"</span>))</div><div class="line">可以着重注意一下load()函数</div></pre></td></tr></table></figure>
+<h3 id="Python的集合类型简介"><a href="#Python的集合类型简介" class="headerlink" title="Python的集合类型简介"></a>Python的集合类型简介</h3><p>集合是无序的，set集合的好处是它存储的值不会重复<br>在未来可能需要扩展的代码，在决定使用集合还是列表时，有两件事情需要考虑：虽然列表迭代速度比集合稍微快一点，<br>但集合查找速度更快</p>
+<h3 id="示例代码"><a href="#示例代码" class="headerlink" title="示例代码"></a>示例代码</h3><pre><code class="bash">from urllib.request import urlopen,HTTPError
+from bs4 import BeautifulSoup
+import datetime
+import random
+import re
+import json
+
+random.seed(datetime.datetime.now())
+def getLinks(articleUrl):
+    html = urlopen(<span class="string">"http://en.wikipedia.org"</span>+articleUrl)
+    bsObj = BeautifulSoup(html,<span class="string">'html.parser'</span>)
+    <span class="built_in">return</span> bsObj.find(<span class="string">"div"</span>,{<span class="string">"id"</span>:<span class="string">"bodyContent"</span>}).findAll(<span class="string">"a"</span>,
+                                                          href=re.compile(<span class="string">"^(/wiki/)((?!:).)*$"</span>))
+def getHistoryIPs(pageUrl):
+    <span class="comment"># 编辑历史页面URL链接格式是：</span>
+    <span class="comment"># http://en.wikipedia.org/w/index.php?title=Title_in_URL&amp;action=history</span>
+    pageUrl = pageUrl.replace(<span class="string">"/wiki/"</span>,<span class="string">""</span>)
+    historyUrl = <span class="string">"http://en.wikipedia.org/w/index.php?title="</span> +pageUrl+<span class="string">"&amp;action=history"</span>
+    <span class="built_in">print</span>(<span class="string">"history url is: "</span> + historyUrl)
+    html = urlopen(historyUrl)
+    bsObj = BeautifulSoup(html,<span class="string">'html.parser'</span>)
+    <span class="comment"># 找出class属性是"mw-anonuserlink"的链接</span>
+    <span class="comment"># 它们用IP地址代替用户</span>
+    ipAddressse = bsObj.findAll(<span class="string">"a"</span>,{<span class="string">"class"</span>:<span class="string">"mw-anonuserlink"</span>})
+    addressList = <span class="built_in">set</span>()
+    <span class="keyword">for</span> ipAddress <span class="keyword">in</span> ipAddressse:
+        addressList.add(ipAddress.get_text())
+        <span class="built_in">return</span> addressList
+
+def getCountry(ipAddress):
+    try:
+        response = urlopen(<span class="string">"http://freegeoip.net/json/"</span>+ipAddress)\
+            .<span class="built_in">read</span>().decode(<span class="string">'utf-8'</span>)
+    except HTTPError:
+        <span class="built_in">return</span> None
+    responseJson = json.loads(response)
+    <span class="built_in">return</span> responseJson.get(<span class="string">"country_code"</span>)
+
+links = getLinks(<span class="string">"/wiki/Python_(programming_language)"</span>)
+
+<span class="keyword">while</span>(len(links) &gt; 0):
+    <span class="keyword">for</span> link <span class="keyword">in</span> links:
+        <span class="built_in">print</span>(<span class="string">"------------------------"</span>)
+        historyIPs = getHistoryIPs(link.attrs[<span class="string">"href"</span>])
+        <span class="keyword">for</span> historyIP <span class="keyword">in</span> historyIPs:
+            country = getCountry(historyIP)
+            <span class="keyword">if</span> country is not None:
+                <span class="built_in">print</span>(historyIP+ <span class="string">" is from "</span> + country)
+    newLink = links[random.randint(0, len(links)-1)].attrs[<span class="string">'herf'</span>]
+    links = getLinks(newLink)
 </code></pre>
 
           
@@ -1062,7 +508,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/17/python数据采集/python初体验（二）/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/30/python数据采集/python数据收集（三）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="EtanWatson">
@@ -1081,7 +527,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/09/17/python数据采集/python初体验（二）/" itemprop="url">python初体验（二）</a></h1>
+                <a class="post-title-link" href="/2017/09/30/python数据采集/python数据收集（三）/" itemprop="url">python数据收集（三）</a></h1>
         
 
         <div class="post-meta">
@@ -1093,8 +539,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-17T16:56:37+08:00">
-                2017-09-17
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-30T20:10:29+08:00">
+                2017-09-30
               </time>
             
 
@@ -1116,8 +562,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/python/" itemprop="url" rel="index">
-                    <span itemprop="name">python</span>
+                  <a href="/categories/python数据收集/" itemprop="url" rel="index">
+                    <span itemprop="name">python数据收集</span>
                   </a>
                 </span>
 
@@ -1155,24 +601,369 @@
       
         
           
-            <h2 id="操作列表"><a href="#操作列表" class="headerlink" title="操作列表"></a>操作列表</h2><h3 id="遍历"><a href="#遍历" class="headerlink" title="遍历"></a>遍历</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ magicians = [<span class="string">'alice'</span>,<span class="string">'david'</span>,<span class="string">'carloina'</span>]</div><div class="line">$ <span class="keyword">for</span> magician <span class="keyword">in</span> magicians:</div><div class="line">$	<span class="built_in">print</span>(magician)</div></pre></td></tr></table></figure>
-<p>这里要非常注意，不要遗漏了magicans后面的冒号</p>
-<h3 id="创建数值列表"><a href="#创建数值列表" class="headerlink" title="创建数值列表"></a>创建数值列表</h3><p>1.使用函数range()<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> value <span class="keyword">in</span> range(1,5):</div><div class="line">    <span class="built_in">print</span>(value)</div></pre></td></tr></table></figure></p>
-<p>2.创建数字列表<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">numbers = list(range(1,6))</div><div class="line">numbers = list(range(2,11,2)</div><div class="line"><span class="comment"># 平方运算</span></div><div class="line">squares = []</div><div class="line"><span class="keyword">for</span> value <span class="keyword">in</span> range(1,11)</div><div class="line">squares.append(value**2)</div></pre></td></tr></table></figure></p>
-<p>3.对数字列表执行简单的统计计算<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">digts = [1,2,3,4,5,6,7,8,9]</div><div class="line">min(digts)</div><div class="line">max(digts)</div><div class="line">sum(digts)</div></pre></td></tr></table></figure></p>
+            <h1 id="开始采集"><a href="#开始采集" class="headerlink" title="开始采集"></a>开始采集</h1><h2 id="遍历单个域名"><a href="#遍历单个域名" class="headerlink" title="遍历单个域名"></a>遍历单个域名</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">from urllib.request import urlopen</div><div class="line">from bs4 import BeautifulSoup</div><div class="line">import datetime</div><div class="line">import random</div><div class="line">import re</div><div class="line"></div><div class="line">random.seed(datetime.datetime.now())</div><div class="line">def getLinks(articleUrl):</div><div class="line">    html = urlopen(<span class="string">"http://en.wikipedia.org"</span>+articleUrl)</div><div class="line">    bsObj = BeautifulSoup(html)</div><div class="line">    <span class="built_in">return</span> bsObj.find(<span class="string">"div"</span>, &#123;<span class="string">"id"</span>:<span class="string">"bodyContent"</span>&#125;).findAll(<span class="string">"a"</span>,</div><div class="line">                          href=re.compile(<span class="string">"^(/wiki/)((?!:).)*$"</span>))</div><div class="line">links = getLinks(<span class="string">"/wiki/Kevin_Bacon"</span>)</div><div class="line"><span class="keyword">while</span> len(links) &gt; 0:</div><div class="line">    newArticle = links[random.randint(0, len(links)-1)].attrs[<span class="string">"href"</span>]</div><div class="line">    <span class="built_in">print</span>(newArticle)</div><div class="line">    links = getLinks(newArticle)</div><div class="line"><span class="comment">#伪随机数和随机数种子</span></div><div class="line">random.seed(datetime.datetime.now()) <span class="comment">#种子重复，会导致随机数重复，所以这里采用系统时间作为种子</span></div><div class="line">random.randint(0,len(links)-1) <span class="comment">#返回0-len(links)-1的随机整数</span></div><div class="line"><span class="comment">#python的伪随机数生成器用的是梅森旋转算法，它产生的随机数很难预测且均匀分布</span></div></pre></td></tr></table></figure>
+<p>#要注意异常处理</p>
+<h2 id="采集整个网站"><a href="#采集整个网站" class="headerlink" title="采集整个网站"></a>采集整个网站</h2><p>1.深网（deep Web）和暗网(dark Web)<br>2.遍历整个网站的网络数据采集有许多好处<br>  <1 生成网站地图="" <2="" 收集数据="" 链接去重="" 集合set类型="" <figure="" class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line">from urllib.request import urlopen</div><div class="line">from bs4 import BeautifulSoup</div><div class="line">import re</div><div class="line"></div><div class="line">pages = <span class="built_in">set</span>()</div><div class="line">def getLinks(pageUrl):</div><div class="line">    global pages</div><div class="line">    html = urlopen(<span class="string">"http://en.wikipedia.org"</span>+pageUrl)</div><div class="line">    bsObj = BeautifulSoup(html)</div><div class="line">    <span class="keyword">for</span> link <span class="keyword">in</span> bsObj.findAll(<span class="string">"a"</span>, href=re.compile(<span class="string">"^(/wiki/)"</span>)):</div><div class="line">        <span class="keyword">if</span> <span class="string">'href'</span> <span class="keyword">in</span> link.attrs:</div><div class="line">            <span class="keyword">if</span> link.attrs[<span class="string">'href'</span>] not <span class="keyword">in</span> pages:</div><div class="line">                <span class="comment"># 我们遇到了新页面</span></div><div class="line">                newPage = link.attrs[<span class="string">'href'</span>]</div><div class="line">                <span class="built_in">print</span>(newPage)</div><div class="line">                pages.add(newPage)</div><div class="line">                getLinks(newPage)</div><div class="line">getLinks(<span class="string">""</span>)</div><div class="line"><span class="comment">#关于递归的警告</span></div><div class="line">如果递归运行的次数非常多，前面的递归程序就很可能崩溃</div><div class="line">python默认的递归限制（自我调用次数）是1000次</div><div class="line"><span class="comment">### 收集整个网站数据</span></div><div class="line">``` bash</div><div class="line">from urllib.request import urlopen</div><div class="line">from bs4 import BeautifulSoup</div><div class="line">import re</div><div class="line">pages = <span class="built_in">set</span>()</div><div class="line">def getLinks(pageUrl):</div><div class="line">    global pages</div><div class="line">    html = urlopen(<span class="string">"http://en.wikipedia.org"</span>+pageUrl)</div><div class="line">    bsObj = BeautifulSoup(html)</div><div class="line">    try:</div><div class="line">        <span class="built_in">print</span>(bsObj.h1.get_text())</div><div class="line">        <span class="built_in">print</span>(bsObj.find(id=<span class="string">"mw-content-text"</span>).findAll(<span class="string">"p"</span>)[0])</div><div class="line">        <span class="built_in">print</span>(bsObj.find(id=<span class="string">"ca-edit"</span>).find(<span class="string">"span"</span>).find(<span class="string">"a"</span>).attrs[<span class="string">'href'</span>])</div><div class="line">    except AttributeError: <span class="built_in">print</span>(<span class="string">"页面缺少一些属性!不过不用担心!"</span>)</div><div class="line">    <span class="keyword">for</span> link <span class="keyword">in</span> bsObj.findAll(<span class="string">"a"</span>, href=re.compile(<span class="string">"^(/wiki/)"</span>)):</div><div class="line">        <span class="keyword">if</span> <span class="string">'href'</span> <span class="keyword">in</span> link.attrs:</div><div class="line">            <span class="keyword">if</span> link.attrs[<span class="string">'href'</span>] not <span class="keyword">in</span> pages:</div><div class="line">                <span class="comment"># 我们遇到了新页面</span></div><div class="line">                newPage = link.attrs[<span class="string">'href'</span>]</div><div class="line">                <span class="built_in">print</span>(<span class="string">"----------------\n"</span>+newPage)</div><div class="line">                pages.add(newPage)</div><div class="line">                getLinks(newPage)</div><div class="line">getLinks(<span class="string">""</span>)</div></pre></td></tr></table></1></p>
+<p>#在一个异常处理语句中包裹多岗语句显然是有点儿危险的，你没有办法识别除究竟哪行代码出现了异常，其次，如果有个页面没</p>
+<p>#有前面的标题内容，却有”编辑”按，那么由于前面已经发生异常，后面的编辑连接就不会出现</p>
+<p>#偶尔都是一些数据，只要保存详细的日志就不是什么问题了</p>
+<h2 id="通过互联网采集（多个域名采集）"><a href="#通过互联网采集（多个域名采集）" class="headerlink" title="通过互联网采集（多个域名采集）"></a>通过互联网采集（多个域名采集）</h2><p>相比之前的单个域名采集，互联网采集要难得多——不同网站的布局迥然不同。这就意味着我们必须在要寻找的信息<br>以及查找方式上都极具灵活性<br>在你写爬虫随意跟外链跳转之前，请问自己几个问题<br>1.我要搜集那些数据？这些数据可以通过采集几个已经确定的网站完成吗？（永远是最简单的做法）？<br>  或者我的爬虫需要发现那些我可能不知道的网站吗？<br>2.当我的爬虫到某个网站，它是立即顺着下一个出站链接跳到一个新网站，还是在网站上待一会儿，深入采集网站的内容<br>3.有没有我不想采集的一类网站？我对非英文网站的内容感兴趣吗？<br>4.如果我的网络爬虫引起了某个网管的怀疑，我该如何避免法律责任</p>
+<p>几个灵活的python函数组合起来就可以实现不同类型的网络爬虫<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line">from urllib.request import urlopen</div><div class="line">from bs4 import BeautifulSoup</div><div class="line">import re</div><div class="line">import datetime</div><div class="line">import random</div><div class="line">pages = <span class="built_in">set</span>()</div><div class="line">random.seed(datetime.datetime.now())</div><div class="line"><span class="comment"># 获取页面所有内链的列表</span></div><div class="line">def getInternalLinks(bsObj, includeUrl):</div><div class="line">    internalLinks = []</div><div class="line">    <span class="comment"># 找出所有以"/"开头的链接</span></div><div class="line">    <span class="keyword">for</span> link <span class="keyword">in</span> bsObj.findAll(<span class="string">"a"</span>, href=re.compile(<span class="string">"^(/|.*"</span>+includeUrl+<span class="string">")"</span>)):</div><div class="line">        <span class="keyword">if</span> link.attrs[<span class="string">'href'</span>] is not None:</div><div class="line">            <span class="keyword">if</span> link.attrs[<span class="string">'href'</span>] not <span class="keyword">in</span> internalLinks:</div><div class="line">                internalLinks.append(link.attrs[<span class="string">'href'</span>])</div><div class="line">    <span class="built_in">return</span> internalLinks</div><div class="line"><span class="comment"># 获取页面所有外链的列表</span></div><div class="line">def getExternalLinks(bsObj, excludeUrl):</div><div class="line">    externalLinks = []</div><div class="line">    <span class="comment"># 找出所有以"http"或"www"开头且不包含当前URL的链接</span></div><div class="line">    <span class="keyword">for</span> link <span class="keyword">in</span> bsObj.findAll(<span class="string">"a"</span>,href=re.compile(<span class="string">"^(http|www)((?!"</span> + excludeUrl + <span class="string">").)*$"</span>)):</div><div class="line">        <span class="keyword">if</span> link.attrs[<span class="string">'href'</span>] is not None:</div><div class="line">            <span class="keyword">if</span> link.attrs[<span class="string">'href'</span>] not <span class="keyword">in</span> externalLinks: externalLinks.append(link.attrs[<span class="string">'href'</span>])</div><div class="line">    <span class="built_in">return</span> externalLinks</div><div class="line">def splitAddress(address):</div><div class="line">    addressParts = address.replace(<span class="string">"http://"</span>, <span class="string">""</span>).split(<span class="string">"/"</span>)</div><div class="line">    <span class="built_in">return</span> addressParts</div><div class="line">def getRandomExternalLink(startingPage):</div><div class="line">    html = urlopen(startingPage)</div><div class="line">    bsObj = BeautifulSoup(html)</div><div class="line">    externalLinks = getExternalLinks(bsObj, splitAddress(startingPage)[0])</div><div class="line">    <span class="keyword">if</span> len(externalLinks) == 0:</div><div class="line">        internalLinks = getInternalLinks(startingPage)</div><div class="line">        <span class="built_in">return</span> getExternalLinks(internalLinks[random.randint(0,len(internalLinks) - 1)])</div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        <span class="built_in">return</span> externalLinks[random.randint(0, len(externalLinks) - 1)]</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">def followExternalOnly(startingSite):</div><div class="line">    externalLink = getRandomExternalLink(<span class="string">"http://oreilly.com"</span>)</div><div class="line">    <span class="built_in">print</span>(<span class="string">"随机外链是:"</span>+externalLink)</div><div class="line">    followExternalOnly(externalLink)</div><div class="line">followExternalOnly(<span class="string">"http://oreilly.com"</span>)</div></pre></td></tr></table></figure></p>
+<p>#网站首页上并不能保证一直能发现外链。这时为了能够发现外链，就需要用一种类似前面案例中使用的采集方法，即递归</p>
+<p>#深入一个网站直到找到一个外链才停止<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">allExtLinks = <span class="built_in">set</span>()</div><div class="line">allIntLinks = <span class="built_in">set</span>()</div><div class="line">def getAllExternalLinks(siteUrl):</div><div class="line">    html = urlopen(siteUrl)</div><div class="line">    bsObj = BeautifulSoup(html)</div><div class="line">    internalLinks = getInternalLinks(bsObj, splitAddress(siteUrl)[0])</div><div class="line">    externalLinks = getExternalLinks(bsObj, splitAddress(siteUrl)[0])</div><div class="line">    <span class="keyword">for</span> link <span class="keyword">in</span> externalLinks:</div><div class="line">        <span class="keyword">if</span> link not <span class="keyword">in</span> allExtLinks:</div><div class="line">            allExtLinks.add(link)</div><div class="line">        <span class="built_in">print</span>(link)</div><div class="line">    <span class="keyword">for</span> link <span class="keyword">in</span> internalLinks:</div><div class="line">        <span class="keyword">if</span> link not <span class="keyword">in</span> allIntLinks:</div><div class="line">            <span class="built_in">print</span>(<span class="string">"即将获取链接的URL是:"</span> + link)</div><div class="line">        allIntLinks.add(link)</div><div class="line">        getAllExternalLinks(link)</div><div class="line">getAllExternalLinks(<span class="string">"http://oreilly.com"</span>)</div></pre></td></tr></table></figure></p>
+<p>#写代码之前拟个大纲或画个流程图是很好的编程习惯，这么做不仅可以为你后期处理节省好多时间，更重要的是可以防止<br>自己在爬虫变得越来越复杂是乱了方寸<br>*处理网页重定向<br> 重定向分为两种：服务器端重定向，客户端重定向；在服务器端的重定向urllib库一般会给你自动处理，但是你要注意，<br> 你要采集的页面URL可能并不是你当前所在的页面的URL</p>
+<h2 id="用Scrapy采集"><a href="#用Scrapy采集" class="headerlink" title="用Scrapy采集"></a>用Scrapy采集</h2><h3 id="创建新的Scrapy项目"><a href="#创建新的Scrapy项目" class="headerlink" title="创建新的Scrapy项目"></a>创建新的Scrapy项目</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$scrapy</span> startproject wikiSpider</div><div class="line"><span class="comment">#然后在spiders文件夹（一定要注意路径）里创建一个articleSpider.py文件，另外需要在items.py文件中，我们需要定义一个Article类</span></div><div class="line">from scrapy import Item,Field</div><div class="line">class Ariticle(Item): <span class="comment"># 每个Item对象表示网站上的一个页面 我们现在只收集title字段</span></div><div class="line">    <span class="comment"># define the fields for your item here like:</span></div><div class="line">    <span class="comment"># name = scrapy.Field()</span></div><div class="line">    title = Field()</div></pre></td></tr></table></figure>
+<h3 id="填坑？"><a href="#填坑？" class="headerlink" title="填坑？"></a>填坑？</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#from scrapy.contrib.spiders import CrawlSpider, Rule</span><span class="comment">#from wikiSpider.items import Article</span><span class="comment">#from scrapy.contrib.linkextractors.sgml import SgmlLinkExtractor</span></div><div class="line">from scrapy.spiders import CrawlSpider, Rule</div><div class="line">from wikiSpider.items import Article</div><div class="line">from scrapy.linkextractors import LinkExtractor</div><div class="line"></div><div class="line">class ArticleSpider(CrawlSpider):</div><div class="line">    name=<span class="string">"article"</span></div><div class="line">    allowed_domains = [<span class="string">"en.wikipedia.org"</span>]</div><div class="line">    start_urls = [<span class="string">"http://en.wikipedia.org/wiki/Main_Page"</span>,</div><div class="line">                    <span class="string">"http://en.wikipedia.org/wiki/Python_%28programming_language%29"</span>]</div><div class="line">    rules = [Rule(LinkExtractor(allow=(<span class="string">'(/wiki/)((?!:).)*$'</span>),),</div><div class="line">                                            callback=<span class="string">"parse_item"</span>, follow=True)]</div><div class="line">    def parse(self, response):</div><div class="line">        item = Article()</div><div class="line">        title = response.xpath(<span class="string">'//h1/text()'</span>)[0].extract()</div><div class="line">        <span class="built_in">print</span>(<span class="string">"Title is: "</span>+title)</div><div class="line">        item[<span class="string">'title'</span>] = title</div><div class="line">        <span class="built_in">return</span> item</div></pre></td></tr></table></figure>
+<p>由于我用的是scrapy1.4+python3,上面是书上原来的代码scrapy版本不详，python2.7，使用上面的代码运行，你会发现好多的函数和包都丢弃或者换位置了，虽然本机有2.7python 但是scrapy的版本不知道该如何弄，所以找了1.4的版本的文旦<br>查阅了一下，改了一下包引用以及函数，但是结果不知道是否达到预期，慢慢学习吧</p>
+<h3 id="Scrapy处理日志"><a href="#Scrapy处理日志" class="headerlink" title="Scrapy处理日志"></a>Scrapy处理日志</h3><p>五种级别日志 CRITICAL ERROR WARNING DEBUG INFO<br>如果级别设置为ERROR，那么只有CRITICAL 和ERROR日志会显示出来<br>将日志输出到一个独立的文件中<br>$ scrapy crawl article -s LOG_FILE=wiki.log<br>如果目录中没有wiki.log,那么运行程序会创建一个新文件，然后把所有的日志都保存在里面，如果已经存在，会在原文后面加入新的日志文件</p>
+<h3 id="输出不同格式"><a href="#输出不同格式" class="headerlink" title="输出不同格式"></a>输出不同格式</h3><p>$ scrapy crawl article -o articles.csv -t csv<br>$ scrapy crawl article -o articles.json -t json<br>$ scrapy crawl article -o articles.xml -t xml<br>当然，你也可以自定义Item对象</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/30/python数据采集/python数据收集（二）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EtanWatson">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EWSUN">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/30/python数据采集/python数据收集（二）/" itemprop="url">python数据收集（二）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-30T15:54:29+08:00">
+                2017-09-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python数据收集/" itemprop="url" rel="index">
+                    <span itemprop="name">python数据收集</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="复杂的HTML解析"><a href="#复杂的HTML解析" class="headerlink" title="复杂的HTML解析"></a>复杂的HTML解析</h1><h2 id="不是一直都要用锤子"><a href="#不是一直都要用锤子" class="headerlink" title="不是一直都要用锤子"></a>不是一直都要用锤子</h2><p>例如：<br>$ bsObj.findAll(“table”)[4].findAll(“tr”)[2].find(“td”).findAll(“div”)[1].find(“a”)<br>虽然可以达到目标，但是除了代码欠缺美感之外，还有就是管理员对网页稍作修改，代码就会失效，甚至会毁了整个<br>网络爬虫<br>如何解决该问题呢？<br>1.寻找样式更友好的移动版或者看看有没有打印此页的链接<br>2.寻找隐藏在javascript文件里的信息<br>3.你要的信息或许也可以从网页的URL链接里获取<br>4.找找你要的信息是不是该网站从别的网站上抓取出来的</p>
+<h2 id="再端一碗BeautifulSoup"><a href="#再端一碗BeautifulSoup" class="headerlink" title="再端一碗BeautifulSoup"></a>再端一碗BeautifulSoup</h2><h3 id="利用好css中的class和ID属性"><a href="#利用好css中的class和ID属性" class="headerlink" title="利用好css中的class和ID属性"></a>利用好css中的class和ID属性</h3><p>ex:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">from urllib.request import urlopen</div><div class="line">from bs4 import BeautifulSoup</div><div class="line"></div><div class="line">html = urlopen(<span class="string">"http://www.pythonscraping.com/pages/warandpeace.html"</span>)</div><div class="line">bsObj = BeautifulSoup(html,<span class="string">"html.parser"</span>)</div><div class="line">nameList = bsObj.findAll(<span class="string">"span"</span>,&#123;<span class="string">"class"</span>:<span class="string">"green"</span>&#125;)</div><div class="line"><span class="keyword">for</span> name <span class="keyword">in</span> nameList:</div><div class="line">    <span class="built_in">print</span>(name.get_text())</div><div class="line"><span class="comment">#使用name.get_text()会将标签中的内容提取出来，如果你正在处理一个包含许多超链接，段落和标签的</span></div><div class="line"><span class="comment">#大段源码，.get_text()会将这些处理成只剩下一串不带标签的文字，一般情况下，尽可能的保留HTML文档的标签结构</span></div></pre></td></tr></table></figure></p>
+<h3 id="BeautifulSoup的find-和findAll"><a href="#BeautifulSoup的find-和findAll" class="headerlink" title="BeautifulSoup的find()和findAll()"></a>BeautifulSoup的find()和findAll()</h3><p>函数定义：<br>findAll(tag, attributes, recursive, text, limit, keywords)<br>find(tag, attributes, recursive, text, keywords)<br>下面来介绍一下各个参数<br>recursive:bool型 True：查找标签参数的所有子标签（默认）<br>        False：只查找文档的一级标签<br>text:更具标签的文本内容去匹配<br>$ nameList = bsObj.findAll(text=”the prince”)<br>$ print(len(nameList))<br>limit:find等价于finall的limit等于1，获取前几项是按照网页上的顺序排序的<br>keyword<br>以下每组效果相同<br>$ bsObj.findAll(id=”text”)<br>$ bsObj.findAll(“”, {“id”:”text”})</p>
+<p>$ bsObj.findAll(class<em>=”green”) #由于class是python的保留字，所以必须在其后面添加</em><br>$ bsObj.findAll(“”, {“class”:”green”})</p>
+<h3 id="其他BeautifulSoup对象"><a href="#其他BeautifulSoup对象" class="headerlink" title="其他BeautifulSoup对象"></a>其他BeautifulSoup对象</h3><p>常用对象： 1.BeautifulSoup 2.Tag对象（前面已经提到过，例如：bsObj.div.h1）<br>不常用对象：NavigableString对象：用来表示标签里的文字<br>     Comment 对象：用来查找HTML文档的注释标签 &lt;!—- 像这样 —&gt;</p>
+<h3 id="导航树"><a href="#导航树" class="headerlink" title="导航树"></a>导航树</h3><p>如果你需要通过标签在文档中的位置来查找标签，就使用导航树(Navigating Trees)<br>$ bsObj.tag.subTag.anotherSubTag</p>
+<h4 id="处理子标签和其他后代标签"><a href="#处理子标签和其他后代标签" class="headerlink" title="处理子标签和其他后代标签"></a>处理子标签和其他后代标签</h4><p>$ bsObj.div.findAll(“img”)<br>如果你只想找出子标签，可以用.children标签<br>$ from urllib.request import urlopen<br>$ from bs4 import BeautifulSoup<br>$ html = urlopen(“<a href="http://www.pythonscraping.com/pages/page3.html" target="_blank" rel="external">http://www.pythonscraping.com/pages/page3.html</a>“)<br>$ bsObj = BeautifulSoup(html)<br>$ for child in bsObj.find(“table”,{“id”:”giftList”}).children:<br>    print(child)<br>如果你用descendants()函数，就会将其所有后代标签打印出来</p>
+<h4 id="处理兄弟标签"><a href="#处理兄弟标签" class="headerlink" title="处理兄弟标签"></a>处理兄弟标签</h4><p>$ from urllib.request import urlopen<br>$ from bs4 import BeautifulSoup<br>$ html = urlopen(“<a href="http://www.pythonscraping.com/pages/page3.html" target="_blank" rel="external">http://www.pythonscraping.com/pages/page3.html</a>“)<br>$ bsObj = BeautifulSoup(html)<br>$ for sibling in bsObj.find(“table”,{“id”:”giftList”}).tr.next_siblings:<br>    print(sibling)</p>
+<p>#这里需要注意的是，next_siblings只会找到他后面的兄弟标签</p>
+<p>#让标签的选择更具体(如果可能的话）<br>$ bsObj.find(“table”,{“id”:”giftList”}).tr</p>
+<p>#罗列一下查找子标签的四个函数<br>next_sibling 和 previous_sibling<br>next_siblings 和 previous_siblings<br>从命名规范中我们也可以发现其各自的用途以及区别，这里不在赘述</p>
+<h4 id="父标签处理"><a href="#父标签处理" class="headerlink" title="父标签处理"></a>父标签处理</h4><p>$ from urllib.request import urlopen<br>$ from bs4 import BeautifulSoup<br>$ html = urlopen(“<a href="http://www.pythonscraping.com/pages/page3.html" target="_blank" rel="external">http://www.pythonscraping.com/pages/page3.html</a>“)<br>$ bsObj = BeautifulSoup(html)<br>$ print(bsObj.find(“img”,{“src”:”../img/gifts/img1.jpg”}).parent.previous_sibling.get_text())</p>
+<h2 id="正则表达式：如果你有一个问题打算用正则表达式来解决，那么就是两个问题了"><a href="#正则表达式：如果你有一个问题打算用正则表达式来解决，那么就是两个问题了" class="headerlink" title="正则表达式：如果你有一个问题打算用正则表达式来解决，那么就是两个问题了"></a>正则表达式：如果你有一个问题打算用正则表达式来解决，那么就是两个问题了</h2><p>ex：邮箱正则表达式：[A-Za-z0-9._+]+@[A-Za-z]+.(com|org\edu\net)<br>OK,接下来我们学习一下12中python中最常用的正则表达式符号</p>
+<ul>
+<li>: 匹配前面的字符，子表达式或括号里的字符0次或多次    a<em>b</em>      aaaaaaaaa,aaabbb,bbbb</li>
+</ul>
+<ul>
+<li>: 匹配前面的字符，子表达式或括号里的字符至少一次    a+b+       aaaabbb ab<br>[]: 匹配任意一个字符（相当于”任选一个”）        [A-Z]<em>   APPLe,GAPITALS<br>(): 表达式编组（在正则表达式的规划里编组会优先运行）    (a</em>b)<em>      aaabaab<br>{m,n}: 匹配前面的字符，子表达式或括号里的字符m到n次（包含m或n）     a{2,3}b{2,3}<br>[^]: 匹配任意一个不在括号里的字符            [^A-Z]</em>     sdasdasd<br>| : 匹配任意一个由竖线分割哥的字符，子表达式        b(a|i|e) bad,bid,bed<br>. : 匹配任意单个字符（包括符号，数字和空格等）        b.d     bad,bzd,b$d,b d<br>^ : 字符串开始位置的字符或子表达式            ^a     apple,asdf,a<br>\ : 转义字符（把有特殊含义的字符转换成字面形式）         . | \<br>$ : 经常用在正则表达式的末尾，表示”从字符串的末端匹配”。如果不用它，<br>  每个正则表达式实际都带着’.<em>’模式，只会从字符串的开头进行匹配。这个符号<br>  可以看做是^符号的反义词<br>?!  “不包含”。这个奇怪的组合通常会放在字符或正则表达式前面，表示字符不能<br>  出现在诺表字符串里。字符通常会在字符窜的不同部位出现。如果要在整个字符串<br>  中全部排除某个字符，就加上^和$符号               ^((?![A-Z]).)</em>$    <h2 id="正则表达式和BeautifulSoup"><a href="#正则表达式和BeautifulSoup" class="headerlink" title="正则表达式和BeautifulSoup"></a>正则表达式和BeautifulSoup</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">from urllib.request import urlopen</div><div class="line">from bs4 import BeautifulSoup</div><div class="line">import re</div><div class="line">html = urlopen(<span class="string">"http://www.pythonscraping.com/pages/page3.html"</span>)</div><div class="line">bsObj = BeautifulSoup(html)</div><div class="line">images = bsObj.findAll(<span class="string">"img"</span>,&#123;<span class="string">"src"</span>:re.compile(<span class="string">"\.\.\/img\/gifts/img.*\.jpg"</span>)&#125;)</div><div class="line"><span class="keyword">for</span> image <span class="keyword">in</span> images:</div><div class="line">    <span class="built_in">print</span>(image[<span class="string">"src"</span>])</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="获取属性"><a href="#获取属性" class="headerlink" title="获取属性"></a>获取属性</h2><p>对于一个标签对象，可以用下面的代码获取它的全部属性：<br>$ myTag.attrs #返回的是Python字典对象<br>$ myImgTag.attrs[“src”]</p>
+<h2 id="Lambda表达式：本质上就是一个函数"><a href="#Lambda表达式：本质上就是一个函数" class="headerlink" title="Lambda表达式：本质上就是一个函数"></a>Lambda表达式：本质上就是一个函数</h2><p>BeautifulSoup允许我们把特定函数类型当做findAll函数的参数-&gt;限定：标签作为参数，返回结果是boolean型<br>BeautifulSoup用这个函数来评估他遇到的每个标签对象，最后把评估结果为真的标签保留，把其他标签剔除<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">soup.findAll(lambda tag: len(tag.attrs) == 2) <span class="comment">#这个在我的环境下不起作用，先标注一下</span></div><div class="line"><span class="comment">#返回结果</span>&lt;div class=<span class="string">"body"</span> id=<span class="string">"content"</span>&gt;&lt;/div&gt;&lt;span style=<span class="string">"color:red"</span> class=<span class="string">"title"</span>&gt;&lt;/span&gt;</div></pre></td></tr></table></figure></p>
+<h2 id="超越BeautifulSoup"><a href="#超越BeautifulSoup" class="headerlink" title="超越BeautifulSoup"></a>超越BeautifulSoup</h2><p>lxml -&gt; <a href="http://lxml.de/" target="_blank" rel="external">http://lxml.de/</a> 用c语言写的，处理绝大多数HTML文档时的速度都非常快（学习成本高）<br>HTML parser -&gt; python自带解析库，不需要重新安装</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/30/python数据采集/python数据收集（一）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EtanWatson">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EWSUN">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/30/python数据采集/python数据收集（一）/" itemprop="url">python数据收集（一）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-30T10:46:43+08:00">
+                2017-09-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python数据收集/" itemprop="url" rel="index">
+                    <span itemprop="name">python数据收集</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>之前的python爬虫初体验，是看视频教学的，感觉不太踏实，正好现在需要系统的学一下爬虫，所有就找了一本python数据采集的书来看看，为了区分学习计划，所以将这个作为数据采集第一篇笔记，加油，坚持下去！</p>
+<h1 id="初见爬虫"><a href="#初见爬虫" class="headerlink" title="初见爬虫"></a>初见爬虫</h1><h2 id="关于urllib"><a href="#关于urllib" class="headerlink" title="关于urllib"></a>关于urllib</h2><p>urllib被分为：urllib.request、urllib.parse和urllib.error 三个子模块</p>
+<h2 id="安装BeautifulSoup"><a href="#安装BeautifulSoup" class="headerlink" title="安装BeautifulSoup"></a>安装BeautifulSoup</h2><h2 id="用虚拟环境保存库文件"><a href="#用虚拟环境保存库文件" class="headerlink" title="用虚拟环境保存库文件"></a>用虚拟环境保存库文件</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">$ virtualenv scrapingEnv</div><div class="line"><span class="comment">#这样就创建了一个叫作scrapingEnv的新环境，你需要先激活它再使用：</span></div><div class="line">$ <span class="built_in">cd</span> scrapingEnv/</div><div class="line">$ <span class="built_in">source</span> bin/activate</div><div class="line"><span class="comment">#你可以在新建的scrapingEnv环境里，安装并使用BeautifulSoup</span></div><div class="line"><span class="comment">#当你不在使用虚拟机环境的库时，可以通过释放命令来退出环境：</span></div><div class="line">$ deactivate</div></pre></td></tr></table></figure>
+<h2 id="运行BeautifulSoup"><a href="#运行BeautifulSoup" class="headerlink" title="运行BeautifulSoup"></a>运行BeautifulSoup</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">from urllib.request import urlopenfrom bs4 import BeautifulSouphtml = urlopen(<span class="string">"http://www.pythonscraping.com/pages/page1.html"</span>) bsObj = BeautifulSoup(html.read())<span class="built_in">print</span>(bsObj.h1)</div></pre></td></tr></table></figure>
+<h2 id="可靠的网络连接"><a href="#可靠的网络连接" class="headerlink" title="可靠的网络连接"></a>可靠的网络连接</h2><h3 id="html-urlopen-“http-news-baidu-com-“-是如何处理异常的？"><a href="#html-urlopen-“http-news-baidu-com-“-是如何处理异常的？" class="headerlink" title="html = urlopen(“http://news.baidu.com/“)是如何处理异常的？"></a>html = urlopen(“<a href="http://news.baidu.com/“)是如何处理异常的？" target="_blank" rel="external">http://news.baidu.com/“)是如何处理异常的？</a></h3><p>这行代码主要可能会发生两种异常</p>
 <ol>
-<li>列表解析<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">squares = [value**2 <span class="keyword">for</span> value <span class="keyword">in</span> range(1,11)</div></pre></td></tr></table></figure>
+<li><p>页面在服务器上不存在<br> 404 Page Not Found<br> 500 Internal Server Error<br>所有这些类似的情形，urlopen函数都会抛出”HTTPError” 异常<br>处理这种异常的方式：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">try:	html = urlopen(<span class="string">"http://news.baidu.com/"</span>)except HTTPError as e: </div><div class="line">	<span class="built_in">print</span>(e)	<span class="comment"># 返回空值，中断程序，或者执行另一个方案 </span></div><div class="line"><span class="keyword">else</span>:	<span class="comment"># 程序继续。注意:如果你已经在上面异常捕捉那一段代码里返回或中断(break)， </span></div><div class="line">	<span class="comment"># 那么就不需要使用else语句了，这段代码也不会执行</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>服务器不存在</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> html is None:		<span class="built_in">print</span>(<span class="string">"URL is not found"</span>)	<span class="keyword">else</span>:		<span class="comment"># 程序继续</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>标签不存在</p>
+<pre><code class="bash"> <span class="comment">#如果BeautifulSoup对象里面没有nonExistentTag标签</span>
+ <span class="built_in">print</span>(bsObj.nonExistentTag) <span class="comment">#返回None对象</span>
+ <span class="comment">#如果这个时候在继续调用nonExistentTag的子标签</span>
+ <span class="built_in">print</span>(bsObj.nonExistentTag.someTag)
+ <span class="comment">#会抛出 AttributeError: 'NoneType' object has no attribute 'someTag'</span>
+解决方法：
+ try:
+     badContent = bsObj.nonExistingTag.anotherTag
+ except AttributeError as e: 
+     <span class="built_in">print</span>(<span class="string">"Tag was not found"</span>)
+ <span class="keyword">else</span>:
+     <span class="keyword">if</span> badContent == None:
+         <span class="built_in">print</span> (<span class="string">"Tag was not found"</span>) 
+     <span class="keyword">else</span>:
+         <span class="built_in">print</span>(badContent)
+</code></pre>
+<p>我们会发现，这样写会有些累赘，换一种写法<br>from urllib.request import urlopen<br>from urllib.error import HTTPError<br>from bs4 import BeautifulSoup<br>def getTitle(url):<br> try:</p>
+<pre><code>html = urlopen(url) 
+</code></pre><p> except HTTPError as e:</p>
+<pre><code>return None 
+</code></pre><p> try:</p>
+<pre><code>        bsObj = BeautifulSoup(html.read())
+title = bsObj.body.h1 
+</code></pre><p> except AttributeError as e:</p>
+<pre><code>return None 
+</code></pre><p> return title<br>title = getTitle(“<a href="http://news.baidu.com/" target="_blank" rel="external">http://news.baidu.com/</a>“)<br>if title == None:<br> print(“Title could not be found”)<br>else:<br> print(title)</p>
 </li>
 </ol>
-<p>稍微解释一下上述式子 value**2 表示的是列表的表达式，而for循环中的value则是为其提供值</p>
-<h3 id="python切片"><a href="#python切片" class="headerlink" title="python切片"></a>python切片</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">squares = [‘A’,’B’,’C’,’D’,’E’,’F’,’G’]</div><div class="line">squares[1:4]</div><div class="line">squares[:4]</div><div class="line">squares[2:]</div><div class="line">squares[-3:]</div></pre></td></tr></table></figure>
-<h4 id="遍历切片"><a href="#遍历切片" class="headerlink" title="遍历切片"></a>遍历切片</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> square <span class="keyword">in</span> squares[:3]</div><div class="line"><span class="built_in">print</span>(square)</div></pre></td></tr></table></figure>
-<h4 id="复制切片"><a href="#复制切片" class="headerlink" title="复制切片"></a>复制切片</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">my_foods = [<span class="string">'jiaozi'</span>,<span class="string">'baozi'</span>,<span class="string">'hundun'</span>]</div><div class="line">friend_foods = my_foods[:]</div><div class="line"><span class="built_in">print</span>(friend_foods)</div><div class="line">这样做做了一个my_foods的副本，是两个列表</div><div class="line">friend_foods = my_foods;</div><div class="line"><span class="comment"># 这样做是同一个列表</span></div></pre></td></tr></table></figure>
-<h2 id="元组-python-将不能修改的值称为不可变的，不可变的列表称为元组"><a href="#元组-python-将不能修改的值称为不可变的，不可变的列表称为元组" class="headerlink" title="元组(python 将不能修改的值称为不可变的，不可变的列表称为元组)"></a>元组(python 将不能修改的值称为不可变的，不可变的列表称为元组)</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">dimensions =(200,50)</div></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">### 遍历元组</span></div><div class="line">``` bash </div><div class="line"> <span class="keyword">for</span> dimension <span class="keyword">in</span> dimensions:</div><div class="line">	<span class="built_in">print</span>(dimension)</div></pre></td></tr></table></figure>
-<h3 id="修改元组变量"><a href="#修改元组变量" class="headerlink" title="修改元组变量"></a>修改元组变量</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">dimensions =(200,50)</div><div class="line">dimensions =(500,50)</div></pre></td></tr></table></figure>
-<h2 id="if语句"><a href="#if语句" class="headerlink" title="if语句"></a>if语句</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">  cars = [<span class="string">'audi'</span>,<span class="string">'bwm'</span>,<span class="string">'subaru'</span>,<span class="string">'toyata'</span>]</div><div class="line">  <span class="keyword">for</span>  car <span class="keyword">in</span> cars:</div><div class="line"> 	<span class="keyword">if</span>(car == <span class="string">'bwm'</span>):</div><div class="line"> 		<span class="built_in">print</span>(car.upper())</div><div class="line"> 	<span class="keyword">else</span>:</div><div class="line"> 		<span class="built_in">print</span>(car.title())</div><div class="line">检查多个条件</div><div class="line">$ age_0 &gt;= 21 and age_1 &gt;= 11</div><div class="line">$ age_0 &gt;= 21 and age_1 &gt;= 11</div><div class="line"><span class="comment">### 关键字 in</span></div><div class="line">``` bash </div><div class="line">$ requesting_toppings = [<span class="string">'mushrooms'</span>,<span class="string">'onions'</span>,<span class="string">'pineapple'</span>]</div><div class="line">$ <span class="string">'mushrooms'</span> <span class="keyword">in</span> requesting_toppings</div><div class="line">显示 True</div><div class="line">检查特定值是否不包含在列表中</div><div class="line">$ <span class="string">'mushrooms'</span> <span class="keyword">in</span> requesting_toppings</div><div class="line">$ ‘A’ <span class="keyword">in</span> requesting_toppings</div><div class="line">显示 False</div></pre></td></tr></table></figure>
-<h3 id="if-elif-else-结构"><a href="#if-elif-else-结构" class="headerlink" title="if-elif-else 结构"></a>if-elif-else 结构</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">  age = 12</div><div class="line">  <span class="keyword">if</span>(age &lt; 4):</div><div class="line"> 	price = 0</div><div class="line">  <span class="keyword">elif</span>(age &lt; 18):</div><div class="line"> 	price = 5</div><div class="line">  <span class="keyword">else</span>: <span class="comment">#包罗万象，有可能引入无效甚至恶意数据</span></div><div class="line"> 	price = 10</div><div class="line">  <span class="built_in">print</span>(<span class="string">"Your admission cost is $“+ str(price)+’.’)</span></div><div class="line"><span class="string">``` </span></div><div class="line"><span class="string">``` bash </span></div><div class="line"><span class="string">### 使用多个列表</span></div><div class="line"><span class="string">``` bash</span></div><div class="line"><span class="string"> available_toppings = ['A','B','C','D','E']</span></div><div class="line"><span class="string"> request_toppings =['A','B','E','G']</span></div><div class="line"><span class="string"> for resquest_topping in request_toppings:</span></div><div class="line"><span class="string">	if resquest_topping in available_toppings:</span></div><div class="line"><span class="string">		print("</span>Adding <span class="string">" + resquest_topping + '.')</span></div><div class="line"><span class="string">	else:</span></div><div class="line"><span class="string">		print("</span>Sorry,we don`t have <span class="string">"+ resquest_topping)</span></div></pre></td></tr></table></figure>
+
           
         
       
@@ -1220,7 +1011,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/17/python数据采集/python-初体验（一）/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/28/概率论/概率论与数理统计（一）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="EtanWatson">
@@ -1239,7 +1030,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/09/17/python数据采集/python-初体验（一）/" itemprop="url">python 初体验（一）</a></h1>
+                <a class="post-title-link" href="/2017/09/28/概率论/概率论与数理统计（一）/" itemprop="url">概率论与数理统计（一）</a></h1>
         
 
         <div class="post-meta">
@@ -1251,8 +1042,444 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-17T08:20:01+08:00">
-                2017-09-17
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-28T18:25:13+08:00">
+                2017-09-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/概率论/" itemprop="url" rel="index">
+                    <span itemprop="name">概率论</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="离散型随机变量及其分布规律"><a href="#离散型随机变量及其分布规律" class="headerlink" title="离散型随机变量及其分布规律"></a>离散型随机变量及其分布规律</h1><h2 id="0-1分布"><a href="#0-1分布" class="headerlink" title="0-1分布"></a>0-1分布</h2><h2 id="二项分布"><a href="#二项分布" class="headerlink" title="二项分布"></a>二项分布</h2><h2 id="泊松分布"><a href="#泊松分布" class="headerlink" title="泊松分布"></a>泊松分布</h2><h1 id="随机变量的分布函数"><a href="#随机变量的分布函数" class="headerlink" title="随机变量的分布函数"></a>随机变量的分布函数</h1><p>#连续性随机变量及其概率密度</p>
+<h2 id="均匀分布"><a href="#均匀分布" class="headerlink" title="均匀分布"></a>均匀分布</h2><h2 id="指数分布"><a href="#指数分布" class="headerlink" title="指数分布"></a>指数分布</h2><h2 id="正态分布"><a href="#正态分布" class="headerlink" title="正态分布"></a>正态分布</h2><h1 id="多维随机变量及其分布"><a href="#多维随机变量及其分布" class="headerlink" title="多维随机变量及其分布"></a>多维随机变量及其分布</h1><h2 id="二维随机变量"><a href="#二维随机变量" class="headerlink" title="二维随机变量"></a>二维随机变量</h2><h2 id="边缘分布"><a href="#边缘分布" class="headerlink" title="边缘分布"></a>边缘分布</h2><h2 id="条件分布"><a href="#条件分布" class="headerlink" title="条件分布"></a>条件分布</h2><h2 id="互相独立的随机变量"><a href="#互相独立的随机变量" class="headerlink" title="互相独立的随机变量"></a>互相独立的随机变量</h2><h2 id="两个随机变量的函数的分布"><a href="#两个随机变量的函数的分布" class="headerlink" title="两个随机变量的函数的分布"></a>两个随机变量的函数的分布</h2><h3 id="卷积公式"><a href="#卷积公式" class="headerlink" title="卷积公式"></a>卷积公式</h3><h1 id="随机变量的数字特征"><a href="#随机变量的数字特征" class="headerlink" title="随机变量的数字特征"></a>随机变量的数字特征</h1><h2 id="数学期望"><a href="#数学期望" class="headerlink" title="数学期望"></a>数学期望</h2><h2 id="方差"><a href="#方差" class="headerlink" title="方差"></a>方差</h2><h2 id="协方差与相关系数"><a href="#协方差与相关系数" class="headerlink" title="协方差与相关系数"></a>协方差与相关系数</h2><h2 id="矩、协方差矩阵"><a href="#矩、协方差矩阵" class="headerlink" title="矩、协方差矩阵"></a>矩、协方差矩阵</h2>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/27/机器学习/机器学习实战（四）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EtanWatson">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EWSUN">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/27/机器学习/机器学习实战（四）/" itemprop="url">机器学习实战（四）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-27T21:38:18+08:00">
+                2017-09-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/机器学习/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>为什么先写四，而没有二，三呢？二三的代码都码了一遍，理解的还不是很充分，今天看到四，所以先把四的概念写写：朴素贝叶斯</p>
+<h1 id="基于概率论的分类方法：朴素贝叶斯"><a href="#基于概率论的分类方法：朴素贝叶斯" class="headerlink" title="基于概率论的分类方法：朴素贝叶斯"></a>基于概率论的分类方法：朴素贝叶斯</h1><p>贝叶斯决策论的核心思想：选着具有最高概率的决策</p>
+<h2 id="条件概率-p-x-y-c1"><a href="#条件概率-p-x-y-c1" class="headerlink" title="条件概率 p(x,y|c1)"></a>条件概率 p(x,y|c1)</h2><p><img src="https://gss0.bdstatic.com/94o3dSag_xI4khGkpoWK1HF6hhy/baike/s%3D113/sign=62231e180df431adb8d247387837ac0f/35a85edf8db1cb1399c0c799dc54564e93584b8b.jpg" alt="“条件概率公式”"><br><img src="https://gss1.bdstatic.com/9vo3dSag_xI4khGkpoWK1HF6hhy/baike/s%3D280/sign=51f198b6c4fdfc03e178e4b0e43f87a9/aec379310a55b31972c9ec3d44a98226cffc1741.jpg" alt="“贝叶斯公式”"></p>
+<h2 id="使用条件概率来分类"><a href="#使用条件概率来分类" class="headerlink" title="使用条件概率来分类"></a>使用条件概率来分类</h2><h2 id="词集模型-词袋模型"><a href="#词集模型-词袋模型" class="headerlink" title="词集模型 词袋模型"></a>词集模型 词袋模型</h2>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/24/机器学习/机器学习实战（一）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EtanWatson">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EWSUN">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/24/机器学习/机器学习实战（一）/" itemprop="url">机器学习实战（一）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-24T19:27:53+08:00">
+                2017-09-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/机器学习/" itemprop="url" rel="index">
+                    <span itemprop="name">机器学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>今天开始了《机器学习实战》的学习，下面就是读书笔记咯</p>
+<h1 id="numpy函数库基础"><a href="#numpy函数库基础" class="headerlink" title="numpy函数库基础"></a>numpy函数库基础</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">random.rand(4,4)</div><div class="line"><span class="comment">#调用mat()函数可以将数组转化为矩阵</span></div><div class="line">randMat = mat(random.rand(4,4)</div><div class="line"><span class="comment">#逆矩阵</span></div><div class="line">invRandMat = randMat.I</div><div class="line"><span class="comment">#逆矩阵*矩阵</span></div><div class="line">invRandMat * randMat <span class="comment">#这里应该是单位矩阵的，但是计算机运算有误差</span></div><div class="line"><span class="comment">#计算误差值</span></div><div class="line">myEye = randMat * invRandMat</div><div class="line">myEye - eye(4) <span class="comment">#用我们计算得到的矩阵减单位矩阵</span></div></pre></td></tr></table></figure>
+<h1 id="K-临近算法"><a href="#K-临近算法" class="headerlink" title="K-临近算法"></a>K-临近算法</h1><p>简单来说，K-临近算法采用测量不同特征值之间的距离方法进行分类</p>
+<h2 id="优缺点："><a href="#优缺点：" class="headerlink" title="优缺点："></a>优缺点：</h2><pre><code>优点：精度高，对异常值不敏感，无数据输入假定
+缺点：计算复杂度高，空间复杂度高
+适用数据范围：数值型和标称型
+</code></pre><h2 id="伪代码"><a href="#伪代码" class="headerlink" title="伪代码"></a>伪代码</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">计算已知类别数据集中的每个点以此执行以下操作</div><div class="line">按照距离递增次序排序</div><div class="line">选取与当前点距离最小的k个点</div><div class="line">确定前k个点所在类别的出现频率</div><div class="line">返回前k个点出现频率最高的类别的类当做当前点的预测分类</div></pre></td></tr></table></figure>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">def classify0(inX,dataSet,labels,k):</div><div class="line">    dataSetSize = dataSet.shape[0]</div><div class="line">    diffMat = tile(inX,(dataSetSize,1)) - dataSet</div><div class="line">    sqDiffMat = diffMat**2</div><div class="line">    sqDistances = sqDiffMat.sum(axis=1)</div><div class="line">    distances = sqDistances**0.5</div><div class="line">    sortedDistIndicies = distances.argsort()</div><div class="line">    classCount = &#123;&#125;</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(k):</div><div class="line">        voteIlabel = labels[sortedDistIndicies[i]]</div><div class="line">        classCount[voteIlabel] = classCount.get(voteIlabel,0) + 1</div><div class="line">    sortedClassCount = sorted(classCount.items(),</div><div class="line">                              key = operator.itemgetter(1),reverse=True)</div><div class="line">    <span class="built_in">return</span> sortedClassCount[0][0]</div></pre></td></tr></table></figure>
+<p>需要注意的是，当你在终端导入一个模块的时候，如果你给这个模块增加了一个新的函数的时候，你必须先退出python3环境，重新导入才能生效<br>array.shape[0] #放回数组的长度<br>tile() # Construct an array by repeating A the number of times given by reps.<br>tile(a,x):   x是控制a重复几次的，结果是一个一维数组<br>tile(a,(x,y))：   结果是一个二维矩阵，其中行数为x，列数是一维数组a的长度和y的乘积<br>tile(a,(x,y,z)):   结果是一个三维矩阵，其中矩阵的行数为x，矩阵的列数为y，而z表示矩阵每个单元格里a重复的次数。(三维矩阵可以看成一个二维矩阵，每个矩阵的单元格里存者一个一维矩阵a)<br>sqDiffMat.sum(axis=1)：将二维数组按行相加，结果是一个一维数组<br>classCount.get(voteIlabel,0)：字典的get方法，查找第一个参数key，如果不存在，返回参数2<br>sorted(classCount.items(),key = operator.itemgetter(1),reverse=True):根据字典中的第二域进行排序<br>sortedClassCount[0][0]：将匹配到的key值取出来</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/24/python数据采集/python网络爬虫-初体验（一）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EtanWatson">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EWSUN">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/24/python数据采集/python网络爬虫-初体验（一）/" itemprop="url">python网络爬虫 初体验（一）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-24T17:12:19+08:00">
+                2017-09-24
               </time>
             
 
@@ -1313,19 +1540,10 @@
       
         
           
-            <h2 id="开端（python遨游记：仅仅只是记下python入门的基本语法，俺是一只小小小菜鸟！）"><a href="#开端（python遨游记：仅仅只是记下python入门的基本语法，俺是一只小小小菜鸟！）" class="headerlink" title="开端（python遨游记：仅仅只是记下python入门的基本语法，俺是一只小小小菜鸟！）"></a>开端（python遨游记：仅仅只是记下python入门的基本语法，俺是一只小小小菜鸟！）</h2><h3 id="删除空白函数"><a href="#删除空白函数" class="headerlink" title="删除空白函数"></a>删除空白函数</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$ favorite_language = “ python ”</div><div class="line">$ favorite_language.rstrip() <span class="comment">#删除右边空白</span></div><div class="line">$ favorite_language.lstrip() <span class="comment">#删除左边空白</span></div><div class="line">$ favorite_language.strip()  <span class="comment">#删除两边空白</span></div></pre></td></tr></table></figure>
-<h3 id="类型转换函数"><a href="#类型转换函数" class="headerlink" title="类型转换函数"></a>类型转换函数</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ age = 23 </div><div class="line">$ message = “Happy ” + str(age) + “rd Birthday !”</div></pre></td></tr></table></figure>
-<h3 id="the-Zen-of-Python-by-Tim-Peters-在-终端中输入import-this"><a href="#the-Zen-of-Python-by-Tim-Peters-在-终端中输入import-this" class="headerlink" title="the Zen of Python , by Tim Peters(在 终端中输入import this)"></a>the Zen of Python , by Tim Peters(在 终端中输入import this)</h3><h4 id="Beautiful-is-better-than-ugly"><a href="#Beautiful-is-better-than-ugly" class="headerlink" title="Beautiful is better than ugly"></a>Beautiful is better than ugly</h4><h4 id="Simple-is-better-than-complex"><a href="#Simple-is-better-than-complex" class="headerlink" title="Simple is better than complex"></a>Simple is better than complex</h4><h4 id="Complex-is-better-than-complicated"><a href="#Complex-is-better-than-complicated" class="headerlink" title="Complex is better than complicated"></a>Complex is better than complicated</h4><h4 id="Readability-counts"><a href="#Readability-counts" class="headerlink" title="Readability counts."></a>Readability counts.</h4><h4 id="There-should-be-one-—-and-preferably-only-one-—obvious-way-to-do-it"><a href="#There-should-be-one-—-and-preferably-only-one-—obvious-way-to-do-it" class="headerlink" title="There should be one —- and preferably only one —obvious way to do it."></a>There should be one —- and preferably only one —obvious way to do it.</h4><h4 id="Now-is-better-than-never"><a href="#Now-is-better-than-never" class="headerlink" title="Now is better than never."></a>Now is better than never.</h4><h3 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h3><h4 id="创建列表"><a href="#创建列表" class="headerlink" title="创建列表"></a>创建列表</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">bicycles = [<span class="string">'trek'</span>,<span class="string">'cannondale'</span>,<span class="string">'redline'</span>,<span class="string">'specialized'</span>]</div><div class="line"><span class="built_in">print</span>(bicycles[0].title())</div><div class="line"><span class="built_in">print</span>(bicycles[-1])   <span class="comment">#访问最后一个元素</span></div><div class="line"><span class="built_in">print</span>(bicycles[-2])   <span class="comment">#访问倒数第二个元素</span></div><div class="line">``` </div><div class="line"><span class="comment">#### 修改列表</span></div><div class="line">``` bash </div><div class="line">$ motorcycles = [‘honda’,’yamaha’,’suzuki’]</div><div class="line">$ motorcycles[0] = ‘ducati’</div></pre></td></tr></table></figure>
-<h4 id="添加元素"><a href="#添加元素" class="headerlink" title="添加元素"></a>添加元素</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ motorcycles.append(‘ducati’)</div></pre></td></tr></table></figure>
-<h4 id="插入元素"><a href="#插入元素" class="headerlink" title="插入元素"></a>插入元素</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ motorcycles.insert(0,‘ducati’)</div></pre></td></tr></table></figure>
-<h4 id="删除元素"><a href="#删除元素" class="headerlink" title="删除元素"></a>删除元素</h4><p>1.使用del语句删除元素<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ del motorcycles[0]</div></pre></td></tr></table></figure></p>
-<p>2.使用pop()方法删除元素<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ poped_motorclcle = motorcycles.pop()</div><div class="line">$ poped_motorclcle = motorcycles.pop(1)</div></pre></td></tr></table></figure></p>
-<p>3.使用remove()方法删除元素(只删除第一个指定的值)<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ motorcycles.remove(“ducati”)</div></pre></td></tr></table></figure></p>
-<p>如果想要用它的值，可以先将其存储在一个变量中<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ too_expensive = ‘ducati’</div></pre></td></tr></table></figure></p>
-<h4 id="组织列表"><a href="#组织列表" class="headerlink" title="组织列表"></a>组织列表</h4><p>1.永久性排序 sort()<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ cars = [‘bmw’,’audi’,’toyota’,’subaru’]</div><div class="line">$ cars.sort()        <span class="comment">#正序排序</span></div><div class="line">$ cars.sort(reverser = <span class="literal">true</span>)        <span class="comment">#反序排序</span></div></pre></td></tr></table></figure></p>
-<p>2.临时排序 sorted()<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ sorted(cars)</div><div class="line">$ sorted(cars,reverse = True)</div></pre></td></tr></table></figure></p>
-<p>3.反转列表 reverse()<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ cars.reverse()</div><div class="line">如需回复，再次使用即可</div></pre></td></tr></table></figure></p>
-<p>4确定列表的长度<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ len(cars)</div></pre></td></tr></table></figure></p>
+            <p>今天看了一个关于爬虫的视频，心血来潮，就想弄弄爬虫，BUT只弄了一个简单页面，不过也算是体验一把，以后会慢慢深入研究（以后是什么鬼？？）</p>
+<h1 id="代码示例（大神勿喷吐槽）"><a href="#代码示例（大神勿喷吐槽）" class="headerlink" title="代码示例（大神勿喷吐槽）"></a>代码示例（大神勿喷吐槽）</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line">import requests</div><div class="line">from bs4 import BeautifulSoup</div><div class="line">from datetime import datetime</div><div class="line"></div><div class="line">res = requests.get(<span class="string">'https://news.sina.cn/gn/2017-09-24/'</span></div><div class="line">                   <span class="string">'detail-ifymenmt6515409.d.html?vt=4&amp;pos=8&amp;wm=8017_0001&amp;cid=56261'</span>)</div><div class="line">res.encoding = <span class="string">'utf-8'</span></div><div class="line">soup = BeautifulSoup(res.text,<span class="string">'html.parser'</span>)</div><div class="line">header = soup.select(<span class="string">'h1'</span>)</div><div class="line"></div><div class="line"><span class="comment">#找出含有a标签的元素</span></div><div class="line"><span class="comment"># a_link = soup.select('a')</span></div><div class="line"><span class="comment"># print(a_link[0])</span></div><div class="line"></div><div class="line"><span class="comment">#找出class为art_p的元素</span></div><div class="line"><span class="comment"># for art_p in soup.select('.art_p'):</span></div><div class="line"><span class="comment">#     print(art_p)</span></div><div class="line"></div><div class="line"><span class="comment">#找出所有a标签内的链接</span></div><div class="line"><span class="comment"># alinks = soup.select('a')</span></div><div class="line"><span class="comment"># for link in alinks:</span></div><div class="line"><span class="comment">#     print(link['href'])</span></div><div class="line"></div><div class="line"><span class="comment">#找出文章标题，文章内容，以及文章时间和出处</span></div><div class="line">art_detail = &#123;&#125;</div><div class="line">art_time = soup.select(<span class="string">'.weibo_time'</span>)[0].contents[1].text + \</div><div class="line">           soup.select(<span class="string">'.weibo_time'</span>)[0].contents[2].strip()</div><div class="line">art_title = soup.select(<span class="string">'h1'</span>)[0].text</div><div class="line"><span class="comment">#字符串转时间</span></div><div class="line">art_time = <span class="string">'2017年'</span>+art_time</div><div class="line">dt = datetime.strptime(art_time,<span class="string">'%Y年%m月%d日%H:%M'</span>)</div><div class="line">dt = datetime.strftime(dt,<span class="string">'%Y年%m月%d日%H:%M'</span>)</div><div class="line"><span class="comment">#时间转字符串</span></div><div class="line"><span class="comment">#datetime.strftime("%Y-M-%d")</span></div><div class="line"><span class="comment">#处理内容</span></div><div class="line">art_content = soup.select(<span class="string">'.art_p'</span>)</div><div class="line">new_source = art_content[-1].text.lstrip(<span class="string">'来源：'</span>)</div><div class="line">art_content =<span class="string">'\n'</span>.join([p.text.strip() <span class="keyword">for</span> p <span class="keyword">in</span> art_content[:-1]])</div><div class="line"><span class="comment">#将拿到的信息放入到art_detail字典中</span></div><div class="line">art_detail[<span class="string">'art_content'</span>] = art_content</div><div class="line">art_detail[<span class="string">'art_time'</span>] = dt</div><div class="line">art_detail[<span class="string">'art_title'</span>] = art_title</div><div class="line">art_detail[<span class="string">'new_source'</span>] = new_source</div><div class="line"><span class="built_in">print</span>(art_detail)</div></pre></td></tr></table></figure>
+<h1 id="备注一个问题"><a href="#备注一个问题" class="headerlink" title="备注一个问题"></a>备注一个问题</h1><p>object of type ‘Response’ has no len()<br>解决方案：soup = BeautifulSoup(res.text,’html.parser’)</p>
+<p>OK 今天就这样 ^~^</p>
 
           
         
@@ -1374,7 +1592,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/16/python数据采集/python-尝鲜踩坑记/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/20/English/英语学习笔记之（翻译）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="EtanWatson">
@@ -1393,7 +1611,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/09/16/python数据采集/python-尝鲜踩坑记/" itemprop="url">python 尝鲜踩坑记</a></h1>
+                <a class="post-title-link" href="/2017/09/20/English/英语学习笔记之（翻译）/" itemprop="url">英语学习笔记之（翻译）</a></h1>
         
 
         <div class="post-meta">
@@ -1405,8 +1623,158 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-16T16:22:47+08:00">
-                2017-09-16
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-20T21:05:01+08:00">
+                2017-09-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/English/" itemprop="url" rel="index">
+                    <span itemprop="name">English</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>今天整理一下老师讲的英语翻译（汉译英）技巧</p>
+<h1 id="英语翻译技巧"><a href="#英语翻译技巧" class="headerlink" title="英语翻译技巧"></a>英语翻译技巧</h1><h2 id="单词"><a href="#单词" class="headerlink" title="单词"></a>单词</h2><h2 id="结构"><a href="#结构" class="headerlink" title="结构"></a>结构</h2><h2 id="完整性"><a href="#完整性" class="headerlink" title="完整性"></a>完整性</h2><h2 id="“的”的处理"><a href="#“的”的处理" class="headerlink" title="“的”的处理"></a>“的”的处理</h2><h2 id="一般词与具体词"><a href="#一般词与具体词" class="headerlink" title="一般词与具体词"></a>一般词与具体词</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">ex:			indicate</div><div class="line">show(一般词）：   reveal</div><div class="line">		imply</div><div class="line">		suggest</div></pre></td></tr></table></figure>
+<h2 id="冠词"><a href="#冠词" class="headerlink" title="冠词"></a>冠词</h2><h2 id="名词的单复数"><a href="#名词的单复数" class="headerlink" title="名词的单复数"></a>名词的单复数</h2><p>``` bash<br> 单数 - &gt; 特指<br> 复数 - &gt; 泛指</p>
+<h2 id="谓语"><a href="#谓语" class="headerlink" title="谓语"></a>谓语</h2><p>``` bash<br>    时态<br>    语态<br>    语气</p>
+<h2 id="动词的选择"><a href="#动词的选择" class="headerlink" title="动词的选择"></a>动词的选择</h2><h2 id="平衡"><a href="#平衡" class="headerlink" title="平衡"></a>平衡</h2><h2 id="用词的多样性"><a href="#用词的多样性" class="headerlink" title="用词的多样性"></a>用词的多样性</h2><h2 id="平行结构：前后一致"><a href="#平行结构：前后一致" class="headerlink" title="平行结构：前后一致"></a>平行结构：前后一致</h2><pre><code>动名词 - &gt; 抽象
+不定式 - &gt; 具体
+</code></pre><h2 id="语意"><a href="#语意" class="headerlink" title="语意"></a>语意</h2><h3 id="越来越的译法"><a href="#越来越的译法" class="headerlink" title="越来越的译法"></a>越来越的译法</h3><pre><code>increasing adj.  ex: An increasing number of people 
+increasingly adv.
+growing adj.  ex：a growing number
+</code></pre><h3 id="面临的译法-face-（倒过来用ing）"><a href="#面临的译法-face-（倒过来用ing）" class="headerlink" title="面临的译法 face （倒过来用ing）"></a>面临的译法 face （倒过来用ing）</h3><h3 id="现在-currently"><a href="#现在-currently" class="headerlink" title="现在 currently"></a>现在 currently</h3><h3 id="短缺-be-shirt-of"><a href="#短缺-be-shirt-of" class="headerlink" title="短缺 be shirt of"></a>短缺 be shirt of</h3><h3 id="缩小-the-shrink-in"><a href="#缩小-the-shrink-in" class="headerlink" title="缩小 the shrink in"></a>缩小 the shrink in</h3>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/20/python数据采集/python初体验（十）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EtanWatson">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EWSUN">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/09/20/python数据采集/python初体验（十）/" itemprop="url">python初体验（十）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-20T16:15:06+08:00">
+                2017-09-20
               </time>
             
 
@@ -1467,301 +1835,12 @@
       
         
           
-            <h2 id="讲述一下第一次在Sublime-Text2下尝试编写python"><a href="#讲述一下第一次在Sublime-Text2下尝试编写python" class="headerlink" title="讲述一下第一次在Sublime Text2下尝试编写python"></a>讲述一下第一次在Sublime Text2下尝试编写python</h2><p>根据Python编程从入门到实践书中推荐，安装了Sublime Text2，由于要使用python3，所以要设置默认编译器，在Sublime Text2下，Tools-&gt;Build System -&gt; New Build System中<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ &#123; “cmd”: [“usr/<span class="built_in">local</span>/bin/python”,”-u”,”<span class="variable">$file</span>”],&#125;</div></pre></td></tr></table></figure></p>
-<p>配置完，command+B运行代码<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ <span class="built_in">print</span>(“Hello World!”)</div></pre></td></tr></table></figure></p>
-<p>报出Error trying to parse setting，查找资料，应该是刚才配置默认编译器的时候多了一个逗号,正确的应该是<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ &#123; “cmd”: [“usr/<span class="built_in">local</span>/bin/python”,”-u”,”<span class="variable">$file</span>”]&#125;</div></pre></td></tr></table></figure></p>
-<p>默认的位置在~/Library/Application Support/Sublime Text 2/下</p>
-<p>##【待续】</p>
+            <p>今天我们来学习一下python的代码测试吧</p>
+<h1 id="测试代码"><a href="#测试代码" class="headerlink" title="测试代码"></a>测试代码</h1><h2 id="单元测试"><a href="#单元测试" class="headerlink" title="单元测试"></a>单元测试</h2><p>python的标准库中的模块unittest提供了代码测试工具，单元测试用于核实函数在某个方面没有问题<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"> import unittest</div><div class="line"> from name_function import get_formatted_name</div><div class="line"></div><div class="line"> class namesTestCase(unittest.TestCase):  <span class="comment">#类名可以随便命名</span></div><div class="line">	def test_first_last_name(self):</div><div class="line">		formatted_name = get_formatted_name(<span class="string">'janis'</span>,<span class="string">'jopin'</span>)</div><div class="line">		self.assertEqual(formatted_name,<span class="string">'Janis Jopin'</span>)</div><div class="line"> unittest.main()</div><div class="line"><span class="comment">#当我们运行该程序的时候，所有的以test_开头的方法都将自动运行</span></div></pre></td></tr></table></figure></p>
+<h2 id="用例测试"><a href="#用例测试" class="headerlink" title="用例测试"></a>用例测试</h2><p>用例测试是一组单元测试，这些单元测试一起核实函数在各种情况下的行为都符合要求。</p>
+<h2 id="测试类"><a href="#测试类" class="headerlink" title="测试类"></a>测试类</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"> import unittest</div><div class="line"> from survey import AnonymousSurvey <span class="comment">#被测试类</span></div><div class="line"></div><div class="line"> class TestAnonymousSurvey(unittest.TestCase):</div><div class="line">	def test_store_single_respones(self):</div><div class="line">		question = <span class="string">"What "</span></div><div class="line">		my_survey = AnonymousSurvey(question)</div><div class="line">		my_survey.store_response(<span class="string">'English'</span>)</div><div class="line"></div><div class="line">		self.assertIn(<span class="string">"English"</span>,my_survey.response)</div><div class="line"> unittest.main()</div><div class="line">```	</div><div class="line"><span class="comment">### setUp()方法</span></div><div class="line">因为我们每创建一个测试方法都得创建一个被测试类的实例，所以使用setUp()可以避免一直创建实例，python会先运行setUp方法，然后在运行以test_开头的方法</div><div class="line">``` bash </div><div class="line"> class TestAnonymousSurvey(unittest.TestCase):</div><div class="line">	def setUp(self):</div><div class="line">		question = <span class="string">"What "</span></div><div class="line">		self.my_survey = AnonymousSurvey(question)</div><div class="line">		self.responses = [<span class="string">'English'</span>,<span class="string">'Spanish'</span>,<span class="string">'Mandarin'</span>]</div><div class="line"></div><div class="line">	def test_store_single_respones(self):</div><div class="line">		question = <span class="string">"What "</span></div><div class="line">		self.my_survey.store_response(self.responses[0])</div><div class="line">		self.assertIn(self.responses[0],self.my_survey.response)</div><div class="line">	def test_store_three_respones(self):</div><div class="line">		<span class="keyword">for</span> response <span class="keyword">in</span> self.responses:</div><div class="line">			self.my_survey.store_response(response)</div><div class="line">		<span class="keyword">for</span> response <span class="keyword">in</span> self.responses:	</div><div class="line">			self.assertIn(response,self.my_survey.response)	</div><div class="line"> unittest.main()</div></pre></td></tr></table></figure>
+<p>接下来就要来到令人激动人心的项目实战啦</p>
 
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/16/Hexo/使用Hexo-github搭建/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="EtanWatson">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/header.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="EWSUN">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/16/Hexo/使用Hexo-github搭建/" itemprop="url">使用Hexo+github搭建个人博客</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-16T15:18:45+08:00">
-                2017-09-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Hexo/" itemprop="url" rel="index">
-                    <span itemprop="name">Hexo</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="使用Hexo-github搭建个人博客"><a href="#使用Hexo-github搭建个人博客" class="headerlink" title="使用Hexo+github搭建个人博客"></a>使用Hexo+github搭建个人博客</h1><h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>确保你电脑中已经安装好了nodeJS,NPM.git如果还没有来得及安装，网上有许多教程，就不一一介绍了（第一次写博客，大家谅解^_^）;<br>要使用github，你得现有一个github的帐号（如果没有，先去注册一个吧）</p>
-<h2 id="遇到的坑"><a href="#遇到的坑" class="headerlink" title="遇到的坑"></a>遇到的坑</h2><h3 id="突然push不上去了"><a href="#突然push不上去了" class="headerlink" title="突然push不上去了"></a>突然push不上去了</h3><p>Error: fatal: unable to access ‘<a href="https://github.com/EtanWatson/EtanWatson.github.io.git/" target="_blank" rel="external">https://github.com/EtanWatson/EtanWatson.github.io.git/</a>‘: Operation timed out after 300035 milliseconds with 0 out of 0 bytes received……<br>纠结了半天，原来我开了Shadowsocks代理</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/12/随笔杂谈/感谢有你/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="EtanWatson">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/header.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="EWSUN">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/12/随笔杂谈/感谢有你/" itemprop="url">感谢有你</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-12T14:55:34+08:00">
-                2017-09-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/随笔杂谈/" itemprop="url" rel="index">
-                    <span itemprop="name">随笔杂谈</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="呜呜"><a href="#呜呜" class="headerlink" title="呜呜"></a>呜呜</h2><p>今天，技术博客总算是”搭成了”？为什么要加引号，因为这个充其量也算是半成品，没有归档，没有社交链接……，但是，它至少可以让我把每天的心得写下来，慢慢完善自己，以后慢慢完善该博客。我知道现在对于我来说，时间是多么的宝贵。我也明白社会竞争的激烈以及自己身在其中的渺小。两天下来，感觉时刻需要提醒自己的就是『冷静』『执着』。诚然，我们不可能做到尽善尽美，但是我们要努力做到让自己不会后悔，加油 Etan ！</p>
-<h2 id="感觉没有什么代码可以码，所以用这篇文章试试Hexo的基本用法"><a href="#感觉没有什么代码可以码，所以用这篇文章试试Hexo的基本用法" class="headerlink" title="感觉没有什么代码可以码，所以用这篇文章试试Hexo的基本用法 ^~^"></a>感觉没有什么代码可以码，所以用这篇文章试试Hexo的基本用法 ^~^</h2><h3 id="JAVA"><a href="#JAVA" class="headerlink" title="JAVA"></a>JAVA</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ System.out.print(“Etan, Come on !”);</div></pre></td></tr></table></figure>
-<h3 id="C"><a href="#C" class="headerlink" title="C"></a>C</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ <span class="built_in">print</span>(“Etan , Come on !”);</div></pre></td></tr></table></figure>
-<h3 id="C-1"><a href="#C-1" class="headerlink" title="C++"></a>C++</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ cout &lt;&lt; “Etan , Come on !”;</div></pre></td></tr></table></figure>
-<h3 id="javascript"><a href="#javascript" class="headerlink" title="javascript"></a>javascript</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ console.log(“Etan , Come on !”);</div></pre></td></tr></table></figure>
-<h2 id="最后，感谢有你，让我无畏风雨！"><a href="#最后，感谢有你，让我无畏风雨！" class="headerlink" title="最后，感谢有你，让我无畏风雨！"></a>最后，感谢有你，让我无畏风雨！</h2>
           
         
       
@@ -1800,7 +1879,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span>
+    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" href="/page/9/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1849,7 +1928,7 @@
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">80</span>
+                <span class="site-state-item-count">93</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

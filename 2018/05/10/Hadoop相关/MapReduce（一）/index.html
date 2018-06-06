@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hadoop相关," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="EWSUN" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="MapReduce（一）MapReduce框架结构及核心运行机制结构 MRAppMaster：负责整个程序的过程调度及状态协调 MapTask： 负责map阶段的整个数据处理流程 ReduceTask： 负责reduce阶段的整个数据处理流程  流程 一个mr程序启动时，最先启动的是MRAppMaster，MRAppMaster启动后根据本次job的描述信息，计算出需要的maptask实例数量，然">
+<meta name="keywords" content="Hadoop相关">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MapReduce（一）">
+<meta property="og:url" content="http://yoursite.com/2018/05/10/Hadoop相关/MapReduce（一）/index.html">
+<meta property="og:site_name" content="EWSUN">
+<meta property="og:description" content="MapReduce（一）MapReduce框架结构及核心运行机制结构 MRAppMaster：负责整个程序的过程调度及状态协调 MapTask： 负责map阶段的整个数据处理流程 ReduceTask： 负责reduce阶段的整个数据处理流程  流程 一个mr程序启动时，最先启动的是MRAppMaster，MRAppMaster启动后根据本次job的描述信息，计算出需要的maptask实例数量，然">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/images/15259373472785.jpg">
+<meta property="og:updated_time" content="2018-05-10T08:14:42.925Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MapReduce（一）">
+<meta name="twitter:description" content="MapReduce（一）MapReduce框架结构及核心运行机制结构 MRAppMaster：负责整个程序的过程调度及状态协调 MapTask： 负责map阶段的整个数据处理流程 ReduceTask： 负责reduce阶段的整个数据处理流程  流程 一个mr程序启动时，最先启动的是MRAppMaster，MRAppMaster启动后根据本次job的描述信息，计算出需要的maptask实例数量，然">
+<meta name="twitter:image" content="http://yoursite.com/images/15259373472785.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/05/10/Hadoop相关/MapReduce（一）/"/>
+
+
+
+
+
+  <title>MapReduce（一） | EWSUN</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">EWSUN</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-schedule">
+          <a href="/schedule/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br />
+            
+            日程表
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/10/Hadoop相关/MapReduce（一）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EtanWatson">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EWSUN">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">MapReduce（一）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-10T09:19:12+08:00">
+                2018-05-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Hadoop相关/" itemprop="url" rel="index">
+                    <span itemprop="name">Hadoop相关</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="MapReduce（一）"><a href="#MapReduce（一）" class="headerlink" title="MapReduce（一）"></a>MapReduce（一）</h1><h2 id="MapReduce框架结构及核心运行机制"><a href="#MapReduce框架结构及核心运行机制" class="headerlink" title="MapReduce框架结构及核心运行机制"></a>MapReduce框架结构及核心运行机制</h2><h3 id="结构"><a href="#结构" class="headerlink" title="结构"></a>结构</h3><ul>
+<li>MRAppMaster：负责整个程序的过程调度及状态协调</li>
+<li>MapTask： 负责map阶段的整个数据处理流程</li>
+<li>ReduceTask： 负责reduce阶段的整个数据处理流程</li>
+</ul>
+<h4 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h4><ul>
+<li>一个mr程序启动时，最先启动的是MRAppMaster，MRAppMaster启动后根据本次job的描述信息，计算出需要的maptask实例数量，然后向集群机器申请机器启动相应数量的maptask进程</li>
+<li>maptask进程启动之后，根据给定的数据切片范围进行数据处理，主体流程为：<ul>
+<li>利用客户端指定的inputformat来获取RecordReader读取数据，形成输入KV对</li>
+<li>将输入KV对传递给客户端定义的map()方法，做逻辑运算，并将map()方法输出的KV对收集到缓存</li>
+<li>将缓存中的KV对按照k分区排序后不断溢写到磁盘文件</li>
+</ul>
+</li>
+<li>MRAppMaster监控到私有maptask进程任务完成疑惑，会根据客户端指定的参数启动相应数量的reducetask进程，并告知reducetask进程要处理的数据范围（数据分区）</li>
+<li>MRAppMaster从maptask运行所在的机器上获取到若干个maptask输出结果文件，并在本地进行重新归并排序，然后按照相同的key的KV分为一个组，调用客户端定义的reduce()进行逻辑运算，然后调用客户指定的outputformat将结果数据输出到外部存储</li>
+</ul>
+<h2 id="MapTask并行度决定机制"><a href="#MapTask并行度决定机制" class="headerlink" title="MapTask并行度决定机制"></a>MapTask并行度决定机制</h2><blockquote>
+<p>将待处理数据执行逻辑切片（即按照一个特定切片的大小，将待处理数据划分成逻辑上的多个split），然后每个split分配一个mapTask并行实例处理<br>FileInputFormat实现类的getSplits()方法实现切片规划，切片规划文</p>
+</blockquote>
+<h3 id="FileInputFormat切片机制"><a href="#FileInputFormat切片机制" class="headerlink" title="FileInputFormat切片机制"></a>FileInputFormat切片机制</h3><h4 id="FileInputFormat中切片的大小的参数配置"><a href="#FileInputFormat中切片的大小的参数配置" class="headerlink" title="FileInputFormat中切片的大小的参数配置"></a>FileInputFormat中切片的大小的参数配置</h4><ul>
+<li>minsize: 默认值：1 -&gt; 配置参数 mapreduce.input.fileinputformat.split.minsize</li>
+<li>maxsize：默认值：Long.MAXValue -&gt; mapreduce.input.fileinputformat.split.maxsize</li>
+</ul>
+<h2 id="ReduceTask并行度的决定"><a href="#ReduceTask并行度的决定" class="headerlink" title="ReduceTask并行度的决定"></a>ReduceTask并行度的决定</h2><p>默认值是1，手动设置为4</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">job.setNumReduceTask(4) // 默认值为1</div></pre></td></tr></table></figure>
+<blockquote>
+<p>尽量不要运行太多的reduce task。对大多数job来说，最好reduce的个数最多和集群中的reduce持平，或者比集群的reduce slots小，这个对于小集群而言，尤其重要</p>
+</blockquote>
+<h2 id="集群运行模式"><a href="#集群运行模式" class="headerlink" title="集群运行模式"></a>集群运行模式</h2><ul>
+<li>YarnRunner -&gt; Resource Manager</li>
+<li>MRAppMaster -&gt; YarnChild(mapTask) -&gt; YarnChild(reduceTask)</li>
+<li>改变自身身份标识<ul>
+<li>VM arguments: -DHADOOP_USER_NAME=hadoop</li>
+<li>conf.set(“HADOOP_USER_NAME”, “hadoop”)<h2 id="MapReduce中的Combiner"><a href="#MapReduce中的Combiner" class="headerlink" title="MapReduce中的Combiner"></a>MapReduce中的Combiner</h2><blockquote>
+<p>combiner的意义就是对每一个maptask的输出进行局部汇总，以减少网络传输量</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="具体实现步骤"><a href="#具体实现步骤" class="headerlink" title="具体实现步骤"></a>具体实现步骤</h3><ul>
+<li>自定义一个combiner继承Reducer，重写reduce方法</li>
+<li>在job中设置：job.setCombinerClass(CustomCombiner.class)</li>
+</ul>
+<h2 id="mapreduce的shuffle机制"><a href="#mapreduce的shuffle机制" class="headerlink" title="mapreduce的shuffle机制"></a>mapreduce的shuffle机制</h2><blockquote>
+<p>核心机制：数据分区，排序，缓存，就是将maptask输出的处理结果数据，分发给reducetask，并在分发的过程中，对数据按key进行分区和排序</p>
+</blockquote>
+<ul>
+<li>分区partition</li>
+<li>Sort根据key排序</li>
+<li>Combiner进行局部value的合并</li>
+</ul>
+<blockquote>
+<p>Suffle中的缓冲区大小会影响到mapreduce程序的执行效率，原则上说，缓冲区越大，磁盘的io的次数越小，执行速度就越快，参数：io.sort.mb 默认 100m</p>
+</blockquote>
+<h2 id="MapReduce中的序列化（Writable）"><a href="#MapReduce中的序列化（Writable）" class="headerlink" title="MapReduce中的序列化（Writable）"></a>MapReduce中的序列化（Writable）</h2><h3 id="jdk序列化和MR序列化之间的比较"><a href="#jdk序列化和MR序列化之间的比较" class="headerlink" title="jdk序列化和MR序列化之间的比较"></a>jdk序列化和MR序列化之间的比较</h3><h3 id="自定义对象实现MR中的序列化接口（实现WritableComparable-lt-gt-）"><a href="#自定义对象实现MR中的序列化接口（实现WritableComparable-lt-gt-）" class="headerlink" title="自定义对象实现MR中的序列化接口（实现WritableComparable&lt;&gt;）"></a>自定义对象实现MR中的序列化接口（实现WritableComparable&lt;&gt;）</h3><blockquote>
+<p>反序列化时，从流中读取到的各个字段的顺序应该与序列化时写出去的顺序保持一致</p>
+</blockquote>
+<h2 id="MapReduce与YARN"><a href="#MapReduce与YARN" class="headerlink" title="MapReduce与YARN"></a>MapReduce与YARN</h2><blockquote>
+<p>用户程序向yarn申请资源，yarn就负责分配资源<br>ResourceManager（主管角色）<br>NodeManager （提供运算资源的角色）</p>
+</blockquote>
+<h2 id="MapReduce中的排序初步"><a href="#MapReduce中的排序初步" class="headerlink" title="MapReduce中的排序初步"></a>MapReduce中的排序初步</h2><h2 id="Mapreduce中的分区Partitioner"><a href="#Mapreduce中的分区Partitioner" class="headerlink" title="Mapreduce中的分区Partitioner"></a>Mapreduce中的分区Partitioner</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">public class ProvincePartitioner extends Partitioner&lt;Text,FlowBean&gt;&#123;</div><div class="line">    public int getPartition(Text key, FlowBean value, int numberPartitions)&#123;&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="mapreduce数据压缩"><a href="#mapreduce数据压缩" class="headerlink" title="mapreduce数据压缩"></a>mapreduce数据压缩</h2><blockquote>
+<p>通过压缩编码对mapper或者reducer的输出进行压缩，以减少磁盘IO</p>
+</blockquote>
+<h3 id="mr支持的压缩编码"><a href="#mr支持的压缩编码" class="headerlink" title="mr支持的压缩编码"></a>mr支持的压缩编码</h3><p><img src="/images/15259373472785.jpg" alt=""></p>
+<h3 id="Reducer输出压缩"><a href="#Reducer输出压缩" class="headerlink" title="Reducer输出压缩"></a>Reducer输出压缩</h3><h4 id="在配置参数中设置"><a href="#在配置参数中设置" class="headerlink" title="在配置参数中设置"></a>在配置参数中设置</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">mapreduce.output.fileoutputformat.compress=false</div><div class="line">mapreduce.output.fileoutputformat.compress.codec=org.apache.hadoop.io.compress.DefaultCodec</div><div class="line">mapreduce.output.fileoutputformat.compress.type=RECORD</div></pre></td></tr></table></figure>
+<h4 id="在代码中设置"><a href="#在代码中设置" class="headerlink" title="在代码中设置"></a>在代码中设置</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Job job = Job.getInstance(conf);</div><div class="line">FileOutputFormat.setCompressOutput(job, true);</div><div class="line">FileOutputFormat.setOutputCompressorClass(job, (Class&lt;? extends CompressionCodec&gt;) Class.forName(&quot;&quot;));</div></pre></td></tr></table></figure>
+<h3 id="Mapper输出压缩"><a href="#Mapper输出压缩" class="headerlink" title="Mapper输出压缩"></a>Mapper输出压缩</h3><h4 id="在参数中配置"><a href="#在参数中配置" class="headerlink" title="在参数中配置"></a>在参数中配置</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mapreduce.map.output.compress=false</div><div class="line">mapreduce.map.output.compress.codec=org.apache.hadoop.io.compress.DefaultCodec</div></pre></td></tr></table></figure>
+<h4 id="在代码中设置-1"><a href="#在代码中设置-1" class="headerlink" title="在代码中设置"></a>在代码中设置</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">conf.setBoolean(Job.MAP_OUTPUT_COMPRESS, true);</div><div class="line">conf.setClass(Job.MAP_OUTPUT_COMPRESS_CODEC, GzipCodec.class, CompressionCodec.class);</div></pre></td></tr></table></figure>
+<h3 id="压缩文件的读取"><a href="#压缩文件的读取" class="headerlink" title="压缩文件的读取"></a>压缩文件的读取</h3><blockquote>
+<p>Hadoop 自带的InputFormat类内置支持压缩文件的读取，比如TextInputFormat类</p>
+</blockquote>
+<h4 id="initialize"><a href="#initialize" class="headerlink" title="initialize()"></a>initialize()</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">public void initialize(InputSplit genericSplit,TaskAttemptContext context) throws IOException &#123;</div><div class="line">    FileSplit split = (FileSplit) genericSplit;</div><div class="line">    Configuration job = context.getConfiguration();</div><div class="line">    this.maxLineLength = job.getInt(MAX_LINE_LENGTH, Integer.MAX_VALUE);</div><div class="line">    start = split.getStart();</div><div class="line">    end = start + split.getLength();</div><div class="line">    final Path file = split.getPath();</div><div class="line"></div><div class="line">    // open the file and seek to the start of the split</div><div class="line">    final FileSystem fs = file.getFileSystem(job);</div><div class="line">    fileIn = fs.open(file);</div><div class="line">    //根据文件后缀名创建相应压缩编码的codec</div><div class="line">    CompressionCodec codec = new CompressionCodecFactory(job).getCodec(file);</div><div class="line">    if (null!=codec) &#123;</div><div class="line">      isCompressedInput = true;	</div><div class="line">      decompressor = CodecPool.getDecompressor(codec);</div><div class="line">	  //判断是否属于可切片压缩编码类型</div><div class="line">      if (codec instanceof SplittableCompressionCodec) &#123;</div><div class="line">        final SplitCompressionInputStream cIn =</div><div class="line">          ((SplittableCompressionCodec)codec).createInputStream(</div><div class="line">            fileIn, decompressor, start, end,</div><div class="line">            SplittableCompressionCodec.READ_MODE.BYBLOCK);</div><div class="line">		 //如果是可切片压缩编码，则创建一个CompressedSplitLineReader读取压缩数据</div><div class="line">        in = new CompressedSplitLineReader(cIn, job,</div><div class="line">            this.recordDelimiterBytes);</div><div class="line">        start = cIn.getAdjustedStart();</div><div class="line">        end = cIn.getAdjustedEnd();</div><div class="line">        filePosition = cIn;</div><div class="line">      &#125; else &#123;</div><div class="line">		//如果是不可切片压缩编码，则创建一个SplitLineReader读取压缩数据，并将文件输入流转换成解压数据流传递给普通SplitLineReader读取</div><div class="line">        in = new SplitLineReader(codec.createInputStream(fileIn,</div><div class="line">            decompressor), job, this.recordDelimiterBytes);</div><div class="line">        filePosition = fileIn;</div><div class="line">      &#125;</div><div class="line">    &#125; else &#123;</div><div class="line">      fileIn.seek(start);</div><div class="line">	   //如果不是压缩文件，则创建普通SplitLineReader读取数据</div><div class="line">      in = new SplitLineReader(fileIn, job, this.recordDelimiterBytes);</div><div class="line">      filePosition = fileIn;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<h3 id="reduce端join算法实现"><a href="#reduce端join算法实现" class="headerlink" title="reduce端join算法实现"></a>reduce端join算法实现</h3><blockquote>
+<p>通过关联条件作为map输出的key，将满足join条件的数据并携带数据数据所有来源的文件信息，发往同一个reduce task，在reduce中进行数据的串联</p>
+<h3 id="map端的join算法实现"><a href="#map端的join算法实现" class="headerlink" title="map端的join算法实现"></a>map端的join算法实现</h3><p>适用于关联表中有小表的情形，可以将小表分发到所有的map结点，这样，map结点就可以在本地对自己所读到的大表数据进行join并输出到最终结果，可以大大提高join操作的并发度，加快处理速度</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">protected void setup(Context context) throws IOException,interruptedException&#123;&#125;</div></pre></td></tr></table></figure>
+<h3 id="web日志处理"><a href="#web日志处理" class="headerlink" title="web日志处理"></a>web日志处理</h3><h4 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h4><ul>
+<li>对web访问日志中的各个字段识别切分</li>
+<li>去除日志中不合法的记录</li>
+<li>根据KPI统计需求，生成各类访问请求过滤数据</li>
+</ul>
+<h4 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h4><ul>
+<li>bean 实体</li>
+<li>parser 解析</li>
+<li>mapreduce 程序</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Hadoop相关/" rel="tag"># Hadoop相关</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/25/设计模式/设计模式之职责链模式/" rel="next" title="设计模式之职责链模式">
+                <i class="fa fa-chevron-left"></i> 设计模式之职责链模式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/10/Hadoop相关/MapReduce（二）/" rel="prev" title="MapReduce（二）">
+                MapReduce（二） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          
+            <img class="site-author-image" itemprop="image"
+              src="/images/header.png"
+              alt="EtanWatson" />
+          
+            <p class="site-author-name" itemprop="name">EtanWatson</p>
+            <p class="site-description motion-element" itemprop="description">有所舍，有所爱，做一个感性的码农</p>
+        </div>
+
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+            
+              <a href="/archives/">
+            
+                <span class="site-state-item-count">93</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#MapReduce（一）"><span class="nav-number">1.</span> <span class="nav-text">MapReduce（一）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#MapReduce框架结构及核心运行机制"><span class="nav-number">1.1.</span> <span class="nav-text">MapReduce框架结构及核心运行机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#结构"><span class="nav-number">1.1.1.</span> <span class="nav-text">结构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#流程"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">流程</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MapTask并行度决定机制"><span class="nav-number">1.2.</span> <span class="nav-text">MapTask并行度决定机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#FileInputFormat切片机制"><span class="nav-number">1.2.1.</span> <span class="nav-text">FileInputFormat切片机制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#FileInputFormat中切片的大小的参数配置"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">FileInputFormat中切片的大小的参数配置</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ReduceTask并行度的决定"><span class="nav-number">1.3.</span> <span class="nav-text">ReduceTask并行度的决定</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#集群运行模式"><span class="nav-number">1.4.</span> <span class="nav-text">集群运行模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MapReduce中的Combiner"><span class="nav-number">1.5.</span> <span class="nav-text">MapReduce中的Combiner</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#具体实现步骤"><span class="nav-number">1.5.1.</span> <span class="nav-text">具体实现步骤</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mapreduce的shuffle机制"><span class="nav-number">1.6.</span> <span class="nav-text">mapreduce的shuffle机制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MapReduce中的序列化（Writable）"><span class="nav-number">1.7.</span> <span class="nav-text">MapReduce中的序列化（Writable）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#jdk序列化和MR序列化之间的比较"><span class="nav-number">1.7.1.</span> <span class="nav-text">jdk序列化和MR序列化之间的比较</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自定义对象实现MR中的序列化接口（实现WritableComparable-lt-gt-）"><span class="nav-number">1.7.2.</span> <span class="nav-text">自定义对象实现MR中的序列化接口（实现WritableComparable<>）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MapReduce与YARN"><span class="nav-number">1.8.</span> <span class="nav-text">MapReduce与YARN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MapReduce中的排序初步"><span class="nav-number">1.9.</span> <span class="nav-text">MapReduce中的排序初步</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mapreduce中的分区Partitioner"><span class="nav-number">1.10.</span> <span class="nav-text">Mapreduce中的分区Partitioner</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mapreduce数据压缩"><span class="nav-number">1.11.</span> <span class="nav-text">mapreduce数据压缩</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#mr支持的压缩编码"><span class="nav-number">1.11.1.</span> <span class="nav-text">mr支持的压缩编码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Reducer输出压缩"><span class="nav-number">1.11.2.</span> <span class="nav-text">Reducer输出压缩</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#在配置参数中设置"><span class="nav-number">1.11.2.1.</span> <span class="nav-text">在配置参数中设置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#在代码中设置"><span class="nav-number">1.11.2.2.</span> <span class="nav-text">在代码中设置</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mapper输出压缩"><span class="nav-number">1.11.3.</span> <span class="nav-text">Mapper输出压缩</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#在参数中配置"><span class="nav-number">1.11.3.1.</span> <span class="nav-text">在参数中配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#在代码中设置-1"><span class="nav-number">1.11.3.2.</span> <span class="nav-text">在代码中设置</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#压缩文件的读取"><span class="nav-number">1.11.4.</span> <span class="nav-text">压缩文件的读取</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#initialize"><span class="nav-number">1.11.4.1.</span> <span class="nav-text">initialize()</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#reduce端join算法实现"><span class="nav-number">1.11.5.</span> <span class="nav-text">reduce端join算法实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#map端的join算法实现"><span class="nav-number">1.11.6.</span> <span class="nav-text">map端的join算法实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#web日志处理"><span class="nav-number">1.11.7.</span> <span class="nav-text">web日志处理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#需求"><span class="nav-number">1.11.7.1.</span> <span class="nav-text">需求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码实现"><span class="nav-number">1.11.7.2.</span> <span class="nav-text">代码实现</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">EtanWatson</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.2</div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
