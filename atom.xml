@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-06-06T11:33:08.194Z</updated>
+  <updated>2018-06-06T12:52:50.751Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -21,9 +21,9 @@
     <link href="http://yoursite.com/2018/06/05/Hadoop%E7%9B%B8%E5%85%B3/scala/"/>
     <id>http://yoursite.com/2018/06/05/Hadoop相关/scala/</id>
     <published>2018-06-05T04:28:29.154Z</published>
-    <updated>2018-06-06T11:33:08.194Z</updated>
+    <updated>2018-06-06T12:52:50.751Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="scala"><a href="#scala" class="headerlink" title="scala"></a>scala</h1><blockquote><p>由于gethub托管的太慢的原因，现在准备将blog部署到阿里云上面，所以有都没有写完</p></blockquote><h3 id="函数和方法的最大区别"><a href="#函数和方法的最大区别" class="headerlink" title="函数和方法的最大区别"></a>函数和方法的最大区别</h3><blockquote><p>函数可以当做参数传入方法中</p></blockquote><h3 id="map"><a href="#map" class="headerlink" title="map()"></a>map()</h3><blockquote><p>可以用自定义函数处理相关集合 map(_+10) //里面传的是匿名函数<br>map((x: Int) =&gt; x * 100)</p></blockquote><h3 id="神奇的下划线"><a href="#神奇的下划线" class="headerlink" title="神奇的下划线"></a>神奇的下划线</h3><h4 id="将方法转换成函数"><a href="#将方法转换成函数" class="headerlink" title="将方法转换成函数"></a>将方法转换成函数</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">var f2 = m2 _</div></pre></td></tr></table></figure>]]></content>
+    <content type="html"><![CDATA[<h1 id="scala"><a href="#scala" class="headerlink" title="scala"></a>scala</h1><blockquote><p>由于gethub托管的太慢的原因，现在准备将blog部署到阿里云上面，所以有都没有写完</p></blockquote><h3 id="函数和方法的最大区别"><a href="#函数和方法的最大区别" class="headerlink" title="函数和方法的最大区别"></a>函数和方法的最大区别</h3><blockquote><p>函数可以当做参数传入方法中</p></blockquote><h3 id="map"><a href="#map" class="headerlink" title="map()"></a>map()</h3><blockquote><p>可以用自定义函数处理相关集合 map(_+10) //里面传的是匿名函数<br>map((x: Int) =&gt; x * 100)</p></blockquote><h3 id="神奇的下划线"><a href="#神奇的下划线" class="headerlink" title="神奇的下划线"></a>神奇的下划线</h3><h4 id="将方法转换成函数"><a href="#将方法转换成函数" class="headerlink" title="将方法转换成函数"></a>将方法转换成函数</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">var f2 = m2 _</div></pre></td></tr></table></figure><h3 id="相关函数"><a href="#相关函数" class="headerlink" title="相关函数"></a>相关函数</h3><h4 id="reduce"><a href="#reduce" class="headerlink" title="reduce()"></a>reduce()</h4><h4 id="fold"><a href="#fold" class="headerlink" title="fold()"></a>fold()</h4><h5 id="foldLeft"><a href="#foldLeft" class="headerlink" title="foldLeft()"></a>foldLeft()</h5><h4 id="a-par-并行计算"><a href="#a-par-并行计算" class="headerlink" title="a.par (并行计算)"></a>a.par (并行计算)</h4>]]></content>
     
     <summary type="html">
     
@@ -43,11 +43,11 @@
   </entry>
   
   <entry>
-    <title></title>
+    <title>java网络编程（二）-- 流</title>
     <link href="http://yoursite.com/2018/06/02/JavaSE/%E6%B5%81/"/>
     <id>http://yoursite.com/2018/06/02/JavaSE/流/</id>
     <published>2018-06-02T12:22:34.239Z</published>
-    <updated>2018-06-02T12:56:27.186Z</updated>
+    <updated>2018-06-06T12:58:54.738Z</updated>
     
     <content type="html"><![CDATA[<h1 id="Java网络编程（二）–-流"><a href="#Java网络编程（二）–-流" class="headerlink" title="Java网络编程（二）– 流"></a>Java网络编程（二）– 流</h1><blockquote><p>java的I/O建立于流（Stream）之上。输入流读取数据，输出流写入数据</p></blockquote><h2 id="输出流"><a href="#输出流" class="headerlink" title="输出流"></a>输出流</h2><blockquote><p>java.io.OutputStream</p></blockquote><h3 id="包括的方法"><a href="#包括的方法" class="headerlink" title="包括的方法"></a>包括的方法</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">public abstract void write(int b) throws IOException</div><div class="line">public void write(byte[] data) throws IOException</div><div class="line">public void write（byte[] data, int offset, int length）throws IOException </div><div class="line">public void flush() throws IOException</div><div class="line">public void close() throws IOException</div></pre></td></tr></table></figure>]]></content>
     
@@ -61,15 +61,19 @@
     
     </summary>
     
+      <category term="JavaSE-网络" scheme="http://yoursite.com/categories/JavaSE-%E7%BD%91%E7%BB%9C/"/>
+    
+    
+      <category term="JavaSE-网络" scheme="http://yoursite.com/tags/JavaSE-%E7%BD%91%E7%BB%9C/"/>
     
   </entry>
   
   <entry>
-    <title></title>
+    <title>java网络编程（一）-- 基本网络概念</title>
     <link href="http://yoursite.com/2018/06/01/JavaSE/%E5%9F%BA%E6%9C%AC%E7%BD%91%E8%B7%AF%E6%A6%82%E5%BF%B5/"/>
     <id>http://yoursite.com/2018/06/01/JavaSE/基本网路概念/</id>
     <published>2018-06-01T07:50:46.775Z</published>
-    <updated>2018-06-02T12:12:32.360Z</updated>
+    <updated>2018-06-06T12:59:24.502Z</updated>
     
     <content type="html"><![CDATA[<h1 id="Java网络编程（一）–-基本网络概念"><a href="#Java网络编程（一）–-基本网络概念" class="headerlink" title="Java网络编程（一）– 基本网络概念"></a>Java网络编程（一）– 基本网络概念</h1><h2 id="网络分层"><a href="#网络分层" class="headerlink" title="网络分层"></a>网络分层</h2><blockquote><p>将网络分层，这样就可以修改甚至替换某一层的软件，只要层与层之间的接口保持不变，就不会影响到其他层</p></blockquote><p><img src="/images/15278412731477.jpg" alt=""></p><h3 id="TCP-IP四层模型"><a href="#TCP-IP四层模型" class="headerlink" title="TCP/IP四层模型"></a>TCP/IP四层模型</h3><p><img src="/images/15278413933079.jpg" alt=""></p><h3 id="IPv4数据包结构"><a href="#IPv4数据包结构" class="headerlink" title="IPv4数据包结构"></a>IPv4数据包结构</h3><p><img src="/images/15278432626508.jpg" alt=""></p><h3 id="传输层"><a href="#传输层" class="headerlink" title="传输层"></a>传输层</h3><blockquote><p>负责确保各包以发送的顺序接收，并保证没有数据丢失或破坏，添加一个附加部首<br>这一层主要有两个协议 TCP(Transmission Control Protocol)/UDP（User Datagram Protocol）</p></blockquote><h3 id="网络地址转换（NAT）"><a href="#网络地址转换（NAT）" class="headerlink" title="网络地址转换（NAT）"></a>网络地址转换（NAT）</h3><blockquote><p>路由器会监视出站和入站的连接，调整IP包中的地址。对于出站的包，它将源地址改为路由器的外部地址。对于入站的包，它将目的地址改为一个本地地址</p></blockquote><h3 id="SOAP"><a href="#SOAP" class="headerlink" title="SOAP"></a>SOAP</h3>]]></content>
     
@@ -82,6 +86,10 @@
     
     </summary>
     
+      <category term="JavaSE-网络" scheme="http://yoursite.com/categories/JavaSE-%E7%BD%91%E7%BB%9C/"/>
+    
+    
+      <category term="JavaSE-网络" scheme="http://yoursite.com/tags/JavaSE-%E7%BD%91%E7%BB%9C/"/>
     
   </entry>
   

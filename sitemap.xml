@@ -2,9 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2018/06/01/JavaSE/%E5%9F%BA%E6%9C%AC%E7%BD%91%E8%B7%AF%E6%A6%82%E5%BF%B5/</loc>
+    
+    <lastmod>2018-06-06T12:59:24.502Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2018/06/02/JavaSE/%E6%B5%81/</loc>
+    
+    <lastmod>2018-06-06T12:58:54.738Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2018/06/05/Hadoop%E7%9B%B8%E5%85%B3/scala/</loc>
     
-    <lastmod>2018-06-06T11:33:08.194Z</lastmod>
+    <lastmod>2018-06-06T12:52:50.751Z</lastmod>
     
   </url>
   
@@ -33,20 +47,6 @@
     <loc>http://yoursite.com/2018/04/15/Hadoop%E7%9B%B8%E5%85%B3/JAVA%E9%AB%98%E7%BA%A7%E7%89%B9%E6%80%A7/</loc>
     
     <lastmod>2018-06-06T11:27:56.078Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2018/06/02/JavaSE/%E6%B5%81/</loc>
-    
-    <lastmod>2018-06-02T12:56:27.186Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2018/06/01/JavaSE/%E5%9F%BA%E6%9C%AC%E7%BD%91%E8%B7%AF%E6%A6%82%E5%BF%B5/</loc>
-    
-    <lastmod>2018-06-02T12:12:32.360Z</lastmod>
     
   </url>
   
