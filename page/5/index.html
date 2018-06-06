@@ -1547,6 +1547,158 @@ request.setAttribute(&quot;handlingTime&quot;, endTime - startTime);
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/09/JVM性能相关/java性能优化-JVM概述（一）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EtanWatson">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EWSUN">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/02/09/JVM性能相关/java性能优化-JVM概述（一）/" itemprop="url">java性能优化-JVM概述（一）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-09T18:22:13+08:00">
+                2018-02-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JVM性能相关/" itemprop="url" rel="index">
+                    <span itemprop="name">JVM性能相关</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="HotSpot-VM的基本架构"><a href="#HotSpot-VM的基本架构" class="headerlink" title="HotSpot VM的基本架构"></a>HotSpot VM的基本架构</h2><p>垃圾收集器和JIT是可插拔的，HotSpot VM运行时系统为HotSpot JIT编译器和垃圾收集器提供服务和通用API</p>
+<h2 id="HotSpot-VM运行时"><a href="#HotSpot-VM运行时" class="headerlink" title="HotSpot VM运行时"></a>HotSpot VM运行时</h2><h3 id="命令行选项"><a href="#命令行选项" class="headerlink" title="命令行选项"></a>命令行选项</h3><ul>
+<li>标准选项</li>
+<li>非标准选项（-X:+(-)）</li>
+<li>非稳定选项（-XX:+(-)）<h3 id="VM生命周期"><a href="#VM生命周期" class="headerlink" title="VM生命周期"></a>VM生命周期</h3><strong>启动</strong></li>
+<li>解析命令行选项</li>
+<li>设置堆的大小和JIT编译器（默认自动优化）</li>
+<li>设定环境变量如LD_LIBRARY_PATH和CLASSPATH</li>
+<li>如果命令行有-jar选项，启动器则从指定JAR的manifest中查找Main—Class，否则从命令行读取Main—Class</li>
+<li>使用标准Java本地接口</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/09/JVM性能相关/java性能优化-操作系统性能监控（一）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1664,158 +1816,6 @@ request.setAttribute(&quot;handlingTime&quot;, endTime - startTime);
 <li><strong>单次读写数据量小而网络读写量大的应用会消耗大量的系统态CPU</strong></li>
 <li><strong>使用非阻塞的JAVA NIO而不是阻塞的java.net.Socket</strong><h2 id="磁盘I-O使用率（iostat-xm-5）"><a href="#磁盘I-O使用率（iostat-xm-5）" class="headerlink" title="磁盘I/O使用率（iostat -xm 5）"></a>磁盘I/O使用率（iostat -xm 5）</h2></li>
 <li>使用缓冲数据结构 BufferedInputStream BufferedOutputStream<h2 id="其他命令行工具（sar）"><a href="#其他命令行工具（sar）" class="headerlink" title="其他命令行工具（sar）"></a>其他命令行工具（sar）</h2></li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/09/JVM性能相关/java性能优化-JVM概述（一）/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="EtanWatson">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/header.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="EWSUN">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/02/09/JVM性能相关/java性能优化-JVM概述（一）/" itemprop="url">java性能优化-JVM概述（一）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-09T18:22:13+08:00">
-                2018-02-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JVM性能相关/" itemprop="url" rel="index">
-                    <span itemprop="name">JVM性能相关</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="HotSpot-VM的基本架构"><a href="#HotSpot-VM的基本架构" class="headerlink" title="HotSpot VM的基本架构"></a>HotSpot VM的基本架构</h2><p>垃圾收集器和JIT是可插拔的，HotSpot VM运行时系统为HotSpot JIT编译器和垃圾收集器提供服务和通用API</p>
-<h2 id="HotSpot-VM运行时"><a href="#HotSpot-VM运行时" class="headerlink" title="HotSpot VM运行时"></a>HotSpot VM运行时</h2><h3 id="命令行选项"><a href="#命令行选项" class="headerlink" title="命令行选项"></a>命令行选项</h3><ul>
-<li>标准选项</li>
-<li>非标准选项（-X:+(-)）</li>
-<li>非稳定选项（-XX:+(-)）<h3 id="VM生命周期"><a href="#VM生命周期" class="headerlink" title="VM生命周期"></a>VM生命周期</h3><strong>启动</strong></li>
-<li>解析命令行选项</li>
-<li>设置堆的大小和JIT编译器（默认自动优化）</li>
-<li>设定环境变量如LD_LIBRARY_PATH和CLASSPATH</li>
-<li>如果命令行有-jar选项，启动器则从指定JAR的manifest中查找Main—Class，否则从命令行读取Main—Class</li>
-<li>使用标准Java本地接口</li>
 </ul>
 
           
