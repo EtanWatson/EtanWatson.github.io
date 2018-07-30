@@ -104,14 +104,14 @@
 <meta property="og:site_name" content="EWSUN">
 <meta property="og:description" content="常用知识积累java虚拟机JVM运行时内存区域的划分 程序计数器：用来指示执行那条指令的 虚拟机栈：java栈（java方法）-栈帧 局部变量表 操作数栈 运行时常量池的引用，方法返回地址 本地方法栈：本地方法 HotSpot虚拟机java栈和本地方法栈合并 java堆：存储对象本身以及数组 方法区：与堆一样，是被线程共享的区域，在方法区中，存储了每个类的信息（包括累的名称，方法信息，字段信息）、">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2018/07/30/JavaSE/常用知识积累/media/15328455150736/15328562665051.jpg">
-<meta property="og:image" content="http://yoursite.com/2018/07/30/JavaSE/常用知识积累/media/15328455150736/15328711157388.jpg">
-<meta property="og:image" content="http://yoursite.com/2018/07/30/JavaSE/常用知识积累/media/15328455150736/15328732787884.jpg">
-<meta property="og:updated_time" content="2018-07-30T02:44:39.022Z">
+<meta property="og:image" content="http://yoursite.com/images/15329219398244.jpg">
+<meta property="og:image" content="http://yoursite.com/images/15329219586535.jpg">
+<meta property="og:image" content="http://yoursite.com/images/15329219759485.jpg">
+<meta property="og:updated_time" content="2018-07-30T03:39:54.440Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="EWSUN">
 <meta name="twitter:description" content="常用知识积累java虚拟机JVM运行时内存区域的划分 程序计数器：用来指示执行那条指令的 虚拟机栈：java栈（java方法）-栈帧 局部变量表 操作数栈 运行时常量池的引用，方法返回地址 本地方法栈：本地方法 HotSpot虚拟机java栈和本地方法栈合并 java堆：存储对象本身以及数组 方法区：与堆一样，是被线程共享的区域，在方法区中，存储了每个类的信息（包括累的名称，方法信息，字段信息）、">
-<meta name="twitter:image" content="http://yoursite.com/2018/07/30/JavaSE/常用知识积累/media/15328455150736/15328562665051.jpg">
+<meta name="twitter:image" content="http://yoursite.com/images/15329219398244.jpg">
 
 
 
@@ -392,7 +392,9 @@
 <ol>
 <li>主内存</li>
 <li>工作内存</li>
-<li><img src="media/15328455150736/15328562665051.jpg" alt=""><h4 id="java-内存模型的承诺"><a href="#java-内存模型的承诺" class="headerlink" title="java 内存模型的承诺"></a>java 内存模型的承诺</h4></li>
+<li><img src="/images/15329219398244.jpg" alt=""></li>
+</ol>
+<h4 id="java-内存模型的承诺"><a href="#java-内存模型的承诺" class="headerlink" title="java 内存模型的承诺"></a>java 内存模型的承诺</h4><ol>
 <li>原子性 Synchronized和 lock</li>
 <li>指令重排 volatile</li>
 <li>可见性  volatile</li>
@@ -437,7 +439,7 @@
 </ol>
 </li>
 </ol>
-<h3 id="类加载机制"><a href="#类加载机制" class="headerlink" title="类加载机制"></a>类加载机制</h3><h4 id="类加载器：启动类加载器-rt-jar、标准扩展类加载器-lib-ext、系统类加载器-classPath"><a href="#类加载器：启动类加载器-rt-jar、标准扩展类加载器-lib-ext、系统类加载器-classPath" class="headerlink" title="类加载器：启动类加载器 rt.jar、标准扩展类加载器 /lib/ext、系统类加载器 classPath"></a>类加载器：启动类加载器 rt.jar、标准扩展类加载器 <java_home>/lib/ext、系统类加载器 classPath</java_home></h4><p><img src="media/15328455150736/15328711157388.jpg" alt=""></p>
+<h3 id="类加载机制"><a href="#类加载机制" class="headerlink" title="类加载机制"></a>类加载机制</h3><h4 id="类加载器：启动类加载器-rt-jar、标准扩展类加载器-lib-ext、系统类加载器-classPath"><a href="#类加载器：启动类加载器-rt-jar、标准扩展类加载器-lib-ext、系统类加载器-classPath" class="headerlink" title="类加载器：启动类加载器 rt.jar、标准扩展类加载器 /lib/ext、系统类加载器 classPath"></a>类加载器：启动类加载器 rt.jar、标准扩展类加载器 <java_home>/lib/ext、系统类加载器 classPath</java_home></h4><p><img src="/images/15329219586535.jpg" alt=""></p>
 <h5 id="委托机制"><a href="#委托机制" class="headerlink" title="委托机制"></a>委托机制</h5><h5 id="全盘负责"><a href="#全盘负责" class="headerlink" title="全盘负责"></a>全盘负责</h5><h2 id="多线程"><a href="#多线程" class="headerlink" title="多线程"></a>多线程</h2><h3 id="volatile"><a href="#volatile" class="headerlink" title="volatile"></a>volatile</h3><p>使用violatile修饰的变量在汇编阶段，会多出一条lock前缀指令，它在多核处理器下会引发两件事情</p>
 <ol>
 <li>将当前处理器缓存行的数据写会到系统内存</li>
@@ -464,7 +466,7 @@
 <li>偏向锁 当有其他线程竞争的时候，会升级成轻量级锁</li>
 </ol>
 <h3 id="线程池"><a href="#线程池" class="headerlink" title="线程池"></a>线程池</h3><h4 id="ThreadPoolExecutor"><a href="#ThreadPoolExecutor" class="headerlink" title="ThreadPoolExecutor"></a>ThreadPoolExecutor</h4><p>corePoolSize（线程池的基本大小）<br>runnableTaskQueue（任务队列）保存等待执行任务的阻塞队列<br>maximumPoolSize(线程池最大大小)：线程池永续创建的最大线程数<br>RejectedExecutionHandler(饱和策略) </p>
-<h4 id="newCachedThreadPool（创建一个可缓存线程池）"><a href="#newCachedThreadPool（创建一个可缓存线程池）" class="headerlink" title="newCachedThreadPool（创建一个可缓存线程池）"></a>newCachedThreadPool（创建一个可缓存线程池）</h4><h4 id="newFixedThreadPool（创建一个指定工作线程数量的线程池）"><a href="#newFixedThreadPool（创建一个指定工作线程数量的线程池）" class="headerlink" title="newFixedThreadPool（创建一个指定工作线程数量的线程池）"></a>newFixedThreadPool（创建一个指定工作线程数量的线程池）</h4><h4 id="newSingleThreadExecutor（创建一个单线程化的Executor）"><a href="#newSingleThreadExecutor（创建一个单线程化的Executor）" class="headerlink" title="newSingleThreadExecutor（创建一个单线程化的Executor）"></a>newSingleThreadExecutor（创建一个单线程化的Executor）</h4><h4 id="newScheduleThreadPool（创建一个定长的线程池，而且支持定时以及周期性任务执行）"><a href="#newScheduleThreadPool（创建一个定长的线程池，而且支持定时以及周期性任务执行）" class="headerlink" title="newScheduleThreadPool（创建一个定长的线程池，而且支持定时以及周期性任务执行）"></a>newScheduleThreadPool（创建一个定长的线程池，而且支持定时以及周期性任务执行）</h4><h2 id="计算机网络"><a href="#计算机网络" class="headerlink" title="计算机网络"></a>计算机网络</h2><h3 id="3次握手和4次挥手"><a href="#3次握手和4次挥手" class="headerlink" title="3次握手和4次挥手"></a>3次握手和4次挥手</h3><p><img src="media/15328455150736/15328732787884.jpg" alt=""></p>
+<h4 id="newCachedThreadPool（创建一个可缓存线程池）"><a href="#newCachedThreadPool（创建一个可缓存线程池）" class="headerlink" title="newCachedThreadPool（创建一个可缓存线程池）"></a>newCachedThreadPool（创建一个可缓存线程池）</h4><h4 id="newFixedThreadPool（创建一个指定工作线程数量的线程池）"><a href="#newFixedThreadPool（创建一个指定工作线程数量的线程池）" class="headerlink" title="newFixedThreadPool（创建一个指定工作线程数量的线程池）"></a>newFixedThreadPool（创建一个指定工作线程数量的线程池）</h4><h4 id="newSingleThreadExecutor（创建一个单线程化的Executor）"><a href="#newSingleThreadExecutor（创建一个单线程化的Executor）" class="headerlink" title="newSingleThreadExecutor（创建一个单线程化的Executor）"></a>newSingleThreadExecutor（创建一个单线程化的Executor）</h4><h4 id="newScheduleThreadPool（创建一个定长的线程池，而且支持定时以及周期性任务执行）"><a href="#newScheduleThreadPool（创建一个定长的线程池，而且支持定时以及周期性任务执行）" class="headerlink" title="newScheduleThreadPool（创建一个定长的线程池，而且支持定时以及周期性任务执行）"></a>newScheduleThreadPool（创建一个定长的线程池，而且支持定时以及周期性任务执行）</h4><h2 id="计算机网络"><a href="#计算机网络" class="headerlink" title="计算机网络"></a>计算机网络</h2><h3 id="3次握手和4次挥手"><a href="#3次握手和4次挥手" class="headerlink" title="3次握手和4次挥手"></a>3次握手和4次挥手</h3><p><img src="/images/15329219759485.jpg" alt=""></p>
 <ol>
 <li>3次握手<br>小明拨打小红的电话<br>小红按下通话键并说了声，喂 （一次握手）<br>小明听到小红的回应，也说了声，喂 （二次握手）<br>小红接收到小明的回应 （三次握手）</li>
 <li>4次挥手<br>小明：我这没事儿了，你还有事儿吗？ （1次挥手）<br>小红：我也没事儿了，你确定没事儿了吗？ （2次挥手）<br>小红：我要挂电话了。 （3次挥手）<br>小明：好吧，你挂吧。 （4次挥手）</li>
@@ -556,6 +558,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2018/07/30/mysql/Mysql索引背后的数据结构及算法原理/" rel="prev" title="">
+                 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -634,7 +640,7 @@
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">94</span>
+                <span class="site-state-item-count">95</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

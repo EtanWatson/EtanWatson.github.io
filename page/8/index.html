@@ -310,6 +310,154 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/03/python数据采集/python数据收集（六）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EtanWatson">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EWSUN">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/03/python数据采集/python数据收集（六）/" itemprop="url">python数据收集（六）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-03T15:36:23+08:00">
+                2017-10-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python数据收集/" itemprop="url" rel="index">
+                    <span itemprop="name">python数据收集</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="读取文档"><a href="#读取文档" class="headerlink" title="读取文档"></a>读取文档</h1><h2 id="文档编码"><a href="#文档编码" class="headerlink" title="文档编码"></a>文档编码</h2><p>纯文本文件，视频文件和图像文件的唯一区别，就是它们的0和1面向用户的转换方式不同</p>
+<h3 id="纯文本"><a href="#纯文本" class="headerlink" title="纯文本"></a>纯文本</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">from urllib.request import urlopen</div><div class="line">textPage = urlopen(<span class="string">"http://www.pythonscraping.com/pages/warandpeace/chapter1.txt"</span>)</div><div class="line"><span class="built_in">print</span>(textPage.read())</div></pre></td></tr></table></figure>
+<p>像这种纯文本的，使用BeautifulSoup库就没有用了，如果变成BeautifulSoup反而适得其反</p>
+<h2 id="文本编码和全球互联网"><a href="#文本编码和全球互联网" class="headerlink" title="文本编码和全球互联网"></a>文本编码和全球互联网</h2><p>UTF-8:<br>在 UTF-8 设计过程中，设计师决定利用 ASCII 文档里的“填充位”，让所有以“0”开头的 字节表示这个字符只用 1 个字节，从而把 ASCII 和 UTF-8 编码完美地结合在一起。因此， 下面的字符在 ASCII 和 UTF-8 两种编码方式中都是有效的:<br>      01000001 - A<br>      01000010 - B<br>      01000011 - C<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"># from urllib.request import urlopen</div><div class="line"># textPage = urlopen(&quot;http://www.pythonscraping.com/pages/warandpeace/chapter1.txt&quot;)</div><div class="line"># print(textPage.read())</div><div class="line"></div><div class="line"></div><div class="line"># from urllib.request import urlopen</div><div class="line"># textPage = urlopen(&quot;http://www.pythonscraping.com/pages/warandpeace/chapter1-ru.txt&quot;)</div><div class="line"># print(str(textPage.read(),&apos;utf-8&apos;))</div><div class="line"></div><div class="line">#用BeautifulSoup和python3.x对文档进行UTF-8编码，如下所示</div><div class="line">from urllib.request import urlopen</div><div class="line">from bs4 import BeautifulSoup</div><div class="line">html = urlopen(&quot;http://en.wikipedia.org/wiki/Python_(programming_language)&quot;)</div><div class="line">bsObj = BeautifulSoup(html)</div><div class="line">content = bsObj.find(&quot;div&quot;, &#123;&quot;id&quot;:&quot;mw-content-text&quot;&#125;).get_text()</div><div class="line">content = bytes(content, &quot;UTF-8&quot;)</div><div class="line">content = content.decode(&quot;UTF-8&quot;)</div></pre></td></tr></table></figure></p>
+<h2 id="CSV"><a href="#CSV" class="headerlink" title="CSV"></a>CSV</h2><h3 id="读取CSV文件"><a href="#读取CSV文件" class="headerlink" title="读取CSV文件"></a>读取CSV文件</h3><p>• 手动把CSV文件下载到本机，然后用Python定位文件位置;<br>• 写Python程序下载文件，读取之后再把源文件删除;<br>• 从网上直接把文件读成一个字符串，然后转换成一个StringIO对象，使它具有文件的<br>属性。（这个方法比较可行）</p>
+<h2 id="PDF"><a href="#PDF" class="headerlink" title="PDF"></a>PDF</h2><p>pdf转字符串(直接上代码)<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#把PDF 读成字符串，然后用 StringIO 转换成文件对象</span></div><div class="line">from urllib.request import urlopen</div><div class="line">from pdfminer.pdfinterp import PDFResourceManager, process_pdf</div><div class="line">from pdfminer.converter import TextConverter</div><div class="line">from pdfminer.layout import LAParams</div><div class="line">from io import StringIO</div><div class="line">from io import open</div><div class="line"></div><div class="line">def readPDF(pdfFile):</div><div class="line">    rsrcmgr = PDFResourceManager()</div><div class="line">    retstr = StringIO()</div><div class="line">    laparams = LAParams()</div><div class="line">    device = TextConverter(rsrcmgr, retstr, laparams=laparams)</div><div class="line">    process_pdf(rsrcmgr, device, pdfFile)</div><div class="line">    device.close()</div><div class="line">    content = retstr.getvalue()</div><div class="line">    retstr.close()</div><div class="line">    <span class="built_in">return</span> content</div><div class="line">pdfFile = urlopen(<span class="string">"http://pythonscraping.com/pages/warandpeace/chapter1.pdf"</span>)</div><div class="line">outputString = readPDF(pdfFile)</div><div class="line"><span class="built_in">print</span>(outputString)</div><div class="line">pdfFile.close()</div><div class="line">``` </div><div class="line"><span class="comment">#如果格式里面有图片，各式各样的文本格式，或者带有表格和数据图的时候，输出结果可能不是很完美</span></div><div class="line"></div><div class="line"><span class="comment">## 微软Word和.docx</span></div><div class="line"><span class="comment">### 读取Microsoft Office 文件</span></div><div class="line">第一步是从文件读取XML</div><div class="line">``` bash </div><div class="line">from zipfile import ZipFile</div><div class="line">from urllib.request import urlopen</div><div class="line">from io import BytesIO</div><div class="line">from bs4 import BeautifulSoup</div><div class="line"></div><div class="line">wordFile = urlopen(<span class="string">"http://pythonscraping.com/pages/AWordDocument.docx"</span>).<span class="built_in">read</span>()</div><div class="line">wordFile = BytesIO(wordFile)</div><div class="line">document = ZipFile(wordFile)</div><div class="line">xml_content = document.read(<span class="string">'word/document.xml'</span>)</div><div class="line"></div><div class="line">wordObj = BeautifulSoup(xml_content.decode(<span class="string">'utf-8'</span>),<span class="string">'html.parser'</span>)</div><div class="line"><span class="comment"># textStrings = wordObj.findAll("w:t")</span></div><div class="line"><span class="comment"># for textElem in textStrings:</span></div><div class="line"><span class="comment">#     print(textElem.text)</span></div><div class="line"><span class="comment">#print(wordObj.text)</span></div><div class="line">textStrings = wordObj.findAll(<span class="string">"w:t"</span>)</div><div class="line"><span class="keyword">for</span> textElem <span class="keyword">in</span> textStrings:</div><div class="line">    closeTag = <span class="string">""</span></div><div class="line">    try:</div><div class="line">        style = textElem.parent.previousSibling.find(<span class="string">"w:pstyle"</span>)</div><div class="line">        <span class="keyword">if</span> style is not None and style[<span class="string">"w:val"</span>] == <span class="string">"Title"</span>: <span class="built_in">print</span>(<span class="string">"&lt;h1&gt;"</span>)</div><div class="line">        closeTag = <span class="string">"&lt;/h1&gt;"</span></div><div class="line">    except AttributeError: <span class="comment">#不打印标签</span></div><div class="line">        pass</div><div class="line">        <span class="built_in">print</span>(textElem.text)</div><div class="line">        <span class="built_in">print</span>(closeTag)</div></pre></td></tr></table></figure></p>
+<p>由于按照书上的做法是得到的是一个空的textStrings,但是可用wordObj.text属性找出，但是格式不太对</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/02/python数据采集/python数据收集（五）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1758,156 +1906,6 @@ title = bsObj.body.h1
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/20/English/英语学习笔记之（翻译）/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="EtanWatson">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/header.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="EWSUN">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/20/English/英语学习笔记之（翻译）/" itemprop="url">英语学习笔记之（翻译）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-20T21:05:01+08:00">
-                2017-09-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/English/" itemprop="url" rel="index">
-                    <span itemprop="name">English</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>今天整理一下老师讲的英语翻译（汉译英）技巧</p>
-<h1 id="英语翻译技巧"><a href="#英语翻译技巧" class="headerlink" title="英语翻译技巧"></a>英语翻译技巧</h1><h2 id="单词"><a href="#单词" class="headerlink" title="单词"></a>单词</h2><h2 id="结构"><a href="#结构" class="headerlink" title="结构"></a>结构</h2><h2 id="完整性"><a href="#完整性" class="headerlink" title="完整性"></a>完整性</h2><h2 id="“的”的处理"><a href="#“的”的处理" class="headerlink" title="“的”的处理"></a>“的”的处理</h2><h2 id="一般词与具体词"><a href="#一般词与具体词" class="headerlink" title="一般词与具体词"></a>一般词与具体词</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">ex:			indicate</div><div class="line">show(一般词）：   reveal</div><div class="line">		imply</div><div class="line">		suggest</div></pre></td></tr></table></figure>
-<h2 id="冠词"><a href="#冠词" class="headerlink" title="冠词"></a>冠词</h2><h2 id="名词的单复数"><a href="#名词的单复数" class="headerlink" title="名词的单复数"></a>名词的单复数</h2><p>``` bash<br> 单数 - &gt; 特指<br> 复数 - &gt; 泛指</p>
-<h2 id="谓语"><a href="#谓语" class="headerlink" title="谓语"></a>谓语</h2><p>``` bash<br>    时态<br>    语态<br>    语气</p>
-<h2 id="动词的选择"><a href="#动词的选择" class="headerlink" title="动词的选择"></a>动词的选择</h2><h2 id="平衡"><a href="#平衡" class="headerlink" title="平衡"></a>平衡</h2><h2 id="用词的多样性"><a href="#用词的多样性" class="headerlink" title="用词的多样性"></a>用词的多样性</h2><h2 id="平行结构：前后一致"><a href="#平行结构：前后一致" class="headerlink" title="平行结构：前后一致"></a>平行结构：前后一致</h2><pre><code>动名词 - &gt; 抽象
-不定式 - &gt; 具体
-</code></pre><h2 id="语意"><a href="#语意" class="headerlink" title="语意"></a>语意</h2><h3 id="越来越的译法"><a href="#越来越的译法" class="headerlink" title="越来越的译法"></a>越来越的译法</h3><pre><code>increasing adj.  ex: An increasing number of people 
-increasingly adv.
-growing adj.  ex：a growing number
-</code></pre><h3 id="面临的译法-face-（倒过来用ing）"><a href="#面临的译法-face-（倒过来用ing）" class="headerlink" title="面临的译法 face （倒过来用ing）"></a>面临的译法 face （倒过来用ing）</h3><h3 id="现在-currently"><a href="#现在-currently" class="headerlink" title="现在 currently"></a>现在 currently</h3><h3 id="短缺-be-shirt-of"><a href="#短缺-be-shirt-of" class="headerlink" title="短缺 be shirt of"></a>短缺 be shirt of</h3><h3 id="缩小-the-shrink-in"><a href="#缩小-the-shrink-in" class="headerlink" title="缩小 the shrink in"></a>缩小 the shrink in</h3>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1961,7 +1959,7 @@ growing adj.  ex：a growing number
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">94</span>
+                <span class="site-state-item-count">95</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
