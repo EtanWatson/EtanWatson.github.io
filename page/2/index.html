@@ -310,6 +310,265 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/10/Hadoop相关/Hive/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EtanWatson">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EWSUN">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/05/10/Hadoop相关/Hive/" itemprop="url">Hive</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-10T21:21:48+08:00">
+                2018-05-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Hadoop相关/" itemprop="url" rel="index">
+                    <span itemprop="name">Hadoop相关</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Hive"><a href="#Hive" class="headerlink" title="Hive"></a>Hive</h1><h2 id="Hive-安装"><a href="#Hive-安装" class="headerlink" title="Hive 安装"></a>Hive 安装</h2><h3 id="三种模式"><a href="#三种模式" class="headerlink" title="三种模式"></a>三种模式</h3><ul>
+<li>内嵌模式：元数据保存在内嵌的derby中，允许一个会话链接，尝试多个链接是会报错</li>
+<li>本地独立模式：在本地安装MySql，把元数据放到MySql内</li>
+<li>远程模式：元数据放置在远程的MySql数据库中</li>
+</ul>
+<h3 id="hive安装包"><a href="#hive安装包" class="headerlink" title="hive安装包"></a>hive安装包</h3><ul>
+<li>下载</li>
+<li>将hive文件上传到Hadoop集群，并解压</li>
+<li>cd (解压路径)  ln -s apache-hive-1.2.1-bin hive(创建软连接)</li>
+</ul>
+<h3 id="配置环境"><a href="#配置环境" class="headerlink" title="配置环境"></a>配置环境</h3><h4 id="编辑-etc-profle"><a href="#编辑-etc-profle" class="headerlink" title="编辑/etc/profle"></a>编辑/etc/profle</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># set hive env </div><div class="line">export HIVE_HOME=/export/servers/hive</div><div class="line">export PATH=$&#123;HIVE_HOME&#125;/bin:$PATH</div><div class="line"></div><div class="line"># 让环境变量生效</div><div class="line">source /etc/profile</div></pre></td></tr></table></figure>
+<h4 id="修改hive配置文件"><a href="#修改hive配置文件" class="headerlink" title="修改hive配置文件"></a>修改hive配置文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line">cd /export/servers/hive/conf/</div><div class="line"></div><div class="line"># 修改hive-env.sh文件</div><div class="line">cp hive-env.sh.template hive-env.sh</div><div class="line"></div><div class="line"># 将一下内容写到hive-env.sh</div><div class="line">export JAVA_HOME=/export/servers/jdk</div><div class="line">export HADOOP_HOME=/export/servers/hadoop</div><div class="line">export HIVE_HOME=/export/servers/hive</div><div class="line"></div><div class="line"># 修改log4j文件</div><div class="line">cp hive-log4j.properties.template hive-log4j.properties</div><div class="line"># 将EventCounter修改成org.apache.hadoop.log.metrics.EventCounter</div><div class="line"># log4j.appender.EventCounter=org.apache.hadoop.hive.shims.HiveEventCounter</div><div class="line">log4j.appender.EventCounter=org.apache.hadoop.log.metrics.EventCounter</div><div class="line"></div><div class="line"># 配置远程登录模式</div><div class="line">touch hive-site.xml</div><div class="line"># 将以下信息写入到hive-site.xml文件中</div><div class="line">&lt;configuration&gt;</div><div class="line">        &lt;property&gt;</div><div class="line">                &lt;name&gt;javax.jdo.option.ConnectionURL&lt;/name&gt;</div><div class="line">                &lt;value&gt;jdbc:mysql://hadoop02:3306/hivedb?createDatabaseIfNotExist=true&lt;/value&gt;</div><div class="line">        &lt;/property&gt;</div><div class="line">        &lt;property&gt;</div><div class="line">                &lt;name&gt;javax.jdo.option.ConnectionDriverName&lt;/name&gt;</div><div class="line">                &lt;value&gt;com.mysql.jdbc.Driver&lt;/value&gt;</div><div class="line">        &lt;/property&gt;</div><div class="line">        &lt;property&gt;</div><div class="line">                &lt;name&gt;javax.jdo.option.ConnectionUserName&lt;/name&gt;</div><div class="line">                &lt;value&gt;root&lt;/value&gt;</div><div class="line">        &lt;/property&gt;</div><div class="line">        &lt;property&gt;</div><div class="line">                &lt;name&gt;javax.jdo.option.ConnectionPassword&lt;/name&gt;</div><div class="line">                &lt;value&gt;root&lt;/value&gt;</div><div class="line">        &lt;/property&gt;</div><div class="line">&lt;/configuration&gt;</div><div class="line"></div><div class="line"># 配置hive元数据库</div><div class="line">mysql -u root -p </div><div class="line">create database hivedb;</div><div class="line"></div><div class="line"># 对hive元数据库进行赋权，开放远程连接，开放localhost连接</div><div class="line">grant all privileges on *.* to root@&quot;%&quot; identified by &quot;root&quot; with grant option;</div><div class="line">grant all privileges on *.* to root@&quot;localhost&quot; identified by &quot;root&quot; with grant option;</div><div class="line"></div><div class="line"># 运行hive命令即可启动hive</div><div class="line">hive</div></pre></td></tr></table></figure>
+<h4 id="错误汇总"><a href="#错误汇总" class="headerlink" title="错误汇总"></a>错误汇总</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">1、Exception in thread &quot;main&quot; java.lang.RuntimeException: java.lang.RuntimeException: Unable to instantiate org.apache.hadoop.hive.ql.metadata.SessionHiveMetaStoreClient </div><div class="line"></div><div class="line">解决方案：hive-site.xml中的mysql配置是否正确，是否将mysql-connector-java-5.1.46放到hive lib里面</div><div class="line"></div><div class="line">2、Terminal initialization failed; falling back to unsupported</div><div class="line"></div><div class="line">解决方案：将hive下的新版本jline的JAR包拷贝到hadoop下</div><div class="line">cp /hive/apache-hive-1.1.0-bin/lib/jline-2.12.jar /root/hadoop/hadoop-2.6.0/share/hadoop/yarn/lib/</div></pre></td></tr></table></figure>
+<h2 id="Hive-架构图"><a href="#Hive-架构图" class="headerlink" title="Hive 架构图"></a>Hive 架构图</h2><p><img src="/images/15259588352733.jpg" alt=""></p>
+<h3 id="hive与hadoop的关系"><a href="#hive与hadoop的关系" class="headerlink" title="hive与hadoop的关系"></a>hive与hadoop的关系</h3><p><img src="/images/15260241753747.jpg" alt=""></p>
+<h3 id="hive的数据存储"><a href="#hive的数据存储" class="headerlink" title="hive的数据存储"></a>hive的数据存储</h3><h4 id="数据模型"><a href="#数据模型" class="headerlink" title="数据模型"></a>数据模型</h4><ul>
+<li>DB 在hdfs表现为一个文件夹 ${hive.metastore.warehouse.dir}目录下</li>
+<li>Table： BD目录下的一个文件夹</li>
+<li>External Table： 存放位置可以任意</li>
+<li>Partition：在hdfs上表现为table目录下的子目录</li>
+<li>Bucket：在hdfs中表现为同一个表目录下根据hash散列之后的多个文件, 会根据不同的文件把数据放到不同的文件中 </li>
+</ul>
+<blockquote>
+<p>删除内部表会直接删除元数据（metadata）及存储数据；删除外部表仅仅会删除元数据，HDFS上的文件并不会被删除； </p>
+</blockquote>
+<h3 id="使用hive"><a href="#使用hive" class="headerlink" title="使用hive"></a>使用hive</h3><h4 id="交互式shell"><a href="#交互式shell" class="headerlink" title="交互式shell"></a>交互式shell</h4><ul>
+<li>bin/hive<h4 id="Hive-thrift服务"><a href="#Hive-thrift服务" class="headerlink" title="Hive thrift服务"></a>Hive thrift服务</h4></li>
+<li>启动为前台： bin/hiveserver2</li>
+<li>启动为后台：nohup bin/hiveserver2 1&gt;/var/log/hiveserver.log 2&gt;/var/log/hiveserver.err &amp;</li>
+</ul>
+<p>启动成功以后，可以在别的结点上用beeline去连接</p>
+<ul>
+<li>hive/bin/beeline  回车，进入beeline的命令界面，输入命令连接hiveserver2: <figure class="highlight plain"><figcaption><span>!connect jdbc:hive2://localhost:10000```（localhost是hiveserver2所启动的那台主机名，端口默认是10000,可以是其他结点）</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">* 启动就连接：```bin/beeline -u jdbc:hive2://locahost:10000 -n hadoop</div></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="hive的基本操作"><a href="#hive的基本操作" class="headerlink" title="hive的基本操作"></a>hive的基本操作</h2><h3 id="DDL操作"><a href="#DDL操作" class="headerlink" title="DDL操作"></a>DDL操作</h3><h4 id="创建表"><a href="#创建表" class="headerlink" title="创建表"></a>创建表</h4><h5 id="建表语法"><a href="#建表语法" class="headerlink" title="建表语法"></a>建表语法</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">create [external] table [if not exists] table_name[(col_name_data_type [comment col_comment],...)]</div><div class="line">[comment table_comment]</div><div class="line">[partitioned by (col_name data_type</div><div class="line">[comment col_comment],...)]</div><div class="line">[clustered by(col_name,col_name,...)[SORTED BY(col_name[ASC|DESC],...)] into num_buckets buckets]</div><div class="line">[row format row_format]</div><div class="line">[stored as file_format]</div><div class="line">[location hdfs_path]</div></pre></td></tr></table></figure>
+<blockquote>
+<p>like 允许用户复制现有的表结构，但是不复制数据<br>row format：用户在建表的时候可以自定义SerDe或者使用自带的SerDe<br>stored as：SEQUENCEFILE|TEXTFILE|RCFILE<br>clustered by:把表分区组织成桶</p>
+</blockquote>
+<h5 id="具体实例"><a href="#具体实例" class="headerlink" title="具体实例"></a>具体实例</h5><h6 id="创建内部表-mytable"><a href="#创建内部表-mytable" class="headerlink" title="创建内部表 mytable"></a>创建内部表 mytable</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">create table if not exists mytable(sid int, sname string)</div><div class="line">row format delimited fields terminated by &apos;\t&apos; stored as textfile;</div></pre></td></tr></table></figure>
+<h6 id="创建外部表pageview"><a href="#创建外部表pageview" class="headerlink" title="创建外部表pageview"></a>创建外部表pageview</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">create external table if not exists pageview(pageid int ,page url string comment &apos;the page URL&apos;)</div><div class="line">row format delimited fields terminated by &apos;,&apos;</div><div class="line">location &apos;hdfs://xxx.xxx.xxx.xxx:9000/user/hive/warehouse&apos;;</div></pre></td></tr></table></figure>
+<h6 id="创建分区表invites"><a href="#创建分区表invites" class="headerlink" title="创建分区表invites"></a>创建分区表invites</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">create table student_p(Sno int, Sname String, Sex string, Sage int, Sdept String) partitioned by(part string)</div><div class="line">row format delimited fields terminated by &apos;,&apos; stored as textfile;</div></pre></td></tr></table></figure>
+<h6 id="创建贷通的表student"><a href="#创建贷通的表student" class="headerlink" title="创建贷通的表student"></a>创建贷通的表student</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">create table student(id int, age int, name string)</div><div class="line">partitioned by(stat_date string)</div><div class="line">clustered by(id) sorted by(age) into 2 buckets</div><div class="line">row format delimited fields terminated by &apos;,&apos;;</div></pre></td></tr></table></figure>
+<h4 id="修改表"><a href="#修改表" class="headerlink" title="修改表"></a>修改表</h4><h5 id="增加删除分区"><a href="#增加删除分区" class="headerlink" title="增加删除分区"></a>增加删除分区</h5><h6 id="语法结构"><a href="#语法结构" class="headerlink" title="语法结构"></a>语法结构</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">alter table table_name add [if not exists] partition_spec[location &apos;location1&apos;]</div><div class="line">partition_spec:</div><div class="line">:partition(partition_col=partution_col_vlaue, partition_col=partition_col= partition_col_value,...)</div><div class="line"></div><div class="line">alter table table_name drop partition_spec,partition_spec,...</div></pre></td></tr></table></figure>
+<h6 id="具体实例-1"><a href="#具体实例-1" class="headerlink" title="具体实例"></a>具体实例</h6><ul>
+<li><p>添加分区</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">alter table student_p add partition(part=&apos;a&apos;)partition(part=&apos;b&apos;)</div></pre></td></tr></table></figure>
+</li>
+<li><p>location</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">alter table student add partition(stat_date=&apos;20180505&apos;) location &apos;/xxx/xxx/xx&apos;</div><div class="line">partition(stat_date=&apos;20180503&apos;)</div></pre></td></tr></table></figure>
+</li>
+<li><p>drop</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">alter table student drop partition(stat_date=&apos;20180505&apos;), partition(stat_date=&apos;20180503&apos;)</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="重命名表"><a href="#重命名表" class="headerlink" title="重命名表"></a>重命名表</h4><h5 id="语法结构-1"><a href="#语法结构-1" class="headerlink" title="语法结构"></a>语法结构</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">alter table table_name rename to ne_table_name</div></pre></td></tr></table></figure>
+<h4 id="增加-更新列"><a href="#增加-更新列" class="headerlink" title="增加/更新列"></a>增加/更新列</h4><h5 id="语法结构-2"><a href="#语法结构-2" class="headerlink" title="语法结构"></a>语法结构</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">alter table table_name add|replace columns(col_name data_type [comment col_comment],...)</div></pre></td></tr></table></figure>
+<h4 id="显示命令"><a href="#显示命令" class="headerlink" title="显示命令"></a>显示命令</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">show tables</div><div class="line">show databases</div><div class="line">show partitions</div><div class="line">show functions</div><div class="line">desc extended t_name</div><div class="line">desc formatted table_name</div></pre></td></tr></table></figure>
+<h3 id="DML操作"><a href="#DML操作" class="headerlink" title="DML操作"></a>DML操作</h3><h4 id="Load"><a href="#Load" class="headerlink" title="Load"></a>Load</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">load data[local]inpath&apos;filepath&apos;[overwrite]into</div><div class="line">table tablename[partition(partcol1=val1,partcol2=val2...)]</div></pre></td></tr></table></figure>
+<h5 id="具体实例-2"><a href="#具体实例-2" class="headerlink" title="具体实例"></a>具体实例</h5><ul>
+<li><p>相对路径</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">load data local inpath &apos;filename&apos; into table student partition(stat_data=&apos;20180101&apos;);</div></pre></td></tr></table></figure>
+</li>
+<li><p>绝对路径</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">load data local inpath &apos;/filename&apos; into table student partition(stat_data=&apos;20180101&apos;);</div></pre></td></tr></table></figure>
+</li>
+<li><p>加载包含模式数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">load data local inpath &apos;hdfs://filenam&apos; [overwrite] into table student partition(stat_data=&apos;20180101&apos;);</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="insert"><a href="#insert" class="headerlink" title="insert"></a>insert</h4><h5 id="将结构插入Hive表"><a href="#将结构插入Hive表" class="headerlink" title="将结构插入Hive表"></a>将结构插入Hive表</h5><h6 id="基本插入模式"><a href="#基本插入模式" class="headerlink" title="基本插入模式"></a>基本插入模式</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">insert overwrite table student partition(stat_date=&apos;20180505&apos;)</div><div class="line">select id, age, name from student where stat_data=&apos;20180506&apos;;</div></pre></td></tr></table></figure>
+<h6 id="多插入模式"><a href="#多插入模式" class="headerlink" title="多插入模式"></a>多插入模式</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">form student </div><div class="line">insert overwrite table student partition(stat_date=&apos;20180505&apos;)</div><div class="line">select id,age,name where stat_date=&apos;20180606&apos;</div><div class="line">insert overwritte table student partition(stat_date=&apos;20180505&apos;)</div><div class="line">select id,age,name where stat_date=&apos;20180607&apos;</div></pre></td></tr></table></figure>
+<h5 id="自动分区模式"><a href="#自动分区模式" class="headerlink" title="自动分区模式"></a>自动分区模式</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">insert overwrite table student1 partition(stat_date)</div><div class="line">select id,age,name,stat_date from student where stat_date=&apos;20180602&apos;;</div></pre></td></tr></table></figure>
+<h5 id="导出数据表"><a href="#导出数据表" class="headerlink" title="导出数据表"></a>导出数据表</h5><h6 id="导出文件到本地"><a href="#导出文件到本地" class="headerlink" title="导出文件到本地"></a>导出文件到本地</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">insert overwrite local directory &apos;/&apos;</div><div class="line">select * from student1;</div></pre></td></tr></table></figure>
+<h5 id="导出数据到HDFS"><a href="#导出数据到HDFS" class="headerlink" title="导出数据到HDFS"></a>导出数据到HDFS</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">insert overwrite directory &apos;hdfs://&apos; </div><div class="line">select * from student1;</div></pre></td></tr></table></figure>
+<h4 id="select"><a href="#select" class="headerlink" title="select"></a>select</h4><h5 id="语法结构-3"><a href="#语法结构-3" class="headerlink" title="语法结构"></a>语法结构</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">SELECT [ALL | DISTINCT] select_expr, select_expr, ... </div><div class="line">FROM table_reference</div><div class="line">[WHERE where_condition] </div><div class="line">[GROUP BY col_list [HAVING condition]] </div><div class="line">[CLUSTER BY col_list </div><div class="line">  | [DISTRIBUTE BY col_list] [SORT BY| ORDER BY col_list] </div><div class="line">] </div><div class="line">[LIMIT number]</div></pre></td></tr></table></figure>
+<ul>
+<li>order by: 全局排序，因此只有一个reducer</li>
+<li>sort by：在数据进入reducer前完成，保证每个reducer的输出有序</li>
+<li>distribute by：根据distribute by 指定的内容将数据分到同一个reducer</li>
+<li>cluster by：distribute by + sort by</li>
+</ul>
+<h5 id="具体实例-3"><a href="#具体实例-3" class="headerlink" title="具体实例"></a>具体实例</h5><ul>
+<li><p>获取年龄最大的三个学生 <figure class="highlight plain"><figcaption><span>id, age, name from student where stat_date</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">* 查询学生信息按年龄，升序降序 ```select id, age, name, from student sort by age desc;``` </div><div class="line">* ``` select id, age, name, from student distribute by age;</div></pre></td></tr></table></figure></p>
+</li>
+<li><p>按学生名称汇总学生年龄 <figure class="highlight plain"><figcaption><span>name, sum(age) from student group by name```</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div><div class="line">### hive join</div><div class="line">#### 语法结构</div></pre></td></tr></table></figure></p>
+</li>
+</ul>
+<p>join_table:<br>  table_reference JOIN table_factor [join_condition]<br>  | table_reference {LEFT|RIGHT|FULL} [OUTER] JOIN table_reference join_condition<br>  | table_reference LEFT SEMI JOIN table_reference join_condition<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">#### 具体实例</div><div class="line">* 获取已分配班级的学生姓名 ```select name, classname from student a join class b on (a.name = b.std_name)</div></pre></td></tr></table></figure></p>
+<ul>
+<li>获取尚未分配班级的学生姓名 <figure class="highlight plain"><figcaption><span>name,classname from student a left join class b on (a.name </span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">* left semi join 是in/exists 的高效实现 ```select id,name from student a left semi join class b on (a.name = b.std_name);</div></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="Hive-Shell-参数"><a href="#Hive-Shell-参数" class="headerlink" title="Hive Shell 参数"></a>Hive Shell 参数</h2><h3 id="hive-shell-命令行"><a href="#hive-shell-命令行" class="headerlink" title="hive shell 命令行"></a>hive shell 命令行</h3><h4 id="语法结构-4"><a href="#语法结构-4" class="headerlink" title="语法结构"></a>语法结构</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">hive [-hiveconf x=y]* [&lt;-i filename&gt;]* [&lt;-f filename&gt;|&lt;-e query-string&gt;] [-S]</div><div class="line">说明：</div><div class="line">* -i 从文件初始化HQL。</div><div class="line">* -e从命令行执行指定的HQL </div><div class="line">* -f 执行HQL脚本 </div><div class="line">* -v 输出执行的HQL语句到控制台 </div><div class="line">* -p &lt;port&gt; connect to Hive Server on port number </div><div class="line">* -hiveconf x=y Use this to set hive/hadoop configuration variables.</div></pre></td></tr></table></figure>
+<h4 id="具体实例-4"><a href="#具体实例-4" class="headerlink" title="具体实例"></a>具体实例</h4><ul>
+<li><p>运行一个查询： <figure class="highlight plain"><figcaption><span>-e 'select count(*) from student'```</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">* 运行一个文件： ```hive -f query.hql</div></pre></td></tr></table></figure></p>
+</li>
+<li><p>运行参数文件： <figure class="highlight plain"><figcaption><span>-i initHAL.conf ```</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div><div class="line">### Hive 的参数配置</div><div class="line">#### 配置文件</div><div class="line">##### 用户自定义配置文件</div></pre></td></tr></table></figure></p>
+</li>
+</ul>
+<p>$HIVE_CONF_DIR/hive-site.xml<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">##### 默认配置文件</div></pre></td></tr></table></figure></p>
+<p>$HIVE_CONF_DIR/hive-default.xml<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">## Hive 函数</div><div class="line">### 内置运算符</div><div class="line">### 内置函数</div><div class="line">### 自定义函数</div><div class="line">#### 自定义函数类别</div><div class="line">* UDF 作用于单个数据行，产生一个数据行作为输出</div><div class="line">* UDFA 用户定义聚集函数：接收多个输入数据行，并产生一个输出数据行（count，max）</div><div class="line"></div><div class="line">##### UDF开发实例</div><div class="line">* 先开发一个java类，继承UDF，并重载evaluate方法</div></pre></td></tr></table></figure></p>
+<p>import org.apache.hadoop.hive.ql.exec.UDF;<br>import org.apache.hadoop.io.Text;<br>public final class Lower extends UDF{<br>    public Text evaluate(final Text s){<br>        if(s==null){<br>            return null;<br>        }<br>        return new Text(s.toString().toLowerCase())<br>    }<br>}<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">* 打成jar包上传到服务器</div><div class="line">* 将jar包添加到hive的classpath ```add JAR /home/hadoop/udf.jar(???)</div><div class="line">* 创建临时的函数与开发好的java class 关联  ```create temporary function toprovince as &apos;完整的类路径&apos;</div></pre></td></tr></table></figure></p>
+<ul>
+<li><p>即可在hql中使用自定义的函数strip <figure class="highlight plain"><figcaption><span>strip(name), age from t_test; ```</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"> </div><div class="line">#### Transform实现</div><div class="line">&gt; 提供了在sql中调用自写脚本的功能</div><div class="line"></div><div class="line">##### 使用实例</div><div class="line">* 借助py脚本</div></pre></td></tr></table></figure></p>
+<p> create table data(</p>
+<pre><code>movieid int,
+rating int,
+weekday int,
+userid int)
+</code></pre><p> )<br> row format delimited fields terminated by ‘\t’;</p>
+<p> add file file.py</p>
+<p> insert overwarite table data<br> select<br> transform(moviedid,rating,unixtime,userid)<br> using ‘file.py’<br> as(movieid, rating, weekday, userid)</p>
+<p> from data_old</p>
+<h1 id="其中file-py内容如下"><a href="#其中file-py内容如下" class="headerlink" title="其中file.py内容如下"></a>其中file.py内容如下</h1><p> #!/bin/python<br> import sys<br> import datetime</p>
+<p> for line in sys.stdin:<br>   line = line.strip()<br>   movieid, rating, unixtime,userid = line.split(‘\t’)<br>   weekday = datetime.datetime.fromtimestamp(float(unixtime)).isoweekday()<br>   print (‘\t’.join([movieid, rating, str(weekday),userid]))</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">    </div><div class="line">    </div><div class="line">    </div><div class="line">* shell的cat命令来处理</div></pre></td></tr></table></figure>
+<p> FROM invites a INSERT OVERWRITE TABLE events SELECT TRANSFORM(a.foo, a.bar) AS (oof, rab) USING ‘/bin/cat’ WHERE a.ds &gt; ‘2008-08-09’;<br> ```</p>
+</li>
+</ul>
+<h2 id="hive-权限设置"><a href="#hive-权限设置" class="headerlink" title="hive 权限设置"></a>hive 权限设置</h2><h2 id="hive-实战"><a href="#hive-实战" class="headerlink" title="hive 实战"></a>hive 实战</h2><h3 id="数据ETL"><a href="#数据ETL" class="headerlink" title="数据ETL"></a>数据ETL</h3><h3 id="访问时长统计"><a href="#访问时长统计" class="headerlink" title="访问时长统计"></a>访问时长统计</h3><h3 id="级联求和"><a href="#级联求和" class="headerlink" title="级联求和"></a>级联求和</h3>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/10/Hadoop相关/hadoop高可用 /">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1957,169 +2216,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/14/Hadoop相关/Linux相关杂记/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="EtanWatson">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/header.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="EWSUN">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/14/Hadoop相关/Linux相关杂记/" itemprop="url">Linux相关杂记</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-14T10:10:54+08:00">
-                2018-04-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Hadoop相关/" itemprop="url" rel="index">
-                    <span itemprop="name">Hadoop相关</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Linux相关杂记"><a href="#Linux相关杂记" class="headerlink" title="Linux相关杂记"></a>Linux相关杂记</h1><h5 id="关于httpd-服务"><a href="#关于httpd-服务" class="headerlink" title="关于httpd 服务"></a>关于httpd 服务</h5><blockquote>
-<p>启动以后，会在 /var/www/html/下生成静态页面</p>
-</blockquote>
-<h5 id="创建软连接"><a href="#创建软连接" class="headerlink" title="创建软连接"></a>创建软连接</h5><blockquote>
-<p>ln -s /xx/xxx（源文件）  /xx/xx(目标文件)</p>
-</blockquote>
-<h5 id="制作局域网内的yum仓库"><a href="#制作局域网内的yum仓库" class="headerlink" title="制作局域网内的yum仓库"></a>制作局域网内的yum仓库</h5><blockquote>
-<p>使用httpd服务以及软连接，然后在yum.repo.d指向它</p>
-</blockquote>
-<h5 id="scp的用法"><a href="#scp的用法" class="headerlink" title="scp的用法"></a>scp的用法</h5><p>例如： A的地址为：192.168.2.2 B的地址为192.168.2.3</p>
-<blockquote>
-<p>scp[参数][原路径][目标路径]</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">scp -r root@192.168.2.3:/home/demo /root #将远程机器上的/home/demo 下的所有文件复制到本地/root下</div><div class="line">scp -r /home/demo root@192.168.2.3:/root #将本地机器上的/home/demo 下的所有文件复制到远程机器/root下</div></pre></td></tr></table></figure>
-<h4 id="修改-etc-profile文件后，命令都不能使用的解决方案"><a href="#修改-etc-profile文件后，命令都不能使用的解决方案" class="headerlink" title="修改/etc/profile文件后，命令都不能使用的解决方案"></a>修改/etc/profile文件后，命令都不能使用的解决方案</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">export PATH=/usr/bin:/usr/sbin:/bin:/sbin:/usr/X11R6/bin</div><div class="line"># 然后将错误的地方改回来</div><div class="line"># 一般会出错的地方可能是没有export PATH=$PATH</div></pre></td></tr></table></figure>
-<h4 id="pstree-命令"><a href="#pstree-命令" class="headerlink" title="pstree 命令"></a>pstree 命令</h4><blockquote>
-<p>显示bash下的进程树</p>
-</blockquote>
-<h4 id="关于变量在bash中的作用域"><a href="#关于变量在bash中的作用域" class="headerlink" title="关于变量在bash中的作用域"></a>关于变量在bash中的作用域</h4><blockquote>
-<p>1、export 当前进程以及子进程生效<br> 2、B=1 只对自己bash生效<br> 3、source script.sh 当前进程下生效<br> 4、bashrc 终端登录时会执行这个sh</p>
-</blockquote>
-<h5 id="tree命令"><a href="#tree命令" class="headerlink" title="tree命令"></a>tree命令</h5><h5 id="ln命令"><a href="#ln命令" class="headerlink" title="ln命令"></a>ln命令</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ln -s</div><div class="line">ln</div></pre></td></tr></table></figure>
-<h5 id="hwclock-命令"><a href="#hwclock-命令" class="headerlink" title="hwclock 命令"></a>hwclock 命令</h5><h5 id="which-命令"><a href="#which-命令" class="headerlink" title="which 命令"></a>which 命令</h5><h5 id="rz-y-命令"><a href="#rz-y-命令" class="headerlink" title="rz -y 命令"></a>rz -y 命令</h5><h5 id="ssh-keygen-f-hadoop-t-rsa-b-2048"><a href="#ssh-keygen-f-hadoop-t-rsa-b-2048" class="headerlink" title="ssh-keygen -f hadoop -t rsa -b 2048"></a>ssh-keygen -f hadoop -t rsa -b 2048</h5><h5 id="ssh-copy-id-i-filename-hadoop-192-169-2-2"><a href="#ssh-copy-id-i-filename-hadoop-192-169-2-2" class="headerlink" title="ssh-copy-id -i filename hadoop@192.169.2.2"></a>ssh-copy-id -i filename hadoop@192.169.2.2</h5><h5 id="关于免密登录：-ssh必须是700-authorized-keys-必须是600"><a href="#关于免密登录：-ssh必须是700-authorized-keys-必须是600" class="headerlink" title="关于免密登录：.ssh必须是700  authorized_keys 必须是600"></a>关于免密登录：.ssh必须是700  authorized_keys 必须是600</h5><h5 id="上传sftp-put-r-path-下载lcd-get-r"><a href="#上传sftp-put-r-path-下载lcd-get-r" class="headerlink" title="上传sftp put -r path 下载lcd  get -r"></a>上传sftp put -r path 下载lcd  get -r</h5>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2173,7 +2269,7 @@
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">93</span>
+                <span class="site-state-item-count">94</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

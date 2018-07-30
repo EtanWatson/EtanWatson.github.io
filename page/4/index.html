@@ -310,6 +310,241 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/08/JavaWeb/深入分析Java I:O的工作机制/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="EtanWatson">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/header.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="EWSUN">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/08/JavaWeb/深入分析Java I:O的工作机制/" itemprop="url">深入分析Java I/O的工作机制</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-08T22:15:56+08:00">
+                2018-04-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaWeb/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaWeb</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="深入分析Java-I-O的工作机制"><a href="#深入分析Java-I-O的工作机制" class="headerlink" title="深入分析Java I/O的工作机制"></a>深入分析Java I/O的工作机制</h1><h2 id="java-I-O类库的基本架构"><a href="#java-I-O类库的基本架构" class="headerlink" title="java I/O类库的基本架构"></a>java I/O类库的基本架构</h2><h3 id="基于字节的I-O操作接口"><a href="#基于字节的I-O操作接口" class="headerlink" title="基于字节的I/O操作接口"></a>基于字节的I/O操作接口</h3><ol>
+<li>InputStream<br> <strong>UML类图</strong></li>
+<li>OutputStream<br> <strong>UML类图</strong>    </li>
+<li><p><strong>这里要说明两点</strong></p>
+<ul>
+<li><p>操作数据的方式是可以组合使用的    </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">OutputStream out = new BufferedOutputStream(new ObjectOutputStream(new FileOutputStream(&quot;fileName&quot;)))</div></pre></td></tr></table></figure>
+</li>
+<li><p>必须要指定流最终要写到什么地方，要么写到磁盘，要么写到网络，其实写网络也是写文件，只不过还有一步要处理</p>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="基于字符的I-O操作"><a href="#基于字符的I-O操作" class="headerlink" title="基于字符的I/O操作"></a>基于字符的I/O操作</h3><ol>
+<li>Writer<br> <strong>UML类图</strong></li>
+<li>Reader<br> <strong>UML类图</strong>    </li>
+<li><strong>只规定了怎么写或读，没有规定数据要写到哪里</strong>      </li>
+</ol>
+<h3 id="基于字符的I-O操作-1"><a href="#基于字符的I-O操作-1" class="headerlink" title="基于字符的I/O操作"></a>基于字符的I/O操作</h3><ol>
+<li>读转化过程<br>InputStreamReader类是从字节到字符转化桥梁<br>StreamDecoder完成从字节到字符的解码的实现类</li>
+<li><p>写转化过程<br>OutputStreamWriter类转换桥梁<br>StreamEncoder完成编码过程    </p>
+<h2 id="磁盘I-O工作机制"><a href="#磁盘I-O工作机制" class="headerlink" title="磁盘I/O工作机制"></a>磁盘I/O工作机制</h2><h3 id="几种访问文件的方式"><a href="#几种访问文件的方式" class="headerlink" title="几种访问文件的方式"></a>几种访问文件的方式</h3><ol>
+<li>标准访问文件的方式<br>read():如果内核高速缓存中没有数据的话，就从磁盘中读取<br>write():将数据从用户地址空间复制到内核地址空间的缓存中，如果不调用sync同步命令，这个是后对于用户进程来说，写操作已经完成</li>
+<li>直接I/O的方式<br>直接访问磁盘上的数据，数据库管理系统。数据不会在程序中缓存，直接从磁盘上加载，速度会缓慢，所以通常和异步I/O搭配使用</li>
+<li>同步访问文件的方式<br>数据的读取和写都是同步的，不同于标准I/O的写操作</li>
+<li>异步访问文件的方式<br>访问数据的线程发出请求以后，线程会接着去做去处理其他的事情，当请求的数据返回以后继续处理下面的事情，会提高程序的执行效率，但是不会改变文件的效率</li>
+<li>内存映射的方式<br>内存中的某一块区域与磁盘中的文件关联起来，当要访问内存中的一段数据时，转换为访问文件的某一段数据，从而减少数据从内核空间缓存到用户空间缓存的数据复制操作     </li>
+</ol>
+</li>
+</ol>
+<h3 id="Java访问磁盘文件"><a href="#Java访问磁盘文件" class="headerlink" title="Java访问磁盘文件"></a>Java访问磁盘文件</h3><ol>
+<li>首先会根据这个路径创建一个File对象来标识这个文件</li>
+<li>根据这个File对象创建真正读取文件的操作对象，这时会创建一个关联真实存在的磁盘文件的文件描述符FileDescriptor，通过这个对象可以直接控制这个磁盘文件</li>
+</ol>
+<h3 id="Java序列化对象"><a href="#Java序列化对象" class="headerlink" title="Java序列化对象"></a>Java序列化对象</h3><p>就是将一个对象转化成一串二进制表示的字节数组，通过保存或转移这些字节数据来达到持久化的目的<br>反序列化必须要有原始类作为模板，才能将这个对象还原</p>
+<ol>
+<li>当父类继承Serializable接口时，所有的子类都可以被序列化</li>
+<li>子类实现了Serializable接口，父类没有，父类中的属性不能序列化（不报错，数据会丢失），但是子类中属性仍能正确序列化</li>
+<li>如果序列化的属性是对象，则这个对象也必须实现Serializable接口，否则会报错</li>
+<li>在反序列化时，如果serialVersionUID被修改，则序列化是会失败</li>
+<li>在反序列化是，如果对象的属性有修改或者删减，则修改部分的属性会丢失，但是不会报错</li>
+</ol>
+<h2 id="网络I-O的工作机制"><a href="#网络I-O的工作机制" class="headerlink" title="网络I/O的工作机制"></a>网络I/O的工作机制</h2><h3 id="TCP状态转化"><a href="#TCP状态转化" class="headerlink" title="TCP状态转化"></a>TCP状态转化</h3><h2 id="NIO的工作方式"><a href="#NIO的工作方式" class="headerlink" title="NIO的工作方式"></a>NIO的工作方式</h2><h2 id="I-O调优"><a href="#I-O调优" class="headerlink" title="I/O调优"></a>I/O调优</h2><h3 id="磁盘I-O的优化"><a href="#磁盘I-O的优化" class="headerlink" title="磁盘I/O的优化"></a>磁盘I/O的优化</h3><ul>
+<li>性能检测<ol>
+<li>I/O wait指标是否正常</li>
+<li>IOPS,查看应用程序需要的最低的IOPS</li>
+<li>RAID</li>
+</ol>
+</li>
+<li>提升I/O性能    <ol>
+<li>增加缓存，减少I/O访问次数</li>
+<li>优化磁盘的管理系统，设计最优的磁盘方式策略，以及磁盘的寻址策略，这是在底层操作系统层面考虑的</li>
+<li>设计合理的磁盘存储数据块，以及访问这些数据块的策略，这是在应用层面考虑的，例如可以给存放的数据设计索引，通过寻址索引来加快和减少磁盘的访问量，还可以采用异步和非阻塞的方式加快磁盘的访问速度</li>
+<li>应用合理的RAID策略提升磁盘的I/O      </li>
+</ol>
+</li>
+</ul>
+<h3 id="TCP网路参数调优"><a href="#TCP网路参数调优" class="headerlink" title="TCP网路参数调优"></a>TCP网路参数调优</h3><ol>
+<li>增大端口范围<br> echo “1024 65535” &gt; /proc/sys/net/ipv4/ip_local_port_range</li>
+<li>TCP连接复用<br> echo 1 &gt; /proc/sys/net/ipv4/tcp_tw_reuse</li>
+<li>查看当前TCP统计信息<ul>
+<li>cat /proc/net/netstat <strong>//查看TCP的统计信息</strong></li>
+<li>cat /proc/net/snmp <strong>//查看当前系统的连接情况</strong></li>
+<li>netstat -s <strong>//查看网络的统计信息</strong></li>
+</ul>
+</li>
+</ol>
+<h3 id="网络I-O优化"><a href="#网络I-O优化" class="headerlink" title="网络I/O优化"></a>网络I/O优化</h3><ol>
+<li>减少网络交互次数<ul>
+<li>再网络交互的两端设置缓存</li>
+<li>合并访问请求</li>
+</ul>
+</li>
+<li>减少网络传输数据量的大小<ul>
+<li>将数据压缩以后在传输</li>
+<li>设计简单的协议，尽量通过读取协议头来获取有用的价值信息，如设计代理程序时，4层代理和7层代理都是在尽量避免要读取整个通信数据来取得需要的信息</li>
+</ul>
+</li>
+<li>尽量减少编码<br>尽量提前将字符转化为字节</li>
+<li>根据应用，设计合适的交互方式<ul>
+<li><strong>同步与异步</strong><br>同步：可靠的任务序列，一个任务完成时需要依赖另外一个任务时，只有等待被依赖的任务完成后，依赖的任务才能完成<br>异步：不需要等待依赖的任务完成</li>
+<li><strong>阻塞与非阻塞</strong>：主要是从cpu的消耗上来说的<br>阻塞：好处，线程需要要频繁的切换<br>非阻塞：好处，cpu不用长时间等待慢的操作</li>
+<li>组合方式有四种<br><strong>同步阻塞</strong>：最简单，I/O性能差，CPU大部分时间处于空闲状态<br><strong>同步非阻塞</strong>：提升I/O性能的常用手段，尤其实在长连接同时传输数据也不是很多的情况下，需要考虑系统的瓶颈是在I/O上还是在cpu上<br><strong>异步阻塞</strong>：分布式数据库上经常用到，通常写一条记录，一份是同步阻塞的记录，另外2-3份是异步阻塞<br><strong>异步非阻塞</strong>：比较复杂，只有在一些非常复杂的分布式情况下使用，集群之间的消息同步机制一般这种I/O方式，它适合同时要传多份相同的数据到集群中的不同的机器，同时传输量虽然不大但是却非常频繁的情况</li>
+</ul>
+</li>
+</ol>
+<h2 id="设计模式解析之适配器模式"><a href="#设计模式解析之适配器模式" class="headerlink" title="设计模式解析之适配器模式"></a>设计模式解析之适配器模式</h2><h3 id="java-I-O中的适配器模式"><a href="#java-I-O中的适配器模式" class="headerlink" title="java I/O中的适配器模式"></a>java I/O中的适配器模式</h3><p><img src="/images/15231970214576.jpg" alt=""><br>可以看到，InputStreamReader就是将InputStream适配到Reader，InputStreamReader实现了Reader接口，并通过StreamDecoder（因为byte到char需要进行编码）间接持有了InputStream的引用，很显然，适配器就是InputStreamReader类，源角色就是InputStream代表的实例对象，目标接口就是Reader类<br>类似的用法还有 StringReader ByteArrayInputStream</p>
+<h2 id="设计模式之装饰器模式"><a href="#设计模式之装饰器模式" class="headerlink" title="设计模式之装饰器模式"></a>设计模式之装饰器模式</h2><h3 id="java-I-O中的装饰器"><a href="#java-I-O中的装饰器" class="headerlink" title="java I/O中的装饰器"></a>java I/O中的装饰器</h3><p><img src="/images/15231970397782.jpg" alt=""></p>
+<p>InputStream以抽象组件存在的，FileInputStream就是具体组件，它实现了抽象组件的所有接口<br>FilterInputStream是装饰角色，它实现了InputStream所有接口，并持有InputStream的对象实例的引用；BufferedInputStream是具体的装饰器实现者，它给InputStream类附加了功能，这个装饰器类的作用就是使得InputStream读取的数据保存在内存中，提高读取的性能</p>
+<h2 id="适配器和装饰器的区别（别名-Wrapper）"><a href="#适配器和装饰器的区别（别名-Wrapper）" class="headerlink" title="适配器和装饰器的区别（别名 Wrapper）"></a>适配器和装饰器的区别（别名 Wrapper）</h2><p><strong>目的不一样</strong></p>
+<ol>
+<li>适配器：将一个接口转换为另外一个接口，通过改变接口来达到重复使用的目的</li>
+<li>装饰器：保持原有接口，但是增强原有对象的功能</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/08/JavaWeb/深入分析Java Web中的中文编码问题/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2002,172 +2237,6 @@ public static void main(String[] args){
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/08/设计模式/设计模式之工厂方法模式/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="EtanWatson">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/header.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="EWSUN">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/08/设计模式/设计模式之工厂方法模式/" itemprop="url">设计模式之工厂方法模式</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-08T19:40:05+08:00">
-                2018-04-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/设计模式/" itemprop="url" rel="index">
-                    <span itemprop="name">设计模式</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="雷锋依然在人间——-工厂方法模式"><a href="#雷锋依然在人间——-工厂方法模式" class="headerlink" title="雷锋依然在人间——-工厂方法模式"></a>雷锋依然在人间——-工厂方法模式</h1><blockquote>
-<p>定义一个用于创建对象的接口，让子类决定实例化哪一个类。工厂方法使一个类的实例化延迟到其子类</p>
-</blockquote>
-<p>简单工厂模式的最大优点在于<strong>工厂类中包含了必要的逻辑判断</strong>，根据客户端的选择动态实例化相关类，对于客户端来说，去除了与具体产品的依赖<br><strong>工厂方法</strong>把简单工厂的内部逻辑判断移到了客户端代码来进行。你要想加功能，本来要改工厂类的，而现在是修改客户端</p>
-<p>先看抽象的类图<br><img src="/images/15231890008404.jpg" alt=""></p>
-<p>Product接口定义工厂方法所创建的对象接口，Creator声明工厂方法，该方法返回一个Product类型的对象</p>
-<p>接下来使用一个学雷锋做好事儿的例子实现一下工厂方法模式（来源大话设计模式）</p>
-<p>LeiFen</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">public class LeiFeng &#123;</div><div class="line">    public void Sweep()&#123;</div><div class="line">        System.out.println(&quot;扫地&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void Wash()&#123;</div><div class="line">        System.out.println(&quot;洗衣&quot;);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void BuyRice()&#123;</div><div class="line">        System.out.println(&quot;买米&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>ILeiFengFactory</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">public interface ILeiFengFactory &#123;</div><div class="line"></div><div class="line">    LeiFeng CreateLeiFeng();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>Undergraduate</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">public class Undergraduate extends LeiFeng&#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>UndergraduateFactory</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">public class UndergraduateFactory implements ILeiFengFactory&#123;</div><div class="line">    @Override</div><div class="line">    public LeiFeng CreateLeiFeng() &#123;</div><div class="line">        return new Undergraduate();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>Volunteer</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">public class Volunteer extends LeiFeng&#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>VolunteerFactory</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">public class VolunteerFactory implements ILeiFengFactory&#123;</div><div class="line">    @Override</div><div class="line">    public LeiFeng CreateLeiFeng() &#123;</div><div class="line">        return new Volunteer();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>Client</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">public class Client &#123;</div><div class="line"></div><div class="line">    public static void main(String [] args)&#123;</div><div class="line">        ILeiFengFactory factory = new UndergraduateFactory();</div><div class="line">        LeiFeng student = factory.CreateLeiFeng();</div><div class="line"></div><div class="line">        student.BuyRice();</div><div class="line">        student.Sweep();</div><div class="line">        student.Wash();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>由于客户端还要修改代码，所以还不够完美，所以需要使用反射技术来实现，抽象工厂模式</p>
-<blockquote>
-<p><strong><em>做一个有文艺气息的码农 ^ _ ^</em></strong></p>
-</blockquote>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2221,7 +2290,7 @@ public static void main(String[] args){
             
               <a href="/archives/">
             
-                <span class="site-state-item-count">93</span>
+                <span class="site-state-item-count">94</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
